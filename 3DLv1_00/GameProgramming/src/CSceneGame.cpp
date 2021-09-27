@@ -21,10 +21,22 @@ void CSceneGame::Update() {
 	glNormal3f(0.0f, 1.0f, 0.0f);
 
 	//頂点座標の設定
-	//glNormal3f(X座標、Y座標、Z座標)
+	//glVertex3f(X座標、Y座標、Z座標)
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(1.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, -0.5f);
+
+	//面の向きはZ軸方向
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(-0.5f, 0.0f, 0.0f);
+
+	//課題１
+	glNormal3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(0.0f, -0.5f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
 
 	//描画終了
 	glEnd();
