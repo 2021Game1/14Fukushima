@@ -1,6 +1,10 @@
 #include "CSceneGame.h"
 #include <stdio.h>
 
+#define WIDTH 800.0 //画面幅
+
+#define HEIGHT 600.0 //画面高さ
+
 //残り時間（30秒）
 int Time = 30 * 60;
 int Remain = 3;
@@ -110,11 +114,31 @@ void CSceneGame::Update() {
 			itr = VectorRect.erase(itr);
 		}
 	}
+	double mLeft, mRight, mBottom, mTop;
+	//画面範囲左の設定
+	mLeft = CPlayer::spInstance->x - WIDTH / 2;
+	//画面範囲右の設定
+	mRight = mLeft + WIDTH;
+	//画面範囲下の設定
+	mBottom = CPlayer::spInstance->y - HEIGHT / 2;
+	//画面範囲上の設定
+	mTop = mBottom + HEIGHT;
+
+	/*画面の投影変更開始*/
+	//行列（設定）をプロジェクションモードへ変更
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity(); //行列（設定）を初期化
+	//2Dの投影範囲を設定
+	gluOrtho2D(mLeft, mRight, mBottom, mTop);
 
 	for (int i = 0; i < VectorRect.size(); i++) {
 		//描画処理
 		VectorRect[i]->Render();
 	}
+
+	glLoadIdentity(); //行列（設定）を初期化
+	//2Dの投影範囲を設定
+	gluOrtho2D(-400, 400, -300, 300);
 
 	CText::DrawChar('S', -350, 250, 16, 16);
 	CText::DrawChar('c', -350 + 32, 250, 16, 16);
