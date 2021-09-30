@@ -1,4 +1,17 @@
 #include"CVector.h"
+//コンストラクタ
+CVector::CVector()
+	:mX(0.0f)
+	,mY(0.0f)
+	,mZ(0.0f)
+{}
+CVector::CVector(float x, float y, float z)
+	:mX(x)
+	,mY(y)
+	,mZ(z)
+{}
+
+
 //Set(X座標,Y座標,Z座標)
 void CVector::Set(float x, float y, float z)
 {
