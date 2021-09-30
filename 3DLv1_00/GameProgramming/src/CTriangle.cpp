@@ -18,6 +18,7 @@ void CTriangle::Normal(const CVector& n) {
 
 //•`‰æ
 void CTriangle::Render() {
+	glBegin(GL_TRIANGLES);
 	glNormal3f(mN.X(), mN.Y(), mN.Z());
 	glVertex3f(mV[0].X(), mV[0].Y(), mV[0].Z());
 	glVertex3f(mV[1].X(), mV[1].Y(), mV[1].Z());

@@ -62,14 +62,25 @@ void CSceneGame::Update() {
 	glVertex3f(v1.X(), v1.Y(), v1.Z());
 	glVertex3f(v2.X(), v2.Y(), v2.Z());
 
-	//三角形クラスのインスタンス作成
-	CTriangle t0;
-	//法線と頂点の設定
-	t0.Vertex(CVector(1.0f, 0.0f, 0.5f), CVector(2.0f, 0.0f, 0.0f), CVector(1.0f, 0.0f, -0.5f));
-	t0.Normal(CVector(0.0f, 1.0f, 0.0f));
-	//三角形の描画
-	t0.Render();
 	//描画終了
 	glEnd();
+
+	//三角形クラスのインスタンス作成①
+	CTriangle t0;
+	//法線と頂点の設定①
+	t0.Vertex(CVector(1.0f, 0.0f, 0.5f), CVector(2.0f, 0.0f, 0.0f), CVector(1.0f, 0.0f, -0.5f));
+	t0.Normal(CVector(0.0f, 1.0f, 0.0f));
+	//三角形の描画①
+	t0.Render();
+
+	//課題3　三角形クラス②のインスタンス作成
+	CTriangle t1;
+	//法線と頂点の設定②
+	t1.Vertex(CVector(0.0f,0.5f,1.0f), CVector(0.0f, 0.0f,2.0f), CVector(0.0f,-0.5f,1.0f));
+	t1.Normal(CVector(2.0f, 0.0f, 0.0f));
+	//三角形の描画②
+	t1.Render();
+
+	
 }
 

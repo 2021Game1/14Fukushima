@@ -1,5 +1,5 @@
 #include"CVector.h"
-//コンストラクタ
+//課題３　コンストラクタ
 CVector::CVector()
 	:mX(0.0f)
 	,mY(0.0f)
