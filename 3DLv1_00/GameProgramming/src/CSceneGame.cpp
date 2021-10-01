@@ -81,6 +81,13 @@ void CSceneGame::Update() {
 	//三角形の描画②
 	t1.Render();
 
+	//課題3 三角形クラス③のインスタンス作成
+	CTriangle t2;
+	//法線と頂点の設定③
+	t2.Vertex(CVector(0.5f,1.0f,0.0f), CVector(0.0f,2.0f,0.0f), CVector(-0.5f,1.0,0.0f));
+	t2.Normal(CVector(2.0f,0.0f,0.0f));
+	//三角形の描画③
+	t2.Render();
 	
 }
 
