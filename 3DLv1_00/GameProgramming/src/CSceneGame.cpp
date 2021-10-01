@@ -5,10 +5,15 @@
 #include"CVector.h"
 //3.2
 #include"CTriangle.h"
+//4.2
+#include"CKey.h"
+
+//カメラの視点の変数
+CVector mEye;
 
 
 void CSceneGame::Init() {
-
+	mEye = CVector(1.0f, 2.0f, 3.0f);
 }
 
 void CSceneGame::Update() {
@@ -24,9 +29,41 @@ void CSceneGame::Update() {
 	//頂点３の座標を設定する
 	v2.Set(0.0f, 0.0f, -0.5f);
 
+	//視点の移動
+	//Jキー:X軸マイナス方向へ移動
+	if (CKey::Push('J'))
+	{
+		mEye = mEye - CVector(0.1f, 0.0f, 0.0f);
+	}
+	//Lキー:X軸プラス方向へ移動
+	if (CKey::Push('L'))
+	{
+		mEye = mEye + CVector(0.1f, 0.0f, 0.0f);
+	}
+	//Iキー:Y軸マイナス方向へ移動
+	if (CKey::Push('I'))
+	{
+		mEye = mEye - CVector(0.0f, 0.0f, 0.1f);
+	}
+	//Kキー:Y軸プラス方向へ移動
+	if (CKey::Push('K'))
+	{
+		mEye = mEye + CVector(0.0f, 0.0f, 0.1f);
+	}
+	//課題4 Mキー:Y軸マイナス方向へ移動
+	if (CKey::Push('M'))
+	{
+		mEye = mEye - CVector(0.0f, 0.1f, 0.0f);
+	}
+	//課題4 Oキー:Y軸プラス方向へ移動
+	if (CKey::Push('O'))
+	{
+		mEye = mEye + CVector(0.0f, 0.1f, 0.0f);
+	}
+
 	//視点の設定
 	//gluLookAt(視点X、視点Y、視点Z、中心X、中心Y、中心Z,上向X、上向Y、上向Z)
-	gluLookAt(1.0f, 2.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gluLookAt(mEye.X(),mEye.Y(),mEye.Z(), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 	//描画開始
 	glBegin(GL_TRIANGLES);
