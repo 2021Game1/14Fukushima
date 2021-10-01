@@ -77,7 +77,7 @@ void CSceneGame::Update() {
 	CTriangle t1;
 	//–@ü‚Æ’¸“_‚Ìİ’è‡A
 	t1.Vertex(CVector(0.0f,0.5f,1.0f), CVector(0.0f, 0.0f,2.0f), CVector(0.0f,-0.5f,1.0f));
-	t1.Normal(CVector(2.0f, 0.0f, 0.0f));
+	t1.Normal(CVector(1.0f, 0.0f, 0.0f));
 	//OŠpŒ`‚Ì•`‰æ‡A
 	t1.Render();
 
@@ -85,7 +85,7 @@ void CSceneGame::Update() {
 	CTriangle t2;
 	//–@ü‚Æ’¸“_‚Ìİ’è‡B
 	t2.Vertex(CVector(0.5f,1.0f,0.0f), CVector(0.0f,2.0f,0.0f), CVector(-0.5f,1.0,0.0f));
-	t2.Normal(CVector(2.0f,0.0f,0.0f));
+	t2.Normal(CVector(0.0f,0.0f,1.0f));
 	//OŠpŒ`‚Ì•`‰æ‡B
 	t2.Render();
 	
