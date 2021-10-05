@@ -93,6 +93,7 @@
     <ClCompile Include="CRectangle.cpp" />
     <ClCompile Include="CSceneGame.cpp" />
     <ClCompile Include="CSceneManager.cpp" />
+    <ClCompile Include="CSceneScreen.cpp" />
     <ClCompile Include="CSceneTitle.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTexture.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneGame.h" />
     <ClInclude Include="CSceneManager.h" />
+    <ClInclude Include="CSceneScreen.h" />
     <ClInclude Include="CSceneTitle.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTexture.h" />

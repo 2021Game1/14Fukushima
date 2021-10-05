@@ -1,5 +1,6 @@
 #include "CSceneGame.h"
 #include <stdio.h>
+#include"CSceneScreen.h"
 
 #define WIDTH 800.0 //âÊñ ïù
 
@@ -24,12 +25,13 @@ void CSceneGame::Init() {
 //37
 	int map[6][8] =
 	{
-		{ 1, 1, 1, 1, 1, 1, 1, 1 },
-		{ 1, 0, 1, 0, 0, 0, 1, 1 },
-		{ 1, 2, 0, 0, 1, 0, 0, 1 },
-		{ 1, 0, 1, 2, 0, 0, 1, 1 },
-		{ 1, 0, 0, 0, 1, 2, 0, 1 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1,},
+		{ 1, 0, 0, 0, 0, 0, 0, 1,},
+		{ 1, 0, 0, 0, 0, 0, 0, 1,},
+		{ 1, 0, 0, 0, 0, 0, 0, 1,},
+		{ 1, 0, 0, 0, 0, 0, 0, 1,},
+		{ 1, 1, 1, 1, 1, 1, 1, 1,},
+		
 	};
 //37	MapSize = 0;	//0Çë„ì¸Ç∑ÇÈ
 	for (int j = 0; j < 6; j++) {
@@ -116,11 +118,11 @@ void CSceneGame::Update() {
 	}
 	double mLeft, mRight, mBottom, mTop;
 	//âÊñ îÕàÕç∂ÇÃê›íË
-	mLeft = CPlayer::spInstance->x - WIDTH / 2;
+	mLeft = CSceneScreen::spInstance->x - WIDTH / 2;
 	//âÊñ îÕàÕâEÇÃê›íË
 	mRight = mLeft + WIDTH;
 	//âÊñ îÕàÕâ∫ÇÃê›íË
-	mBottom = CPlayer::spInstance->y - HEIGHT / 2;
+	mBottom = CSceneScreen::spInstance->y - HEIGHT / 2;
 	//âÊñ îÕàÕè„ÇÃê›íË
 	mTop = mBottom + HEIGHT;
 
