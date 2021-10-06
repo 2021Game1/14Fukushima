@@ -18,8 +18,14 @@ void CSceneGame::Init() {
 //37
 	CSceneScreen* Screen = new CSceneScreen();
 	{
-		Screen->x = 800;
-		Screen->y = 600;
+		
+		Screen->x = 0;
+		Screen->y = 500;
+		Screen->w = 1000;
+		Screen->h = 800;
+		Screen->mSy = -2;
+		
+	
 	}
 	CPlayer* Player = new CPlayer();
 	Player->x = 150;
