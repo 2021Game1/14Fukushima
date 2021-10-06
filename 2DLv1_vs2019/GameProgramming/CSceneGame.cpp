@@ -16,7 +16,12 @@ void CSceneGame::Init() {
 
 	//クラスのメンバ変数への代入
 //37
-	CPlayer *Player = new CPlayer();
+	CSceneScreen* Screen = new CSceneScreen();
+	{
+		Screen->x = 800;
+		Screen->y = 600;
+	}
+	CPlayer* Player = new CPlayer();
 	Player->x = 150;
 	Player->y = 150;
 	Player->w = 25;
@@ -25,21 +30,21 @@ void CSceneGame::Init() {
 //37
 	int map[6][8] =
 	{
-		{ 1, 1, 1, 1, 1, 1, 1, 1,},
 		{ 1, 0, 0, 0, 0, 0, 0, 1,},
 		{ 1, 0, 0, 0, 0, 0, 0, 1,},
 		{ 1, 0, 0, 0, 0, 0, 0, 1,},
 		{ 1, 0, 0, 0, 0, 0, 0, 1,},
-		{ 1, 1, 1, 1, 1, 1, 1, 1,},
+		{ 1, 0, 0, 0, 0, 0, 0, 1,},
+		{ 1, 0, 0, 0, 0, 0, 0, 1,},
 		
 	};
-//37	MapSize = 0;	//0を代入する
+	//37	MapSize = 0;	//0を代入する
 	for (int j = 0; j < 6; j++) {
 		for (int i = 0; i < 8; i++) {
 			//mapの要素が1の時、四角形配置
 			if (map[j][i] == 1) {
 				//37
-				CMap *Map = new CMap();
+				CMap* Map = new CMap();
 				//四角形に値を設定
 				Map->mEnabled = true;
 				Map->x = i * 100 - 350;
@@ -49,12 +54,17 @@ void CSceneGame::Init() {
 				//37
 			}
 			else if (map[j][i] == 2) {
-				CEnemy *Enemy = new CEnemy();
+				CEnemy* Enemy = new CEnemy();
 				Enemy->x = i * 100 - 350;
 				Enemy->y = j * -100 + 250;
 				//右へ移動
 				Enemy->mFx = 0;
 				Enemy->mFy = 1;
+			}
+			
+		}
+	}
+
 				/*37
 				for (int k = 0; k < 10; k++) {
 					if (!Enemy[k].mEnabled) {
@@ -70,9 +80,9 @@ void CSceneGame::Init() {
 					}
 				}
 				*/
-			}
-		}
-	}
+			
+		
+	
 }
 
 void CSceneGame::Update() {
@@ -116,18 +126,13 @@ void CSceneGame::Update() {
 			itr = VectorRect.erase(itr);
 		}
 	}
-	
-
-	
 
 	for (int i = 0; i < VectorRect.size(); i++) {
 		//描画処理
 		VectorRect[i]->Render();
 	}
 
-	glLoadIdentity(); //行列（設定）を初期化
-	//2Dの投影範囲を設定
-	gluOrtho2D(-400, 400, -300, 300);
+	
 
 	CText::DrawChar('S', -350, 250, 16, 16);
 	CText::DrawChar('c', -350 + 32, 250, 16, 16);
