@@ -6,9 +6,14 @@
 
 #define HEIGHT 600.0 //画面高さ
 
+#define SCROLL_SPEED -2 
+
 //残り時間（30秒）
 int Time = 30 * 60;
 int Remain = 3;
+
+
+
 
 void CSceneGame::Init() {
 	//シーンの設定
@@ -16,23 +21,17 @@ void CSceneGame::Init() {
 
 	//クラスのメンバ変数への代入
 //37
-	CSceneScreen* Screen = new CSceneScreen();
-	{
-		
-		Screen->x = 0;
-		Screen->y = 500;
-		Screen->w = 1000;
-		Screen->h = 800;
-		Screen->mSy = -2;
+
+		CSceneScreen* Screen = new CSceneScreen();
+		{
+			//１枚目
+			Screen->x = 0;
+			Screen->y = 510;
+			Screen->speed = SCROLL_SPEED;
+			Screen->mEnabled = true;
+		}
 		
 	
-	}
-	CPlayer* Player = new CPlayer();
-	Player->x = 150;
-	Player->y = 150;
-	Player->w = 25;
-	Player->h = 25;
-	Player->mEnabled = true;
 //37
 	int map[6][8] =
 	{
@@ -67,9 +66,15 @@ void CSceneGame::Init() {
 				Enemy->mFx = 0;
 				Enemy->mFy = 1;
 			}
-			
 		}
 	}
+
+	CPlayer* Player = new CPlayer();
+	Player->x = 150;
+	Player->y = 150;
+	Player->w = 25;
+	Player->h = 25;
+	Player->mEnabled = true;
 
 				/*37
 				for (int k = 0; k < 10; k++) {
@@ -92,6 +97,8 @@ void CSceneGame::Init() {
 }
 
 void CSceneGame::Update() {
+
+	
 	/*
 	配列の要素分繰り返す
 	配列名.size()
@@ -133,11 +140,14 @@ void CSceneGame::Update() {
 		}
 	}
 
+	
+
 	for (int i = 0; i < VectorRect.size(); i++) {
 		//描画処理
 		VectorRect[i]->Render();
 	}
 
+	
 	
 
 	CText::DrawChar('S', -350, 250, 16, 16);

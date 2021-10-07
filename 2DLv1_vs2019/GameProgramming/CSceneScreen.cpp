@@ -7,16 +7,17 @@
 CSceneScreen* CSceneScreen::spInstance = nullptr;
 
 CSceneScreen::CSceneScreen()
-	:mSy(-1.0f)
 {
 	mTag = EScreen;
 	Screen.Load("screen.tga");
 	spInstance = this;
+	w = 510;
+	h = 800;
 }
 
 void CSceneScreen::Update()
 {
-	y += mSy;
+	y += speed;
 }
 
 void CSceneScreen::Render()
