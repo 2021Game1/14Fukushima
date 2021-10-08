@@ -1,7 +1,7 @@
 #ifndef CSCENEGAME_H
 #define CSCENEGAME_H
 #include "CScene.h"
-
+#include "CModel.h"
 /*
 ゲームのシーン
 */
@@ -11,6 +11,9 @@ public:
 	void Init();
 	//更新処理のオーバーライド
 	void Update();
+	//モデルクラスのインスタンス作成
+	CModel mModel;
+
 };
 
 #endif

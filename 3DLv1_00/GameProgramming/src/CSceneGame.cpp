@@ -7,13 +7,16 @@
 #include"CTriangle.h"
 //4.2
 #include"CKey.h"
-
+//モデルデータの指定
+#define MODEL_OBJ "res\\obj.obj","res\\obj.mtl"
 //カメラの視点の変数
 CVector mEye;
 
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
+	//モデルファイルの入力
+	mModel.Load(MODEL_OBJ);
 }
 
 void CSceneGame::Update() {
