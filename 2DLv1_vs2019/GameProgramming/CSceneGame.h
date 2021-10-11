@@ -10,7 +10,7 @@
 // テクスチャクラスのインクルード
 #include "CTexture.h"
 #include "CMap.h"
-
+#include"CSceneScreen.h"
 /*
 ゲームのシーン
 */
@@ -26,9 +26,11 @@ public:
 	//int FireCount = 10;
 	//CEnemy Enemy[10];
 	//37
+	
 
 	//初期化処理のオーバーライド
 	void Init();
+	
 	//更新処理のオーバーライド
 	void Update();
 

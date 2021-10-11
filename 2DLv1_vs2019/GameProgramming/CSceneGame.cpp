@@ -6,7 +6,7 @@
 
 #define HEIGHT 600.0 //画面高さ
 
-#define SCROLL_SPEED -1.0
+#define SCROLL_SPEED -2.0
 
 //残り時間（30秒）
 int Time = 30 * 60;
@@ -22,22 +22,18 @@ void CSceneGame::Init() {
 	//クラスのメンバ変数への代入
 //37
 		CSceneScreen* Screen = new CSceneScreen();
-		{
 			Screen->x = 0;
 			Screen->y = 500;
 			Screen->speed = SCROLL_SPEED;
 			Screen->mEnabled = true;
-		}
+
 		CSceneScreen* Screen2 = new CSceneScreen();
-		{
-			if () {
-				Screen2->x = 0;
-				Screen2->y = 2100;
-				Screen2->speed = SCROLL_SPEED;
-				Screen2->mEnabled = true;
-			}
-		}
-		
+			Screen2->x = 0;
+			Screen2->y = 2100;
+			Screen2->speed = SCROLL_SPEED;
+			Screen2->mEnabled = true;
+			
+				
 	
 //37
 /*
