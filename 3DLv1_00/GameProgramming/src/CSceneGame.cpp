@@ -17,6 +17,7 @@ void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
+	
 }
 
 void CSceneGame::Update() {

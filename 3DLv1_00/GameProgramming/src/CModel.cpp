@@ -30,9 +30,9 @@ void CModel::Load(char* obj, char* mtl) {
 		//入力した値をコンソールに出力する
 		printf("%s", buf);
 	}
-	//ファイルのクローズ
-	fclose(fp);
-
+		//ファイルのクローズ
+		fclose(fp);
+	
 	//ファイルのオープン
 	//fopen(ファイル名,モード)
 	//オープン出来ない時はNULLを返す
