@@ -1,6 +1,6 @@
 #include"CModel.h"
 //標準入出力のインクルード
-#include<stdio.h>
+#include<string.h>
 //CVectorのインクルード
 #include"CVector.h"
 
@@ -40,25 +40,26 @@ void CModel::Load(char* obj, char* mtl) {
 		//strcmp(文字列１,文字列２)
 		//文字列１と文字列２が同じとき0,異なる時０以外を返す
 		// 先頭がvの時、頂点をvertexに追加する
-		if (strcmp(str[0], "v") == 0) {
+		if (strcmp(str[0],"v") == 0) {
 			//可変長配列vertexに追加する
 			//atof(文字列) 文字列からfloat型の値を返す
-			vertex.push_back(CVector(atof(str[1]), atof(str[2]),atof(str[3])));
+			vertex.push_back(CVector(atof(str[1]), atof(str[2]), atof(str[3])));
 		}
 		//先頭がfの時、三角形を作成して追加する
-		else if(strcmp(str[0],"f")==0){
+		else if (strcmp(str[0],"f") == 0) {
 			//頂点と法線の番号作成
-			int v[3], n[3];
+			int v[3],n[3];
 			//頂点と法線の番号取得
-			sscanf(str[1], "%d//%d,&v[0],&n[0]");
-			sscanf(str[2], "%d//%d,&v[1],&n[1]");
-			sscanf(str[3], "%d//%d,&v[2],&n[2]");
+			sscanf(str[1], "%d//%d", &v[0], &n[0]);
+			sscanf(str[2], "%d//%d", &v[1], &n[1]);
+			sscanf(str[3], "%d//%d", &v[2], &n[2]);
 			//三角形作成
 			CTriangle t;
 			t.Vertex(vertex[v[0] - 1], vertex[v[1] - 1], vertex[v[2] - 1]);
 			//可変長配列mTrianglesに三角形を追加
 			mTriangles.push_back(t);
 		}
+
 		//入力した値をコンソールに出力する
 		printf("%s", buf);
 	}
@@ -84,5 +85,14 @@ void CModel::Load(char* obj, char* mtl) {
 		printf("%s", buf);
 	}
 	//ファイルのクローズ
-	fclose(fp2);	
+	fclose(fp2);
+
+}
+//描画
+void CModel::Render() {
+	//可変長配列の要素数だけ繰り返し
+	for (int i = 0; i < mTriangles.size(); i++){
+		//可変長配列に添え字でアクセスする
+		mTriangles[i].Render();
+	}
 }

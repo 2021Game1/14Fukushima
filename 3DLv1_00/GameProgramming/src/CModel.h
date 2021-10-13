@@ -13,7 +13,8 @@ public:
 	//モデルファイルの入力
 	//Load(モデルファイル名、マテリアルファイル名）
 	void Load(char* obj, char* mtl);
-
+	//描画
+	void Render();
 private:
 	//三角形の可変長配列
 	std::vector<CTriangle>mTriangles;

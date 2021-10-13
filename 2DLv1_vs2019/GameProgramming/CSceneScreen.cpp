@@ -13,11 +13,15 @@ CSceneScreen::CSceneScreen()
 	spInstance = this;
 	w = 510;
 	h = 800;
+	
 }
 
 void CSceneScreen::Update()
 {
 	y += speed;
+	if (y == -1200)
+		y = 1736;
+	
 }
 
 void CSceneScreen::Render()

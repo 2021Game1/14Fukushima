@@ -67,10 +67,15 @@ void CSceneGame::Update() {
 
 	//視点の設定
 	//gluLookAt(視点X、視点Y、視点Z、中心X、中心Y、中心Z,上向X、上向Y、上向Z)
-	gluLookAt(mEye.X(),mEye.Y(),mEye.Z(), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gluLookAt(mEye.X(), mEye.Y(), mEye.Z(), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
+	mModel.Render();
+
+}
+	/*
 	//描画開始
 	glBegin(GL_TRIANGLES);
+
 
 	//法線（面の向き）の設定
 	glNormal3f(n.X(), n.Y(), n.Z());
@@ -129,6 +134,6 @@ void CSceneGame::Update() {
 	t2.Normal(CVector(0.0f,0.0f,1.0f));
 	//課題3 三角形の描画③
 	t2.Render();
-	
-}
+	*/
+
 

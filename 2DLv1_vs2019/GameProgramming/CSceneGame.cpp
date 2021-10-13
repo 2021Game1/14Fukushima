@@ -23,16 +23,18 @@ void CSceneGame::Init() {
 //37
 		CSceneScreen* Screen = new CSceneScreen();
 			Screen->x = 0;
-			Screen->y = 500;
+			Screen->y = 250;
 			Screen->speed = SCROLL_SPEED;
 			Screen->mEnabled = true;
 
+
 		CSceneScreen* Screen2 = new CSceneScreen();
 			Screen2->x = 0;
-			Screen2->y = 2100;
+			Screen2->y = 1700;
 			Screen2->speed = SCROLL_SPEED;
 			Screen2->mEnabled = true;
 			
+	
 				
 	
 //37

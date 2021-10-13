@@ -8,7 +8,7 @@ extern CTexture Texture;
 
 
 CPlayer::CPlayer()
-: mFx(1.0f), mFy(0.0f)
+: mFx(0.0f), mFy(1.0f)
 , FireCount(0)
 {
 	mTag = EPLAYER;
@@ -20,16 +20,12 @@ void CPlayer::Update() {
 	//staticÉÅÉ\ÉbÉhÇÕÇ«Ç±Ç©ÇÁÇ≈Ç‡åƒÇ◊ÇÈ
 	if (CKey::Push('A')) {
 		x -= 3;
-		mFx = -1;
-		mFy = 0;
 		if (x - w < -400) {
 			x = -400 + w;
 		}
 	}
 	if (CKey::Push('D')) {
 		x += 3;
-		mFx = 1;
-		mFy = 0;
 		if (x + w > 400) {
 			x = 400 - w;
 		}
@@ -44,8 +40,6 @@ void CPlayer::Update() {
 	}
 	if (CKey::Push('S')) {
 		y -= 3;
-		mFx = 0;
-		mFy = -1;
 		if (y - h < -300) {
 			y = -300 + h;
 		}
