@@ -27,16 +27,12 @@ void CSceneGame::Init() {
 			Screen->speed = SCROLL_SPEED;
 			Screen->mEnabled = true;
 
-
 		CSceneScreen* Screen2 = new CSceneScreen();
 			Screen2->x = 0;
 			Screen2->y = 1700;
 			Screen2->speed = SCROLL_SPEED;
 			Screen2->mEnabled = true;
-			
-	
 				
-	
 //37
 /*
 	int map[6][8] =

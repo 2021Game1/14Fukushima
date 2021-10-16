@@ -8,10 +8,11 @@ public:
 	int mFx, mFy;
 	//37
 	int FireCount;
+	//プレイヤーレベル
+	int mLevel;
 	CPlayer();
 	void Update();
 	void Render();
-
 	//36
 	void Collision(CRectangle *i, CRectangle *y);
 
