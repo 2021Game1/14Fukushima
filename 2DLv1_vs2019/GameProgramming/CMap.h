@@ -9,7 +9,7 @@ class CMap : public CRectangle {
 public:
 	void Render() {
 		if (mEnabled) {
-			CRectangle::Render(Texture, 48, 95, 56, 23);
+			
 		}
 	}
 };
