@@ -15,6 +15,13 @@ void CTriangle::Vertex(const CVector& v0, const CVector& v1, const CVector& v2) 
 void CTriangle::Normal(const CVector& n) {
 	mN[0] = mN[1] = mN[2] = n;
 }
+//法線設定
+//Normal(法線ベクトル1,法線ベクトル2,法線ベクトル3)
+void CTriangle::Normal(const CVector& v0, const CVector& v1, const CVector& v2) {
+	mN[0] = v0;
+	mN[1] = v1;
+	mN[2] = v2;
+}
 
 //描画
 void CTriangle::Render() {

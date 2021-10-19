@@ -94,7 +94,7 @@ void CEnemy::Update() {
 		*/
 	}
 	
-}
+
 /*
 親のCollisionをオーバーライドする
 衝突すると移動方向を反対にする

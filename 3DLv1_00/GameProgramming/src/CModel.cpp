@@ -64,6 +64,9 @@ void CModel::Load(char* obj, char* mtl) {
 		//strcmp(文字列１,文字列２)
 		//文字列１と文字列２が同じとき0,異なる時０以外を返す
 		// 先頭がvの時、頂点をvertexに追加する
+		if (strcmp(str[0], "vn") == 0) {
+			normal.push_back(CVector(atof(str[1]), atof(str[2]), atof(str[3])));
+		}
 		if (strcmp(str[0], "v") == 0) {
 			//可変長配列vertexに追加する
 			//atof(文字列) 文字列からfloat型の値を返す
@@ -80,6 +83,7 @@ void CModel::Load(char* obj, char* mtl) {
 			//三角形作成
 			CTriangle t;
 			t.Vertex(vertex[v[0] - 1], vertex[v[1] - 1], vertex[v[2] - 1]);
+			t.Normal(normal[v[0] - 1], normal[v[1] - 1], normal[v[2] - 1]);
 			//可変長配列mTrianglesに三角形を追加
 			mTriangles.push_back(t);
 		}
