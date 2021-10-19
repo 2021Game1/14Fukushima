@@ -9,6 +9,7 @@
 void CModel::Load(char* obj, char* mtl) {
 	//頂点データの保存（CVector型）
 	std::vector<CVector>vertex;
+	std::vector<CVector>normal;
 	//ファイルポインタ変数の作成
 	FILE* fp;
 	//ファイルポインタ変数の作成
@@ -82,8 +83,9 @@ void CModel::Load(char* obj, char* mtl) {
 			//可変長配列mTrianglesに三角形を追加
 			mTriangles.push_back(t);
 		}
-		//入力した値をコンソールに出力する
-		printf("%s", buf);
+			//入力した値をコンソールに出力する
+			printf("%s", buf);
+		
 	}
 	//ファイルのクローズ
 	fclose(fp2);
