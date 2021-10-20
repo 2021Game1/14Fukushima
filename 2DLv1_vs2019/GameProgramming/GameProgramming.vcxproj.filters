@@ -98,5 +98,8 @@
     <ClInclude Include="CSceneScreen.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CEnemyData.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

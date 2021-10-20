@@ -1,6 +1,7 @@
 #include "CEnemy.h"
 #include "CTexture.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
+#include "CEnemyData.h"
 extern CTexture Texture;
 
 //CBullet CEnemy::EBullet[20];
@@ -11,10 +12,7 @@ CEnemy::CEnemy()
 	//37
 //	mEnabled = true;
 	mTag = EENEMY;
-	w = 25;
-	h = 25;
 }
-
 void CEnemy::Update() {
 	
 		//37e
