@@ -1,6 +1,7 @@
 #include "CSceneGame.h"
 #include <stdio.h>
-#include"CSceneScreen.h"
+#include "CSceneScreen.h"
+#include"CEnemyData.h"
 
 #define WIDTH 800.0 //‰æ–Ê•
 
@@ -32,9 +33,17 @@ void CSceneGame::Init() {
 			Screen2->y = 1700;
 			Screen2->speed = SCROLL_SPEED;
 			Screen2->mEnabled = true;
-				
-//37
 			
+			new CEnemy();
+			CENEMYDATA EData[5] =
+			{
+				{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, },
+			};
+			EData[0].mType
+			{ 1, 2, 3, 4, 5};
+			
+//37
+	/*
 
 	int map[7][8] =
 	{
@@ -62,6 +71,7 @@ void CSceneGame::Init() {
 				//37
 			}
 		}
+	*/
 
 		CPlayer* Player = new CPlayer();
 		Player->x = 150;
@@ -87,11 +97,15 @@ void CSceneGame::Init() {
 		*/
 
 
-	}
+
 }
 
 void CSceneGame::Update() {
+		
+	
+	
 
+	
 	
 	/*
 	”z—ñ‚Ì—v‘f•ªŒJ‚è•Ô‚·

@@ -6,10 +6,7 @@
 class CPlayer : public CRectangle {
 public:
 	int mFx, mFy;
-	//37
 	int FireCount;
-	//プレイヤーレベル
-	int mLevel;
 	CPlayer();
 	void Update();
 	void Render();

@@ -107,6 +107,7 @@
     <ClInclude Include="CKey.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CPlayerDate.h" />
     <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneGame.h" />

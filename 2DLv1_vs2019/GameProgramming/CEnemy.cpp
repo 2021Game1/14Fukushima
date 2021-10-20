@@ -12,7 +12,9 @@ CEnemy::CEnemy()
 	//37
 //	mEnabled = true;
 	mTag = EENEMY;
+	
 }
+
 void CEnemy::Update() {
 	
 		//37e

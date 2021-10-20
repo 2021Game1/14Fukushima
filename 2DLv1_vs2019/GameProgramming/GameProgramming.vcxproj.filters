@@ -101,5 +101,8 @@
     <ClInclude Include="CEnemyData.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerDate.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 #include "CKey.h"
 //37
 #include "CBullet.h"
-
+#include "CPlayerDate.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
 
@@ -12,7 +12,9 @@ CPlayer::CPlayer()
 , FireCount(0)
 {
 	mTag = EPLAYER;
-	mLevel=0;
+
+	CPLAERDATA date[PLAYER_NUM];
+	
 }
 
 void CPlayer::Update() {
@@ -53,7 +55,7 @@ void CPlayer::Update() {
 	//FireContが0で、かつ、スペースキーで弾発射
 	else if (CKey::Once(' ')) {
 		CBullet* Bullet = new CBullet();
-			if (mLevel == 0) {
+			if ( == 0) {
 			//発射位置の設定
 			Bullet->x = x;
 			Bullet->y = y;
@@ -66,7 +68,7 @@ void CPlayer::Update() {
 			Bullet->mTag = CRectangle::EPLAYERBULLET;
 			FireCount = 15;
 			}
-			if (mLevel == 1) {
+			if ( == 1) {
 				//発射位置の設定
 				Bullet->x = x;
 				Bullet->y = y;
@@ -79,7 +81,7 @@ void CPlayer::Update() {
 				Bullet->mTag = CRectangle::EPLAYERBULLET;
 				FireCount = 10;
 			}
-			if (mLevel == 2) {
+			if ( == 2) {
 				Bullet->x = x;
 				Bullet->y = y;
 				//移動の値を設定

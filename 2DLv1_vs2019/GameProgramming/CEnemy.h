@@ -20,6 +20,7 @@ public:
 	void Collision(CRectangle* i, CRectangle* y);
 
 	
+	
 
 };
 #endif
