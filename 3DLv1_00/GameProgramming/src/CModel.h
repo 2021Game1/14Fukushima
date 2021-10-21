@@ -4,6 +4,8 @@
 #include<vector>
 //CTriangleのインクルード
 #include"CTriangle.h"
+//マテリアルクラスのインクルード
+#include"CMaterial.h"
 /*
 モデルクラス
 モデルデータの入力や表示
@@ -15,9 +17,12 @@ public:
 	void Load(char* obj, char* mtl);
 	//描画
 	void Render();
+	~CModel();
 private:
 	//三角形の可変長配列
 	std::vector<CTriangle>mTriangles;
+	//マテリアルポインタの可変長配列
+	std::vector<CMaterial*>mpMaterials;
 	
 };
 
