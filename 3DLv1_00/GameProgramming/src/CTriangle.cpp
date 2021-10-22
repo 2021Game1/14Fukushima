@@ -1,13 +1,16 @@
 #include"CTriangle.h"
 //OpenGL
 #include"glut.h"
-
+#include"CModel.h"
 //頂点座標設定
 //Vertex(頂点1,頂点2,頂点3)
 void CTriangle::Vertex(const CVector& v0, const CVector& v1, const CVector& v2) {
 	mV[0] = v0;
 	mV[1] = v1;
 	mV[2] = v2;
+}
+int CTriangle::MaterialIdx() {
+	sscanf(CTriangle::mMaterialIdx);
 }
 
 //法線設定
@@ -33,4 +36,8 @@ void CTriangle::Render() {
 	glNormal3f(mN[2].X(), mN[2].Y(), mN[2].Z());
 	glVertex3f(mV[2].X(), mV[2].Y(), mV[2].Z());
 	glEnd();
+}
+
+void CTriangle::MaterialIdx(int idx) {
+	CTriangle::MaterialIdx(mMaterialIdx<-idx);
 }
