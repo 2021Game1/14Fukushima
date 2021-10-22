@@ -13,7 +13,7 @@ CPlayer::CPlayer()
 {
 	mTag = EPLAYER;
 
-	CPLAERDATA date[PLAYER_NUM];
+	
 	
 }
 
@@ -55,7 +55,6 @@ void CPlayer::Update() {
 	//FireContが0で、かつ、スペースキーで弾発射
 	else if (CKey::Once(' ')) {
 		CBullet* Bullet = new CBullet();
-			if ( == 0) {
 			//発射位置の設定
 			Bullet->x = x;
 			Bullet->y = y;
@@ -67,32 +66,10 @@ void CPlayer::Update() {
 			//プレイヤーの弾を設定
 			Bullet->mTag = CRectangle::EPLAYERBULLET;
 			FireCount = 15;
-			}
-			if ( == 1) {
-				//発射位置の設定
-				Bullet->x = x;
-				Bullet->y = y;
-				//移動の値を設定
-				Bullet->mFx = mFx * 5;
-				Bullet->mFy = mFy * 5;
-				//有効にする
-				Bullet->mEnabled = true;
-				//プレイヤーの弾を設定
-				Bullet->mTag = CRectangle::EPLAYERBULLET;
-				FireCount = 10;
-			}
-			if ( == 2) {
-				Bullet->x = x;
-				Bullet->y = y;
-				//移動の値を設定
-				Bullet->mFx = mFx * 5;
-				Bullet->mFy = mFy * 5;
-				//有効にする
-				Bullet->mEnabled = true;
-				//プレイヤーの弾を設定
-				Bullet->mTag = CRectangle::EPLAYERBULLET;
-				FireCount = 8;
-			}
+		
+			
+			
+		
 	}
 	//37
 }

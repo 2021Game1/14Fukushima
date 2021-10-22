@@ -13,7 +13,9 @@
 int Time = 30 * 60;
 int Remain = 3;
 
+int CE=0;
 
+int CP;
 
 
 void CSceneGame::Init() {
@@ -22,86 +24,99 @@ void CSceneGame::Init() {
 
 	//クラスのメンバ変数への代入
 //37
-		CSceneScreen* Screen = new CSceneScreen();
-			Screen->x = 0;
-			Screen->y = 250;
-			Screen->speed = SCROLL_SPEED;
-			Screen->mEnabled = true;
+	CSceneScreen* Screen = new CSceneScreen();
+	Screen->x = 0;
+	Screen->y = 250;
+	Screen->speed = SCROLL_SPEED;
+	Screen->mEnabled = true;
 
-		CSceneScreen* Screen2 = new CSceneScreen();
-			Screen2->x = 0;
-			Screen2->y = 1700;
-			Screen2->speed = SCROLL_SPEED;
-			Screen2->mEnabled = true;
-			
-			new CEnemy();
-			CENEMYDATA EData[5] =
-			{
-				{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, },
-			};
-			EData[0].mType
-			{ 1, 2, 3, 4, 5};
-			
-//37
-	/*
+	CSceneScreen* Screen2 = new CSceneScreen();
+	Screen2->x = 0;
+	Screen2->y = 1700;
+	Screen2->speed = SCROLL_SPEED;
+	Screen2->mEnabled = true;
 
-	int map[7][8] =
-	{
-		{ 1, 2, 0, 2, 0, 2, 0, 1,},
-		{ 1, 0, 0, 0, 0, 0, 0, 1,},
-		{ 1, 0, 0, 0, 0, 0, 0, 1,},
-		{ 1, 0, 0, 0, 0, 0, 0, 1,},
-		{ 1, 0, 0, 0, 0, 0, 0, 1,},
-		{ 1, 0, 0, 0, 0, 0, 0, 1,},
-		{ 1, 1, 1, 1, 1, 1, 1, 1,},
-	};
-	//37	MapSize = 0;	//0を代入する
-	for (int j = 0; j < 7; j++) {
-		for (int i = 0; i < 8; i++) {
-			//mapの要素が1の時、四角形配置
-			if (map[j][i] == 1) {
-				//37
-				CMap* Map = new CMap();
-				//四角形に値を設定
-				Map->mEnabled = true;
-				Map->x = i * 100 - 350;
-				Map->y = j * -100 + 250;
-				Map->w = 50;
-				Map->h = 50;
-				//37
+
+
+
+
+
+	//37
+		/*
+
+		int map[7][8] =
+		{
+			{ 1, 2, 0, 2, 0, 2, 0, 1,},
+			{ 1, 0, 0, 0, 0, 0, 0, 1,},
+			{ 1, 0, 0, 0, 0, 0, 0, 1,},
+			{ 1, 0, 0, 0, 0, 0, 0, 1,},
+			{ 1, 0, 0, 0, 0, 0, 0, 1,},
+			{ 1, 0, 0, 0, 0, 0, 0, 1,},
+			{ 1, 1, 1, 1, 1, 1, 1, 1,},
+		};
+		//37	MapSize = 0;	//0を代入する
+		for (int j = 0; j < 7; j++) {
+			for (int i = 0; i < 8; i++) {
+				//mapの要素が1の時、四角形配置
+				if (map[j][i] == 1) {
+					//37
+					CMap* Map = new CMap();
+					//四角形に値を設定
+					Map->mEnabled = true;
+					Map->x = i * 100 - 350;
+					Map->y = j * -100 + 250;
+					Map->w = 50;
+					Map->h = 50;
+					//37
+				}
 			}
-		}
-	*/
-
-		CPlayer* Player = new CPlayer();
-		Player->x = 150;
-		Player->y = 150;
-		Player->w = 25;
-		Player->h = 25;
-		Player->mEnabled = true;
-
-		/*37
-		for (int k = 0; k < 10; k++) {
-			if (!Enemy[k].mEnabled) {
-				//敵に値を設定
-				Enemy[k].x = i * 100 - 350;
-				Enemy[k].y = j * -100 + 250;
-				//右へ移動
-				Enemy[k].mFx = 0;
-				Enemy[k].mFy = 1;
-				//有効にする
-				Enemy[k].mEnabled = true;
-				break;
-			}
-		}
 		*/
 
+	CPlayer* Player = new CPlayer();
+	Player->x = 0;
+	Player->y = -255;
+	Player->w = 25;
+	Player->h = 25;
+	Player->mEnabled = true;
+
+	CENEMYDATA EData[5] =
+	{
+		{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, },
+	};
+	CEnemy* Enemy = new CEnemy();
+	EData[0].mType[0];
+	{
+		Enemy->x = 100;
+		Enemy->y = 250;
+		Enemy->mFx = 0;
+		Enemy->mFy = -1;
+		
 
 
+	}
+
+	/*37
+	for (int k = 0; k < 10; k++) {
+		if (!Enemy[k].mEnabled) {
+			//敵に値を設定
+			Enemy[k].x = i * 100 - 350;
+			Enemy[k].y = j * -100 + 250;
+			//右へ移動
+			Enemy[k].mFx = 0;
+			Enemy[k].mFy = 1;
+			//有効にする
+			Enemy[k].mEnabled = true;
+			break;
+		}
+	}
+	*/
 }
 
+
+
 void CSceneGame::Update() {
-		
+	
+	
 	
 	
 

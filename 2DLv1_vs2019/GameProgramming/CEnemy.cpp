@@ -7,36 +7,52 @@ extern CTexture Texture;
 //CBullet CEnemy::EBullet[20];
 
 CEnemy::CEnemy()
-
+: mFx(0), mFy(0)
 {
+	
 	//37
 //	mEnabled = true;
-	mTag = EENEMY;
 	
+	mTag = EENEMY;
+	w = 25;
+	h = 25;
 }
 
 void CEnemy::Update() {
-	
-		//37e
-		/* 37
-		//“G’e”•ªŒJ‚è•Ô‚µ
-		for (int i = 0; i < 20; i++) {
-			//–³Œø‚È’e‚È‚ç”­Ë‚·‚é
-			if (!EBullet[i].mEnabled) {
-				//À•Wİ’è
-				EBullet[i].x = x;
-				EBullet[i].y = y;
-				//ˆÚ“®—Êİ’è
-				EBullet[i].mFx = 2;
-				EBullet[i].mFy = 0;
-				//—LŒø‚É‚·‚é
-				EBullet[i].mEnabled = true;
-				EBullet[i].mTag = EENEMYBULLET;
-				//”­ËŠÔŠu‚ğ60ƒtƒŒ[ƒ€‚É‚·‚é
-				break;
-			}
-			mFireCount = 60;
+	//mEnabled‚ªfalse‚È‚ç–ß‚é
+	if (!mEnabled)return;
+	//—LŒø‚È
+	if (mEnabled) {
+		//ˆÚ“®
+		x += mFx * 1;
+		y += mFy * 1;
+	}
+	//60ƒtƒŒ[ƒ€‚É1‰ñ”­Ë
+	if (mFireCount > 0) {
+		mFireCount--;
+	}
+	//37e
+
+	else {
+		//’e‚ğ‚S”­l•û‚Ö”­Ë‚·‚é
+		for (int i = 0; i < 4; i++) {
+				CBullet* EBullet = new CBullet();
+					//À•Wİ’è
+					EBullet->x = x;
+					EBullet->y = y;
+					//ˆÚ“®—Êİ’è
+					EBullet->mFx = (i - 2) % 2 * 2;
+					EBullet->mFy = (i - 1) % 2 * 2;
+					//—LŒø‚É‚·‚é
+					EBullet->mEnabled = true;
+					EBullet->mTag = EENEMYBULLET;
+					break;	
 		}
+		mFireCount = 60;
+
+		
+
+		/*
 		//“G’e”•ªŒJ‚è•Ô‚µ
 		for (int i = 0; i < 20; i++) {
 			//–³Œø‚È’e‚È‚ç”­Ë‚·‚é
@@ -93,6 +109,7 @@ void CEnemy::Update() {
 		}
 		*/
 	}
+}
 	
 
 /*

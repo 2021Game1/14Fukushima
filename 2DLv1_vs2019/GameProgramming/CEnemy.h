@@ -9,13 +9,13 @@ public:
 
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 
-	//37	CBullet EBullet[20];
-
+	//CBullet EBullet[20];
+	int mFx,mFy;
 	CEnemy();
 	void Update();
 	bool Collision(const CRectangle& r);
 	void Render();
-
+	int mFireCount;
 	//36
 	void Collision(CRectangle* i, CRectangle* y);
 
