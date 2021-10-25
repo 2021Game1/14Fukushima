@@ -8,6 +8,7 @@ extern CTexture Texture;
 
 CEnemy::CEnemy()
 : mFx(0), mFy(0)
+
 {
 	
 	//37
@@ -17,6 +18,8 @@ CEnemy::CEnemy()
 	w = 25;
 	h = 25;
 }
+
+
 
 void CEnemy::Update() {
 	//mEnabled‚ªfalse‚È‚ç–ß‚é
@@ -28,8 +31,8 @@ void CEnemy::Update() {
 		y += mFy * 1;
 	}
 	//60ƒtƒŒ[ƒ€‚É1‰ñ”­ŽË
-	if (mFirecount > 0) {
-		mFirecount--;
+	if (mFireCount > 0) {
+		mFireCount--;
 	}
 	//37e
 	/**/

@@ -13,6 +13,7 @@ int x;//X座標
 int y;//Y座標
 int mFirecount;//弾の発射間隔
 int mItem;//アイテム
+
 };
 #define ENEMY_NUM 5
 #endif 

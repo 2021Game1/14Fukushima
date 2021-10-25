@@ -3,6 +3,7 @@
 
 #include "CRectangle.h"
 #include "CBullet.h"
+#include "CEnemyData.h"
 
 class CEnemy : public CRectangle {
 public:
@@ -11,16 +12,6 @@ public:
 
 	//CBullet EBullet[20];
 	int mFx,mFy;
-	int mType;//“G‚Ìí—Ş
-	int mSype;//“G‚Ì’e‚Ìí—Ş
-	int mPattern;//“G‚Ìs“®ƒpƒ^[ƒ“
-	int mShotpattrn;//“G‚Ì’e‚Ì”­Ëƒpƒ^[ƒ“
-	int mEnemytime;// “G‚ÌoŒ»ŠÔ
-	int mBullettime;//“G‚Ì’e”­ËŠÔ
-	int x;//XÀ•W
-	int y;//YÀ•W
-	int mFirecount;//’e‚Ì”­ËŠÔŠu
-	int mItem;//ƒAƒCƒeƒ€
 	CEnemy();
 	void Update();
 	bool Collision(const CRectangle& r);
@@ -28,6 +19,7 @@ public:
 	int mFireCount;
 	//36
 	void Collision(CRectangle* i, CRectangle* y);
+	
 
 	
 	

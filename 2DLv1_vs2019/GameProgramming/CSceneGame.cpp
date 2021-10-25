@@ -83,47 +83,8 @@ void CSceneGame::Init() {
 	{
 		{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, },
 	};
-	CEnemy* Enemy = new CEnemy();
-		EData[0].mType;
-		{
-
-		}
-		EData[0].mSype;//“G‚Ì’e‚ÌŽí—Þ
-		{
-
-		}
-		EData[0].mPattern;//“G‚Ìs“®ƒpƒ^[ƒ“
-		{
-
-		}
-		EData[0].mShotpattrn;//“G‚Ì’e‚Ì”­ŽËƒpƒ^[ƒ“
-		{
-
-		}
-		EData[0].mEnemytime; // “G‚ÌoŒ»ŽžŠÔ
-		{
-
-		}
-		EData[0].mBullettime;//“G‚Ì’e”­ŽËŽžŠÔ 
-		{
+	
 		
-		}
-		EData[0].x;//XÀ•W
-		{
-			Enemy->x = 100;
-		}
-		EData[0].y;//YÀ•W
-		{
-			Enemy->y = 600;
-		}
-		EData[0].mFirecount;//’e‚Ì”­ŽËŠÔŠu
-		{
-			Enemy->mFirecount = 121;
-		}
-		EData[0].mItem;//ƒAƒCƒeƒ€
-		{
-			Enemy->mItem;
-		}
 		
 
 
@@ -148,7 +109,7 @@ void CSceneGame::Init() {
 
 void CSceneGame::Update() {
 	
-	
+	CEnemy* Enemy = new CEnemy();
 	
 	
 
