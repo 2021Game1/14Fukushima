@@ -28,14 +28,14 @@ void CEnemy::Update() {
 		y += mFy * 1;
 	}
 	//60ƒtƒŒ[ƒ€‚É1‰ñ”­ŽË
-	if (mFireCount > 0) {
-		mFireCount--;
+	if (mFirecount > 0) {
+		mFirecount--;
 	}
 	//37e
-
+	/**/
 	else {
 		//’e‚ð‚S”­Žl•û‚Ö”­ŽË‚·‚é
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 20; i++) {
 				CBullet* EBullet = new CBullet();
 					//À•WÝ’è
 					EBullet->x = x;
@@ -48,8 +48,8 @@ void CEnemy::Update() {
 					EBullet->mTag = EENEMYBULLET;
 					break;	
 		}
-		mFireCount = 60;
-
+		mFireCount = 121;
+	}
 		
 
 		/*
@@ -108,7 +108,7 @@ void CEnemy::Update() {
 			mFireCount = 60;
 		}
 		*/
-	}
+	
 }
 	
 
@@ -140,10 +140,11 @@ bool CEnemy::Collision(const CRectangle &r) {
 }
 
 void CEnemy::Render() {
-	if (mEnabled) {
-		CRectangle::Render(Texture, 146 - 16, 146 + 16, 178 + 16, 178 - 16);
-		
-	}
+		if (mEnabled) {
+			CRectangle::Render(Texture, 146 - 16, 146 + 16, 178 + 16, 178 - 16);
+
+		}
+	
 }
 
 //36
