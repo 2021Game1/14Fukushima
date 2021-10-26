@@ -10,7 +10,7 @@ void CTriangle::Vertex(const CVector& v0, const CVector& v1, const CVector& v2) 
 	mV[2] = v2;
 }
 int CTriangle::MaterialIdx() {
-	sscanf(CTriangle::mMaterialIdx);
+	return mMaterialIdx;
 }
 
 //ñ@ê¸ê›íË
@@ -39,5 +39,5 @@ void CTriangle::Render() {
 }
 
 void CTriangle::MaterialIdx(int idx) {
-	CTriangle::MaterialIdx(mMaterialIdx<-idx);
+	mMaterialIdx = idx;
 }
