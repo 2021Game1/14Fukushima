@@ -2,12 +2,17 @@
 #define CMATERIAL_H
 #define MATERIAL_NAME_LEN 64 //名前の長さ
 
+#include "CTexture.h"
+
+
 /*
 マテリアルクラス
 マテリアルのデータを扱う
 */
 class CMaterial{
 public:
+	//テクスチャ
+	CTexture mTexture;
 	//デフォルトコンストラクタ
 	CMaterial();
 	//マテリアルを有効にする
@@ -19,6 +24,10 @@ public:
 	void Name(char* name);
 	//mDiffuse配列の取得
 	float* Diffuse();
+	//マテリアルを無効にする
+	void Disabled();
+	//テクスチャの取得
+	CTexture* Texture();
 
 private:
 	//マテリアル名

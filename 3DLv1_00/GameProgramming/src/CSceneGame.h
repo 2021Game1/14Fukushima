@@ -13,7 +13,7 @@ public:
 	void Update();
 	//モデルクラスのインスタンス作成
 	CModel mModel;
-
+	CModel mBackGround; //背景モデル
 };
 
 #endif

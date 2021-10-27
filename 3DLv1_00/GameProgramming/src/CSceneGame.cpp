@@ -9,15 +9,18 @@
 #include"CKey.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\obj.obj","res\\obj.mtl"
+#define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
 //カメラの視点の変数
 CVector mEye;
+//背景モデルデータの指定
+
 
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
+	mBackGround.Load(MODEL_BACKGROUND);
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
-	
 }
 
 void CSceneGame::Update() {
@@ -71,6 +74,7 @@ void CSceneGame::Update() {
 
 	mModel.Render();
 
+	mBackGround.Render();
 }
 	/*
 	//描画開始

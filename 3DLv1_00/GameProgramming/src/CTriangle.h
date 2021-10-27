@@ -2,6 +2,7 @@
 #define CTRIANGLE_H
 
 #include"CVector.h"
+
 /*
 三角形クラス
 */
@@ -22,10 +23,14 @@ public:
 	//マテリアル番号の設定
 	//Matrial(マテリアル番号)
 	void MaterialIdx(int idx);
+	//UV設定
+	void SetUv(const CVector& v0, const CVector& v1, const CVector& v2);
 
+	
 private:
 	CVector mV[3]; //頂点座標
 	CVector mN[3]; //法線
+	CVector mUv[3]; //テクスチャマッピング
 	int mMaterialIdx; //マテリアル番号
 };
 #endif 
