@@ -6,22 +6,30 @@ extern CTexture Texture;
 
 //CBullet CEnemy::EBullet[20];
 
-CEnemy::CEnemy()
-: mFx(0), mFy(0)
 
+//敵のデータ//
+CEnemy::CEnemy(CENEMYDATA ed) 
+	: mFx(0), mFy(0)
 {
 	
-	//37
-//	mEnabled = true;
-	
-	mTag = EENEMY;
-	w = 25;
-	h = 25;
+	mEnemydata = ed;
+	{
+		
+		//37
+	//	mEnabled = true;
+
+		mTag = EENEMY;
+		w = 25;
+		h = 25;
+	}
 }
 
 
 
+
+
 void CEnemy::Update() {
+	
 	//mEnabledがfalseなら戻る
 	if (!mEnabled)return;
 	//有効な時
@@ -30,10 +38,7 @@ void CEnemy::Update() {
 		x += mFx * 1;
 		y += mFy * 1;
 	}
-	//60フレームに1回発射
-	if (mFireCount > 0) {
-		mFireCount--;
-	}
+	
 	//37e
 	/**/
 	else {
@@ -51,7 +56,7 @@ void CEnemy::Update() {
 					EBullet->mTag = EENEMYBULLET;
 					break;	
 		}
-		mFireCount = 121;
+		
 	}
 		
 

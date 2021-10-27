@@ -78,11 +78,6 @@ void CSceneGame::Init() {
 	Player->h = 25;
 	Player->mEnabled = true;
 
-	//ìGÇÃÉfÅ[É^//
-	CENEMYDATA EData[5] =
-	{
-		{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, },
-	};
 	
 		
 		
@@ -108,8 +103,19 @@ void CSceneGame::Init() {
 
 
 void CSceneGame::Update() {
+	CENEMYDATA EData[5] =
+	{
+		{ 1, 10, 20, 4, 60, 121, 100, 600, 4, 30, },
+		{ 2, 11, 21, 4,120, 181, 300, 600, 4, 40, },
+		{ 3, 12, 22, 4,180, 241, 400, 600, 4, 50, },
+		{ 4, 13, 23, 4,240, 301, 500, 600, 4, 40, },
+		{ 5, 14, 24, 4,300, 361, 600, 600, 4, 30, },
+	};
 	
-	CEnemy* Enemy = new CEnemy();
+	
+		
+	
+	
 	
 	
 

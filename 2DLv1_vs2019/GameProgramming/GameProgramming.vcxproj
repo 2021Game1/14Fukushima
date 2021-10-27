@@ -95,6 +95,7 @@
     <ClCompile Include="CSceneManager.cpp" />
     <ClCompile Include="CSceneScreen.cpp" />
     <ClCompile Include="CSceneTitle.cpp" />
+    <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="Update.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="CSceneManager.h" />
     <ClInclude Include="CSceneScreen.h" />
     <ClInclude Include="CSceneTitle.h" />
+    <ClInclude Include="CSound.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="Update.h" />
