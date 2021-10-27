@@ -10,10 +10,11 @@ extern
 class CEnemy : public CRectangle{
 public:
 
-	CENEMYDATA mEnemydata;
+	
+
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
-
+	
 	//CBullet EBullet[20];
 	
 	void Update();
@@ -22,7 +23,7 @@ public:
 	//36
 	void Collision(CRectangle* i, CRectangle* y);
 
-	CEnemy(CENEMYDATA ed);
+	CEnemy();
 	
 	
 	

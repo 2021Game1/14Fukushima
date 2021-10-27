@@ -34,6 +34,8 @@ public:
 	//更新処理のオーバーライド
 	void Update();
 
+	
+
 	EScene GetNextScene();
 	//デストラクタの宣言
 	~CSceneGame();

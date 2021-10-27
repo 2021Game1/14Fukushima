@@ -12,9 +12,9 @@
 int Time = 30 * 60;
 int Remain = 3;
 
-int CE=0;
 
-int CP;
+CENEMYDATA mType;
+
 
 
 void CSceneGame::Init() {
@@ -103,6 +103,7 @@ void CSceneGame::Init() {
 
 
 void CSceneGame::Update() {
+	
 	CENEMYDATA EData[5] =
 	{
 		{ 1, 10, 20, 4, 60, 121, 100, 600, 4, 30, },
@@ -110,6 +111,26 @@ void CSceneGame::Update() {
 		{ 3, 12, 22, 4,180, 241, 400, 600, 4, 50, },
 		{ 4, 13, 23, 4,240, 301, 500, 600, 4, 40, },
 		{ 5, 14, 24, 4,300, 361, 600, 600, 4, 30, },
+	};
+	for (int i = 0; i < 5; i++) {
+
+		if (!Enemy.mEnabled) {
+			if (EData[i].mEnemytime > 0) {
+				EData[i].mEnemytime--;
+			}
+			 new CEnemy();
+			if (EData[i].mBullettime > 0) {
+				EData[i].mBullettime--;
+			}
+			if (EData[i].mFirecount > 0) {
+				EData[i].mFirecount--;
+			}
+			Enemy.mEnabled = true;
+
+			break;
+		}
+		
+
 	};
 	
 	

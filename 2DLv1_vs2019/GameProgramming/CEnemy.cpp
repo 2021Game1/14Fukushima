@@ -8,11 +8,12 @@ extern CTexture Texture;
 
 
 //“G‚Ìƒf[ƒ^//
-CEnemy::CEnemy(CENEMYDATA ed) 
+CEnemy::CEnemy() 
 	: mFx(0), mFy(0)
 {
 	
-	mEnemydata = ed;
+
+	
 	{
 		
 		//37
@@ -58,7 +59,8 @@ void CEnemy::Update() {
 		}
 		
 	}
-		
+	
+	
 
 		/*
 		//“G’e”•ªŒJ‚è•Ô‚µ
