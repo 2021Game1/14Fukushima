@@ -6,6 +6,7 @@
 //CTriangleのインクルード
 #include"CTriangle.h"
 
+
 CModel::~CModel()
 {
 	for (int i = 0; i < mpMaterials.size(); i++)
@@ -138,7 +139,14 @@ void CModel::Load(char* obj, char* mtl) {
 				sscanf(str[1], "%d//%d", &v[0], &n[0]);
 				sscanf(str[2], "%d//%d", &v[1], &n[1]);
 				sscanf(str[3], "%d//%d", &v[2], &n[2]);
-				
+				//三角形作成
+				CTriangle t;
+				t.Vertex(vertex[v[0] - 1], vertex[v[1] - 1], vertex[v[2] - 1]);
+				t.Normal(normal[n[0] - 1], normal[n[1] - 1], normal[n[2] - 1]);
+				//マテリアル番号の設定
+				t.MaterialIdx(idx);
+				//可変長配列mTrianglesに三角形を追加
+				mTriangles.push_back(t);
 			}
 			else {
 				//テクスチャマッピング有り
@@ -177,6 +185,6 @@ void CModel::Render() {
 		//可変長配列に添え字でアクセスする
 		mTriangles[i].Render();
 		//マテリアルを無効
-		mpMaterials[mTriangles[i].mMaterialIdx]->Disabled();
+		mpMaterials[mTriangles[i].MaterialIdx()]->Disabled();
 	}
 }
