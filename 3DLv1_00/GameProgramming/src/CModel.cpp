@@ -65,12 +65,7 @@ void CModel::Load(char* obj, char* mtl) {
 		else if (strcmp(str[0],"map_Kd")==0){
 			mpMaterials[idx]->Texture()->Load(str[1]);
 		}
-		//先頭がvtの時、uvに追加する
-		else if (strcmp(str[0], "vt") == 0) {
-			//可変長配列uvに追加する
-			//atof(文字列)　文字列からfloat型の値を返す
-			uv.push_back(CVector(atof(str[1]), atof(str[2]), 0.0));
-		}
+	
 		//先頭がKdの時、Diffuseを設定する
 		else if (strcmp(str[0], "Kd") == 0) {
 			mpMaterials[idx]->Diffuse()[0] = atof(str[1]);
@@ -98,6 +93,7 @@ void CModel::Load(char* obj, char* mtl) {
 		printf("%s file open error\n", obj);
 		return;
 	}
+	
 	//ファイルから１行入力
 // fgets(入力エリア,エリアサイズ,ファイルポインタ)
 // ファイルの最後になるとNULLを返す
@@ -118,6 +114,12 @@ void CModel::Load(char* obj, char* mtl) {
 			//可変長配列vertexに追加する
 			//atof(文字列) 文字列からfloat型の値を返す
 			vertex.push_back(CVector(atof(str[1]), atof(str[2]), atof(str[3])));
+		}
+		//先頭がvtの時、uvに追加する
+		else if (strcmp(str[0], "vt") == 0) {
+			//可変長配列uvに追加する
+			//atof(文字列)　文字列からfloat型の値を返す
+			uv.push_back(CVector(atof(str[1]), atof(str[2]), 0.0));
 		}
 		//先頭がusemtlの時、マテリアルインデックスを取得する
 		else if (strcmp(str[0], "usemtl") == 0) {
@@ -165,12 +167,9 @@ void CModel::Load(char* obj, char* mtl) {
 				//可変長配列mTrianglesに三角形を追加
 				mTriangles.push_back(t);
 			}
-		
-			
-		}
 			//入力した値をコンソールに出力する
 			printf("%s", buf);
-		
+		}
 	}
 	//ファイルのクローズ
 	fclose(fp2);
