@@ -11,9 +11,6 @@ extern CTexture Texture;
 CEnemy::CEnemy() 
 	: mFx(0), mFy(0)
 {
-	
-
-	
 	{
 		
 		//37
@@ -30,9 +27,9 @@ CEnemy::CEnemy()
 
 
 void CEnemy::Update() {
-	
 	//mEnabled‚ªfalse‚È‚ç–ß‚é
 	if (!mEnabled)return;
+	
 	//—LŒø‚ÈŽž
 	if (mEnabled) {
 		//ˆÚ“®

@@ -5,18 +5,14 @@
 #include "CBullet.h"
 #include "CEnemyData.h"
 
-extern 
+ 
 
 class CEnemy : public CRectangle{
 public:
-
-	
-
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	
-	//CBullet EBullet[20];
-	
+
 	void Update();
 	bool Collision(const CRectangle& r);
 	void Render();
@@ -24,9 +20,7 @@ public:
 	void Collision(CRectangle* i, CRectangle* y);
 
 	CEnemy();
-	
-	
-	
+
 	
 	
 

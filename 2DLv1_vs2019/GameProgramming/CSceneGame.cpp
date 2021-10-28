@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "CSceneScreen.h"
 #include"CEnemyData.h"
+
 #define WIDTH 800.0 //画面幅
 
 #define HEIGHT 600.0 //画面高さ
@@ -12,10 +13,9 @@
 int Time = 30 * 60;
 int Remain = 3;
 
+int mEnemypoptime;
 
-CENEMYDATA mType;
-
-
+int EnemyTime = 2 * 60;
 
 void CSceneGame::Init() {
 	//シーンの設定
@@ -37,39 +37,40 @@ void CSceneGame::Init() {
 
 
 
+	int EnemyMap[6][8] =
+	{
+
+			{ 1,2,3,2,3,2,3,1},
+			{ 1,0,0,0,0,0,0,1},
+			{ 1,0,0,0,0,0,0,1},
+			{ 1,0,0,0,0,0,0,1},
+			{ 1,0,0,0,0,0,0,1},
+			{ 1,1,1,1,1,1,1,1},
+	};
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (EnemyMap[j][i] == 2) {
+				CEnemy* Enemy = new CEnemy();
+				Enemy->x = i * 100 - 350;
+				Enemy->y = j * -100 + 250;
+				//横へ移動
+				Enemy->mFx = 0;
+				Enemy->mFy = -1;
+				Enemy->mEnabled = true;
+				Enemy->mTag = CRectangle::EENEMY;
+				
+			}
+		}
+	}
 
 
 
 	//37
-		/*
 
-		int map[7][8] =
-		{
-			{ 1, 2, 0, 2, 0, 2, 0, 1,},
-			{ 1, 0, 0, 0, 0, 0, 0, 1,},
-			{ 1, 0, 0, 0, 0, 0, 0, 1,},
-			{ 1, 0, 0, 0, 0, 0, 0, 1,},
-			{ 1, 0, 0, 0, 0, 0, 0, 1,},
-			{ 1, 0, 0, 0, 0, 0, 0, 1,},
-			{ 1, 1, 1, 1, 1, 1, 1, 1,},
-		};
-		//37	MapSize = 0;	//0を代入する
-		for (int j = 0; j < 7; j++) {
-			for (int i = 0; i < 8; i++) {
-				//mapの要素が1の時、四角形配置
-				if (map[j][i] == 1) {
-					//37
-					CMap* Map = new CMap();
-					//四角形に値を設定
-					Map->mEnabled = true;
-					Map->x = i * 100 - 350;
-					Map->y = j * -100 + 250;
-					Map->w = 50;
-					Map->h = 50;
-					//37
-				}
-			}
-		*/
+
+
+
+
 
 	CPlayer* Player = new CPlayer();
 	Player->x = 0;
@@ -78,9 +79,8 @@ void CSceneGame::Init() {
 	Player->h = 25;
 	Player->mEnabled = true;
 
-	
-		
-		
+
+
 
 
 	/*37
@@ -102,36 +102,15 @@ void CSceneGame::Init() {
 
 
 
+
 void CSceneGame::Update() {
 	
-	CENEMYDATA EData[5] =
-	{
-		{ 1, 10, 20, 4, 60, 121, 100, 600, 4, 30, },
-		{ 2, 11, 21, 4,120, 181, 300, 600, 4, 40, },
-		{ 3, 12, 22, 4,180, 241, 400, 600, 4, 50, },
-		{ 4, 13, 23, 4,240, 301, 500, 600, 4, 40, },
-		{ 5, 14, 24, 4,300, 361, 600, 600, 4, 30, },
-	};
-	for (int i = 0; i < 5; i++) {
+	
 
-		if (!Enemy.mEnabled) {
-			if (EData[i].mEnemytime > 0) {
-				EData[i].mEnemytime--;
-			}
-			 new CEnemy();
-			if (EData[i].mBullettime > 0) {
-				EData[i].mBullettime--;
-			}
-			if (EData[i].mFirecount > 0) {
-				EData[i].mFirecount--;
-			}
-			Enemy.mEnabled = true;
+	
+	
 
-			break;
-		}
-		
-
-	};
+	
 	
 	
 		

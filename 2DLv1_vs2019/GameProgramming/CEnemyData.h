@@ -3,6 +3,7 @@
 
 struct CENEMYDATA
 {
+	//CBullet EBullet[20];
 	int mType;//敵の種類
 	int mSype;//敵の弾の種類
 	int mPattern;//敵の行動パターン
