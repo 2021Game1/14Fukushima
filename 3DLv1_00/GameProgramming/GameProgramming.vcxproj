@@ -23,10 +23,12 @@
     <ClCompile Include="src\CVector.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Update.cpp" />
+    <ClCompile Include="src\CMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CKey.h" />
     <ClInclude Include="src\CMaterial.h" />
+    <ClInclude Include="src\CMatrix.h" />
     <ClInclude Include="src\CModel.h" />
     <ClInclude Include="src\CScene.h" />
     <ClInclude Include="src\CSceneGame.h" />

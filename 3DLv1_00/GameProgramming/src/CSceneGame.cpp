@@ -7,6 +7,8 @@
 #include"CTriangle.h"
 //4.2
 #include"CKey.h"
+//課題11
+#include"CMatrix.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
@@ -14,10 +16,13 @@
 CVector mEye;
 //背景モデルデータの指定
 
-
+//課題11
+CMatrix matrix;
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
+	//課題11
+	matrix.Print();
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
 	mBackGround.Load(MODEL_BACKGROUND);
