@@ -14,13 +14,17 @@ CBullet::CBullet()
 
 //XVˆ—
 void CBullet::Update() {
+	if (CBullet::x >= 400 || CBullet::x <= -400 ||
+		CBullet::y >= 300 || CBullet::y <= -300) {
+		mEnabled = false;
+	}
 	//—LŒø‚ÈŽž
 	if (mEnabled) {
 		//ˆÚ“®
 		x += mFx;
 		y += mFy;
-		if (x > 400 || x < -400 || y > 300 || y < -300)
-			mEnabled = false;
+
+
 	}
 }
 

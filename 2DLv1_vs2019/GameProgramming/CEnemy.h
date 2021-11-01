@@ -9,10 +9,11 @@
 
 class CEnemy : public CRectangle{
 public:
+
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
+	int mFireCount;
 	
-
 	void Update();
 	bool Collision(const CRectangle& r);
 	void Render();

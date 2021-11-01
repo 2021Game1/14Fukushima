@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "CSceneScreen.h"
 #include"CEnemyData.h"
+#include<time.h>
 
 #define WIDTH 800.0 //画面幅
 
@@ -13,55 +14,109 @@
 int Time = 30 * 60;
 int Remain = 3;
 
-int mEnemypoptime;
 
-int EnemyTime = 2 * 60;
+
+
+
+
 
 void CSceneGame::Init() {
 	//シーンの設定
 	mScene = EGAME;
 
+	
 	//クラスのメンバ変数への代入
 //37
-	CSceneScreen* Screen = new CSceneScreen();
-	Screen->x = 0;
-	Screen->y = 250;
-	Screen->speed = SCROLL_SPEED;
-	Screen->mEnabled = true;
+	
 
-	CSceneScreen* Screen2 = new CSceneScreen();
-	Screen2->x = 0;
-	Screen2->y = 1700;
-	Screen2->speed = SCROLL_SPEED;
-	Screen2->mEnabled = true;
-
-
-
+	
+	/*
 	int EnemyMap[6][8] =
 	{
 
-			{ 1,2,3,2,3,2,3,1},
+			{ 1,2,3,4,2,4,3,1},
 			{ 1,0,0,0,0,0,0,1},
 			{ 1,0,0,0,0,0,0,1},
 			{ 1,0,0,0,0,0,0,1},
 			{ 1,0,0,0,0,0,0,1},
 			{ 1,1,1,1,1,1,1,1},
 	};
-	for (int i = 0; i < 8; i++) {
+	
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 8; j++) {
+			CSceneScreen* Screen = new CSceneScreen();
+			Screen->x = 0;
+			Screen->y = 250;
+			Screen->speed = SCROLL_SPEED;
+			Screen->mEnabled = true;
+
+			CSceneScreen* Screen2 = new CSceneScreen();
+			Screen2->x = 0;
+			Screen2->y = 1700;
+			Screen2->speed = SCROLL_SPEED;
+			Screen2->mEnabled = true;
+		}
+	}
+			/*敵のデータ*/
+	/*
+	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < 8; j++) {
 			if (EnemyMap[j][i] == 2) {
 				CEnemy* Enemy = new CEnemy();
 				Enemy->x = i * 100 - 350;
 				Enemy->y = j * -100 + 250;
+				Enemy->w = 25;
+				Enemy->h = 25;
 				//横へ移動
 				Enemy->mFx = 0;
 				Enemy->mFy = -1;
 				Enemy->mEnabled = true;
 				Enemy->mTag = CRectangle::EENEMY;
-				
+				break;
 			}
 		}
 	}
+
+			for (int i = 0; i < 6; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (EnemyMap[j][i] == 3) {
+						CEnemy* Enemy2 = new CEnemy();
+						Enemy2->x = i * 100 - 350;
+						Enemy2->y = j * -100 + 250;
+						Enemy2->w = 25;
+						Enemy2->h = 25;
+						//横へ移動
+						Enemy2->mFx = 0;
+						Enemy2->mFy = -1;
+						Enemy2->mEnabled = true;
+						Enemy2->mTag = CRectangle::EENEMY;
+						break;
+					}
+				}
+			}
+			for (int i = 0; i < 6; i++) {
+				for (int j = 0; j < 8; j++) {
+					if (EnemyMap[j][i] == 4) {
+						CEnemy* Enemy3 = new CEnemy();
+						Enemy3->x = i * 100 - 350;
+						Enemy3->y = j * -100 + 250;
+						Enemy3->w = 25;
+						Enemy3->h = 25;
+						//横へ移動
+						Enemy3->mFx = 0;
+						Enemy3->mFy = -1;
+						Enemy3->mEnabled = true;
+						Enemy3->mTag = CRectangle::EENEMY;
+						break;
+					}
+				}
+			}
+	*/
+
+	
+
+
+	
 
 
 
@@ -104,6 +159,9 @@ void CSceneGame::Init() {
 
 
 void CSceneGame::Update() {
+
+	
+
 	
 	
 
@@ -198,6 +256,7 @@ void CSceneGame::Update() {
 	sprintf(buf, "%d", Remain);
 	CText::DrawString(buf, 150 + 32 * 7, -250, 16, 16);
 */
+
 }
 
 

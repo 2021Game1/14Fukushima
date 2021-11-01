@@ -15,14 +15,11 @@ CEnemy::CEnemy()
 		
 		//37
 	//	mEnabled = true;
-
+		
 		mTag = EENEMY;
-		w = 25;
-		h = 25;
+	
 	}
 }
-
-
 
 
 
@@ -30,32 +27,42 @@ void CEnemy::Update() {
 	//mEnabledがfalseなら戻る
 	if (!mEnabled)return;
 	
+	
+
 	//有効な時
 	if (mEnabled) {
 		//移動
 		x += mFx * 1;
 		y += mFy * 1;
 	}
+	//60フレームに1回発射
+	if (mFireCount > 0) {
+		mFireCount--;
+	}
+
 	
+
 	//37e
 	/**/
+
 	else {
 		//弾を４発四方へ発射する
-		for (int i = 0; i < 20; i++) {
-				CBullet* EBullet = new CBullet();
-					//座標設定
-					EBullet->x = x;
-					EBullet->y = y;
-					//移動量設定
-					EBullet->mFx = (i - 2) % 2 * 2;
-					EBullet->mFy = (i - 1) % 2 * 2;
-					//有効にする
-					EBullet->mEnabled = true;
-					EBullet->mTag = EENEMYBULLET;
-					break;	
+		for (int i = 0; i < 4; i++) {
+			CBullet* EBullet = new CBullet();
+			//座標設定
+			EBullet->x = x;
+			EBullet->y = y;
+			//移動量設定
+			EBullet->mFx = (i - 2) % 2 * 2;
+			EBullet->mFy = (i - 1) % 2 * 2;
+			//有効にする
+			EBullet->mEnabled = true;
+			EBullet->mTag = EENEMYBULLET;
 		}
-		
+		mFireCount = 60;
 	}
+
+	
 	
 	
 
