@@ -1,7 +1,7 @@
 #include "CEnemy.h"
 #include "CTexture.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
-#include "CEnemyData.h"
+#include "CSceneGame.h"
 extern CTexture Texture;
 
 //CBullet CEnemy::EBullet[20];
@@ -17,7 +17,7 @@ CEnemy::CEnemy()
 	//	mEnabled = true;
 		
 		mTag = EENEMY;
-	
+		
 	}
 }
 
@@ -32,7 +32,7 @@ void CEnemy::Update() {
 	//有効な時
 	if (mEnabled) {
 		//移動
-		x += mFx * 1;
+		x += mFx * 0;
 		y += mFy * 1;
 	}
 	//60フレームに1回発射
@@ -147,6 +147,7 @@ bool CEnemy::Collision(const CRectangle &r) {
 		case EPLAYER:
 			mEnabled = false;
 			break;
+		CSceneGame::GameTime = CSceneGame::GameTime + 1;
 		}
 		return true;
 	}

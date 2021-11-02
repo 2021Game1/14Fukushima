@@ -34,7 +34,7 @@ public:
 	//更新処理のオーバーライド
 	void Update();
 
-	
+	static int GameTime;
 
 	EScene GetNextScene();
 	//デストラクタの宣言
