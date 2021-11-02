@@ -16,16 +16,16 @@
 CVector mEye;
 //背景モデルデータの指定
 
-//課題11
-CMatrix matrix;
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
-	//課題11
-	matrix.Print();
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
 	mBackGround.Load(MODEL_BACKGROUND);
+	//課題11
+	CMatrix matrix;
+	//課題11
+	matrix.Print();
 }
 
 void CSceneGame::Update() {

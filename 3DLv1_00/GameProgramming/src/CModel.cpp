@@ -7,13 +7,7 @@
 #include"CTriangle.h"
 
 
-CModel::~CModel()
-{
-	for (int i = 0; i < mpMaterials.size(); i++)
-	{
-		delete mpMaterials[i];
-	}
-}
+
 //モデルファイルの入力
 //Load(モデルファイル名,マテリアルファイル名)
 void CModel::Load(char* obj, char* mtl) {
@@ -25,9 +19,6 @@ void CModel::Load(char* obj, char* mtl) {
 	std::vector<CVector>uv;
 	//ファイルポインタ変数の作成
 	FILE* fp;
-	//ファイルポインタ変数の作成
-	FILE* fp2;
-	//ファイルのオープン
 	//fopen(ファイル名,モード)
 	//オープン出来ない時はNULLを返す
 	fp = fopen(mtl, "r");
@@ -61,10 +52,7 @@ void CModel::Load(char* obj, char* mtl) {
 			//配列の長さを取得
 			idx = mpMaterials.size() - 1;
 		}
-		//先頭がmap_Kdの時、テクスチャを入力する
-		else if (strcmp(str[0],"map_Kd")==0){
-			mpMaterials[idx]->Texture()->Load(str[1]);
-		}
+	
 	
 		//先頭がKdの時、Diffuseを設定する
 		else if (strcmp(str[0], "Kd") == 0) {
@@ -76,33 +64,44 @@ void CModel::Load(char* obj, char* mtl) {
 		else if (strcmp(str[0], "d") == 0) {
 			mpMaterials[idx]->Diffuse()[3] = atof(str[1]);
 		}
-		//入力した値をコンソールに出力する
-		printf("%s", buf);
+		//先頭がmap_Kdの時、テクスチャを入力する
+		else if (strcmp(str[0], "map_Kd") == 0) {
+			mpMaterials[idx]->Texture()->Load(str[1]);
+		}
 	}
-		//ファイルのクローズ
-		fclose(fp);
+	//ファイルのクローズ
+	fclose(fp);
 	
 	//ファイルのオープン
 	//fopen(ファイル名,モード)
 	//オープン出来ない時はNULLを返す
-	fp2 = fopen(obj, "r");
+	fp = fopen(obj, "r");
 	//ファイルオープンのエラーの判定
 	//fpがNULLの時はエラー
-	if (fp2 == NULL) {
+	if (fp == NULL) {
 		//コンソールにエラーを出力して戻る
 		printf("%s file open error\n", obj);
 		return;
 	}
-	
 	//ファイルから１行入力
 // fgets(入力エリア,エリアサイズ,ファイルポインタ)
 // ファイルの最後になるとNULLを返す
-	while (fgets(buf, sizeof(buf), fp2) != NULL) {
+	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		//データを分割する
 		char str[4][64] = { "","","","" };
 		//文字列からデータを４つ変数へ代入する
 		// sscanf(文字列,変換指定子,変数)
 		sscanf(buf, "%s %s %s %s", str[0], str[1], str[2], str[3]);
+		//先頭がnewmtlの時、マテリアルを追加する
+		if (strcmp(str[0], "newmtl") == 0) {
+			CMaterial* pm = new CMaterial();
+			//マテリアル名の設定
+			pm->Name(str[1]);
+			//マテリアルの可変長配列に追加
+			mpMaterials.push_back(pm);
+			//配列の長さを取得
+			idx = mpMaterials.size() - 1;
+		}
 		//文字列の比較
 		//strcmp(文字列１,文字列２)
 		//文字列１と文字列２が同じとき0,異なる時０以外を返す
@@ -167,12 +166,10 @@ void CModel::Load(char* obj, char* mtl) {
 				//可変長配列mTrianglesに三角形を追加
 				mTriangles.push_back(t);
 			}
-			//入力した値をコンソールに出力する
-			printf("%s", buf);
 		}
 	}
 	//ファイルのクローズ
-	fclose(fp2);
+	fclose(fp);
 
 }
 //描画
@@ -185,5 +182,12 @@ void CModel::Render() {
 		mTriangles[i].Render();
 		//マテリアルを無効
 		mpMaterials[mTriangles[i].MaterialIdx()]->Disabled();
+	}
+}
+CModel::~CModel()
+{
+	for (int i = 0; i < mpMaterials.size(); i++)
+	{
+		delete mpMaterials[i];
 	}
 }

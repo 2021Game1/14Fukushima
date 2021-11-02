@@ -19,6 +19,9 @@ void CMatrix::Print() {
 }
 //’PˆÊs—ñ‚Ìì¬
 CMatrix CMatrix::Identity() {
+
 	//‚±‚Ìs—ñ‚ğ•Ô‚·
 	return *this;
 }
+	
+
