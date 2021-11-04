@@ -173,7 +173,7 @@ void CModel::Load(char* obj, char* mtl) {
 
 }
 //描画
-void CModel::Render() {
+void CModel::Render(const CMatrix&m) {
 	//可変長配列の要素数だけ繰り返し
 	for (int i = 0; i < mTriangles.size(); i++){
 		//マテリアルの適用

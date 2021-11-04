@@ -17,7 +17,7 @@ CEnemy::CEnemy()
 	//	mEnabled = true;
 		
 		mTag = EENEMY;
-		
+	
 	}
 }
 

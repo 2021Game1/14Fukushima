@@ -67,8 +67,6 @@ void CSceneGame::Init() {
 		//“G‚ÌÀ•W‚ğ‰Šú‰»‚·‚é
 		if (!Enemy[i].mEnabled) {
 			//“G‚É’l‚ğİ’è
-			Enemy[i].x = 0;
-			Enemy[i].y = 0;
 			Enemy[i].w = 50;
 			Enemy[i].h = 50;
 			//‰º‚ÖˆÚ“®
@@ -133,6 +131,7 @@ void CSceneGame::Update() {
 			val = rand() % 501-250;
 			Enemy[i].x = val;
 			Enemy[i].y = 250;
+			//“G‚É’l‚ğİ’è
 			//—LŒø‚É‚·‚é
 			Enemy[i].mEnabled = true;
 			if (i>=10)
@@ -140,7 +139,7 @@ void CSceneGame::Update() {
 				i = 0;
 			}
 		}
-		if (Enemy[i].y>500)
+		if (Enemy[i].mFy>500)
 		{
 			//“G‚Ìƒtƒ‰ƒO‚ğfalse‚É
 			Enemy[i].mEnabled = false;
