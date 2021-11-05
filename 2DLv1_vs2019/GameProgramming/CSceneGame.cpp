@@ -17,9 +17,10 @@ int Remain = 3;
 
 int val;
 
-CEnemy Enemy[10];
+
 
 int CSceneGame::GameTime;
+
 
 
 
@@ -44,42 +45,12 @@ void CSceneGame::Init() {
 	
 
 	
-	/*
-	int EnemyMap[6][8] =
-	{
 
-			{ 1,2,3,4,2,4,3,1},
-			{ 1,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,1},
-			{ 1,1,1,1,1,1,1,1},
-	};
 	
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 8; j++) {
-		
-		}
-	}
-	*/
 	
-	for (int i = 0; i < 10; i = i + 1){
-		//敵の座標を初期化する
-		if (!Enemy[i].mEnabled) {
-			//敵に値を設定
-			Enemy[i].w = 50;
-			Enemy[i].h = 50;
-			//下へ移動
-			Enemy[i].mFx = 0;
-			Enemy[i].mFy = -1;
-			//有効にする
-			Enemy[i].mEnabled = true;
-			GameTime = 0;
-		}
-			break;
-	}
-
-
+	
+	
+	
 	
 
 
@@ -91,16 +62,16 @@ void CSceneGame::Init() {
 
 
 
+	
+
+	
+
 	CPlayer* Player = new CPlayer();
 	Player->x = 0;
 	Player->y = -255;
 	Player->w = 25;
 	Player->h = 25;
 	Player->mEnabled = true;
-
-
-
-
 
 	/*37
 	for (int k = 0; k < 10; k++) {
@@ -123,29 +94,29 @@ void CSceneGame::Init() {
 
 
 void CSceneGame::Update() {
-	for (int i = 0; i < 10; i = i + 1) {
-		if (GameTime % 360 == 0)
+
+	for (int k = 0; k < 5; k = k + 1) {
+		if (GameTime % 480 == 0)
 		{
 			/*srand(time(NULL));*/
 			//乱数値=rand()%乱数値の要素数+乱数値の最小値
-			val = rand() % 501-250;
-			Enemy[i].x = val;
-			Enemy[i].y = 250;
+			val = rand() % 501 - 250;
+			CEnemy* Enemy = new CEnemy();
+			Enemy->x = val;
+			Enemy->y = 250;
+			Enemy->mFy = -1;
 			//敵に値を設定
 			//有効にする
-			Enemy[i].mEnabled = true;
-			if (i>=10)
+			Enemy->mEnabled = true;
+			if (Enemy->y < 0)
 			{
-				i = 0;
+				//敵のフラグをfalseに
+				Enemy->mEnabled = false;
 			}
 		}
-		if (Enemy[i].mFy>500)
-		{
-			//敵のフラグをfalseに
-			Enemy[i].mEnabled = false;
-		}
 	}
-
+	//時間を加算する
+	GameTime = GameTime + 1;
 	
 	
 
@@ -198,9 +169,11 @@ void CSceneGame::Update() {
 		}
 		else {
 			//falseのインスタンスを削除
-			delete *itr;
+//			delete *itr;
 			//リストからも削除
-			itr = VectorRect.erase(itr);
+//			itr = VectorRect.erase(itr);
+						//次へ
+			itr++;
 		}
 	}
 

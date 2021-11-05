@@ -12,12 +12,13 @@ CEnemy::CEnemy()
 	: mFx(0), mFy(0)
 {
 	{
-		
+	
+		w = 25;
+		h = 25;
 		//37
 	//	mEnabled = true;
+		mTag = CRectangle::EENEMY;
 		
-		mTag = EENEMY;
-	
 	}
 }
 
@@ -53,8 +54,8 @@ void CEnemy::Update() {
 			EBullet->x = x;
 			EBullet->y = y;
 			//ˆÚ“®—ÊÝ’è
-			EBullet->mFx = (i - 2) % 2 * 2;
-			EBullet->mFy = (i - 1) % 2 * 2;
+			EBullet->mFx = (i - 2) -1;
+			EBullet->mFy = (i - 1) -8;
 			//—LŒø‚É‚·‚é
 			EBullet->mEnabled = true;
 			EBullet->mTag = EENEMYBULLET;
@@ -157,7 +158,6 @@ bool CEnemy::Collision(const CRectangle &r) {
 void CEnemy::Render() {
 		if (mEnabled) {
 			CRectangle::Render(Texture, 146 - 16, 146 + 16, 178 + 16, 178 - 16);
-
 		}
 	
 }

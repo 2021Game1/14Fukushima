@@ -13,7 +13,11 @@ public:
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	int mFireCount;
+
+	int val;
 	
+	
+
 	
 	void Update();
 	bool Collision(const CRectangle& r);

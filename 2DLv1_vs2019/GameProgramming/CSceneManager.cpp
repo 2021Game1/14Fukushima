@@ -11,7 +11,7 @@ CSceneManager::~CSceneManager() {
 	//シーンがあれば削除
 	if (mpScene)
 		//シーンの削除
-		delete mpScene;
+	//	delete mpScene;
 	mpScene = 0;
 }
 //初期化処理
