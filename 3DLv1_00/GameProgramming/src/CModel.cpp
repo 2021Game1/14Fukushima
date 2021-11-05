@@ -179,7 +179,7 @@ void CModel::Render(const CMatrix&m) {
 		//マテリアルの適用
 		mpMaterials[mTriangles[i].MaterialIdx()]->Enabled();
 		//可変長配列に添え字でアクセスする
-		mTriangles[i].Render();
+		mTriangles[i].Render(m);
 		//マテリアルを無効
 		mpMaterials[mTriangles[i].MaterialIdx()]->Disabled();
 	}

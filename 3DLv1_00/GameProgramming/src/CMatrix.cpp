@@ -36,9 +36,9 @@ CMatrix CMatrix::Scale(float sx, float sy, float sz) {
 	return *this;
 }
 //2次元配列mMのr行c列の値を返します
-int M(int r, int c)
+float CMatrix::M(int r, int c)const
 {
 	//この行列を返す
-	return;
-}
+	return mM[r][c];
+};
 
