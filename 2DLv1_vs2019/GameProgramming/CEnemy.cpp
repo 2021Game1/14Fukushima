@@ -2,6 +2,7 @@
 #include "CTexture.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 #include "CSceneGame.h"
+#include "CPlayer.h"
 extern CTexture Texture;
 
 //CBullet CEnemy::EBullet[20];
@@ -25,10 +26,17 @@ CEnemy::CEnemy()
 
 
 void CEnemy::Update() {
+	
+	
 	//mEnabledがfalseなら戻る
 	if (!mEnabled)return;
-	
-	
+
+	if (y < -280)
+	{
+		//敵のフラグをfalseに
+		mEnabled = false;
+	}
+
 
 	//有効な時
 	if (mEnabled) {
@@ -41,27 +49,39 @@ void CEnemy::Update() {
 		mFireCount--;
 	}
 
-	
+
 
 	//37e
 	/**/
 
 	else {
 		//弾を４発四方へ発射する
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 2; i++) {
 			CBullet* EBullet = new CBullet();
 			//座標設定
 			EBullet->x = x;
 			EBullet->y = y;
 			//移動量設定
-			EBullet->mFx = (i - 2) -1;
-			EBullet->mFy = (i - 1) -8;
+			if (CEnemy::x < CPlayer::spInstance->x) {
+				EBullet->mFx = +1;
+				EBullet->mFy = -3 * ((i / 2) + 1);
+			}
+			if (CEnemy::x > CPlayer::spInstance->x){
+				EBullet->mFx = -1;
+				EBullet->mFy = -3 * ((i / 2) + 1);
+			}
+			/*
+			EBullet->mFx = ((i / 2) + 1) * (2 * (i % 2) -1);
+			EBullet->mFy = -2 * ((i / 2) + 1);
+			*/
 			//有効にする
 			EBullet->mEnabled = true;
 			EBullet->mTag = EENEMYBULLET;
 		}
-		mFireCount = 60;
+		mFireCount = 40;
+
 	}
+}
 
 	
 	
@@ -124,7 +144,6 @@ void CEnemy::Update() {
 		}
 		*/
 	
-}
 	
 
 /*

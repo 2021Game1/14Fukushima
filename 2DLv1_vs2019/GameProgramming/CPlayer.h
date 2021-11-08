@@ -5,6 +5,7 @@
 
 class CPlayer : public CRectangle {
 public:
+	static CPlayer* spInstance;
 	int mFx, mFy;
 	int FireCount;
 	CPlayer();

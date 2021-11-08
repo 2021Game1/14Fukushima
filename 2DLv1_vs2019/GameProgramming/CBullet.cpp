@@ -15,7 +15,7 @@ CBullet::CBullet()
 //XVˆ—
 void CBullet::Update() {
 	if (CBullet::x >= 400 || CBullet::x <= -400 ||
-		CBullet::y >= 300 || CBullet::y <= -300) {
+		CBullet::y >= 280 || CBullet::y <= -280) {
 		mEnabled = false;
 	}
 	//—LŒø‚ÈŽž

@@ -5,6 +5,7 @@
 #include "CPlayerDate.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
+CPlayer* CPlayer::spInstance = nullptr;
 
 
 CPlayer::CPlayer()
@@ -12,8 +13,7 @@ CPlayer::CPlayer()
 , FireCount(0)
 {
 	mTag = EPLAYER;
-
-	
+	spInstance = this;
 	
 }
 

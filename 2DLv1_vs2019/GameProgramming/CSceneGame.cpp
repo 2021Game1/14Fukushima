@@ -95,8 +95,8 @@ void CSceneGame::Init() {
 
 void CSceneGame::Update() {
 
-	for (int k = 0; k < 5; k = k + 1) {
-		if (GameTime % 480 == 0)
+	for (int k = 0; k < 3; k = k + 1) {
+		if (GameTime % 460 == 0)
 		{
 			/*srand(time(NULL));*/
 			//乱数値=rand()%乱数値の要素数+乱数値の最小値
@@ -108,16 +108,29 @@ void CSceneGame::Update() {
 			//敵に値を設定
 			//有効にする
 			Enemy->mEnabled = true;
-			if (Enemy->y < 0)
-			{
-				//敵のフラグをfalseに
-				Enemy->mEnabled = false;
-			}
+		
 		}
 	}
 	//時間を加算する
 	GameTime = GameTime + 1;
-	
+	for (int k = 0; k < 3; k = k + 1) {
+		if (GameTime % 360 == 0)
+		{
+			/*srand(time(NULL));*/
+			//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			val = rand() % 501 - 250;
+			CEnemy* Enemy2 = new CEnemy();
+			Enemy2->x = val;
+			Enemy2->y = 250;
+			Enemy2->mFy = -2;
+			//敵に値を設定
+			//有効にする
+			Enemy2->mEnabled = true;
+
+		}
+	}
+	//時間を加算する
+	GameTime = GameTime + 1;
 	
 
 	
@@ -169,11 +182,11 @@ void CSceneGame::Update() {
 		}
 		else {
 			//falseのインスタンスを削除
-//			delete *itr;
+			delete *itr;
 			//リストからも削除
-//			itr = VectorRect.erase(itr);
+			itr = VectorRect.erase(itr);
 						//次へ
-			itr++;
+			
 		}
 	}
 
