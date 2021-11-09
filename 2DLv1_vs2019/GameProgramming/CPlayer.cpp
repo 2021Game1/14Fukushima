@@ -75,24 +75,35 @@ void CPlayer::Update() {
 }
 
 void CPlayer::Render() {
-	CRectangle::Render(Texture, 146 - 16, 146 + 16, 146 + 16, 146 - 16);
+	CRectangle::Render(Texture, 65, 115, 85, 25);
 }
 
 //36
-void CPlayer::Collision(CRectangle *ri, CRectangle *ry) {
-	if (ry->mTag == EBLOCK) {
-		int mx, my;
-		if (CRectangle::Collision(ry, &mx, &my)) {
-			//abs(x) x‚Ìâ‘Î’l‚ğ‹‚ß‚é
-			//ˆÚ“®—Ê‚ª­‚È‚¢•ûŒü‚¾‚¯ˆÚ“®‚³‚¹‚é
-			if (abs(mx) < abs(my)) {
-				//Rect‚ğx‚¾‚¯ˆÚ“®‚·‚é
-				x += mx;
+void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
+	if ((*ry).mTag == EBLOCK) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			int mx, my;
+			if (CRectangle::Collision(ry, &mx, &my)) {
+				//abs(x)x‚Ìâ‘Î’l‚ğ‹‚ß‚é
+				//ˆÚ“®—Ê‚ª­‚È‚¢•ûŒü‚¾‚¯ˆÚ“®‚³‚¹‚é
+				if (abs(mx) < abs(my)) {
+					//Rect‚ğX‚¾‚¯ˆÚ“®‚·‚é
+					x += mx;
+				}
+				else {
+					//Rect‚ğy‚¾‚¯ˆÚ“®‚·‚é
+					y += my;
+				}
 			}
-			else {
-				//Rect‚ğy‚¾‚¯ˆÚ“®‚·‚é
-				y += my;
+		}
+	}
+	if ((*ry).mTag == EENEMYBULLET) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				(*ry).mEnabled = false;
+				CSceneGame::Remain -= 1;
 			}
 		}
 	}
 }
+

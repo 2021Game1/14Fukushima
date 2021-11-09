@@ -36,6 +36,22 @@ public:
 
 	static int GameTime;
 
+	static int EnemyPattern;
+
+	static int Remain;
+
+	//残り時間（30秒）
+	static int Time;
+	//スコア
+	static int ScoreCount;
+	//ゲームクリア
+	static int CLEAR;
+	//ゲームオーバー
+	static int OVER;
+
+	//整数を文字列に変換する
+	static char buf[10];//9文字までOK
+
 	EScene GetNextScene();
 	//デストラクタの宣言
 	~CSceneGame();

@@ -13,6 +13,17 @@
 
 
 int Remain = 3;
+//残り時間（30秒）
+int CSceneGame::Time = 30 * 60;
+
+int CSceneGame::Remain = 3;
+
+int CSceneGame::CLEAR = 0;
+
+int CSceneGame::OVER = 0;
+
+char CSceneGame::buf[10];
+
 //時間を表す変数
 
 int val;
@@ -21,8 +32,9 @@ int val;
 
 int CSceneGame::GameTime;
 
+int CSceneGame::EnemyPattern;
 
-
+int EnemyPattern = 0;
 
 void CSceneGame::Init() {
 	//シーンの設定
@@ -96,7 +108,7 @@ void CSceneGame::Init() {
 void CSceneGame::Update() {
 
 	for (int k = 0; k < 3; k = k + 1) {
-		if (GameTime % 460 == 0)
+		if (GameTime % 260 == 0)
 		{
 			/*srand(time(NULL));*/
 			//乱数値=rand()%乱数値の要素数+乱数値の最小値
@@ -108,16 +120,15 @@ void CSceneGame::Update() {
 			//敵に値を設定
 			//有効にする
 			Enemy->mEnabled = true;
-		
+
+
 		}
 	}
-	//時間を加算する
-	GameTime = GameTime + 1;
-	for (int k = 0; k < 3; k = k + 1) {
+	for (int k = 0; k < 2; k = k + 1) {
 		if (GameTime % 360 == 0)
 		{
 			/*srand(time(NULL));*/
-			//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			//乱数値=rand()%乱数値の要素数-乱数値の最小値
 			val = rand() % 501 - 250;
 			CEnemy* Enemy2 = new CEnemy();
 			Enemy2->x = val;
@@ -129,6 +140,7 @@ void CSceneGame::Update() {
 
 		}
 	}
+
 	//時間を加算する
 	GameTime = GameTime + 1;
 	
@@ -189,16 +201,45 @@ void CSceneGame::Update() {
 			
 		}
 	}
-
+	if (Time > 0) {
+		Time--;
+	}
 	
 
 	for (int i = 0; i < VectorRect.size(); i++) {
 		//描画処理
 		VectorRect[i]->Render();
 	}
-
+	if (CSceneGame::Remain < 0) {
+		CSceneGame::Remain = 0;
+	}
+	CText::DrawString("Score", -350, 250, 16, 16);
+	sprintf(buf, "%d", ScoreCount);
+	CText::DrawString(buf, -350 + 32 * 5.5, 250, 16, 16);
 	
-	
+	if (Time == 0 || Remain == 0) {
+		CText::DrawString("GAME OVER!", -300, 0, 32, 32);
+		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
+		if (CKey::Once(VK_RETURN)) {
+			Remain = 3;
+			ScoreCount = 0;
+			Time = 30 * 60;
+			CLEAR = 0;
+			OVER = 0;
+			mScene = ETITLE;
+		}
+	}
+	if (Time == 0 && Remain != 0) {
+		CText::DrawString("GAME CLEAR!", -300, 0, 32, 32);
+		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
+		if (CKey::Once(VK_RETURN)) {
+			Remain = 3;
+			Time = 30 * 60;
+			CLEAR += 1;
+			OVER += 1;
+			mScene = ETITLE;
+		}
+	}
 /*
 	CText::DrawChar('S', -350, 250, 16, 16);
 	CText::DrawChar('c', -350 + 32, 250, 16, 16);

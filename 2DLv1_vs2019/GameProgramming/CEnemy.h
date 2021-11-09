@@ -13,12 +13,8 @@ public:
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	int mFireCount;
-
 	int val;
-	
-
-
-	
+	static CEnemy* spInstance;
 	void Update();
 	bool Collision(const CRectangle& r);
 	void Render();

@@ -10,6 +10,7 @@
 // テクスチャクラスのインクルード
 #include "CTexture.h"
 CTexture Texture; //マップの画像
+CTexture BulletTexture; //弾の画像
 
 //シーンマネージャのインスタンス
 CSceneManager SceneManager;
@@ -18,7 +19,8 @@ CSceneManager SceneManager;
 //最初に一度だけ呼ばれる関数
 void Init() {
 	//
-	Texture.Load("Image.tga");
+	Texture.Load("GameImage.tga");
+	BulletTexture.Load("BulletImage.tga");
 	//文字画像の読み込み
 	CText::mFont.Load("font.tga");
 	//シーンマネージャの初期化

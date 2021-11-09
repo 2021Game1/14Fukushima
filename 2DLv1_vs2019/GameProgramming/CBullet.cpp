@@ -1,7 +1,7 @@
 #include "CBullet.h"
 #include "CTexture.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
-extern CTexture Texture;
+extern CTexture BulletTexture;
 
 //デフォルトコンストラクタ
 CBullet::CBullet()
@@ -33,7 +33,7 @@ void CBullet::Render() {
 	//有効な時
 	if (mEnabled) {
 		//親の描画メソッドを呼ぶ
-		CRectangle::Render(Texture, 192, 207, 112, 97);
+		CRectangle::Render(BulletTexture, 17, 26, 99, 88);
 	}
 }
 

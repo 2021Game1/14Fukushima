@@ -5,6 +5,7 @@
 #include "CPlayer.h"
 extern CTexture Texture;
 
+CEnemy* CEnemy::spInstance = nullptr;
 //CBullet CEnemy::EBullet[20];
 
 
@@ -13,7 +14,7 @@ CEnemy::CEnemy()
 	: mFx(0), mFy(0)
 {
 	{
-	
+		spInstance = this;
 		w = 25;
 		h = 25;
 		//37
@@ -26,8 +27,8 @@ CEnemy::CEnemy()
 
 
 void CEnemy::Update() {
-	
-	
+
+
 	//mEnabledがfalseなら戻る
 	if (!mEnabled)return;
 
@@ -36,7 +37,6 @@ void CEnemy::Update() {
 		//敵のフラグをfalseに
 		mEnabled = false;
 	}
-
 
 	//有効な時
 	if (mEnabled) {
@@ -48,15 +48,11 @@ void CEnemy::Update() {
 	if (mFireCount > 0) {
 		mFireCount--;
 	}
-
-
-
 	//37e
 	/**/
 
 	else {
-		//弾を４発四方へ発射する
-		for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++) {
 			CBullet* EBullet = new CBullet();
 			//座標設定
 			EBullet->x = x;
@@ -64,24 +60,28 @@ void CEnemy::Update() {
 			//移動量設定
 			if (CEnemy::x < CPlayer::spInstance->x) {
 				EBullet->mFx = +1;
-				EBullet->mFy = -3 * ((i / 2) + 1);
+				EBullet->mFy = -3 * ((j / 2) + 1);
 			}
-			if (CEnemy::x > CPlayer::spInstance->x){
+			if (CEnemy::x > CPlayer::spInstance->x) {
 				EBullet->mFx = -1;
-				EBullet->mFy = -3 * ((i / 2) + 1);
+				EBullet->mFy = -3 * ((j / 2) + 1);
 			}
-			/*
-			EBullet->mFx = ((i / 2) + 1) * (2 * (i % 2) -1);
-			EBullet->mFy = -2 * ((i / 2) + 1);
-			*/
 			//有効にする
 			EBullet->mEnabled = true;
 			EBullet->mTag = EENEMYBULLET;
 		}
 		mFireCount = 40;
 
+
 	}
 }
+	
+	
+	
+
+
+
+
 
 	
 	
@@ -176,7 +176,7 @@ bool CEnemy::Collision(const CRectangle &r) {
 
 void CEnemy::Render() {
 		if (mEnabled) {
-			CRectangle::Render(Texture, 146 - 16, 146 + 16, 178 + 16, 178 - 16);
+			CRectangle::Render(Texture, 140, 190, 75, 25);
 		}
 	
 }
