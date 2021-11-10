@@ -12,7 +12,7 @@
 #define SCROLL_SPEED -2.0
 
 
-int Remain = 3;
+int CSceneGame::Remain = 3;
 //écÇËéûä‘Åi30ïbÅj
 int CSceneGame::Time = 30 * 60;
 
@@ -21,6 +21,8 @@ int CSceneGame::Remain = 3;
 int CSceneGame::CLEAR = 0;
 
 int CSceneGame::OVER = 0;
+
+int CSceneGame::ScoreCount;
 
 char CSceneGame::buf[10];
 
@@ -217,6 +219,11 @@ void CSceneGame::Update() {
 	sprintf(buf, "%d", ScoreCount);
 	CText::DrawString(buf, -350 + 32 * 5.5, 250, 16, 16);
 	
+	//ï∂éöóÒÇÃï`âÊ
+	CText::DrawString("Player", 150, -250, 16, 16);
+	sprintf(buf, "%d", Remain);
+	CText::DrawString(buf, 360, -250, 16, 16);
+
 	if (Time == 0 || Remain == 0) {
 		CText::DrawString("GAME OVER!", -300, 0, 32, 32);
 		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
@@ -230,7 +237,8 @@ void CSceneGame::Update() {
 		}
 	}
 	if (Time == 0 && Remain != 0) {
-		CText::DrawString("GAME CLEAR!", -300, 0, 32, 32);
+		CText::DrawString("GAME SCORE", -300, 0, 32, 32);
+		sprintf(buf, "%d", ScoreCount);
 		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			Remain = 3;

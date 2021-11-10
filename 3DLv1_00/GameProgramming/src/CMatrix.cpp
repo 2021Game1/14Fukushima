@@ -49,6 +49,8 @@ float CMatrix::M(int r, int c)const
 //RotateX(角度
 CMatrix CMatrix::RotateX(float degree) {
 	float rad = degree / 180.0f * M_PI;
+	//単位行列にする
+	Identity();
 	mM[1][1] = mM[2][2] = cosf(rad);
 	mM[2][1] = -sinf(rad);
 	mM[1][2] = -mM[2][1];
@@ -60,6 +62,8 @@ CMatrix CMatrix::RotateX(float degree) {
 CMatrix CMatrix::RotateY(float degree) {
 	//角度からラジアンを求める
 	float rad = degree / 180.0f * M_PI;
+	//単位行列にする
+	Identity();
 	//Y軸で回転する行列の設定
 	mM[0][0] = mM[2][2] = cosf(rad);
 	mM[0][2] = -sinf(rad);
@@ -73,11 +77,28 @@ CMatrix CMatrix::RotateZ(float degree)
 {
 	//角度からラジアンを求める
 	float rad = degree / 180.0f * M_PI;
+	//単位行列にする
+	Identity();
 	//Z軸で回転する行列の設定
 	mM[0][0] = mM[1][1] = cosf(rad);
 	mM[0][1] = sinf(rad);
 	mM[1][0] = -mM[0][1];
 	//行列を返す
 	return *this;
+}
+//移動行列の作成
+//Translate(移動量X,移動量Y,移動量Z)
+CMatrix CMatrix::Translate(float mx, float my, float mz)
+{
+	mM[3][0] = mx;
+	mM[3][1] = my;
+	mM[3][2] = mz;
+	//この行列を返す
+	return *this;
+}
+//配列を代入する
+void CMatrix::M(int row, int col, float value)
+{
+	mM[row][col] = value;
 }
 

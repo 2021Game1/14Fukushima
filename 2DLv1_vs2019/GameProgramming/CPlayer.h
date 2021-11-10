@@ -2,6 +2,7 @@
 #define CPLAYER_H
 
 #include "CRectangle.h"
+#include "CSceneGame.h"
 
 class CPlayer : public CRectangle {
 public:
