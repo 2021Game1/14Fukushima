@@ -90,6 +90,8 @@ CMatrix CMatrix::RotateZ(float degree)
 //Translate(ˆÚ“®—ÊX,ˆÚ“®—ÊY,ˆÚ“®—ÊZ)
 CMatrix CMatrix::Translate(float mx, float my, float mz)
 {
+	//’PˆÊs—ñ‚É‚·‚é
+	Identity();
 	mM[3][0] = mx;
 	mM[3][1] = my;
 	mM[3][2] = mz;
