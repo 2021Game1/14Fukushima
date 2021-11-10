@@ -16,8 +16,6 @@ int CSceneGame::Remain = 3;
 //残り時間（30秒）
 int CSceneGame::Time = 30 * 60;
 
-int CSceneGame::Remain = 3;
-
 int CSceneGame::CLEAR = 0;
 
 int CSceneGame::OVER = 0;
@@ -127,7 +125,7 @@ void CSceneGame::Update() {
 		}
 	}
 	for (int k = 0; k < 2; k = k + 1) {
-		if (GameTime % 360 == 0)
+		if (GameTime % 560 == 0)
 		{
 			/*srand(time(NULL));*/
 			//乱数値=rand()%乱数値の要素数-乱数値の最小値
@@ -224,8 +222,13 @@ void CSceneGame::Update() {
 	sprintf(buf, "%d", Remain);
 	CText::DrawString(buf, 360, -250, 16, 16);
 
+	//文字列の描画
+	CText::DrawString("Time", 150, 250, 16, 16);
+	sprintf(buf, "%d", Time / 60);
+	CText::DrawString(buf, 300, 250, 16, 16);
+
 	if (Time == 0 || Remain == 0) {
-		CText::DrawString("GAME OVER!", -300, 0, 32, 32);
+		CText::DrawString("GAME OVER!", -280, 0, 32, 32);
 		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
@@ -237,7 +240,7 @@ void CSceneGame::Update() {
 		}
 	}
 	if (Time == 0 && Remain != 0) {
-		CText::DrawString("GAME SCORE", -300, 0, 32, 32);
+		CText::DrawString("GAME SCORE", -300, 0, 16, 32);
 		sprintf(buf, "%d", ScoreCount);
 		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {

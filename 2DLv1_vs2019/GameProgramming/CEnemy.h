@@ -16,7 +16,7 @@ public:
 	int val;
 	static CEnemy* spInstance;
 	void Update();
-	bool Collision(const CRectangle& r);
+	bool Collision(CRectangle& r);
 	void Render();
 	//36
 	void Collision(CRectangle* i, CRectangle* y);

@@ -60,5 +60,6 @@ void CBullet::Collision(CRectangle *i, CRectangle *y) {
 			}
 
 		}
+
 	}
 }

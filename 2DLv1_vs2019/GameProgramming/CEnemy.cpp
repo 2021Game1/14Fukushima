@@ -52,7 +52,7 @@ void CEnemy::Update() {
 	/**/
 
 	else {
-		for (int j = 0; j < 2; j++) {
+		for (int j = 0; j < 1; j++) {
 			CBullet* EBullet = new CBullet();
 			//座標設定
 			EBullet->x = x;
@@ -144,28 +144,29 @@ void CEnemy::Update() {
 		}
 		*/
 	
-	
 
 /*
 親のCollisionをオーバーライドする
 衝突すると移動方向を反対にする
 */
-bool CEnemy::Collision(const CRectangle &r) {
+bool CEnemy::Collision(CRectangle &r) {
 	//mEnabledがfalseなら戻る
+	if (!r.mEnabled)return false;
 	if (!mEnabled) return false;
 	//親のCollisionメソッドを呼び出す
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
-		case EBLOCK:
-			//衝突していれば反転
-			mEnabled = false;
-			break;
 		case EPLAYERBULLET:
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
+			r.mEnabled = false;
+			CSceneGame::ScoreCount += 50;
 			break;
 		case EPLAYER:
+			//プレイヤーに当たると、無効にする
 			mEnabled = false;
+			CSceneGame::ScoreCount += 25;
+			CSceneGame::Remain -= 1;
 			break;
 		CSceneGame::GameTime = CSceneGame::GameTime + 1;
 		}

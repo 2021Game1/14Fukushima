@@ -13,12 +13,13 @@ CPlayer::CPlayer()
 , FireCount(0)
 {
 	mTag = EPLAYER;
+	mEnabled = true;
 	spInstance = this;
 	
 }
 
 void CPlayer::Update() {
-
+	//mEnabled‚ªfalse‚È‚ç–ß‚é
 	//staticƒƒ\ƒbƒh‚Í‚Ç‚±‚©‚ç‚Å‚àŒÄ‚×‚é
 	if (CKey::Push('A')) {
 		x -= 3;
