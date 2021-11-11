@@ -2,7 +2,7 @@
 #include "CKey.h"
 //37
 #include "CBullet.h"
-#include "CPlayerDate.h"
+
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
 CPlayer* CPlayer::spInstance = nullptr;
@@ -102,7 +102,9 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
 				(*ry).mEnabled = false;
-				CSceneGame::Remain -= 1;
+				if (CSceneGame::Time != 0) {
+					CSceneGame::Remain -= 1;
+				}
 			}
 		}
 	}

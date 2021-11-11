@@ -104,11 +104,9 @@
   <ItemGroup>
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CEnemy.h" />
-    <ClInclude Include="CEnemyData.h" />
     <ClInclude Include="CKey.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CPlayer.h" />
-    <ClInclude Include="CPlayerDate.h" />
     <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneGame.h" />

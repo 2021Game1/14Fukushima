@@ -62,6 +62,10 @@ void CEnemy::Update() {
 				EBullet->mFx = +1;
 				EBullet->mFy = -3 * ((j / 2) + 1);
 			}
+			if (CEnemy::x == CPlayer::spInstance->x) {
+				EBullet->mFx = 0;
+				EBullet->mFy = -3 * ((j / 2) + 1);
+			}
 			if (CEnemy::x > CPlayer::spInstance->x) {
 				EBullet->mFx = -1;
 				EBullet->mFy = -3 * ((j / 2) + 1);
@@ -160,13 +164,20 @@ bool CEnemy::Collision(CRectangle &r) {
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
-			CSceneGame::ScoreCount += 50;
+			if (CSceneGame::Time != 0)
+			{
+				CSceneGame::ScoreCount += 50;
+			}
 			break;
 		case EPLAYER:
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
-			CSceneGame::ScoreCount += 25;
-			CSceneGame::Remain -= 1;
+			if (CSceneGame::Time!=0)
+			{
+				CSceneGame::ScoreCount += 25;
+				CSceneGame::Remain -= 1;
+			}
+			
 			break;
 		CSceneGame::GameTime = CSceneGame::GameTime + 1;
 		}
