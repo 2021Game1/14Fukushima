@@ -206,7 +206,7 @@ void CSceneGame::Update() {
 			
 		}
 	}
-	if (Time > 0) {
+	if (Time > 0 && Remain > 0) {
 		Time--;
 	}
 	
@@ -233,7 +233,10 @@ void CSceneGame::Update() {
 	CText::DrawString(buf, 300, 250, 12, 12);
 
 	if (Remain == 0) {
-		CText::DrawString("GAME OVER!", -270, 0, 32, 32);
+		CText::DrawString("GAME SCORE", -180, 0, 16, 16);
+		sprintf(buf, "%d", ScoreCount);
+		CText::DrawString(buf, 160, 0, 16, 16);
+		CText::DrawString("GAME OVER!", -140, 100, 16, 16);
 		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
