@@ -8,7 +8,7 @@ CSceneScreen* CSceneScreen::spInstance = nullptr;
 
 CSceneScreen::CSceneScreen()
 {
-	mTag = EScreen;
+	mTag = ESCREEN;
 	Screen.Load("screen.tga");
 	spInstance = this;
 	w = 510;

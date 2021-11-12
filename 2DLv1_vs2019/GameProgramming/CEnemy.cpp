@@ -153,7 +153,7 @@ void CEnemy::Update() {
 親のCollisionをオーバーライドする
 衝突すると移動方向を反対にする
 */
-bool CEnemy::Collision(CRectangle &r) {
+bool CEnemy::Collision(CRectangle& r) {
 	//mEnabledがfalseなら戻る
 	if (!r.mEnabled)return false;
 	if (!mEnabled) return false;
@@ -164,27 +164,31 @@ bool CEnemy::Collision(CRectangle &r) {
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
-			if (CSceneGame::Time != 0)
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 			{
-				CSceneGame::ScoreCount += 50;
+			CSceneGame::ScoreCount += 50;
 			}
 			break;
+			
 		case EPLAYER:
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
-			if (CSceneGame::Time!=0)
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 			{
-				CSceneGame::ScoreCount += 25;
-				CSceneGame::Remain -= 1;
+			CSceneGame::ScoreCount += 25;
+			CSceneGame::Remain -= 1;
 			}
-			
 			break;
-		CSceneGame::GameTime = CSceneGame::GameTime + 1;
+
+
+
+			CSceneGame::GameTime = CSceneGame::GameTime + 1;
 		}
-		return true;
+			return true;
 	}
-	return false;
+		return false;
 }
+
 
 void CEnemy::Render() {
 		if (mEnabled) {
