@@ -3,6 +3,9 @@
 //extern：他のソースファイルの外部変数にアクセスする宣言
 #include "CSceneGame.h"
 #include "CPlayer.h"
+#include"CItem.h"
+//extern：他のソースファイルの外部変数にアクセスする宣言
+extern CTexture ItemTexture;
 extern CTexture Texture;
 
 CEnemy* CEnemy::spInstance = nullptr;
@@ -14,6 +17,7 @@ CEnemy::CEnemy()
 	: mFx(0), mFy(0)
 {
 	{
+
 		spInstance = this;
 		w = 25;
 		h = 25;
@@ -78,6 +82,8 @@ void CEnemy::Update() {
 
 
 	}
+
+	
 }
 	
 	
@@ -166,8 +172,78 @@ bool CEnemy::Collision(CRectangle& r) {
 			r.mEnabled = false;
 			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 			{
-			CSceneGame::ScoreCount += 50;
+				CItemA* ItemA = new CItemA;
+				ItemA->x = x;
+				ItemA->y = y;
+				ItemA->mFy = -3;
+				CItemB* ItemB = new CItemB;
+				ItemB->x = x;
+				ItemB->y = y;
+				ItemB->mFy = -3;
+				CItemC* ItemC = new CItemC;
+				ItemC->x = x;
+				ItemC->y = y;
+				ItemC->mFy = -3;
+				CItemD* ItemD = new CItemD;
+				ItemD->x = x;
+				ItemD->y = y;
+				ItemD->mFy = -3;
+				CItemE* ItemE = new CItemE;
+				ItemE->x = x;
+				ItemE->y = y;
+				ItemE->mFy = -3;
+
+				vel = (rand() % 100) + 1;
+
+				if (vel >= 20) {
+					ItemA->mEnabled = true;
+					ItemA->mTag = EENEMYITEM;
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CPlayer::CPlayerLevel += 1;
+					}
+				}
+				if (vel >= 20 || vel <= 50) {
+					ItemB->mEnabled = true;
+					ItemB->mTag = EENEMYITEM;
+					mEnabled = false;
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::ScoreCount += 50;
+					}
+
+				}
+				if (vel <= 50 || vel >= 60) {
+
+					ItemD->mEnabled = true;
+					ItemD->mTag = EENEMYITEM;
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::Remain += 1;
+					}
+				}
+				if (vel >= 60 || vel >= 65) {
+					ItemE->mEnabled = true;
+					ItemE->mTag = EENEMYITEM;
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::GameTime += 30;
+						CSceneGame::Remain += 2;
+					}
+				}
+				if (vel >= 65 || vel >= 100) {
+
+					ItemC->mEnabled = true;
+					ItemC->mTag = EENEMYITEM;
+
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::Time += 10;
+					}
+				}
+
 			}
+			CSceneGame::ScoreCount += 50;
 			break;
 			
 		case EPLAYER:

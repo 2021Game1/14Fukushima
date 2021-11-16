@@ -7,6 +7,7 @@
 extern CTexture Texture;
 CPlayer* CPlayer::spInstance = nullptr;
 
+int CPlayer::CPlayerLevel = 0;
 
 CPlayer::CPlayer()
 : mFx(0.0f), mFy(1.0f)
@@ -55,7 +56,8 @@ void CPlayer::Update() {
 	}
 	//FireContが0で、かつ、スペースキーで弾発射
 	else if (CKey::Once(' ')) {
-		CBullet* Bullet = new CBullet();
+		if (CPlayerLevel >= 0) {
+			CBullet* Bullet = new CBullet();
 			//発射位置の設定
 			Bullet->x = x;
 			Bullet->y = y;
@@ -67,11 +69,11 @@ void CPlayer::Update() {
 			//プレイヤーの弾を設定
 			Bullet->mTag = CRectangle::EPLAYERBULLET;
 			FireCount = 15;
-		
-			
-			
-		
+		}
+
 	}
+
+
 	//37
 }
 
@@ -105,6 +107,14 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 				if (CSceneGame::Time != 0) {
 					CSceneGame::Remain -= 1;
 				}
+			}
+		}
+	}
+	if ((*ry).mTag == EENEMYITEM) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				(*ry).mEnabled = false;
+			
 			}
 		}
 	}

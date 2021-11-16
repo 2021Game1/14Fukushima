@@ -36,7 +36,7 @@ public:
 
 	static int GameTime;
 
-	static int EnemyPattern;
+	
 
 	static int Remain;
 

@@ -3,7 +3,7 @@
 
 #include "CRectangle.h"
 #include "CBullet.h"
-
+#include"CItem.h"
 
  
 
@@ -13,7 +13,7 @@ public:
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	int mFireCount;
-	int val;
+	int vel;
 	static CEnemy* spInstance;
 	void Update();
 	bool Collision(CRectangle& r);

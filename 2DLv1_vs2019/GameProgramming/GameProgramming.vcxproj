@@ -89,6 +89,7 @@
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemyItem.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CKey.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CRectangle.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemyItem.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CKey.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CPlayer.h" />

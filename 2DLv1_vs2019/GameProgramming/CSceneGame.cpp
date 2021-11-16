@@ -13,7 +13,7 @@
 
 int CSceneGame::Remain = 3;
 //残り時間（30秒）
-int CSceneGame::Time = 30 * 60;
+int CSceneGame::Time = 31 * 60;
 
 int CSceneGame::CLEAR = 0;
 
@@ -31,9 +31,6 @@ int val;
 
 int CSceneGame::GameTime;
 
-int CSceneGame::EnemyPattern;
-
-int EnemyPattern = 0;
 
 void CSceneGame::Init() {
 	//シーンの設定
@@ -218,9 +215,13 @@ void CSceneGame::Update() {
 	if (CSceneGame::Remain < 0) {
 		CSceneGame::Remain = 0;
 	}
-	CText::DrawString("Score", -350, 250, 12, 12);
-	sprintf(buf, "%d", ScoreCount);
-	CText::DrawString(buf, -350 + 32 * 4.0, 250, 12, 12);
+
+	if (Remain != 0 && Time != 0)
+	{
+		CText::DrawString("Score", -350, 250, 12, 12);
+		sprintf(buf, "%d", ScoreCount);
+		CText::DrawString(buf, -350 + 32 * 4.0, 250, 12, 12);
+	}
 	
 	//文字列の描画
 	CText::DrawString("Player", 200, -250, 12, 12);
@@ -237,11 +238,11 @@ void CSceneGame::Update() {
 		sprintf(buf, "%d", ScoreCount);
 		CText::DrawString(buf, 160, 0, 16, 16);
 		CText::DrawString("GAME OVER!", -140, 100, 16, 16);
-		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
+		CText::DrawString("Push ENETER Key", -210, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
 			ScoreCount = 0;
-			Time = 30 * 60;
+			Time = 31 * 60;
 			mScene = ETITLE;
 		}
 	}
@@ -253,7 +254,8 @@ void CSceneGame::Update() {
 		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
-			Time = 30 * 60;
+			ScoreCount = 0;
+			Time = 31 * 60;
 			mScene = ETITLE;
 		}
 	}
