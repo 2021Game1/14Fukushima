@@ -9,13 +9,21 @@
 #include"CKey.h"
 //課題11
 #include"CMatrix.h"
+//16.2
+#include"CTransform.h"
+//16.2
+#include"CCharacter.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
 //カメラの視点の変数
 CVector mEye;
-//背景モデルデータの指定
-
+//キャラクタの変数
+CCharacter mCharacter;
+//課題11
+CMatrix matrix;
+//課題16
+CCharacter mPlayer;
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
@@ -23,9 +31,15 @@ void CSceneGame::Init() {
 	mModel.Load(MODEL_OBJ);
 	mBackGround.Load(MODEL_BACKGROUND);
 	//課題11
-	CMatrix matrix;
-	//課題11
 	matrix.Print();
+	//キャラクタのモデルポインタ
+	mCharacter.Model(&mModel);
+	mCharacter.Scale(CVector(0.1f, 0.1f, 0.1f));
+	//プレイヤーのモデルポインタ
+	mPlayer.Model(&mModel);
+	mPlayer.Scale(CVector(0.1f, 0.1f, 0.1f));
+	mPlayer.Position(CVector(0.0f, 0.0f, -3.0f));
+	mPlayer.Rotation(CVector(180.0f,0.0f,0.0f));
 }
 
 void CSceneGame::Update() {
@@ -72,18 +86,35 @@ void CSceneGame::Update() {
 	{
 		mEye = mEye + CVector(0.0f, 0.1f, 0.0f);
 	}
-
 	//視点の設定
 	//gluLookAt(視点X、視点Y、視点Z、中心X、中心Y、中心Z,上向X、上向Y、上向Z)
 	gluLookAt(mEye.X(), mEye.Y(), mEye.Z(), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	
+	mCharacter.Update();
+	mCharacter.Render();
 
-	CMatrix matrix, position,rotation,scale;
-	position.Translate(0.5f, 1.8f, 0.5f);//移動行列設定
-	rotation.RotateY(180.0f);//回転行列設定
-	scale.Scale(0.1f, 0.1f, 0.1f);//拡大縮小行列設定
-	matrix = scale * rotation * position;//合成行列設定
-	mModel.Render(matrix);//モデルの描画
-	mBackGround.Render(CMatrix());//モデルの描画
+	mPlayer.Update();
+	mPlayer.Render();
+	
+	
+	mBackGround.Render(CMatrix());//背景モデルの描画
+
+	//CTransform trans; //変数行列インスタンスの作成
+	//trans.Position(CVector(0.5f, 1.8f, 0.5f)); //位置の設定
+	//trans.Rotation(CVector(-10.0f, -20.0f, -30.0f)); //回転の設定
+	//trans.Scale(CVector(0.1f, 0.1f, 0.1f)); //拡大縮小の設定
+	//trans.Update(); //行列の更新
+	//mModel.Render(trans.Matrix()); //戦闘機モデルの描画
+
+
+	//CTransform mPlayer;
+	//mPlayer.Position(CVector(0.5f, 1.8f, 0.5f)); //位置の設定
+	//mPlayer.Rotation(CVector(-10.0f, -20.0f, -30.0f)); //回転の設定
+	//mPlayer.Scale(CVector(0.1f, 0.1f, 0.1f)); //拡大縮小の設定
+	//mPlayer.Update(); //行列の更新
+	//mModel.Render(mPlayer.Matrix()); //戦闘機モデルの描画
+
+	
 }
 	/*
 	//描画開始

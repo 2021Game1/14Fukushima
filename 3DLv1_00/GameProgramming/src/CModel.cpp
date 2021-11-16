@@ -1,6 +1,7 @@
-#include"CModel.h"
 //標準入出力のインクルード
 #include<string.h>
+//CModelのインクルード
+#include"CModel.h"
 //CVectorのインクルード
 #include"CVector.h"
 //CTriangleのインクルード
@@ -83,7 +84,7 @@ void CModel::Load(char* obj, char* mtl) {
 		printf("%s file open error\n", obj);
 		return;
 	}
-	//ファイルから１行入力
+//ファイルから１行入力
 // fgets(入力エリア,エリアサイズ,ファイルポインタ)
 // ファイルの最後になるとNULLを返す
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
