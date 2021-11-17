@@ -41,7 +41,7 @@ void CSceneGame::Init() {
 	mPlayer.Model(&mModel);
 	mPlayer.Scale(CVector(0.1f, 0.1f, 0.1f));
 	mPlayer.Position(CVector(0.0f, 0.0f, -3.0f));
-	mPlayer.Rotation(CVector(180.0f,0.0f,0.0f));
+	mPlayer.Rotation(CVector(0.0f, 180.0f,0.0f));
 }
 
 void CSceneGame::Update() {
@@ -60,7 +60,7 @@ void CSceneGame::Update() {
 	////視点の移動
 	////Jキー:X軸マイナス方向へ移動
 	//if (CKey::Push('J'))
-	//{
+	//{a
 	//	mEye = mEye - CVector(0.1f, 0.0f, 0.0f);
 	//}
 	////Lキー:X軸プラス方向へ移動

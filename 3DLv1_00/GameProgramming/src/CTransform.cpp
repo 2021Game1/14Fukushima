@@ -35,9 +35,9 @@ void CTransform::Update() {
 	mMatrixScale.Scale(mScale.X(),mScale.Y(),mScale.Z());
 	//回転行列の設定
 	mMatrixRotate =
-		CMatrix().RotateX(mRotation.Z()) *
-		CMatrix().RotateY(mRotation.X()) *
-		CMatrix().RotateZ(mRotation.Y());
+		CMatrix().RotateZ(mRotation.Z()) *
+		CMatrix().RotateX(mRotation.X()) *
+		CMatrix().RotateY(mRotation.Y());
 	//平行移動行列の設定
 	mMatrixTranslate.Translate(mPosition.X(), mPosition.Y(), mPosition.Z());
 	//合成行列の設定
