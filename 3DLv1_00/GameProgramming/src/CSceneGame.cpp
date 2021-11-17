@@ -13,6 +13,8 @@
 #include"CTransform.h"
 //16.2
 #include"CCharacter.h"
+//17.1
+#include"CPlayer.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
@@ -22,8 +24,8 @@ CVector mEye;
 CCharacter mCharacter;
 //課題11
 CMatrix matrix;
-//課題16
-CCharacter mPlayer;
+//17.1
+CPlayer mPlayer;
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
@@ -55,37 +57,37 @@ void CSceneGame::Update() {
 	//頂点３の座標を設定する
 	v2.Set(0.0f, 0.0f, -0.5f);
 
-	//視点の移動
-	//Jキー:X軸マイナス方向へ移動
-	if (CKey::Push('J'))
-	{
-		mEye = mEye - CVector(0.1f, 0.0f, 0.0f);
-	}
-	//Lキー:X軸プラス方向へ移動
-	if (CKey::Push('L'))
-	{
-		mEye = mEye + CVector(0.1f, 0.0f, 0.0f);
-	}
-	//Iキー:Y軸マイナス方向へ移動
-	if (CKey::Push('I'))
-	{
-		mEye = mEye - CVector(0.0f, 0.0f, 0.1f);
-	}
-	//Kキー:Y軸プラス方向へ移動
-	if (CKey::Push('K'))
-	{
-		mEye = mEye + CVector(0.0f, 0.0f, 0.1f);
-	}
-	//課題4 Mキー:Y軸マイナス方向へ移動
-	if (CKey::Push('M'))
-	{
-		mEye = mEye - CVector(0.0f, 0.1f, 0.0f);
-	}
-	//課題4 Oキー:Y軸プラス方向へ移動
-	if (CKey::Push('O'))
-	{
-		mEye = mEye + CVector(0.0f, 0.1f, 0.0f);
-	}
+	////視点の移動
+	////Jキー:X軸マイナス方向へ移動
+	//if (CKey::Push('J'))
+	//{
+	//	mEye = mEye - CVector(0.1f, 0.0f, 0.0f);
+	//}
+	////Lキー:X軸プラス方向へ移動
+	//if (CKey::Push('L'))
+	//{
+	//	mEye = mEye + CVector(0.1f, 0.0f, 0.0f);
+	//}
+	////Iキー:Y軸マイナス方向へ移動
+	//if (CKey::Push('I'))
+	//{
+	//	mEye = mEye - CVector(0.0f, 0.0f, 0.1f);
+	//}
+	////Kキー:Y軸プラス方向へ移動
+	//if (CKey::Push('K'))
+	//{
+	//	mEye = mEye + CVector(0.0f, 0.0f, 0.1f);
+	//}
+	////課題4 Mキー:Y軸マイナス方向へ移動
+	//if (CKey::Push('M'))
+	//{
+	//	mEye = mEye - CVector(0.0f, 0.1f, 0.0f);
+	//}
+	////課題4 Oキー:Y軸プラス方向へ移動
+	//if (CKey::Push('O'))
+	//{
+	//	mEye = mEye + CVector(0.0f, 0.1f, 0.0f);
+	//}
 	//視点の設定
 	//gluLookAt(視点X、視点Y、視点Z、中心X、中心Y、中心Z,上向X、上向Y、上向Z)
 	gluLookAt(mEye.X(), mEye.Y(), mEye.Z(), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
