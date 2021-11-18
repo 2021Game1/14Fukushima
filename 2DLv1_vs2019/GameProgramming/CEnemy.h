@@ -4,7 +4,7 @@
 #include "CRectangle.h"
 #include "CBullet.h"
 #include"CItem.h"
-
+#include <time.h>
  
 
 class CEnemy : public CRectangle{

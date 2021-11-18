@@ -166,12 +166,13 @@ bool CEnemy::Collision(CRectangle& r) {
 	//親のCollisionメソッドを呼び出す
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
-		case EPLAYERBULLET:
+		case EPLAYERBULLET:	
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
-			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)	
 			{
+
 				CItemA* ItemA = new CItemA;
 				ItemA->x = x;
 				ItemA->y = y;
@@ -193,62 +194,55 @@ bool CEnemy::Collision(CRectangle& r) {
 				ItemE->y = y;
 				ItemE->mFy = -3;
 
+				srand((unsigned)time(NULL));
 				vel = (rand() % 100) + 1;
-
-				if (vel >= 20) {
-					ItemA->mEnabled = true;
+				
+				if (vel >= 0 && vel <= 50) {
+					ItemA->mEnabled = false;
 					ItemA->mTag = EENEMYITEM;
-					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
-					{
-						CPlayer::CPlayerLevel += 1;
-					}
+					
+					mEnabled = false;
 				}
-				if (vel >= 20 || vel <= 50) {
+				if (vel > 50 && vel <= 70) {
 					ItemB->mEnabled = true;
 					ItemB->mTag = EENEMYITEM;
+					
 					mEnabled = false;
-					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
-					{
-						CSceneGame::ScoreCount += 50;
-					}
-
 				}
-				if (vel <= 50 || vel >= 60) {
-
+				if (vel > 70 && vel <= 80) {
 					ItemD->mEnabled = true;
 					ItemD->mTag = EENEMYITEM;
-					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
-					{
-						CSceneGame::Remain += 1;
-					}
+					
+					mEnabled = false;
 				}
-				if (vel >= 60 || vel >= 65) {
+				if (vel > 80  && vel <= 85) {
+					
 					ItemE->mEnabled = true;
 					ItemE->mTag = EENEMYITEM;
-					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
-					{
-						CSceneGame::GameTime += 30;
-						CSceneGame::Remain += 2;
-					}
+					
+					
+					mEnabled = false;
 				}
-				if (vel >= 65 || vel >= 100) {
-
+				if (vel > 85 && vel <= 100) {
+					
 					ItemC->mEnabled = true;
 					ItemC->mTag = EENEMYITEM;
-
-					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
-					{
-						CSceneGame::Time += 10;
-					}
+					mEnabled = false;
 				}
 
 			}
-			CSceneGame::ScoreCount += 50;
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				{
+					CSceneGame::ScoreCount += 50;
+				}
+
 			break;
 			
 		case EPLAYER:
+
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
+
 			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 			{
 			CSceneGame::ScoreCount += 25;
