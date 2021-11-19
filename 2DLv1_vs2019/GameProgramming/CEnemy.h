@@ -10,6 +10,7 @@
 class CEnemy : public CRectangle{
 public:
 
+	int item[5];
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	int mFireCount;

@@ -172,7 +172,6 @@ bool CEnemy::Collision(CRectangle& r) {
 			r.mEnabled = false;
 			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)	
 			{
-
 				CItemA* ItemA = new CItemA;
 				ItemA->x = x;
 				ItemA->y = y;
@@ -193,43 +192,58 @@ bool CEnemy::Collision(CRectangle& r) {
 				ItemE->x = x;
 				ItemE->y = y;
 				ItemE->mFy = -3;
-
+				
 				srand((unsigned)time(NULL));
 				vel = (rand() % 100) + 1;
-				
+
 				if (vel >= 0 && vel <= 50) {
 					ItemA->mEnabled = false;
 					ItemA->mTag = EENEMYITEM;
-					
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+
+					}
 					mEnabled = false;
 				}
 				if (vel > 50 && vel <= 70) {
 					ItemB->mEnabled = true;
 					ItemB->mTag = EENEMYITEM;
-					
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::ScoreCount += 50;
+					}
 					mEnabled = false;
 				}
 				if (vel > 70 && vel <= 80) {
 					ItemD->mEnabled = true;
 					ItemD->mTag = EENEMYITEM;
-					
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::Remain += 1;
+					}
 					mEnabled = false;
 				}
-				if (vel > 80  && vel <= 85) {
-					
+				if (vel > 80 && vel <= 85) {
+
 					ItemE->mEnabled = true;
 					ItemE->mTag = EENEMYITEM;
-					
-					
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::GameTime += 31 * 60;
+						CSceneGame::Remain += 2;
+					}
 					mEnabled = false;
 				}
 				if (vel > 85 && vel <= 100) {
-					
+
 					ItemC->mEnabled = true;
 					ItemC->mTag = EENEMYITEM;
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						CSceneGame::Time += 10 * 60;
+					}
 					mEnabled = false;
 				}
-
 			}
 				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 				{
@@ -239,14 +253,15 @@ bool CEnemy::Collision(CRectangle& r) {
 			break;
 			
 		case EPLAYER:
+			
+
 
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
-
 			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 			{
-			CSceneGame::ScoreCount += 25;
-			CSceneGame::Remain -= 1;
+				CSceneGame::ScoreCount += 25;
+				CSceneGame::Remain -= 1;
 			}
 			break;
 
