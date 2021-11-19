@@ -62,3 +62,12 @@ CTexture* CMaterial::Texture()
 {
 	return&mTexture;
 }
+void CMaterial::VertexNum(int num) 
+{
+	mVertexNum = num;
+}
+
+int CMaterial::VertexNum()
+{
+	return mVertexNum;
+}

@@ -6,6 +6,8 @@
 #include"CTriangle.h"
 //マテリアルクラスのインクルード
 #include"CMaterial.h"
+//マトリックスクラスのインクルード
+#include"CMatrix.h"
 /*
 モデルクラス
 モデルデータの入力や表示
@@ -15,6 +17,9 @@ public:
 	//モデルファイルの入力
 	//Load(モデルファイル名、マテリアルファイル名）
 	void Load(char* obj, char* mtl);
+	//描画
+	//Render(行列)
+	void Render();
 	//描画
 	//Render(行列)
 	void Render(const CMatrix& m);

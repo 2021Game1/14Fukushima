@@ -188,7 +188,7 @@ void CModel::Load(char* obj, char* mtl) {
 
 	int v = 0, t = 0;
 	//マテリアル毎に頂点配列に設定する
-	for (int i = 0; i < mTriangles.size(); i++)
+	for (int i = 0; i < mpMaterials.size(); i++)
 	{
 		//全ての三角形を比較
 		for (int j = 0; j < mTriangles.size(); j++)
@@ -220,13 +220,11 @@ void CModel::Load(char* obj, char* mtl) {
 				//テクスチャマッピング
 				mpTextureCoord[t++] = mTriangles[j].UV0().X();
 				mpTextureCoord[t++] = mTriangles[j].UV0().Y();
-				mpTextureCoord[t++] = mTriangles[j].UV0().Z();
 				mpTextureCoord[t++] = mTriangles[j].UV1().X();
 				mpTextureCoord[t++] = mTriangles[j].UV1().Y();
-				mpTextureCoord[t++] = mTriangles[j].UV1().Z();
 				mpTextureCoord[t++] = mTriangles[j].UV2().X();
 				mpTextureCoord[t++] = mTriangles[j].UV2().Y();
-				mpTextureCoord[t++] = mTriangles[j].UV2().Z();
+
 
 
 			}
@@ -235,8 +233,19 @@ void CModel::Load(char* obj, char* mtl) {
 		mpMaterials[i]->VertexNum(v / 3);
 	}
 }
+
+void CModel::Render()
+{
+	for (int i = 0; i < mTriangles.size(); i++)
+	{
+		mpMaterials[mTriangles[i].MaterialIdx()]->Enabled();
+		mTriangles[i].Render();
+		mpMaterials[mTriangles[i].MaterialIdx()]->Disabled();
+	}
+}
+
 //描画
-void CModel::Render(const CMatrix&m) {
+void CModel::Render(const CMatrix& m) {
 	//行列の退避
 	glPushMatrix();
 	//合成行列を掛ける
