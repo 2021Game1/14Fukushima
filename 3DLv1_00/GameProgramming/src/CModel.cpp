@@ -263,7 +263,7 @@ void CModel::Render(const CMatrix& m) {
 	//法線の配列を指定する
 	glNormalPointer(GL_FLOAT, 0, mpNormal);
 	//テクスチャコードの配列を指定する
-	glColorPointer(2, GL_FLOAT, 0, mpTextureCoord);
+	glTexCoordPointer(2, GL_FLOAT, 0, mpTextureCoord);
 
 	int first = 0; //描画位置
 	//マテリアル毎に描画する
