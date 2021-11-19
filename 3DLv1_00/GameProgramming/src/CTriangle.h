@@ -28,6 +28,21 @@ public:
 	//描画
 	//Render(行列)
 	void Render(const CMatrix& m);
+
+	//頂点座標を得る
+	const CVector& V0() const; //mV[0]を返します
+	const CVector& V1() const; //mV[1]を返します
+	const CVector& V2() const; //mV[2]を返します
+
+	//頂点座標を得る
+	const CVector& N0() const; //mN[0]を返します
+	const CVector& N1() const; //mN[1]を返します
+	const CVector& N2() const; //mN[2]を返します
+
+	//頂点座標を得る
+	const CVector& UV0() const; //mUV[0]を返します
+	const CVector& UV1() const; //mUV[1]を返します
+	const CVector& UV2() const; //mUV[2]を返します
 private:
 	CVector mV[3]; //頂点座標
 	CVector mN[3]; //法線

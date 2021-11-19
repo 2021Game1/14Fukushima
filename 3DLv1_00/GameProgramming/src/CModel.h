@@ -19,12 +19,17 @@ public:
 	//Render(行列)
 	void Render(const CMatrix& m);
 	~CModel();
+	//デフォルトコンストラクタ
+	CModel();
 private:
 	//三角形の可変長配列
 	std::vector<CTriangle>mTriangles;
 	//マテリアルポインタの可変長配列
 	std::vector<CMaterial*>mpMaterials;
-	
+	//頂点配列
+	float* mpVertex;//頂点座標
+	float* mpNormal;//法線
+	float* mpTextureCoord;//テクスチャマッピング
 };
 
 #endif 

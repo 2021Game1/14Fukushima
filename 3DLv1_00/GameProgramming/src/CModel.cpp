@@ -7,6 +7,12 @@
 //CTriangleのインクルード
 #include"CTriangle.h"
 
+//デフォルトコンストラクタ
+CModel::CModel()
+:mpVertex(nullptr), mpNormal(nullptr), mpTextureCoord(nullptr)
+{
+
+}
 
 
 //モデルファイルの入力
@@ -172,23 +178,130 @@ void CModel::Load(char* obj, char* mtl) {
 	//ファイルのクローズ
 	fclose(fp);
 
+	//頂点配列の作成
+	//全ての座標の値をマテリアルの順番に保存する
+	mpVertex = new float[mTriangles.size() * 9];
+	//全ての法線の値をマテリアルの順番に保存する
+	mpNormal = new float[mTriangles.size() * 9];
+	//全てのテクスチャマッピングの値をマテリアルの順番に保存する
+	mpTextureCoord = new float[mTriangles.size() * 6];
+
+	int v = 0, t = 0;
+	//マテリアル毎に頂点配列に設定する
+	for (int i = 0; i < mTriangles.size(); i++)
+	{
+		//全ての三角形を比較
+		for (int j = 0; j < mTriangles.size(); j++)
+		{
+			//マテリアル番号が一致する時
+			if (i == mTriangles[j].MaterialIdx()) {
+				//頂点配列に設定する
+				//頂点座標
+				mpVertex[v++] = mTriangles[j].V0().X();
+				mpVertex[v++] = mTriangles[j].V0().Y();
+				mpVertex[v++] = mTriangles[j].V0().Z();
+				mpVertex[v++] = mTriangles[j].V1().X();
+				mpVertex[v++] = mTriangles[j].V1().Y();
+				mpVertex[v++] = mTriangles[j].V1().Z();
+				mpVertex[v++] = mTriangles[j].V2().X();
+				mpVertex[v++] = mTriangles[j].V2().Y();
+				mpVertex[v++] = mTriangles[j].V2().Z();
+				v -= 9;
+				//法線
+				mpNormal[v++] = mTriangles[j].N0().X();
+				mpNormal[v++] = mTriangles[j].N0().Y();
+				mpNormal[v++] = mTriangles[j].N0().Z();
+				mpNormal[v++] = mTriangles[j].N1().X();
+				mpNormal[v++] = mTriangles[j].N1().Y();
+				mpNormal[v++] = mTriangles[j].N1().Z();
+				mpNormal[v++] = mTriangles[j].N2().X();
+				mpNormal[v++] = mTriangles[j].N2().Y();
+				mpNormal[v++] = mTriangles[j].N2().Z();
+				//テクスチャマッピング
+				mpTextureCoord[t++] = mTriangles[j].UV0().X();
+				mpTextureCoord[t++] = mTriangles[j].UV0().Y();
+				mpTextureCoord[t++] = mTriangles[j].UV0().Z();
+				mpTextureCoord[t++] = mTriangles[j].UV1().X();
+				mpTextureCoord[t++] = mTriangles[j].UV1().Y();
+				mpTextureCoord[t++] = mTriangles[j].UV1().Z();
+				mpTextureCoord[t++] = mTriangles[j].UV2().X();
+				mpTextureCoord[t++] = mTriangles[j].UV2().Y();
+				mpTextureCoord[t++] = mTriangles[j].UV2().Z();
+
+
+			}
+		}
+		//頂点数を設定
+		mpMaterials[i]->VertexNum(v / 3);
+	}
 }
 //描画
 void CModel::Render(const CMatrix&m) {
-	//可変長配列の要素数だけ繰り返し
-	for (int i = 0; i < mTriangles.size(); i++){
-		//マテリアルの適用
-		mpMaterials[mTriangles[i].MaterialIdx()]->Enabled();
-		//可変長配列に添え字でアクセスする
-		mTriangles[i].Render(m);
-		//マテリアルを無効
-		mpMaterials[mTriangles[i].MaterialIdx()]->Disabled();
+	//行列の退避
+	glPushMatrix();
+	//合成行列を掛ける
+	glMultMatrixf(m.M());
+
+	//頂点座標の配列を有効にする
+	glEnableClientState(GL_VERTEX_ARRAY);
+	//法線の配列を有効にする
+	glEnableClientState(GL_NORMAL_ARRAY);
+	//テクスチャマッピングの配列を有効にする
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	//頂点座標の配列を指定する
+	glVertexPointer(3, GL_FLOAT, 0, mpVertex);
+	//法線の配列を指定する
+	glNormalPointer(GL_FLOAT, 0, mpNormal);
+	//テクスチャコードの配列を指定する
+	glColorPointer(2, GL_FLOAT, 0, mpTextureCoord);
+
+	int first = 0; //描画位置
+	//マテリアル毎に描画する
+	for (int i = 0; i < mpMaterials.size(); i++)
+	{
+		//マテリアルを適用する
+		mpMaterials[i]->Enabled();
+		//描画位置からのデータで三角形を描画する
+		glDrawArrays(GL_TRIANGLES, first, mpMaterials[i]->VertexNum() - first);
+		//マテリアルを無効にする
+		mpMaterials[i]->Disabled();
+		//描画位置を移動
+		first = mpMaterials[i]->VertexNum();
 	}
+	//行列を戻す
+	glPopMatrix();
+
+	//頂点座標の配列を無効にする
+	glDisableClientState(GL_VERTEX_ARRAY);
+	//法線の配列を無効にする
+	glDisableClientState(GL_NORMAL_ARRAY);
+	//テクスチャマッピングの配列を無効にする
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
+//デストラクタ
 CModel::~CModel()
 {
 	for (int i = 0; i < mpMaterials.size(); i++)
 	{
 		delete mpMaterials[i];
 	}
+	if (mpVertex != nullptr) 
+	{
+		//頂点座標配列削除
+		delete[] mpVertex;
+	}
+	if (mpNormal != nullptr)
+	{
+		//法線配列削除
+		delete[] mpNormal;
+	}
+	if (mpTextureCoord != nullptr)
+	{
+		//テクスチャマッピング配列削除
+		delete[] mpTextureCoord;
+
+	}
+	
 }
+
