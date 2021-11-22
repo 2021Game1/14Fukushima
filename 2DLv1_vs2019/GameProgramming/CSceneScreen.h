@@ -2,7 +2,7 @@
 #define CSCENESCREEN_H
 
 #include "CRectangle.h"
-
+#include "CSceneGame.h"
 
 
 

@@ -57,10 +57,10 @@
     <ClCompile Include="CSound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CEnemyItem.cpp">
+    <ClCompile Include="CItem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CItem.cpp">
+    <ClCompile Include="CBossEnemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,10 +110,10 @@
     <ClInclude Include="CPlayer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CEnemyItem.h">
+    <ClInclude Include="CItem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CItem.h">
+    <ClInclude Include="CBossEnemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

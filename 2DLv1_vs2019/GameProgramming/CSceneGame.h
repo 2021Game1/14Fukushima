@@ -10,7 +10,8 @@
 // テクスチャクラスのインクルード
 #include "CTexture.h"
 #include "CMap.h"
-#include"CSceneScreen.h"
+#include "CSceneScreen.h"
+#include "CBossEnemy.h"
 /*
 ゲームのシーン
 */
@@ -48,6 +49,8 @@ public:
 	static int CLEAR;
 	//ゲームオーバー
 	static int OVER;
+
+	
 
 	//整数を文字列に変換する
 	static char buf[10];//9文字までOK

@@ -170,31 +170,106 @@ bool CEnemy::Collision(CRectangle& r) {
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
-			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)	
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 			{
 				CItemA* ItemA = new CItemA;
-				ItemA->x = x;
-				ItemA->y = y;
-				ItemA->mFy = -3;
 				CItemB* ItemB = new CItemB;
-				ItemB->x = x;
-				ItemB->y = y;
-				ItemB->mFy = -3;
 				CItemC* ItemC = new CItemC;
-				ItemC->x = x;
-				ItemC->y = y;
-				ItemC->mFy = -3;
 				CItemD* ItemD = new CItemD;
-				ItemD->x = x;
-				ItemD->y = y;
-				ItemD->mFy = -3;
 				CItemE* ItemE = new CItemE;
-				ItemE->x = x;
-				ItemE->y = y;
-				ItemE->mFy = -3;
+
+				for (int j = 0; j < 1; j++) {
+					ItemA->x = x;
+					ItemA->y = y;
+					if (CEnemy::x < CPlayer::spInstance->x) {
+						ItemA->mFx = -1;
+						ItemA->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x == CPlayer::spInstance->x) {
+						ItemA->mFx = 0;
+						ItemA->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x > CPlayer::spInstance->x) {
+						ItemA->mFx = +1;
+						ItemA->mFy = -3 * ((j / 2) + 1);
+					}
+					ItemA->mFy = -3;
+				}
+
+				for (int j = 0; j < 1; j++) {
+					ItemB->x = x;
+					ItemB->y = y;
+					if (CEnemy::x < CPlayer::spInstance->x) {
+						ItemB->mFx = -1;
+						ItemB->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x == CPlayer::spInstance->x) {
+						ItemB->mFx = 0;
+						ItemB->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x > CPlayer::spInstance->x) {
+						ItemB->mFx = +1;
+						ItemB->mFy = -3 * ((j / 2) + 1);
+					}
+					ItemB->mFy = -3;
+				}
+
+				for (int j = 0; j < 1; j++) {
+					ItemC->x = x;
+					ItemC->y = y;
+					if (CEnemy::x < CPlayer::spInstance->x) {
+						ItemC->mFx = -1;
+						ItemC->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x == CPlayer::spInstance->x) {
+						ItemC->mFx = 0;
+						ItemC->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x > CPlayer::spInstance->x) {
+						ItemC->mFx = +1;
+						ItemC->mFy = -3 * ((j / 2) + 1);
+					}
+					
+				}
 				
+				for (int j = 0; j < 1; j++) {
+					ItemD->x = x;
+					ItemD->y = y;
+					if (CEnemy::x < CPlayer::spInstance->x) {
+						ItemD->mFx = -1;
+						ItemD->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x == CPlayer::spInstance->x) {
+						ItemD->mFx = 0;
+						ItemD->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x > CPlayer::spInstance->x) {
+						ItemD->mFx = +1;
+						ItemD->mFy = -3 * ((j / 2) + 1);
+					}
+					
+				}
+				for (int j = 0; j < 1; j++) {
+					ItemE->x = x;
+					ItemE->y = y;
+					if (CEnemy::x < CPlayer::spInstance->x) {
+						ItemE->mFx = -1;
+						ItemE->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x == CPlayer::spInstance->x) {
+						ItemE->mFx = 0;
+						ItemE->mFy = -3 * ((j / 2) + 1);
+					}
+					if (CEnemy::x > CPlayer::spInstance->x) {
+						ItemE->mFx = +1;
+						ItemE->mFy = -3 * ((j / 2) + 1);
+					}
+					
+				}
+
 				srand((unsigned)time(NULL));
 				vel = (rand() % 100) + 1;
+
 
 				if (vel >= 0 && vel <= 50) {
 					ItemA->mEnabled = false;
@@ -203,7 +278,6 @@ bool CEnemy::Collision(CRectangle& r) {
 					{
 
 					}
-					mEnabled = false;
 				}
 				if (vel > 50 && vel <= 70) {
 					ItemB->mEnabled = true;
@@ -223,17 +297,18 @@ bool CEnemy::Collision(CRectangle& r) {
 					}
 					mEnabled = false;
 				}
-				if (vel > 80 && vel <= 85) {
 
+				if (vel > 80 && vel <= 85) {
 					ItemE->mEnabled = true;
 					ItemE->mTag = EENEMYITEM;
 					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 					{
-						CSceneGame::GameTime += 31 * 60;
-						CSceneGame::Remain += 2;
+						CSceneGame::GameTime += 21 * 60;
+						CPlayer::CPlayerLevel += 1;
 					}
 					mEnabled = false;
 				}
+
 				if (vel > 85 && vel <= 100) {
 
 					ItemC->mEnabled = true;
@@ -253,7 +328,6 @@ bool CEnemy::Collision(CRectangle& r) {
 			break;
 			
 		case EPLAYER:
-			
 
 
 			//プレイヤーに当たると、無効にする

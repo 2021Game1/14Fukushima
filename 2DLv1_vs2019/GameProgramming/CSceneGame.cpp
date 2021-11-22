@@ -50,6 +50,7 @@ void CSceneGame::Init() {
 	
 	//クラスのメンバ変数への代入
 //37
+/*
 	//配列の宣言と初期値の設定
 	int map[6][8] =
 	{
@@ -76,7 +77,7 @@ void CSceneGame::Init() {
 		}
 	}
 	
-
+*/
 	
 	
 	
@@ -125,27 +126,35 @@ void CSceneGame::Init() {
 
 
 void CSceneGame::Update() {
+	if (GameTime % !3000) {
+		for (int k = 0; k < 3; k = k + 1) {
+			if (GameTime % 240 == 0)
+			{
+				/*srand(time(NULL));*/
+				//乱数値=rand()%乱数値の要素数+乱数値の最小値
+				val = rand() % 501 - 250;
+				CEnemy* Enemy = new CEnemy();
+				Enemy->x = val;
+				Enemy->y = 250;
+				Enemy->mFy = -1;
+				//敵に値を設定
+				//有効にする
+				Enemy->mEnabled = true;
 
-	for (int k = 0; k < 3; k = k + 1) {
-		if (GameTime % 240 == 0)
-		{
-			/*srand(time(NULL));*/
-			//乱数値=rand()%乱数値の要素数+乱数値の最小値
-			val = rand() % 501 - 250;
-			CEnemy* Enemy = new CEnemy();
-			Enemy->x = val;
-			Enemy->y = 250;
-			Enemy->mFy = -1;
-			//敵に値を設定
-			//有効にする
-			Enemy->mEnabled = true;
 
-
+			}
 		}
 	}
 	//時間を加算する
 	GameTime = GameTime + 1;
 	
+	if (GameTime % 3000)
+	{
+		CBossEnemy* EBossEnemy = new CBossEnemy();
+		EBossEnemy->x = -75;
+		EBossEnemy->y = 100;
+		EBossEnemy->mEnabled = true;
+	}
 
 	
 	

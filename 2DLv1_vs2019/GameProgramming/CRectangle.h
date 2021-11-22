@@ -23,6 +23,7 @@ public:
 		EENEMY,
 		ESCREEN,
 		EENEMYITEM,
+		EBOSSENEMY,
 	};
 	ETag mTag;	//列挙型の変数
 	//デフォルトコンストラクタ

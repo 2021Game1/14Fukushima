@@ -68,13 +68,11 @@ void CPlayer::Update() {
 			Bullet->mEnabled = true;
 			//ƒvƒŒƒCƒ„[‚Ì’e‚ðÝ’è
 			Bullet->mTag = CRectangle::EPLAYERBULLET;
-			FireCount = 15;
+			
 		}
-
+		FireCount = 15;
 	}
-
-
-	//37
+	
 }
 
 void CPlayer::Render() {
