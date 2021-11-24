@@ -36,7 +36,6 @@ public:
 	//頂点数の取得
 	int VertexNum();
 
-
 private:
 	//マテリアル名
 	char mName[MATERIAL_NAME_LEN];
@@ -44,6 +43,7 @@ private:
 	float mDiffuse[4];
 	//マテリアル毎の頂点数
 	int mVertexNum;
+	
 };
 
 #endif 
