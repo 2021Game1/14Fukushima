@@ -15,7 +15,6 @@ public:
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	int mFireCount;
 	int vel;
-	static CEnemy* spInstance;
 	void Update();
 	bool Collision(CRectangle& r);
 	void Render();

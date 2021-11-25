@@ -32,23 +32,27 @@ void CBullet::Update() {
 void CBullet::Render() {
 	//有効な時
 	if (mEnabled) {
-		if (mTag==EPLAYERBULLET)
+		if (mTag == EPLAYERBULLET)
 		{
 			//親の描画メソッドを呼ぶ
 			CRectangle::Render(BulletTexture, 17, 26, 99, 88);
 		}
+	}
+	if (mEnabled) {
 		if (mTag == EENEMYBULLET)
 		{
 			//親の描画メソッドを呼ぶ
 			CRectangle::Render(BulletTexture, 206, 216, 114, 104);
 		}
+	}
+	//有効な時
+	if (mEnabled) {
 		if (mTag == EBOSSBULLET)
 		{
 			//親の描画メソッドを呼ぶ
 			CRectangle::Render(BulletTexture, 128, 135, 175, 158);
 		}
-	
-	}
+	}	
 }
 
 //36
@@ -73,7 +77,7 @@ void CBullet::Collision(CRectangle *i, CRectangle *y) {
 				return;
 			}
 		}
-		if (i->mTag == EBOSSBULLET && y->mTag == EPLAYER) {
+		if (i->mTag == EPLAYERBULLET && y->mTag == EBOSSENEMY) {
 			if (i->Collision(*y)) {
 				mEnabled = false;
 				return;

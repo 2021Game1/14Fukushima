@@ -32,6 +32,7 @@ int val;
 int CSceneGame::GameTime;
 
 
+
 void CSceneGame::Init() {
 	//ƒV[ƒ“‚ÌÝ’è
 	mScene = EGAME;
@@ -82,11 +83,8 @@ void CSceneGame::Init() {
 	
 */
 		
-			
-				CBossEnemy* EBossEnemy = new CBossEnemy();
-				EBossEnemy->x = 0;
-				EBossEnemy->y = 100;
-				EBossEnemy->mEnabled = true;
+		
+				
 			
 		
 	
@@ -94,12 +92,21 @@ void CSceneGame::Init() {
 	
 	
 	
-
+		
 
 
 	//37
 		
 
+		CBossEnemy* EBossEnemy = new CBossEnemy();
+		EBossEnemy->x = 0;
+		EBossEnemy->y = 250;
+		EBossEnemy->mFy = -1;
+		EBossEnemy->mEnabled = true;
+			
+
+
+	
 
 
 
@@ -139,7 +146,6 @@ void CSceneGame::Init() {
 
 
 void CSceneGame::Update() {
-	if (ScoreCount < 1000) {
 		for (int k = 0; k < 3; k = k + 1) {
 			if (GameTime % 240 == 0)
 			{
@@ -157,12 +163,11 @@ void CSceneGame::Update() {
 
 			}
 		}
-	}
+	
 	//ŽžŠÔ‚ð‰ÁŽZ‚·‚é
 	GameTime = GameTime + 1;
 
 
-	
 
 	
 
@@ -219,9 +224,10 @@ void CSceneGame::Update() {
 			
 		}
 	}
-	if (Time > 0 && Remain > 0 && ScoreCount != 1000) {
+	if (Time > 0 && Remain > 0) {
 		Time--;
 	}
+
 	
 
 	for (int i = 0; i < VectorRect.size(); i++) {
@@ -262,6 +268,7 @@ void CSceneGame::Update() {
 			Remain = 3;
 			ScoreCount = 0;
 			Time = 31 * 60;
+			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
 		}
 	}
@@ -275,6 +282,7 @@ void CSceneGame::Update() {
 			Remain = 3;
 			ScoreCount = 0;
 			Time = 31 * 60;
+			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
 		}
 	}

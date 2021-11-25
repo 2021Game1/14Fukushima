@@ -22,66 +22,74 @@ CPlayer::CPlayer()
 void CPlayer::Update() {
 	//mEnabledがfalseなら戻る
 	//staticメソッドはどこからでも呼べる
-	if (CKey::Push('A')) {
-		x -= 3;
-		if (x - w < -400) {
-			x = -400 + w;
+	if (CSceneGame::Remain > 0)
+	{
+		if (CKey::Push('A')) {
+			x -= 3;
+			if (x - w < -400) {
+				x = -400 + w;
+			}
 		}
-	}
-	if (CKey::Push('D')) {
-		x += 3;
-		if (x + w > 400) {
-			x = 400 - w;
+		if (CKey::Push('D')) {
+			x += 3;
+			if (x + w > 400) {
+				x = 400 - w;
+			}
 		}
-	}
-	if (CKey::Push('W')) {
-		y += 3;
-		mFx = 0;
-		mFy = 1;
-		if (y + h > 300) {
-			y = 300 - h;
+		if (CKey::Push('W')) {
+			y += 3;
+			mFx = 0;
+			mFy = 1;
+			if (y + h > 300) {
+				y = 300 - h;
+			}
 		}
-	}
-	if (CKey::Push('S')) {
-		y -= 3;
-		if (y - h < -300) {
-			y = -300 + h;
+		if (CKey::Push('S')) {
+			y -= 3;
+			if (y - h < -300) {
+				y = -300 + h;
+			}
 		}
-	}
-	//37
-	//スペースキーで弾発射
-	//0より大きいとき1減算する
-	if (FireCount > 0) {
-		FireCount--;
-	}
-	//FireContが0で、かつ、スペースキーで弾発射
-	else if (CKey::Once(' ')) {
-		if (CPlayerLevel >= 0) {
-			CBullet* Bullet = new CBullet();
-			//発射位置の設定
-			Bullet->x = x;
-			Bullet->y = y;
-			//移動の値を設定
-			Bullet->mFx = mFx * 5;
-			Bullet->mFy = mFy * 5;
-			//有効にする
-			Bullet->mEnabled = true;
-			//プレイヤーの弾を設定
-			Bullet->mTag = CRectangle::EPLAYERBULLET;
-			
+		//37
+		//スペースキーで弾発射
+		//0より大きいとき1減算する
+		if (FireCount > 0) {
+			FireCount--;
 		}
-		FireCount = 15;
+		//FireContが0で、かつ、スペースキーで弾発射
+		else if (CKey::Once(' ')) {
+			if (CPlayerLevel >= 0) {
+				CBullet* Bullet = new CBullet();
+				//発射位置の設定
+				Bullet->x = x;
+				Bullet->y = y;
+				//移動の値を設定
+				Bullet->mFx = mFx * 5;
+				Bullet->mFy = mFy * 5;
+				//有効にする
+				Bullet->mEnabled = true;
+				//プレイヤーの弾を設定
+				Bullet->mTag = CRectangle::EPLAYERBULLET;
+
+			}
+			FireCount = 15;
+		}
+
 	}
-	
 }
+	
 
 void CPlayer::Render() {
-	CRectangle::Render(Texture, 65, 115, 85, 25);
+	if (CSceneGame::Remain > 0)
+	{
+		CRectangle::Render(Texture, 65, 115, 85, 25);
+	}
 }
+	
 
 //36
 void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
-	if ((*ry).mTag == EBLOCK) {
+	if ((*ry).mTag == EBOSSENEMY) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			int mx, my;
 			if (CRectangle::Collision(ry, &mx, &my)) {
@@ -112,7 +120,17 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
 				(*ry).mEnabled = false;
-			
+				
+			}
+		}
+	}
+	if ((*ry).mTag == EBOSSBULLET) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				(*ry).mEnabled = false;
+				if (CSceneGame::Time != 0) {
+					CSceneGame::Remain -= 1;
+				}
 			}
 		}
 	}

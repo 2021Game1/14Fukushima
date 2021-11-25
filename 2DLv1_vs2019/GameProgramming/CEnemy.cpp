@@ -8,7 +8,6 @@
 extern CTexture ItemTexture;
 extern CTexture Texture;
 
-CEnemy* CEnemy::spInstance = nullptr;
 //CBullet CEnemy::EBullet[20];
 
 
@@ -18,7 +17,6 @@ CEnemy::CEnemy()
 {
 	{
 
-		spInstance = this;
 		w = 25;
 		h = 25;
 		//37
@@ -77,6 +75,7 @@ void CEnemy::Update() {
 			//—LŒø‚É‚·‚é
 			EBullet->mEnabled = true;
 			EBullet->mTag = EENEMYBULLET;
+
 		}
 		mFireCount = 40;
 

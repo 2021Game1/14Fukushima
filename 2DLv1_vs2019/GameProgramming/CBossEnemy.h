@@ -14,7 +14,6 @@ public:
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	int mBossFireCount;
 	static int CBossEnemyLife;
-	static CBossEnemy* spInstance;
 	void Update();
 	bool Collision(CRectangle& r);
 	void Render();
