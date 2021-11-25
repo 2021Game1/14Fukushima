@@ -108,6 +108,9 @@ void CSceneGame::Update() {
 	
 	mBackGround.Render(CMatrix());//背景モデルの描画
 
+	mPlayer.bullet.Update();
+	mPlayer.bullet.Render();
+
 	//CTransform trans; //変数行列インスタンスの作成
 	//trans.Position(CVector(0.5f, 1.8f, 0.5f)); //位置の設定
 	//trans.Rotation(CVector(-10.0f, -20.0f, -30.0f)); //回転の設定

@@ -9,6 +9,14 @@
 
 //更新処理
 void CPlayer::Update() {
+	//スペースキーを入力で弾を発射
+	//スペースキーを入力で弾を発射
+	if (CKey::Push(VK_SPACE)){
+		bullet.Set(0.1f, 1.5f);
+		bullet.Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
+		bullet.Rotation(mRotation);
+		
+	}
 	//Dキー入力で回転
 	if (CKey::Push('D')) {
 		//Y軸の回転値を減少
@@ -30,7 +38,7 @@ void CPlayer::Update() {
 		//X軸の回転値を減算
 		mRotation = mRotation - ROTATION_XV;
 	}
-	//Wキー入力で上向き
+	//Wキー入力で下向き
 	if (CKey::Push('W'))
 	{
 		//X軸の回転値を加算

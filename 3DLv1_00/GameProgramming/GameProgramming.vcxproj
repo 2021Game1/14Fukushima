@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CBullet.cpp" />
     <ClCompile Include="src\CCharacter.cpp" />
     <ClCompile Include="src\CKey.cpp" />
     <ClCompile Include="src\CMaterial.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="src\CMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CBullet.h" />
     <ClInclude Include="src\CCharacter.h" />
     <ClInclude Include="src\CKey.h" />
     <ClInclude Include="src\CMaterial.h" />
