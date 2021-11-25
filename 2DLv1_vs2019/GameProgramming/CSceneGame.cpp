@@ -36,18 +36,21 @@ void CSceneGame::Init() {
 	//ƒV[ƒ“‚ÌÝ’è
 	mScene = EGAME;
 
-	CSceneScreen* Screen = new CSceneScreen();
-	Screen->x = 0;
-	Screen->y = 250;
-	Screen->speed = SCROLL_SPEED;
-	Screen->mEnabled = true;
-
-	CSceneScreen* Screen2 = new CSceneScreen();
-	Screen2->x = 0;
-	Screen2->y = 1700;
-	Screen2->speed = SCROLL_SPEED;
-	Screen2->mEnabled = true;
 	
+		CSceneScreen* Screen = new CSceneScreen();
+		Screen->x = 0;
+		Screen->y = 250;
+		Screen->speed = SCROLL_SPEED;
+		Screen->mEnabled = true;
+
+	
+		CSceneScreen* Screen2 = new CSceneScreen();
+		Screen2->x = 0;
+		Screen2->y = 1700;	
+		Screen2->speed = SCROLL_SPEED;
+		Screen2->mEnabled = true;
+	
+
 	//ƒNƒ‰ƒX‚Ìƒƒ“ƒo•Ï”‚Ö‚Ì‘ã“ü
 //37
 /*
@@ -78,7 +81,14 @@ void CSceneGame::Init() {
 	}
 	
 */
-	
+		
+			
+				CBossEnemy* EBossEnemy = new CBossEnemy();
+				EBossEnemy->x = 0;
+				EBossEnemy->y = 100;
+				EBossEnemy->mEnabled = true;
+			
+		
 	
 	
 	
@@ -88,13 +98,12 @@ void CSceneGame::Init() {
 
 
 	//37
+		
 
 
 
 
-
-
-	
+		
 
 	
 
@@ -104,6 +113,10 @@ void CSceneGame::Init() {
 	Player->w = 20;
 	Player->h = 20;
 	Player->mEnabled = true;
+
+	
+
+
 
 	/*37
 	for (int k = 0; k < 10; k++) {
@@ -126,7 +139,7 @@ void CSceneGame::Init() {
 
 
 void CSceneGame::Update() {
-	if (GameTime % !3000) {
+	if (ScoreCount < 1000) {
 		for (int k = 0; k < 3; k = k + 1) {
 			if (GameTime % 240 == 0)
 			{
@@ -147,16 +160,10 @@ void CSceneGame::Update() {
 	}
 	//ŽžŠÔ‚ð‰ÁŽZ‚·‚é
 	GameTime = GameTime + 1;
-	
-	if (GameTime % 3000)
-	{
-		CBossEnemy* EBossEnemy = new CBossEnemy();
-		EBossEnemy->x = -75;
-		EBossEnemy->y = 100;
-		EBossEnemy->mEnabled = true;
-	}
+
 
 	
+
 	
 
 	
@@ -212,7 +219,7 @@ void CSceneGame::Update() {
 			
 		}
 	}
-	if (Time > 0 && Remain > 0) {
+	if (Time > 0 && Remain > 0 && ScoreCount != 1000) {
 		Time--;
 	}
 	
@@ -236,11 +243,14 @@ void CSceneGame::Update() {
 	CText::DrawString("Player", 200, -250, 12, 12);
 	sprintf(buf, "%d", Remain);
 	CText::DrawString(buf, 360, -250, 12, 12);
-
-	//•¶Žš—ñ‚Ì•`‰æ
-	CText::DrawString("Time", 200, 250, 12, 12);
-	sprintf(buf, "%d", Time / 60);
-	CText::DrawString(buf, 300, 250, 12, 12);
+	if (ScoreCount != 1000)
+	{
+		//•¶Žš—ñ‚Ì•`‰æ
+		CText::DrawString("Time", 200, 250, 12, 12);
+		sprintf(buf, "%d", Time / 60);
+		CText::DrawString(buf, 300, 250, 12, 12);
+	}
+	
 
 	if (Remain == 0) {
 		CText::DrawString("GAME SCORE", -180, 0, 16, 16);
