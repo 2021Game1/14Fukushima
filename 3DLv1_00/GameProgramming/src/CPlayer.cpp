@@ -6,6 +6,7 @@
 #define ROTATION_YV CVector(0.0f,1.0f,0.0f)//回転速度
 #define ROTATION_XV CVector(1.0f,0.0f,0.0f)//回転速度
 #define VELOCITY CVector(0.0f,0.0f,0.1f)//移動速度
+#
 
 //更新処理
 void CPlayer::Update() {

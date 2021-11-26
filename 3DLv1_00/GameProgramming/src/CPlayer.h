@@ -4,6 +4,8 @@
 #include"CCharacter.h"
 //弾クラスのインクルード
 #include"CBullet.h"
+
+
 /*
 プレイヤークラス
 キャラクタークラスを継承
