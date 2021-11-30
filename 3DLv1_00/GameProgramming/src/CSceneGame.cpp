@@ -1,21 +1,21 @@
 #include "CSceneGame.h"
 //OpenGL
 #include"glut.h"
-//2.1
+//ベクトルクラスのインクルード
 #include"CVector.h"
-//3.2
+//三角形クラスのインクルード
 #include"CTriangle.h"
-//4.2
+//キークラスのインクルード
 #include"CKey.h"
-//課題11
+//マトリックスクラスのインクルード
 #include"CMatrix.h"
-//16.2
+//トランスフォームクラスのインクルード
 #include"CTransform.h"
-//16.2
+//キャラクタクラスのインクルード
 #include"CCharacter.h"
-//17.1
+//プレイヤークラスのインクルード
 #include"CPlayer.h"
-//21.6
+//タスクマネージャクラスのインクルード
 #include"CTaskManager.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
@@ -23,10 +23,10 @@
 //カメラの視点の変数
 CVector mEye;
 
-//課題11
+//マトリックスの変数
 CMatrix matrix;
 
-//17.1
+//プレイヤーの変数
 CPlayer mPlayer;
 
 void CSceneGame::Init() {
@@ -34,7 +34,7 @@ void CSceneGame::Init() {
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
 	mBackGround.Load(MODEL_BACKGROUND);
-	//課題11
+	//マトリックスの描画変数
 	matrix.Print();
 	
 	//プレイヤーのモデルポインタ
