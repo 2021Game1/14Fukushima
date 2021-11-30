@@ -22,39 +22,54 @@ void CBossEnemy::Update() {
 	}
 
 	else {
-		for (int j = 0; j < 1; j++) {
+		for (int j = 0; j < 3; j++) {
 			CBullet* BEBullet = new CBullet();
 			//座標設定
 			BEBullet->x = x;
 			BEBullet->y = y;
-			//移動量設定
-			if (CBossEnemy::x < CPlayer::spInstance->x) {
-				BEBullet->mFx = +1;
-				BEBullet->mFy = -3 * ((j / 2) + 1);
-				
-				//有効にする
-				
-			}
-			if (CBossEnemy::x == CPlayer::spInstance->x) {
-				BEBullet->mFx = 0;
-				BEBullet->mFy = -3 * ((j / 2) + 1);
-				
-				
-			}
-
-			if (CBossEnemy::x > CPlayer::spInstance->x) {
-				BEBullet->mFx = -1;
-				BEBullet->mFy = -3 * ((j / 2) + 1);
-				
-				
-			}
-			//有効にする
-			BEBullet->mEnabled = true;
-			BEBullet->mTag = EBOSSBULLET;
 			
+			for (int i = 0; i < 1; i++) {
+				if (CBossEnemy::x > CPlayer::spInstance->x > -50 || CBossEnemy::x < CPlayer::spInstance->x < 50 || CBossEnemy::x == CPlayer::spInstance->x) {
+					BEBullet->mFx = 0;
+					BEBullet->mFy = -2;
+					//有効にする
+					BEBullet->mEnabled = true;
+					BEBullet->mTag = EBOSSBULLET;
+					//発射間隔を60フレームにする
+					break;
+				}
+				mBossFireCount = 30;
+			}
+			for (int i = 0; i < 1; i++) {
+				if (CBossEnemy::x > CPlayer::spInstance->x) {
+					BEBullet->mFx = -1;
+					BEBullet->mFy = -3 * ((j / 2) + 1);
+					//有効にする
+					BEBullet->mEnabled = true;
+					BEBullet->mTag = EBOSSBULLET;
+					//発射間隔を60フレームにする
+					break;
+				}
+				mBossFireCount = 30;
+			}
+			//移動量設定
+			//敵弾数分繰り返し
+			for (int i = 0; i < 1; i++) {
+				if (CBossEnemy::x < CPlayer::spInstance->x) {
+					BEBullet->mFx = +1;
+					BEBullet->mFy = -3 * ((j / 2) + 1);
+
+					//有効にする
+					BEBullet->mEnabled = true;
+					BEBullet->mTag = EBOSSBULLET;
+					//発射間隔を60フレームにする
+					break;
+				}
+				mBossFireCount = 30;
+			}
 		}
 			
-		mBossFireCount = 30;
+		
 	}
 }
 

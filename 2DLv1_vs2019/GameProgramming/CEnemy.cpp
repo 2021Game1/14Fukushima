@@ -321,7 +321,7 @@ bool CEnemy::Collision(CRectangle& r) {
 			}
 				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 				{
-					CSceneGame::ScoreCount += 50;
+					CSceneGame::ScoreCount += 1000;
 				}
 
 			break;

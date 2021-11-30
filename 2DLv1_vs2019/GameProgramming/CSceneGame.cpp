@@ -19,17 +19,19 @@ int CSceneGame::CLEAR = 0;
 
 int CSceneGame::OVER = 0;
 
-int CSceneGame::ScoreCount;
+int CSceneGame::ScoreCount = 0;
+
+int CSceneGame::Bossflug = 0;
 
 char CSceneGame::buf[10];
+
 
 //時間を表す変数
 
 int val;
 
-
-
 int CSceneGame::GameTime;
+
 
 
 
@@ -37,7 +39,8 @@ void CSceneGame::Init() {
 	//シーンの設定
 	mScene = EGAME;
 
-	
+
+
 		CSceneScreen* Screen = new CSceneScreen();
 		Screen->x = 0;
 		Screen->y = 250;
@@ -51,6 +54,8 @@ void CSceneGame::Init() {
 		Screen2->speed = SCROLL_SPEED;
 		Screen2->mEnabled = true;
 	
+		
+
 
 	//クラスのメンバ変数への代入
 //37
@@ -98,11 +103,7 @@ void CSceneGame::Init() {
 	//37
 		
 
-		CBossEnemy* EBossEnemy = new CBossEnemy();
-		EBossEnemy->x = 0;
-		EBossEnemy->y = 250;
-		EBossEnemy->mFy = -1;
-		EBossEnemy->mEnabled = true;
+		
 			
 
 
@@ -147,7 +148,7 @@ void CSceneGame::Init() {
 
 void CSceneGame::Update() {
 		for (int k = 0; k < 3; k = k + 1) {
-			if (GameTime % 240 == 0)
+			if (GameTime % 240 == 0 && ScoreCount < 1000)
 			{
 				/*srand(time(NULL));*/
 				//乱数値=rand()%乱数値の要素数+乱数値の最小値
@@ -167,8 +168,24 @@ void CSceneGame::Update() {
 	//時間を加算する
 	GameTime = GameTime + 1;
 
-
-
+	
+		if (Bossflug != 2)
+		{
+			if (ScoreCount > 1000)
+			{
+				CBossEnemy* EBossEnemy = new CBossEnemy();
+				Bossflug += 1;
+				EBossEnemy->x = 0;
+				EBossEnemy->y = 250;
+				EBossEnemy->mFy = -1;
+				EBossEnemy->mEnabled = true;
+				Bossflug = 2;
+			}
+			
+		}
+	
+	
+	
 	
 
 	
@@ -224,7 +241,7 @@ void CSceneGame::Update() {
 			
 		}
 	}
-	if (Time > 0 && Remain > 0) {
+	if (Time > 0 && Remain > 0 && ScoreCount < 1000) {
 		Time--;
 	}
 
@@ -249,7 +266,7 @@ void CSceneGame::Update() {
 	CText::DrawString("Player", 200, -250, 12, 12);
 	sprintf(buf, "%d", Remain);
 	CText::DrawString(buf, 360, -250, 12, 12);
-	if (ScoreCount != 1000)
+	if (ScoreCount < 1000)
 	{
 		//文字列の描画
 		CText::DrawString("Time", 200, 250, 12, 12);
@@ -268,6 +285,7 @@ void CSceneGame::Update() {
 			Remain = 3;
 			ScoreCount = 0;
 			Time = 31 * 60;
+			Bossflug = 0;
 			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
 		}
@@ -282,6 +300,7 @@ void CSceneGame::Update() {
 			Remain = 3;
 			ScoreCount = 0;
 			Time = 31 * 60;
+			Bossflug = 0;
 			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
 		}

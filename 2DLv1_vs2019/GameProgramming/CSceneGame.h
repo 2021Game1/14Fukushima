@@ -49,8 +49,8 @@ public:
 	static int CLEAR;
 	//ゲームオーバー
 	static int OVER;
-
-	
+	//ボスのフラグ管理
+	static int Bossflug;
 
 	//整数を文字列に変換する
 	static char buf[10];//9文字までOK
