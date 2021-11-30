@@ -13,9 +13,12 @@ void CPlayer::Update() {
 	//スペースキーを入力で弾を発射
 	//スペースキーを入力で弾を発射
 	if (CKey::Push(VK_SPACE)){
-		bullet.Set(0.1f, 1.5f);
-		bullet.Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
-		bullet.Rotation(mRotation);
+		CBullet* bullet = new CBullet();
+		bullet->Set(0.1f, 1.5f);
+		bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
+		bullet->Rotation(mRotation);
+		bullet->Update();
+		TaskManager.Add(bullet);
 		
 	}
 	//Dキー入力で回転

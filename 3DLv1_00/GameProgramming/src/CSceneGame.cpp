@@ -15,6 +15,8 @@
 #include"CCharacter.h"
 //17.1
 #include"CPlayer.h"
+//21.6
+#include"CTaskManager.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
@@ -108,8 +110,10 @@ void CSceneGame::Update() {
 	
 	mBackGround.Render(CMatrix());//背景モデルの描画
 
-	mPlayer.bullet.Update();
-	mPlayer.bullet.Render();
+	//タスクマネージャの更新
+	TaskManager.Update();
+	//タスクマネージャの描画	
+	TaskManager.Render();
 
 	//CTransform trans; //変数行列インスタンスの作成
 	//trans.Position(CVector(0.5f, 1.8f, 0.5f)); //位置の設定

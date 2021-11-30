@@ -5,13 +5,14 @@
 #include"CTransform.h"
 //モデルクラスのインクルード
 #include"CModel.h"
-
+//タスクマネージャクラスのインクルード
+#include"CTask.h"
 /*
 キャラクタークラス
 ゲームキャラクタの基本的な機能を定義する
 */
 
-class CCharacter : public CTransform{
+class CCharacter : public CTransform,public CTask{
 protected:
 	CModel* mpModel; //モデルのポインタ
 public:
