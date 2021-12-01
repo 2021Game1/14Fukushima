@@ -4,6 +4,7 @@
 #include "CSceneGame.h"
 #include "CPlayer.h"
 #include"CItem.h"
+#include"CSceneTitle.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture ItemTexture;
 extern CTexture Texture;
@@ -30,57 +31,60 @@ CEnemy::CEnemy()
 
 void CEnemy::Update() {
 
-
-	//mEnabledがfalseなら戻る
-	if (!mEnabled)return;
-
-	if (y < -280)
+	if (CSceneTitle::mStage == 0)
 	{
-		//敵のフラグをfalseに
-		mEnabled = false;
-	}
+		//mEnabledがfalseなら戻る
+		if (!mEnabled)return;
 
-	//有効な時
-	if (mEnabled) {
-		//移動
-		x += mFx * 0;
-		y += mFy * 1;
-	}
-	//60フレームに1回発射
-	if (mFireCount > 0) {
-		mFireCount--;
-	}
-	//37e
-	/**/
+		if (y < -280)
+		{
+			//敵のフラグをfalseに
+			mEnabled = false;
+		}
 
-	else {
-		for (int j = 0; j < 1; j++) {
-			CBullet* EBullet = new CBullet();
-			//座標設定
-			EBullet->x = x;
-			EBullet->y = y;
-			//移動量設定
-			if (CEnemy::x < CPlayer::spInstance->x) {
-				EBullet->mFx = +1;
-				EBullet->mFy = -3 * ((j / 2) + 1);
+		//有効な時
+		if (mEnabled) {
+			//移動
+			x += mFx * 0;
+			y += mFy * 1;
+		}
+		//60フレームに1回発射
+		if (mFireCount > 0) {
+			mFireCount--;
+		}
+		//37e
+		/**/
+
+		else {
+			for (int j = 0; j < 1; j++) {
+				CBullet* EBullet = new CBullet();
+				//座標設定
+				EBullet->x = x;
+				EBullet->y = y;
+				//移動量設定
+				if (CEnemy::x < CPlayer::spInstance->x) {
+					EBullet->mFx = +1;
+					EBullet->mFy = -3 * ((j / 2) + 1);
+				}
+				if (CEnemy::x == CPlayer::spInstance->x) {
+					EBullet->mFx = 0;
+					EBullet->mFy = -3 * ((j / 2) + 1);
+				}
+				if (CEnemy::x > CPlayer::spInstance->x) {
+					EBullet->mFx = -1;
+					EBullet->mFy = -3 * ((j / 2) + 1);
+				}
+				//有効にする
+				EBullet->mEnabled = true;
+				EBullet->mTag = EENEMYBULLET;
+
 			}
-			if (CEnemy::x == CPlayer::spInstance->x) {
-				EBullet->mFx = 0;
-				EBullet->mFy = -3 * ((j / 2) + 1);
-			}
-			if (CEnemy::x > CPlayer::spInstance->x) {
-				EBullet->mFx = -1;
-				EBullet->mFy = -3 * ((j / 2) + 1);
-			}
-			//有効にする
-			EBullet->mEnabled = true;
-			EBullet->mTag = EENEMYBULLET;
+			mFireCount = 40;
+
 
 		}
-		mFireCount = 40;
-
-
 	}
+
 
 	
 }

@@ -3,6 +3,7 @@
 
 #include "CScene.h"
 #include "CText.h"
+#include"CSceneGame.h"
 
 class CSceneTitle : public CScene {
 public:
@@ -12,6 +13,8 @@ public:
 	void Update();
 	//Ÿ‚ÌƒV[ƒ“‚Ìæ“¾
 	EScene GetNextScene();
+
+	static int mStage;
 };
 
 #endif

@@ -12,6 +12,7 @@
 #include "CMap.h"
 #include "CSceneScreen.h"
 #include "CBossEnemy.h"
+#include "CSceneTitle.h"
 /*
 ƒQ[ƒ€‚ÌƒV[ƒ“
 */

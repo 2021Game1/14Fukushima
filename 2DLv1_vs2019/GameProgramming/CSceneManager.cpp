@@ -37,6 +37,26 @@ void CSceneManager::Update() {
 			mpScene = new CSceneGame();
 			mpScene->Init();
 			break;
+		case CScene::EGAME_A:
+			mpScene = new CSceneGame();
+			mpScene->Init();
+			break;
+		case CScene::EGAME_B:
+			mpScene = new CSceneGame();
+			mpScene->Init();
+			break;
+		case CScene::EGAME_C:
+			mpScene = new CSceneGame();
+			mpScene->Init();
+			break;
+		case CScene::EGAME_D:
+			mpScene = new CSceneGame();
+			mpScene->Init();
+			break;
+		case CScene::EGAME_E:
+			mpScene = new CSceneGame();
+			mpScene->Init();
+			break;
 		case CScene::ETITLE:
 			mpScene = new CSceneTitle();
 			mpScene->Init();
