@@ -19,7 +19,10 @@ public:
 	void Update();
 	//描画
 	void Render();
-
+	//弾の生存時間
+	int mLife;
+	//デフォルトコンストラクタ
+	CBullet();
 private:
 	//三角形
 	CTriangle mT;

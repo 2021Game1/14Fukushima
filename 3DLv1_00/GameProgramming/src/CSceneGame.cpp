@@ -45,17 +45,20 @@ void CSceneGame::Init() {
 }
 
 void CSceneGame::Update() {
+	//タスクマネージャの更新
+	TaskManager.Update();
 
-	//頂点１，頂点２，頂点３，法線データの作成
-	CVector v0, v1, v2, n;
-	//法線を上向きで設定する
-	n.Set(0.0f, 1.0f, 0.0f);
-	//頂点１の座標を設定する
-	v0.Set(0.0f, 0.0f, 0.5f);
-	//頂点２の座標を設定する
-	v1.Set(1.0f, 0.0f, 0.0f);
-	//頂点３の座標を設定する
-	v2.Set(0.0f, 0.0f, -0.5f);
+
+	////頂点１，頂点２，頂点３，法線データの作成
+	//CVector v0, v1, v2, n;
+	////法線を上向きで設定する
+	//n.Set(0.0f, 1.0f, 0.0f);
+	////頂点１の座標を設定する
+	//v0.Set(0.0f, 0.0f, 0.5f);
+	////頂点２の座標を設定する
+	//v1.Set(1.0f, 0.0f, 0.0f);
+	////頂点３の座標を設定する
+	//v2.Set(0.0f, 0.0f, -0.5f);
 
 	////視点の移動
 	////Jキー:X軸マイナス方向へ移動
@@ -94,7 +97,7 @@ void CSceneGame::Update() {
 	
 	
 
-	mPlayer.Update();
+	/*mPlayer.Update();*/
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点,注視点,上方向
 	//視点を求める
@@ -105,16 +108,16 @@ void CSceneGame::Update() {
 	u = CVector(0.0f,1.0f,0.0f) * mPlayer.MatirixRotate();
 	//カメラの設定
 	gluLookAt(e.X(), e.Y(), e.Z(), c.X(), c.Y(), c.Z(), u.X(), u.Y(), u.Z());
-	mPlayer.Render();
+	//mPlayer.Render();
 	
 	
-	mBackGround.Render(CMatrix());//背景モデルの描画
 
-	//タスクマネージャの更新
-	TaskManager.Update();
+	
+	//タスクリストの削除
+	TaskManager.Delete();
 	//タスクマネージャの描画	
 	TaskManager.Render();
-
+	mBackGround.Render(CMatrix());//背景モデルの描画
 	//CTransform trans; //変数行列インスタンスの作成
 	//trans.Position(CVector(0.5f, 1.8f, 0.5f)); //位置の設定
 	//trans.Rotation(CVector(-10.0f, -20.0f, -30.0f)); //回転の設定

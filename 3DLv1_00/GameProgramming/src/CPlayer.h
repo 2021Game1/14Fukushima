@@ -4,8 +4,7 @@
 #include"CCharacter.h"
 //弾クラスのインクルード
 #include"CBullet.h"
-//タスクマネージャクラスのインクルード
-#include"CTaskManager.h"
+
 
 
 /*
@@ -16,7 +15,7 @@
 class CPlayer : public CCharacter {
 public:
 	//CBulletクラスのインスタンス変数
-	CBullet bullet;
+	/*CBullet bullet;*/
 	//更新処理
 	void Update();
 

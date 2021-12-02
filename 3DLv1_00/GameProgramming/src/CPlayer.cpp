@@ -2,6 +2,8 @@
 #include"CPlayer.h"
 //キー入力クラスのインクルード
 #include"CKey.h"
+//タスクマネージャクラスのインクルード
+#include"CTaskManager.h"
 
 #define ROTATION_YV CVector(0.0f,1.0f,0.0f)//回転速度
 #define ROTATION_XV CVector(1.0f,0.0f,0.0f)//回転速度
@@ -18,7 +20,7 @@ void CPlayer::Update() {
 		bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
 		bullet->Rotation(mRotation);
 		bullet->Update();
-		TaskManager.Add(bullet);
+	//TaskManager.Add(bullet);
 		
 	}
 	//Dキー入力で回転

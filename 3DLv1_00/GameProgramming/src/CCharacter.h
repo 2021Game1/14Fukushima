@@ -5,8 +5,9 @@
 #include"CTransform.h"
 //モデルクラスのインクルード
 #include"CModel.h"
-//タスクマネージャクラスのインクルード
+//タスククラスのインクルード
 #include"CTask.h"
+
 /*
 キャラクタークラス
 ゲームキャラクタの基本的な機能を定義する
@@ -21,6 +22,10 @@ public:
 	void Model(CModel* m);
 	//描画処理
 	void Render();
+	//コンストラクタ
+	CCharacter();
+	//デストラクタ
+	~CCharacter();
 
 };
 #endif 
