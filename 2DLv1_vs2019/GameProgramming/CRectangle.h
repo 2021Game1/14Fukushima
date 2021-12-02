@@ -25,6 +25,7 @@ public:
 		EENEMYITEM,
 		EBOSSBULLET,
 		EBOSSENEMY,
+		EENEMYBLOCK,
 	};
 	ETag mTag;	//列挙型の変数
 	//デフォルトコンストラクタ

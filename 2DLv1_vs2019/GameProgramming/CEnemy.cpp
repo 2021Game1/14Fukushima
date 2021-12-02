@@ -169,6 +169,11 @@ bool CEnemy::Collision(CRectangle& r) {
 	//親のCollisionメソッドを呼び出す
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
+		case EBLOCK:
+			//衝突していれば反転
+			mFx *= -1;
+			mFy *= -1;
+			break;
 		case EPLAYERBULLET:	
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;

@@ -9,10 +9,10 @@
 
 // テクスチャクラスのインクルード
 #include "CTexture.h"
-CTexture Texture; //マップの画像
+CTexture Texture; //全体の画像
 CTexture BulletTexture; //弾の画像
 CTexture ItemTexture;//アイテムの画像
-
+CTexture Block;//ブロックの画像
 //シーンマネージャのインスタンス
 CSceneManager SceneManager;
 

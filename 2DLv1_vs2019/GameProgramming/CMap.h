@@ -2,16 +2,18 @@
 #define CMAP_H
 
 #include "CRectangle.h"
+#include"CTexture.h"
+#include"CSceneTitle.h"
 
-extern CTexture Texture;
+extern CTexture Block;
 
 class CMap : public CRectangle {
 public:
-	void Render() {
-		if (mEnabled) {
-			
-		}
-	}
+	CTexture mBlock;
+	CMap();
+	void Render();
+	CScene::EScene mScene;
+
 };
 
 #endif

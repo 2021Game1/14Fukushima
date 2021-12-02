@@ -42,7 +42,7 @@ void CSceneTitle::Update() {
 		CText::DrawString("Push ENTER Key", -200, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			//次のシーンはゲーム
-			mScene = EGAME;
+			mScene = EGAME_A;
 		}
 	}
 	if (mStage == 2)
@@ -52,7 +52,7 @@ void CSceneTitle::Update() {
 		CText::DrawString("Push ENTER Key", -200, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			//次のシーンはゲーム
-			mScene = EGAME;
+			mScene = EGAME_B;
 		}
 	}
 	if (mStage == 3)
@@ -62,7 +62,7 @@ void CSceneTitle::Update() {
 		CText::DrawString("Push ENTER Key", -200, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			//次のシーンはゲーム
-			mScene = EGAME;
+			mScene = EGAME_C;
 		}
 	}
 	if (mStage == 4)
@@ -72,7 +72,7 @@ void CSceneTitle::Update() {
 		CText::DrawString("Push ENTER Key", -200, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			//次のシーンはゲーム
-			mScene = EGAME;
+			mScene = EGAME_D;
 		}
 	}
 	if (mStage == 5)
@@ -82,7 +82,7 @@ void CSceneTitle::Update() {
 		CText::DrawString("Push ENTER Key", -200, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			//次のシーンはゲーム
-			mScene = EGAME;
+			mScene = EGAME_E;
 		}
 	}
 

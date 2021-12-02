@@ -134,5 +134,22 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 			}
 		}
 	}
+	if ((*ry).mTag == EBLOCK) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			int mx, my;
+			if (CRectangle::Collision(ry, &mx, &my)) {
+				//abs(x)x‚Ìâ‘Î’l‚ğ‹‚ß‚é
+				//ˆÚ“®—Ê‚ª­‚È‚¢•ûŒü‚¾‚¯ˆÚ“®‚³‚¹‚é
+				if (abs(mx) < abs(my)) {
+					//Rect‚ğX‚¾‚¯ˆÚ“®‚·‚é
+					x += mx;
+				}
+				else {
+					//Rect‚ğy‚¾‚¯ˆÚ“®‚·‚é
+					y += my;
+				}
+			}
+		}
+	}
 }
 
