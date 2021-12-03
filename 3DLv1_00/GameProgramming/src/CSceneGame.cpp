@@ -13,8 +13,6 @@
 #include"CTransform.h"
 //キャラクタクラスのインクルード
 #include"CCharacter.h"
-//プレイヤークラスのインクルード
-#include"CPlayer.h"
 //タスクマネージャクラスのインクルード
 #include"CTaskManager.h"
 //モデルデータの指定
@@ -26,8 +24,7 @@ CVector mEye;
 //マトリックスの変数
 CMatrix matrix;
 
-//プレイヤーの変数
-CPlayer mPlayer;
+
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);

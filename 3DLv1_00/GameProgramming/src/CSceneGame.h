@@ -2,6 +2,9 @@
 #define CSCENEGAME_H
 #include "CScene.h"
 #include "CModel.h"
+//プレイヤークラスのインクルード
+#include"CPlayer.h"
+
 /*
 ゲームのシーン
 */
@@ -14,6 +17,8 @@ public:
 	//モデルクラスのインスタンス作成
 	CModel mModel;
 	CModel mBackGround; //背景モデル
+	//プレイヤーの変数
+	CPlayer mPlayer;
 };
 
 #endif
