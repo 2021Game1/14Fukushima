@@ -9,7 +9,6 @@
 #include "CText.h"
 // テクスチャクラスのインクルード
 #include "CTexture.h"
-#include "CMap.h"
 #include "CSceneScreen.h"
 #include "CBossEnemy.h"
 #include "CSceneTitle.h"

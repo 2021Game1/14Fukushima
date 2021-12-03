@@ -52,6 +52,10 @@ void CBossEnemy::Update() {
 					if (CBossEnemy::x > CPlayer::spInstance->x) {
 						BEBullet->mFx = -1;
 						BEBullet->mFy = -3 * ((j / 2) + 1);
+					if (CBossEnemy::y < CPlayer::spInstance->y){
+						BEBullet->mFy *= -1;
+						BEBullet->y += h;
+					}
 						//有効にする
 						BEBullet->mEnabled = true;
 						BEBullet->mTag = EBOSSBULLET;
@@ -66,6 +70,10 @@ void CBossEnemy::Update() {
 					if (CBossEnemy::x < CPlayer::spInstance->x) {
 						BEBullet->mFx = +1;
 						BEBullet->mFy = -3 * ((j / 2) + 1);
+						if (CBossEnemy::y < CPlayer::spInstance->y) {
+							BEBullet->mFy *= -1;
+							BEBullet->y += h;
+						}
 
 						//有効にする
 						BEBullet->mEnabled = true;
@@ -80,7 +88,34 @@ void CBossEnemy::Update() {
 
 		}
 	}
+	if (x >= 350) {
+		//衝突していれば反転
+
+
 	
+			mFx -= 2;
+
+	}
+	if (y >= 250)
+	{
+
+			mFy -= 1;
+			
+	}
+	if (y <= -250)
+	{
+
+		mFy += 1;
+		
+	}
+	if (x <= -350) {
+	
+			//衝突していれば反転
+			mFx += 2;
+			
+
+	}
+
 }
 
 bool CBossEnemy::Collision(CRectangle& r) {
@@ -90,12 +125,6 @@ bool CBossEnemy::Collision(CRectangle& r) {
 	//親のCollisionメソッドを呼び出す
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
-		case EBLOCK:
-			//衝突していれば反転
-			mFx *= -1;
-			mFy *= -1;
-			break;
-
 		case EPLAYERBULLET:
 			CBossEnemy::CBossEnemyLife -= 1;
 			if (CBossEnemy::CBossEnemyLife == 0)

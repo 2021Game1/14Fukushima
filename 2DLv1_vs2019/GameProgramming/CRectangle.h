@@ -18,14 +18,14 @@ public:
 	enum ETag {
 		EBLOCK,			//ブロック
 		EPLAYERBULLET,	//プレイヤー弾
-		EPLAYER,
-		EENEMYBULLET,
-		EENEMY,
-		ESCREEN,
-		EENEMYITEM,
-		EBOSSBULLET,
-		EBOSSENEMY,
-		EENEMYBLOCK,
+		EPLAYER,        //プレイヤー
+		EENEMYBULLET,   //敵の弾
+		EENEMY,         //敵
+		ESCREEN,        //スクリーン
+		EENEMYITEM,     //アイテム
+		EBOSSBULLET,    //ボスの弾
+		EBOSSENEMY,     //ボス
+		ESTAGEBLOCK,    //白黒ブロック
 	};
 	ETag mTag;	//列挙型の変数
 	//デフォルトコンストラクタ

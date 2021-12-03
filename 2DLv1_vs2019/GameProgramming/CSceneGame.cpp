@@ -3,7 +3,7 @@
 #include"CSceneScreen.h"
 #include<stdlib.h>
 #include<time.h>
-
+#include"CBlock.h"
 #define WIDTH 800.0 //画面幅
 
 #define HEIGHT 600.0 //画面高さ
@@ -36,318 +36,36 @@ int CSceneGame::GameTime;
 
 
 void CSceneGame::Init() {
-	if (CSceneTitle::mStage == 0)
-	{
-		//シーンの設定
-		mScene = EGAME;
+
+	//シーンの設定
+	mScene = EGAME;
+
+	CSceneScreen* Screen = new CSceneScreen();
+	Screen->x = 0;
+	Screen->y = 250;
+	Screen->speed = SCROLL_SPEED;
+	Screen->mEnabled = true;
+
+
+	CSceneScreen* Screen2 = new CSceneScreen();
+	Screen2->x = 0;
+	Screen2->y = 1700;
+	Screen2->speed = SCROLL_SPEED;
+	Screen2->mEnabled = true;
 
 
 
-		CSceneScreen* Screen = new CSceneScreen();
-		Screen->x = 0;
-		Screen->y = 250;
-		Screen->speed = SCROLL_SPEED;
-		Screen->mEnabled = true;
+	CPlayer* Player = new CPlayer();
+	Player->x = 0;
+	Player->y = -225;
+	Player->w = 20;
+	Player->h = 20;
+	Player->mEnabled = true;
+	//クラスのメンバ変数への代入
+//37
 
 
-		CSceneScreen* Screen2 = new CSceneScreen();
-		Screen2->x = 0;
-		Screen2->y = 1700;
-		Screen2->speed = SCROLL_SPEED;
-		Screen2->mEnabled = true;
-
-
-
-
-		//クラスのメンバ変数への代入
-	//37
-
-		//配列の宣言と初期値の設定
-		int map[6][8] =
-		{
-			{ 1,0,0,0,0,0,0,1},
-			{ 0,0,0,0,0,0,0,0},
-			{ 0,0,0,0,0,0,0,0},
-			{ 0,0,0,0,0,0,0,0},
-			{ 0,0,0,0,0,0,0,0},
-			{ 0,0,0,0,0,0,0,0},
-		};
-		//MapSize = 0; //0を代入する
-		for (int j = 0; j < 6; j++) {
-			for (int i = 0; i < 8; i++) {
-				//mapの要素が１の時、四角形配置
-				if (map[j][i] == 1) {
-					CMap* Map = new CMap;
-					//四角形に値を設定
-					Map->mEnabled = true;
-					Map->x = i * 100 - 375;
-					Map->y = j * -100 + 275;
-					Map->w = 25;
-					Map->h = 25;
-				}
-			}
-		}
-		CPlayer* Player = new CPlayer();
-		Player->x = 0;
-		Player->y = -225;
-		Player->w = 20;
-		Player->h = 20;
-		Player->mEnabled = true;
-	}
-	if (CSceneTitle::mStage == 1)
-	{
-		//シーンの設定
-		mScene = EGAME_A;
-		//配列の宣言と初期値の設定
-		int map[12][16] =
-		{
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-
-		};
-		//MapSize = 0; //0を代入する
-		for (int j = 0; j < 12; j++) {
-			for (int i = 0; i < 16; i++) {
-				//mapの要素が１の時、四角形配置
-				if (map[j][i] == 1) {
-					CMap* Map = new CMap;
-					//四角形に値を設定
-					Map->mEnabled = true;
-					Map->x = i * 50 - 375;
-					Map->y = j * -50 + 275;
-					Map->w = 25;
-					Map->h = 25;
-				}
-			}
-		}
-		CPlayer* Player = new CPlayer();
-		Player->x = 0;
-		Player->y = -225;
-		Player->w = 20;
-		Player->h = 20;
-		Player->mEnabled = true;
-	}
-	if (CSceneTitle::mStage == 2)
-	{
-		//シーンの設定
-		mScene = EGAME_B;
-		//配列の宣言と初期値の設定
-		int map[12][16] =
-		{
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-
-		};
-		//MapSize = 0; //0を代入する
-		for (int j = 0; j < 12; j++) {
-			for (int i = 0; i < 16; i++) {
-				//mapの要素が１の時、四角形配置
-				if (map[j][i] == 1) {
-					CMap* Map = new CMap;
-					//四角形に値を設定
-					Map->mEnabled = true;
-					Map->x = i * 50 - 375;
-					Map->y = j * -50 + 275;
-					Map->w = 25;
-					Map->h = 25;
-				}
-			}
-		}
-		CPlayer* Player = new CPlayer();
-		Player->x = 0;
-		Player->y = -225;
-		Player->w = 20;
-		Player->h = 20;
-		Player->mEnabled = true;
-	}
-	if (CSceneTitle::mStage == 3)
-	{
-		//シーンの設定
-		mScene = EGAME_C;
-		//配列の宣言と初期値の設定
-		int map[12][16] =
-		{
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-
-		};
-		//MapSize = 0; //0を代入する
-		for (int j = 0; j < 12; j++) {
-			for (int i = 0; i < 16; i++) {
-				//mapの要素が１の時、四角形配置
-				if (map[j][i] == 1) {
-					CMap* Map = new CMap;
-					//四角形に値を設定
-					Map->mEnabled = true;
-					Map->x = i * 50 - 375;
-					Map->y = j * -50 + 275;
-					Map->w = 25;
-					Map->h = 25;
-				}
-			}
-		}
-		CPlayer* Player = new CPlayer();
-		Player->x = 0;
-		Player->y = -225;
-		Player->w = 20;
-		Player->h = 20;
-		Player->mEnabled = true;
-	}
-	if (CSceneTitle::mStage == 4)
-	{
-		//シーンの設定
-		mScene = EGAME_D;
-		//配列の宣言と初期値の設定
-		int map[12][16] =
-		{
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-
-		};
-		//MapSize = 0; //0を代入する
-		for (int j = 0; j < 12; j++) {
-			for (int i = 0; i < 16; i++) {
-				//mapの要素が１の時、四角形配置
-				if (map[j][i] == 1) {
-					CMap* Map = new CMap;
-					//四角形に値を設定
-					Map->mEnabled = true;
-					Map->x = i * 50 - 375;
-					Map->y = j * -50 + 275;
-					Map->w = 25;
-					Map->h = 25;
-				}
-			}
-		}
-		CPlayer* Player = new CPlayer();
-		Player->x = 0;
-		Player->y = -225;
-		Player->w = 20;
-		Player->h = 20;
-		Player->mEnabled = true;
-	}
-	if (CSceneTitle::mStage == 5)
-	{
-		//シーンの設定
-		mScene = EGAME_E;
-		//配列の宣言と初期値の設定
-		int map[12][16] =
-		{
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-			{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-
-		};
-		//MapSize = 0; //0を代入する
-		for (int j = 0; j < 12; j++) {
-			for (int i = 0; i < 16; i++) {
-				//mapの要素が１の時、四角形配置
-				if (map[j][i] == 1) {
-					CMap* Map = new CMap;
-					//四角形に値を設定
-					Map->mEnabled = true;
-					Map->x = i * 50 - 375;
-					Map->y = j * -50 + 275;
-					Map->w = 25;
-					Map->h = 25;
-				}
-			}
-		}
-		CPlayer* Player = new CPlayer();
-		Player->x = 0;
-		Player->y = -225;
-		Player->w = 20;
-		Player->h = 20;
-		Player->mEnabled = true;
-	}
 }
-
-	//37
-		
-
-		
-			
-
-
-	
-
-
-
-		
-
-	
-
-	
-
-	
-
-
-
-	/*37
-	for (int k = 0; k < 10; k++) {
-		if (!Enemy[k].mEnabled) {
-			//敵に値を設定
-			Enemy[k].x = i * 100 - 350;
-			Enemy[k].y = j * -100 + 250;
-			//右へ移動
-			Enemy[k].mFx = 0;
-			Enemy[k].mFy = 1;
-			//有効にする
-			Enemy[k].mEnabled = true;
-			break;
-		}
-	}
-	*/
-
 
 
 
