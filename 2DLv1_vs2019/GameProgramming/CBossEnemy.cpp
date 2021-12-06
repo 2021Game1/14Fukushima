@@ -14,8 +14,7 @@ CBossEnemy::CBossEnemy()
 }
 
 void CBossEnemy::Update() {
-	if (CSceneTitle::mStage ==0)
-	{
+
 		//mEnabled‚ªfalse‚È‚ç–ß‚é
 		if (!mEnabled)return;
 		//—LŒø‚ÈŽž
@@ -30,7 +29,7 @@ void CBossEnemy::Update() {
 		}
 
 		else {
-			for (int j = 0; j < 3; j++) {
+			for (int j = 0; j < 2; j++) {
 				CBullet* BEBullet = new CBullet();
 				//À•WÝ’è
 				BEBullet->x = x;
@@ -51,7 +50,7 @@ void CBossEnemy::Update() {
 				for (int i = 0; i < 1; i++) {
 					if (CBossEnemy::x > CPlayer::spInstance->x) {
 						BEBullet->mFx = -1;
-						BEBullet->mFy = -3 * ((j / 2) + 1);
+						BEBullet->mFy = -1 * ((j / 1) + 2);
 					if (CBossEnemy::y < CPlayer::spInstance->y){
 						BEBullet->mFy *= -1;
 						BEBullet->y += h;
@@ -69,7 +68,7 @@ void CBossEnemy::Update() {
 				for (int i = 0; i < 1; i++) {
 					if (CBossEnemy::x < CPlayer::spInstance->x) {
 						BEBullet->mFx = +1;
-						BEBullet->mFy = -3 * ((j / 2) + 1);
+						BEBullet->mFy = -1 * ((j / 1) + 2);
 						if (CBossEnemy::y < CPlayer::spInstance->y) {
 							BEBullet->mFy *= -1;
 							BEBullet->y += h;
@@ -87,33 +86,26 @@ void CBossEnemy::Update() {
 
 
 		}
-	}
-	if (x >= 350) {
+	
+	if (x == 350 && y == 50) {
 		//Õ“Ë‚µ‚Ä‚¢‚ê‚Î”½“]
-
-
-	
-			mFx -= 2;
-
+			CBossEnemy::mFx = -2;
+			CBossEnemy::mFy = 0;
 	}
-	if (y >= 250)
+	if (y == 250 && x == 350)
 	{
-
-			mFy -= 1;
-			
+			CBossEnemy::mFy = -2;
+			CBossEnemy::mFx = 0;
 	}
-	if (y <= -250)
+	if (y == 50 && x == -350)
 	{
-
-		mFy += 1;
+			CBossEnemy::mFy = 2;
+			CBossEnemy::mFx = 0;
+	}
+	if (x == -350 && y == 250) {
 		
-	}
-	if (x <= -350) {
-	
-			//Õ“Ë‚µ‚Ä‚¢‚ê‚Î”½“]
-			mFx += 2;
-			
-
+			CBossEnemy::mFx = 2;
+			CBossEnemy::mFy = 0;
 	}
 
 }

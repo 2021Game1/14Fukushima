@@ -14,7 +14,7 @@ public:
 	//Ÿ‚ÌƒV[ƒ“‚Ìæ“¾
 	EScene GetNextScene();
 
-	static int mStage;
+
 };
 
 #endif

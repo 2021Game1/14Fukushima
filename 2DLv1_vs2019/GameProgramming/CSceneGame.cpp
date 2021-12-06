@@ -72,25 +72,42 @@ void CSceneGame::Init() {
 
 void CSceneGame::Update() {
 
-	if (CSceneTitle::mStage == 0)
-	{
-		for (int k = 0; k < 3; k = k + 1) {
-			if (GameTime % 240 == 0 && ScoreCount < 1000)
-			{
-				/*srand(time(NULL));*/
-				//乱数値=rand()%乱数値の要素数+乱数値の最小値
-				val = rand() % 501 - 250;
-				CEnemy* Enemy = new CEnemy();
-				Enemy->x = val;
-				Enemy->y = 250;
-				Enemy->mFy = -1;
-				//敵に値を設定
-				//有効にする
-				Enemy->mEnabled = true;
 
-
-			}
+	for (int k = 0; k < 3; k = k + 1) {
+		if (GameTime % 240 == 0 && ScoreCount < 1000)
+		{
+			/*srand(time(NULL));*/
+			//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			val = rand() % 501 - 250;
+			CEnemy* Enemy = new CEnemy();
+			Enemy->x = val;
+			Enemy->y = 250;
+			Enemy->mFy = -1;
+			//敵に値を設定
+			//有効にする
+			Enemy->mEnabled = true;
+			
 		}
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		if (GameTime % 420 == 0 && ScoreCount >= 1000)
+		{
+			/*srand(time(NULL));*/
+			//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			val = rand() % 501 - 250;
+			CEnemy* Enemy2 = new CEnemy();
+			Enemy2->x = val;
+			Enemy2->y = 250;
+			Enemy2->mFy = -1;
+			//敵に値を設定
+			//有効にする
+			Enemy2->mEnabled = true;
+			
+		}
+	}
+			
+		
 
 		//時間を加算する
 		GameTime = GameTime + 1;
@@ -112,7 +129,7 @@ void CSceneGame::Update() {
 
 		}
 
-	}
+	
 		
 	
 	
@@ -205,7 +222,7 @@ void CSceneGame::Update() {
 	}
 	
 
-	if (Remain == 0) {
+	if (Remain == 0 && Time != 0 ) {
 		CText::DrawString("GAME SCORE", -180, 0, 16, 16);
 		sprintf(buf, "%d", ScoreCount);
 		CText::DrawString(buf, 160, 0, 16, 16);

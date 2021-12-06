@@ -1,7 +1,7 @@
 #include "CSceneTitle.h"
 #include "CKey.h"
 
-int CSceneTitle::mStage = 0;
+
 
 void CSceneTitle::Init() {
 	//ƒV[ƒ“‚Ìİ’è

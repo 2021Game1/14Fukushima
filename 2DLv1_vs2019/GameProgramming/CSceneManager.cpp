@@ -26,7 +26,6 @@ void CSceneManager::Init() {
 //更新処理
 void CSceneManager::Update() {
 	//ポインタのUpdateを呼ぶ
-
 	mpScene->Update();
 	//次のシーンを取得し異なるか判定
 	if (mScene != mpScene->GetNextScene()) {
@@ -38,11 +37,11 @@ void CSceneManager::Update() {
 			mpScene = new CSceneGame();
 			mpScene->Init();
 			break;
-		case CScene::EGAME_A:
-			mpScene = new CSceneGame();
+
+		case CScene::ETITLE:
+			mpScene = new CSceneTitle();
 			mpScene->Init();
 			break;
-		
 		}
 	}
 }

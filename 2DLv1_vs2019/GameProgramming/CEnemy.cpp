@@ -27,64 +27,68 @@ CEnemy::CEnemy()
 }
 void CEnemy::Update() {
 
-	if (CSceneTitle::mStage == 0)
+
+	//mEnabledがfalseなら戻る
+	if (!mEnabled)return;
+
+	if (y < -280)
 	{
-		//mEnabledがfalseなら戻る
-		if (!mEnabled)return;
+		//敵のフラグをfalseに
+		mEnabled = false;
+	}
 
-		if (y < -280)
-		{
-			//敵のフラグをfalseに
-			mEnabled = false;
-		}
+	//有効な時
+	if (mEnabled) {
+		//移動
+		x += mFx * 0;
+		y += mFy * 1;
+	}
 
-		//有効な時
-		if (mEnabled) {
-			//移動
-			x += mFx * 0;
-			y += mFy * 1;
-		}
+	//60フレームに1回発射
+	if (mFireCount > 0) {
+		mFireCount--;
+	}
+	//37e
+	/**/
 
-		//60フレームに1回発射
-		if (mFireCount > 0) {
-			mFireCount--;
-		}
-		//37e
-		/**/
-
-		else {
-			for (int j = 0; j < 1; j++) {
-				CBullet* EBullet = new CBullet();
-				//座標設定
-				EBullet->x = x;
-				EBullet->y = y;
-				//移動量設定
-				if (CEnemy::x < CPlayer::spInstance->x) {
-					EBullet->mFx = +1;
-					EBullet->mFy = -3 * ((j / 2) + 1);
-				}
-				if (CEnemy::x == CPlayer::spInstance->x) {
-					EBullet->mFx = 0;
-					EBullet->mFy = -3 * ((j / 2) + 1);
-				}
-				if (CEnemy::x > CPlayer::spInstance->x) {
-					EBullet->mFx = -1;
-					EBullet->mFy = -3 * ((j / 2) + 1);
-				}
-				//有効にする
-				EBullet->mEnabled = true;
-				EBullet->mTag = EENEMYBULLET;
-
+	else {
+		for (int j = 0; j < 1; j++) {
+			CBullet* EBullet = new CBullet();
+			//座標設定
+			EBullet->x = x;
+			EBullet->y = y;
+			//移動量設定
+			if (CEnemy::x < CPlayer::spInstance->x) {
+				EBullet->mFx = +1;
+				EBullet->mFy = -3 * ((j / 2) + 1);
 			}
-			mFireCount = 40;
-
+			if (CEnemy::x == CPlayer::spInstance->x) {
+				EBullet->mFx = 0;
+				EBullet->mFy = -3 * ((j / 2) + 1);
+			}
+			if (CEnemy::x > CPlayer::spInstance->x) {
+				EBullet->mFx = -1;
+				EBullet->mFy = -3 * ((j / 2) + 1);
+			}
+			//有効にする
+			EBullet->mEnabled = true;
+			EBullet->mTag = EENEMYBULLET;
 
 		}
+		mFireCount = 50;
+
+
+	}
+	if (y == -50) {
+		CEnemy::mFy = 2;
 	}
 
 
-	
 }
+
+
+	
+
 /*
 親のCollisionをオーバーライドする
 衝突すると移動方向を反対にする
