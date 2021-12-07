@@ -23,6 +23,10 @@ int CSceneGame::ScoreCount = 0;
 
 int CSceneGame::Bossflug = 0;
 
+int CSceneGame::BossCount = 0;
+
+int CSceneGame::EnemyCount = 0;
+
 char CSceneGame::buf[10];
 
 
@@ -129,6 +133,7 @@ void CSceneGame::Update() {
 
 		}
 
+
 	
 		
 	
@@ -188,7 +193,7 @@ void CSceneGame::Update() {
 			
 		}
 	}
-	if (Time > 0 && Remain > 0 && ScoreCount < 1000) {
+	if (Time > 0 && Remain > 0) {
 		Time--;
 	}
 
@@ -213,13 +218,12 @@ void CSceneGame::Update() {
 	CText::DrawString("Player", 200, -250, 12, 12);
 	sprintf(buf, "%d", Remain);
 	CText::DrawString(buf, 360, -250, 12, 12);
-	if (ScoreCount < 1000)
-	{
+	
 		//•¶Žš—ñ‚Ì•`‰æ
 		CText::DrawString("Time", 200, 250, 12, 12);
 		sprintf(buf, "%d", Time / 60);
 		CText::DrawString(buf, 300, 250, 12, 12);
-	}
+	
 	
 
 	if (Remain == 0 && Time != 0 ) {
@@ -233,6 +237,8 @@ void CSceneGame::Update() {
 			ScoreCount = 0;
 			Time = 31 * 60;
 			Bossflug = 0;
+			EnemyCount = 0;
+			BossCount = 0;
 			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
 		}
@@ -248,6 +254,8 @@ void CSceneGame::Update() {
 			ScoreCount = 0;
 			Time = 31 * 60;
 			Bossflug = 0;
+			EnemyCount = 0;
+			BossCount = 0;
 			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
 		}

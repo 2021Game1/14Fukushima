@@ -34,11 +34,14 @@ void CBossEnemy::Update() {
 				//ç¿ïWê›íË
 				BEBullet->x = x;
 				BEBullet->y = y - (h * 50 / 100);
-
 				for (int i = 0; i < 1; i++) {
 					if (CBossEnemy::x > CPlayer::spInstance->x || CBossEnemy::x < CPlayer::spInstance->x || CBossEnemy::x == CPlayer::spInstance->x) {
 						BEBullet->mFx = 0;
 						BEBullet->mFy = -2;
+						if (BEBullet->y == -100)
+						{
+							BEBullet->mFy = 2;
+						}
 						//óLå¯Ç…Ç∑ÇÈ
 						BEBullet->mEnabled = true;
 						BEBullet->mTag = EBOSSBULLET;
@@ -52,7 +55,6 @@ void CBossEnemy::Update() {
 						BEBullet->mFx = -1;
 						BEBullet->mFy = -1 * ((j / 1) + 2);
 					if (CBossEnemy::y < CPlayer::spInstance->y){
-						BEBullet->mFy *= -1;
 						BEBullet->y += h;
 					}
 						//óLå¯Ç…Ç∑ÇÈ
@@ -86,28 +88,75 @@ void CBossEnemy::Update() {
 
 
 		}
-	
-	if (x == 350 && y == 50) {
-		//è’ìÀÇµÇƒÇ¢ÇÍÇŒîΩì]
-			CBossEnemy::mFx = -2;
-			CBossEnemy::mFy = 0;
-	}
-	if (y == 250 && x == 350)
-	{
-			CBossEnemy::mFy = -2;
-			CBossEnemy::mFx = 0;
-	}
-	if (y == 50 && x == -350)
-	{
-			CBossEnemy::mFy = 2;
-			CBossEnemy::mFx = 0;
-	}
-	if (x == -350 && y == 250) {
+		if (CSceneGame::BossCount == 0)
+		{
 		
-			CBossEnemy::mFx = 2;
-			CBossEnemy::mFy = 0;
-	}
+			if (y == 250 && x == 350)
+			{
+				CBossEnemy::mFy = -2;
+				CBossEnemy::mFx = 0;
+			}
+			if (y == 50 && x == 350)
+			{
+				CBossEnemy::mFy = 0;
+				CBossEnemy::mFx = -2;
+			}
+			if (y == 50 && x == -350)
+			{
+				CBossEnemy::mFy = -2;
+				CBossEnemy::mFx = 0;
+			}
+			if (x == -350 && y == -250)
+			{
+				CBossEnemy::mFx = 2;
+				CBossEnemy::mFy = 0;
+			}
+			if (x == 350 && y == -250)
+			{
+				CBossEnemy::mFx = 0;
+				CBossEnemy::mFy = 2;
+			}
+			if (x == 350 && y == -50)
+			{
+				CBossEnemy::mFx = -2;
+				CBossEnemy::mFy = 0;
+			}
+			if (y == -50 && x == -300)
+			{
+				CBossEnemy::mFx = 0;
+				CBossEnemy::mFy = 2;
+			}
+			if (y ==250 && x == -300)
+			{
+				CBossEnemy::mFx = 2;
+				CBossEnemy::mFy = 0;
+			}
 
+		}
+		if (CSceneGame::BossCount >= 1)
+		{
+			if (x == 350) {
+				//è’ìÀÇµÇƒÇ¢ÇÍÇŒîΩì]
+				CBossEnemy::mFx = -2;
+				CBossEnemy::mFy = 0;
+			}
+			if (y == 250 || x == 350)
+			{
+				CBossEnemy::mFy = -2;
+				CBossEnemy::mFx = 0;
+			}
+			if (y == 50 || x == -350)
+			{
+				CBossEnemy::mFy = 2;
+				CBossEnemy::mFx = 0;
+			}
+			if (x == -350) {
+
+				CBossEnemy::mFx = 2;
+				CBossEnemy::mFy = 0;
+			}
+		}
+	
 }
 
 bool CBossEnemy::Collision(CRectangle& r) {
@@ -126,7 +175,8 @@ bool CBossEnemy::Collision(CRectangle& r) {
 				{
 					mEnabled = false;
 					r.mEnabled = false;
-					CSceneGame::ScoreCount += 5000;
+					CSceneGame::ScoreCount += 2000;
+					CSceneGame::BossCount += 1;
 				}
 			}
 			break;

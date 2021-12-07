@@ -51,7 +51,10 @@ public:
 	static int OVER;
 	//ボスのフラグ管理
 	static int Bossflug;
-
+	//エネミーのカウンタ
+	static int EnemyCount;
+	//ボスのカウンタ
+	static int BossCount;
 	//整数を文字列に変換する
 	static char buf[10];//9文字までOK
 

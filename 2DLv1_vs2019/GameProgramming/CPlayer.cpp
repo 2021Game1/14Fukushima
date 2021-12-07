@@ -25,21 +25,45 @@ void CPlayer::Update() {
 	if (CSceneGame::Remain > 0)
 	{
 		if (CKey::Push('A')) {
-			x -= 3;
+			if (CSceneGame::EnemyCount < 14)
+			{
+				x -= 3;
+			}
+			
+			if (CSceneGame::EnemyCount >= 14)
+			{
+				x -= 5;
+			}
 			if (x - w < -400) {
 				x = -400 + w;
 			}
+			
 		}
 		if (CKey::Push('D')) {
-			x += 3;
+			if (CSceneGame::EnemyCount < 14)
+			{
+				x += 3;
+			}
+			if (CSceneGame::EnemyCount >= 14)
+			{
+				x += 5;
+			}
 			if (x + w > 400) {
 				x = 400 - w;
 			}
 		}
 		if (CKey::Push('W')) {
 			y += 3;
-			mFx = 0;
-			mFy = 1;
+			if (CSceneGame::EnemyCount < 14)
+			{
+				mFx = 0;
+				mFy = 1;
+			}
+			
+			if (CSceneGame::EnemyCount >= 14) {
+				mFx = 0;
+				mFy = 2;
+			}
 			if (y + h > 300) {
 				y = 300 - h;
 			}
@@ -50,27 +74,17 @@ void CPlayer::Update() {
 				y = -300 + h;
 			}
 		}
-		if (CKey::Push('R')) {
-			if (mPlayer > 0)
-			{
-				mPlayer -= 1;
+
+		if (CSceneGame::EnemyCount < 14)
+		{
+			//37
+					//スペースキーで弾発射
+					//0より大きいとき1減算する
+			if (FireCount > 0) {
+				FireCount--;
 			}
-		}
-		if (CKey::Push('U')) {
-			if (mPlayer < 1)
-			{
-				mPlayer += 1;
-			}
-		}
-		
-		//37
-		//スペースキーで弾発射
-		//0より大きいとき1減算する
-		if (FireCount > 0) {
-			FireCount--;
-		}
-		//FireContが0で、かつ、スペースキーで弾発射
-		else if (CKey::Once(' ')) {
+			//FireContが0で、かつ、スペースキーで弾発射
+			else if (CKey::Once(' ')) {
 				CBullet* Bullet = new CBullet();
 				//発射位置の設定
 				Bullet->x = x;
@@ -83,10 +97,43 @@ void CPlayer::Update() {
 				//プレイヤーの弾を設定
 				Bullet->mTag = CRectangle::EPLAYERBULLET;
 
-			FireCount = 15;
-		}
+				FireCount = 20;
+			}
 
+		}
 	}
+		
+	//mEnabledがfalseなら戻る
+	//staticメソッドはどこからでも呼べる
+	if (CSceneGame::Remain > 0){
+		//37
+		//スペースキーで弾発射
+		//0より大きいとき1減算する
+		if (FireCount > 0) {
+			FireCount--;
+		}
+		if (CSceneGame::EnemyCount >= 14){
+			//FireContが0で、かつ、スペースキーで弾発射
+				if (CKey::Once(' ')) {
+				CBullet* Bullet2 = new CBullet();
+				//発射位置の設定
+				Bullet2->x = x;
+				Bullet2->y = y;
+				//移動の値を設定
+				Bullet2->mFx = mFx * 5;
+				Bullet2->mFy = mFy * 5;
+				//有効にする
+				Bullet2->mEnabled = true;
+				//プレイヤーの弾を設定
+				Bullet2->mTag = CRectangle::EPLAYERBULLET;
+
+				FireCount = 15;
+				}
+
+		}
+		
+	}
+	
 }
 	
 

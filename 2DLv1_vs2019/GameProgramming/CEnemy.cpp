@@ -256,6 +256,7 @@ bool CEnemy::Collision(CRectangle& r) {
 				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 				{
 					CSceneGame::ScoreCount += 100;
+					CSceneGame::EnemyCount += 1;
 				}
 
 			break;
