@@ -75,7 +75,7 @@ void CEnemy::Update() {
 			EBullet->mTag = EENEMYBULLET;
 
 		}
-		mFireCount = 50;
+		mFireCount = 55;
 
 
 	}
