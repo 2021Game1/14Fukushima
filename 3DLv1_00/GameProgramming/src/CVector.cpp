@@ -5,6 +5,8 @@ CVector::CVector()
 	,mY(0.0f)
 	,mZ(0.0f)
 {}
+//コンストラクタ
+//CVector(X座標,Y座標,Z座標)
 CVector::CVector(float x, float y, float z)
 	:mX(x)
 	,mY(y)

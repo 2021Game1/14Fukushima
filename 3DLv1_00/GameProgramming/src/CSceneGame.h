@@ -15,8 +15,9 @@ public:
 	//更新処理のオーバーライド
 	void Update();
 	//モデルクラスのインスタンス作成
-	CModel mModel;
+	CModel mModel; //プレイヤーモデル
 	CModel mBackGround; //背景モデル
+	CModel mModelC5; //敵モデル
 	//プレイヤーの変数
 	CPlayer mPlayer;
 };

@@ -15,6 +15,8 @@
 #include"CCharacter.h"
 //タスクマネージャクラスのインクルード
 #include"CTaskManager.h"
+//敵のクラスのインクルード
+#include"CEnemy.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
@@ -30,15 +32,23 @@ void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
+	//背景モデルファイルの入力
 	mBackGround.Load(MODEL_BACKGROUND);
+	//敵のモデルの読み込み
+	mModelC5.Load("res\\C5.obj","res\\C5.mtl");
 	//マトリックスの描画変数
 	matrix.Print();
-	
 	//プレイヤーのモデルポインタ
 	mPlayer.Model(&mModel);
 	mPlayer.Scale(CVector(0.1f, 0.1f, 0.1f));
 	mPlayer.Position(CVector(0.0f, 0.0f, -3.0f));
 	mPlayer.Rotation(CVector(0.0f, 180.0f,0.0f));
+	//敵機のインスタンス作成
+	new CEnemy(&mModelC5,CVector(0.0f, 10.0f, -100.0f),
+		CVector(),CVector(0.1f,0.1f,0.1f));
+	new CEnemy(&mModelC5, CVector(30.0f, 10.0f, -130.0f),
+		CVector(), CVector(0.1f, 0.1f, 0.1f));
+
 }
 
 void CSceneGame::Update() {
@@ -109,6 +119,7 @@ void CSceneGame::Update() {
 	
 	
 
+	
 	
 	//タスクリストの削除
 	TaskManager.Delete();
