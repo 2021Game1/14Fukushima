@@ -32,7 +32,7 @@ void CPlayer::Update() {
 			
 			if (CSceneGame::EnemyCount >= 14)
 			{
-				x -= 5;
+				x -= 4;
 			}
 			if (x - w < -400) {
 				x = -400 + w;
@@ -46,7 +46,7 @@ void CPlayer::Update() {
 			}
 			if (CSceneGame::EnemyCount >= 14)
 			{
-				x += 5;
+				x += 4;
 			}
 			if (x + w > 400) {
 				x = 400 - w;
@@ -62,7 +62,7 @@ void CPlayer::Update() {
 			
 			if (CSceneGame::EnemyCount >= 14) {
 				mFx = 0;
-				mFy = 2;
+				mFy = 1.5;
 			}
 			if (y + h > 300) {
 				y = 300 - h;
@@ -78,8 +78,8 @@ void CPlayer::Update() {
 		if (CSceneGame::EnemyCount < 14)
 		{
 			//37
-					//スペースキーで弾発射
-					//0より大きいとき1減算する
+				//スペースキーで弾発射
+				//0より大きいとき1減算する
 			if (FireCount > 0) {
 				FireCount--;
 			}
@@ -102,7 +102,7 @@ void CPlayer::Update() {
 
 		}
 	}
-		
+	if (CSceneGame::EnemyCount >= 14) {
 	//mEnabledがfalseなら戻る
 	//staticメソッドはどこからでも呼べる
 	if (CSceneGame::Remain > 0){
@@ -112,7 +112,6 @@ void CPlayer::Update() {
 		if (FireCount > 0) {
 			FireCount--;
 		}
-		if (CSceneGame::EnemyCount >= 14){
 			//FireContが0で、かつ、スペースキーで弾発射
 				if (CKey::Once(' ')) {
 				CBullet* Bullet2 = new CBullet();

@@ -42,6 +42,10 @@ void CSceneManager::Update() {
 			mpScene = new CSceneTitle();
 			mpScene->Init();
 			break;
+		case CScene::ENEXTSTAGE1:
+			mpScene = new CSceneTitle();
+			mpScene->Init();
+			break;
 		}
 	}
 }

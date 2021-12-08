@@ -40,31 +40,34 @@ int CSceneGame::GameTime;
 
 
 void CSceneGame::Init() {
+	if (OVER == 0)
+	{
+		//シーンの設定
+		mScene = EGAME;
 
-	//シーンの設定
-	mScene = EGAME;
-
-	CSceneScreen* Screen = new CSceneScreen();
-	Screen->x = 0;
-	Screen->y = 250;
-	Screen->speed = SCROLL_SPEED;
-	Screen->mEnabled = true;
-
-
-	CSceneScreen* Screen2 = new CSceneScreen();
-	Screen2->x = 0;
-	Screen2->y = 1700;
-	Screen2->speed = SCROLL_SPEED;
-	Screen2->mEnabled = true;
+		CSceneScreen* Screen = new CSceneScreen();
+		Screen->x = 0;
+		Screen->y = 250;
+		Screen->speed = SCROLL_SPEED;
+		Screen->mEnabled = true;
 
 
+		CSceneScreen* Screen2 = new CSceneScreen();
+		Screen2->x = 0;
+		Screen2->y = 1700;
+		Screen2->speed = SCROLL_SPEED;
+		Screen2->mEnabled = true;
 
-	CPlayer* Player = new CPlayer();
-	Player->x = 0;
-	Player->y = -225;
-	Player->w = 20;
-	Player->h = 20;
-	Player->mEnabled = true;
+
+
+		CPlayer* Player = new CPlayer();
+		Player->x = 0;
+		Player->y = -225;
+		Player->w = 20;
+		Player->h = 20;
+		Player->mEnabled = true;
+	}
+	
 	//クラスのメンバ変数への代入
 //37
 
@@ -226,7 +229,7 @@ void CSceneGame::Update() {
 	
 	
 
-	if (Remain == 0 && Time != 0 ) {
+	if (Remain == 0 || Time == 0 ) {
 		CText::DrawString("GAME SCORE", -180, 0, 16, 16);
 		sprintf(buf, "%d", ScoreCount);
 		CText::DrawString(buf, 160, 0, 16, 16);
@@ -234,6 +237,7 @@ void CSceneGame::Update() {
 		CText::DrawString("Push ENETER Key", -210, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
+			OVER = 0;
 			ScoreCount = 0;
 			Time = 31 * 60;
 			Bossflug = 0;
@@ -243,14 +247,18 @@ void CSceneGame::Update() {
 			mScene = ETITLE;
 		}
 	}
-	if (Time == 0 && Remain != 0) {
-		CText::DrawString("GAME SCORE", -225, 0, 16, 16);
-		sprintf(buf, "%d", ScoreCount);
-		CText::DrawString(buf, 140, 0, 16, 16);
-		CText::DrawString("GAME CLEAR!", -165, 100, 16, 16);
-		CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
-		if (CKey::Once(VK_RETURN)) {
+
+	if (Remain != 0) {
+		if (BossCount == 1){
+			CText::DrawString("GAME SCORE", -225, 0, 16, 16);
+			sprintf(buf, "%d", ScoreCount);
+			CText::DrawString(buf, 140, 0, 16, 16);
+			CText::DrawString("GAME CLEAR!", -165, 100, 16, 16);
+			CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
+			if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
+			CLEAR += 1;
+			OVER = 1;
 			ScoreCount = 0;
 			Time = 31 * 60;
 			Bossflug = 0;
@@ -258,6 +266,7 @@ void CSceneGame::Update() {
 			BossCount = 0;
 			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
+			}
 		}
 	}
 /*
