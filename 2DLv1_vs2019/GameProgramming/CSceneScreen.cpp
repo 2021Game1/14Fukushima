@@ -8,7 +8,6 @@ CSceneScreen* CSceneScreen::spInstance = nullptr;
 
 CSceneScreen::CSceneScreen()
 {
-	mTag = ESCREEN;
 	Screen.Load("screen.tga");
 	spInstance = this;
 	w = 510;
@@ -25,7 +24,10 @@ void CSceneScreen::Update()
 
 void CSceneScreen::Render()
 {
+	if (mTag == ESCREEN)
+	{
+		CRectangle::Render(Screen, 0, 255, 255, 0);
+	}
 	
-	CRectangle::Render(Screen,0,255,255,0);
 
 }

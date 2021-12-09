@@ -58,7 +58,6 @@ void CBossEnemy::Update() {
 				if (CBossEnemy::y < CPlayer::spInstance->y) {
 					BEBullet->mFx = 3;
 					BEBullet->mFx = +3;
-					BEBullet->y += h;
 				}
 				//—LŒø‚É‚·‚é
 				BEBullet->mEnabled = true;
@@ -79,7 +78,6 @@ void CBossEnemy::Update() {
 				if (CBossEnemy::y < CPlayer::spInstance->y) {
 					BEBullet->mFx = -3;
 					BEBullet->mFy = +3;
-					BEBullet->y += h;
 				}
 				//—LŒø‚É‚·‚é
 				BEBullet->mEnabled = true;

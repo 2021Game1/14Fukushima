@@ -27,6 +27,7 @@ int CSceneGame::BossCount = 0;
 
 int CSceneGame::EnemyCount = 0;
 
+
 char CSceneGame::buf[10];
 
 
@@ -49,6 +50,7 @@ void CSceneGame::Init() {
 		Screen->x = 0;
 		Screen->y = 250;
 		Screen->speed = SCROLL_SPEED;
+		Screen->mTag = CRectangle::ESCREEN;
 		Screen->mEnabled = true;
 
 
@@ -56,6 +58,7 @@ void CSceneGame::Init() {
 		Screen2->x = 0;
 		Screen2->y = 1700;
 		Screen2->speed = SCROLL_SPEED;
+		Screen2->mTag = CRectangle::ESCREEN;
 		Screen2->mEnabled = true;
 
 
@@ -68,6 +71,15 @@ void CSceneGame::Init() {
 		Player->mEnabled = true;
 	}
 	
+	if (CLEAR == 1)
+	{
+		CPlayer* Player = new CPlayer();
+		Player->x = 0;
+		Player->y = -225;
+		Player->w = 20;
+		Player->h = 20;
+		Player->mEnabled = true;
+	}
 	//クラスのメンバ変数への代入
 //37
 
@@ -96,6 +108,21 @@ void CSceneGame::Update() {
 			
 		}
 	}
+	if (Bossflug != 2)
+	{
+		if (ScoreCount >= 1000)
+		{
+			CBossEnemy* EBossEnemy = new CBossEnemy();
+			Bossflug += 1;
+			EBossEnemy->x = 0;
+			EBossEnemy->y = 250;
+			EBossEnemy->mFx = 2;
+			EBossEnemy->mFy = 0;
+			EBossEnemy->mEnabled = true;
+			Bossflug = 2;
+		}
+
+	}
 	for (int i = 0; i < 2; i++)
 	{
 		if (GameTime % 420 == 0 && ScoreCount >= 1000)
@@ -113,28 +140,28 @@ void CSceneGame::Update() {
 			
 		}
 	}
-			
-		
-
+	for (int j = 0; j < 1; j++)
+	{
+		if (GameTime % 520 == 0 && CLEAR == 1)
+		{
+			/*srand(time(NULL));*/
+				//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			val = rand() % 501 - 250;
+			CBlock* Block = new CBlock();
+			Block->x = val;
+			Block->y = 250;
+			Block->mFy = -1;
+			//敵に値を設定
+			//有効にする
+			Block->mEnabled = true;
+		}
+	}
+	
 		//時間を加算する
 		GameTime = GameTime + 1;
 
 
-		if (Bossflug != 2)
-		{
-			if (ScoreCount >= 1000)
-			{
-				CBossEnemy* EBossEnemy = new CBossEnemy();
-				Bossflug += 1;
-				EBossEnemy->x = 0;
-				EBossEnemy->y = 250;
-				EBossEnemy->mFx = 2;
-				EBossEnemy->mFy = 0;
-				EBossEnemy->mEnabled = true;
-				Bossflug = 2;
-			}
-
-		}
+		
 
 
 	
@@ -196,6 +223,7 @@ void CSceneGame::Update() {
 			
 		}
 	}
+
 	if (Time > 0 && Remain > 0) {
 		Time--;
 	}
@@ -206,6 +234,7 @@ void CSceneGame::Update() {
 		//描画処理
 		VectorRect[i]->Render();
 	}
+
 	if (CSceneGame::Remain < 0) {
 		CSceneGame::Remain = 0;
 	}
@@ -259,11 +288,10 @@ void CSceneGame::Update() {
 			Remain = 3;
 			CLEAR += 1;
 			OVER = 1;
-			ScoreCount = 0;
 			Time = 31 * 60;
 			Bossflug = 0;
 			EnemyCount = 0;
-			BossCount = 0;
+			BossCount = 1;
 			CBossEnemy::CBossEnemyLife = 20;
 			mScene = ETITLE;
 			}

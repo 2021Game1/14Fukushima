@@ -10,12 +10,14 @@ extern CTexture Block;
 
 class CBlock : public CRectangle {
 public:
-	//•`‰æ
-	void Render() {
-		if (mEnabled) {
-			CRectangle::Render(Block, 0, 72, 74, 0);
-		}
-	}
+
+	int mFx, mFy;
+	void Update();
+	void Render();
+	CBlock();
+	bool Collision(CRectangle& r);
+	void Collision(CRectangle* i, CRectangle* y);
+	
 };
 
 #endif 
