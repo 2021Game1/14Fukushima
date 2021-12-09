@@ -1,7 +1,7 @@
 #include"CBullet.h"
 
 CBullet::CBullet()
-: mLife(50)
+: mLife(50),mCollider(this, &mMatrix, CVector(0.0f, 0.0f, 0.0f), 0.1f)
 {}
 
 //•‚Æ‰œs‚«‚Ìİ’è
@@ -37,6 +37,6 @@ void CBullet::Render() {
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, c);
 	//OŠpŒ`•`‰æ
 	mT.Render(mMatrix);
-	
+	mCollider.Render();
 
 }
