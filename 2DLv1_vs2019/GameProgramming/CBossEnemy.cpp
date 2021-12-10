@@ -29,11 +29,13 @@ void CBossEnemy::Update() {
 	}
 
 	else {
-		for (int j = 0; j < 2; j++) {
+		for (int j = 0; j < 1; j++) {
 			CBullet* BEBullet = new CBullet();
 			//À•WÝ’è
 			BEBullet->x = x;
 			BEBullet->y = y - (h * 50 / 100);
+			BEBullet->w = 10;
+			BEBullet->h = 10;
 			for (int i = 0; i < 1; i++) {
 				if (CBossEnemy::x == CPlayer::spInstance->x) {
 					BEBullet->mFx = 0;

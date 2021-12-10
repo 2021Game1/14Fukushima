@@ -31,7 +31,7 @@ void CEnemy::Update() {
 	//mEnabled‚ªfalse‚È‚ç–ß‚é
 	if (!mEnabled)return;
 
-	if (y < -280)
+	if (y > 280)
 	{
 		//“G‚Ìƒtƒ‰ƒO‚ğfalse‚É
 		mEnabled = false;
@@ -57,6 +57,8 @@ void CEnemy::Update() {
 			//À•Wİ’è
 			EBullet->x = x;
 			EBullet->y = y;
+			EBullet->w = 8;
+			EBullet->h = 8;
 			//ˆÚ“®—Êİ’è
 			if (CEnemy::x < CPlayer::spInstance->x) {
 				EBullet->mFx = +1;

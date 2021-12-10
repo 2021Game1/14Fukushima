@@ -8,8 +8,8 @@ CBullet::CBullet()
 : mFx(0), mFy(0)
 {
 	mEnabled = false;
-	w = 10;	//•İ’è
-	h = 10;	//‚‚³İ’è
+		//•İ’è
+		//‚‚³İ’è
 }
 
 //XVˆ—

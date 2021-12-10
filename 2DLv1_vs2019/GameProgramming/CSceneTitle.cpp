@@ -11,8 +11,6 @@ void CSceneTitle::Init() {
 
 //更新処理のオーバーライド
 void CSceneTitle::Update() {
-	if (CSceneGame::OVER == 0)
-	{
 		//文字列の描画
 		CText::DrawString("TITLE", -200, 0, 50, 50);
 		CText::DrawString("Push ENTER Key",
@@ -21,19 +19,9 @@ void CSceneTitle::Update() {
 			//次のシーンはゲーム
 			mScene = EGAME;
 		}
-	}
+	
 
-	if (CSceneGame::CLEAR >= 1)
-	{
-		//文字列の描画
-		CText::DrawString("NEXT STAGE", -225, 0, 25, 25);
-		CText::DrawString("Push ENTER Key",
-			-200, -100, 16, 16);
-		if (CKey::Once(VK_RETURN)) {
-			//次のシーンはゲーム
-			mScene = EGAME;
-		}
-	}
+
 	
 	
 	

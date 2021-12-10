@@ -10,7 +10,6 @@ public:
 	enum EScene {
 		EGAME,	//ゲーム
 		ETITLE, 	//タイトル
-		ENEXTSTAGE1, //次のステージ
 	};
 	//次のシーン
 	EScene mScene;

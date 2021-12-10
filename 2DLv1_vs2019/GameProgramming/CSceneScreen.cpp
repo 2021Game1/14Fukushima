@@ -12,7 +12,7 @@ CSceneScreen::CSceneScreen()
 	spInstance = this;
 	w = 510;
 	h = 800;
-	
+	mTag = ESCREEN;
 }
 
 void CSceneScreen::Update()
@@ -24,10 +24,12 @@ void CSceneScreen::Update()
 
 void CSceneScreen::Render()
 {
-	if (mTag == ESCREEN)
+	if (mEnabled)
 	{
 		CRectangle::Render(Screen, 0, 255, 255, 0);
 	}
+		
+	
 	
 
 }
