@@ -239,7 +239,7 @@ bool CEnemy::Collision(CRectangle& r) {
 					ItemE->mTag = EENEMYITEM;
 					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 					{
-						CSceneGame::GameTime += 21 * 60;
+						CSceneGame::Time += 21 * 60;
 					}
 					mEnabled = false;
 				}

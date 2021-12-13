@@ -56,10 +56,11 @@ void CBossEnemy::Update() {
 				if (CBossEnemy::x > CPlayer::spInstance->x) {
 					BEBullet->mFx = -3;
 					BEBullet->mFy = -3;
-				}
-				if (CBossEnemy::y < CPlayer::spInstance->y) {
-					BEBullet->mFx = 3;
-					BEBullet->mFx = +3;
+				
+					if (CBossEnemy::y < CPlayer::spInstance->y) {
+					BEBullet->mFx = -3;
+					BEBullet->mFy = 3;
+					}
 				}
 				//—LŒø‚É‚·‚é
 				BEBullet->mEnabled = true;
@@ -73,13 +74,13 @@ void CBossEnemy::Update() {
 			//“G’e”•ªŒJ‚è•Ô‚µ
 			for (int i = 0; i < 1; i++) {
 				if (CBossEnemy::x < CPlayer::spInstance->x) {
-
 					BEBullet->mFx = +3;
 					BEBullet->mFy = -3;
-				}
-				if (CBossEnemy::y < CPlayer::spInstance->y) {
-					BEBullet->mFx = -3;
+				
+					if (CBossEnemy::y < CPlayer::spInstance->y) {
+					BEBullet->mFx = 3;
 					BEBullet->mFy = +3;
+					}
 				}
 				//—LŒø‚É‚·‚é
 				BEBullet->mEnabled = true;
@@ -87,7 +88,7 @@ void CBossEnemy::Update() {
 				//”­ËŠÔŠu‚ğ60ƒtƒŒ[ƒ€‚É‚·‚é
 				break;
 
-				mBossFireCount = 30;
+				mBossFireCount = 40;
 
 
 

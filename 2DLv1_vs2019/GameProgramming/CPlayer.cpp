@@ -24,105 +24,135 @@ void CPlayer::Update() {
 	//staticメソッドはどこからでも呼べる
 	if (CSceneGame::Remain > 0)
 	{
-		if (CKey::Push('A')) {
-			if (CSceneGame::EnemyCount < 14)
-			{
-				CPlayer::x -= 3;
-			}
-			
-			if (CSceneGame::EnemyCount >= 14)
-			{
-				CPlayer::x -= 4;
-			}
-			if (x - w < -400) {
-				CPlayer::x = -400 + w;
-			}
-			
-		}
-		if (CKey::Push('D')) {
-			if (CSceneGame::EnemyCount < 14)
-			{
-				x += 3;
-			}
-			if (CSceneGame::EnemyCount >= 14)
-			{
-				x += 4;
-			}
-			if (x + w > 400) {
-				x = 400 - w;
-			}
-		}
-		if (CKey::Push('W')) {
-			y += 3;
-			if (y + h > 300) {
-				y = 300 - h;
-			}
-		}
-		if (CKey::Push('S')) {
-			y -= 3;
-			if (y - h < -300) {
-				y = -300 + h;
-			}
-		}
-	
-			//37
+		//37
 				//スペースキーで弾発射
 				//0より大きいとき1減算する
+		if (FireCount > 0) {
+			FireCount--;
+		}
+		//FireContが0で、かつ、スペースキーで弾発射
+		else if (CKey::Once(' ')) {
+			CBullet* Bullet = new CBullet();
+			//発射位置の設定
+			Bullet->x = x;
+			Bullet->y = y;
+			Bullet->w = 10;
+			Bullet->h = 10;
+			//弾の発射設定
+			Bullet->mFx = mFx * 5;
+			Bullet->mFy = mFy * 5;
+			//有効にする
+			Bullet->mEnabled = true;
+			//プレイヤーの弾を設定
+			Bullet->mTag = CRectangle::EPLAYERBULLET;
+
+			FireCount = 20;
+
+		}
+	}
+	if (CSceneGame::EnemyCount >= 14) {
+		//mEnabledがfalseなら戻る
+		//staticメソッドはどこからでも呼べる
+		if (CSceneGame::Remain > 0) {
+			//37
+			//スペースキーで弾発射
+			//0より大きいとき1減算する
 			if (FireCount > 0) {
 				FireCount--;
 			}
 			//FireContが0で、かつ、スペースキーで弾発射
-			else if (CKey::Once(' ')) {
-				CBullet* Bullet = new CBullet();
-				//発射位置の設定
-				Bullet->x = x;
-				Bullet->y = y;
-				Bullet->w = 10;
-				Bullet->h = 10;
-				//移動の値を設定
-				Bullet->mFx = mFx * 5;
-				Bullet->mFy = mFy * 5;
-				//有効にする
-				Bullet->mEnabled = true;
-				//プレイヤーの弾を設定
-				Bullet->mTag = CRectangle::EPLAYERBULLET;
-
-				FireCount = 20;
+			if (CKey::Once(' ')) {
+			CBullet* Bullet2 = new CBullet();
+			//発射位置の設定
+			Bullet2->x = x + 5;
+			Bullet2->y = y;
+			Bullet2->w = 10;
+			Bullet2->h = 10;
+			//弾の発射設定
+			Bullet2->mFx = mFx * 5;
+			Bullet2->mFy = mFy * 5;
+			//有効にする
+			Bullet2->mEnabled = true;
+			//プレイヤーの弾を設定
+			Bullet2->mTag = CRectangle::EPLAYERBULLET;
+			FireCount = 10;
 			}
 
-	}
-	
-	if (CSceneGame::EnemyCount >= 14) {
-	//mEnabledがfalseなら戻る
-	//staticメソッドはどこからでも呼べる
-	if (CSceneGame::Remain > 0){
-		//37
-		//スペースキーで弾発射
-		//0より大きいとき1減算する
-		if (FireCount > 0) {
-			FireCount--;
 		}
-			//FireContが0で、かつ、スペースキーで弾発射
-				if (CKey::Once(' ')) {
-				CBullet* Bullet2 = new CBullet();
-				//発射位置の設定
-				Bullet2->x = x + 5;
-				Bullet2->y = y;
-				//移動の値を設定
-				Bullet2->mFx = mFx * 5;
-				Bullet2->mFy = mFy * 5;
-				//有効にする
-				Bullet2->mEnabled = true;
-				//プレイヤーの弾を設定
-				Bullet2->mTag = CRectangle::EPLAYERBULLET;
-				FireCount = 10;
-				}
+	}
 
-		}
-		
-	}
-	
+
+					if (CKey::Push('A')) {
+						if (CSceneGame::EnemyCount < 14)
+						{
+							
+							CPlayer::x -= 3;
+						}
+
+						if (CSceneGame::EnemyCount >= 14)
+						{
+							CPlayer::x -= 4;
+						}
+						if (x - w < -400) {
+							CPlayer::x = -400 + w;
+						}
+
+					}
+					if (CKey::Push('D')) {
+						if (CSceneGame::EnemyCount < 14)
+						{
+							
+							x += 3;
+						}
+						if (CSceneGame::EnemyCount >= 14)
+						{
+						
+							x += 4;
+						}
+						if (x + w > 400) {
+							x = 400 - w;
+						}
+					}
+					if (CKey::Push('W')) {
+						if (CSceneGame::EnemyCount < 14)
+						{
+							mFy = 1;
+							y += 3;
+						}
+						if (y + h > 300) {
+							y = 300 - h;
+						}
+						if (CSceneGame::EnemyCount >= 14)
+						{
+					
+							y += 3;
+						}
+					}
+					if (CKey::Push('S')) {
+						y -= 3;
+						if (y - h < -300) {
+							y = -300 + h;
+						}
+					}
+					if (CKey::Push('J'))
+					{
+						mFy = 1;
+						mFx = -1;
+					}
+					if (CKey::Push('L'))
+					{
+						mFy = 1;
+						mFx = 1;
+					}
+					if (!CKey::Push('J') && !CKey::Push('L')){
+						if (CKey::Push('W'))
+						{
+							mFx = 0;
+						}
+					}
+					
 }
+
 	
 
 void CPlayer::Render() {
