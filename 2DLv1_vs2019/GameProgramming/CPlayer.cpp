@@ -186,7 +186,7 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
 				(*ry).mEnabled = false;
-				if (CSceneGame::Time != 0) {
+				if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0) {
 					CSceneGame::Remain -= 1;
 				}
 			}
@@ -204,7 +204,7 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
 				(*ry).mEnabled = false;
-				if (CSceneGame::Time != 0) {
+				if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0) {
 					CSceneGame::Remain -= 1;
 				}
 			}

@@ -13,7 +13,9 @@ public:
 	int mFx, mFy;
 	//	bool mEnabled;	//—LŒøƒtƒ‰ƒO
 	int mBossFireCount;
-	static int CBossEnemyLife;
+	static int mBossEnemyLife;
+	int Count;
+	int Hit;
 	void Update();
 	bool Collision(CRectangle& r);
 	void Render();

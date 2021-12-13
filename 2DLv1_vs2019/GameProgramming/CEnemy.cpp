@@ -255,9 +255,9 @@ bool CEnemy::Collision(CRectangle& r) {
 					mEnabled = false;
 				}
 			}
-				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 				{
-					CSceneGame::ScoreCount += 75;
+					CSceneGame::ScoreCount += 1000;
 					CSceneGame::EnemyCount += 1;
 				}
 
@@ -268,7 +268,7 @@ bool CEnemy::Collision(CRectangle& r) {
 
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
-			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 			{
 				CSceneGame::ScoreCount += 25;
 				CSceneGame::Remain -= 1;

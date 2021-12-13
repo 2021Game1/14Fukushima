@@ -1,12 +1,15 @@
 #include"CBossEnemy.h"
+#include<time.h>
 
-int CBossEnemy::CBossEnemyLife = 20;
+int CBossEnemy::mBossEnemyLife = 2;
 
 extern CTexture Texture;
 
 CBossEnemy::CBossEnemy()
 	:mFx(0),mFy(0),mBossFireCount(0)
 {
+	Hit = true;
+	Count = 0;
 	mEnabled = false;
 	w = 50;
 	h = 50;
@@ -144,7 +147,14 @@ void CBossEnemy::Update() {
 
 			}
 		}
-	
+		if (Count > 0 && Hit == false)
+		{
+			Count--;
+		}
+		if (Count == 0)
+		{
+			Hit = true;
+		}
 }
 
 
@@ -158,17 +168,23 @@ bool CBossEnemy::Collision(CRectangle& r) {
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
 		case EPLAYERBULLET:
-			CBossEnemy::CBossEnemyLife -= 1;
-			if (CBossEnemy::CBossEnemyLife == 0)
-			{
-				//プレイヤーの弾に当たると、無効にする
-				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+			if (Hit == true) {
+				CBossEnemy::mBossEnemyLife -= 1;
+
+				if (CBossEnemy::mBossEnemyLife == 0)
 				{
-					mEnabled = false;
-					r.mEnabled = false;
-					CSceneGame::ScoreCount += 2000;
-					CSceneGame::BossCount += 1;
+					//プレイヤーの弾に当たると、無効にする
+					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+					{
+						mEnabled = false;
+						r.mEnabled = false;
+						CSceneGame::ScoreCount += 2000;
+						CSceneGame::BossCount += 1;
+					}
+
 				}
+				Hit = false;
+				Count = 150;
 			}
 			break;
 

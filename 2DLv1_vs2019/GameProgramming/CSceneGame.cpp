@@ -249,7 +249,7 @@ void CSceneGame::Update() {
 			Bossflug = 0;
 			EnemyCount = 0;
 			BossCount = 0;
-			CBossEnemy::CBossEnemyLife = 20;
+			CBossEnemy::mBossEnemyLife = 20;
 			mScene = ETITLE;
 		}
 	}
@@ -263,13 +263,12 @@ void CSceneGame::Update() {
 			CText::DrawString("Push ENETER Key", -225, -100, 16, 16);
 			if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
-			CLEAR = 0;
-			OVER = 0;
+			ScoreCount = 0;
 			Time = 31 * 60;
 			Bossflug = 0;
 			EnemyCount = 0;
 			BossCount = 0;
-			CBossEnemy::CBossEnemyLife = 20;
+			CBossEnemy::mBossEnemyLife = 20;
 			mScene = ETITLE;
 			}
 		}
