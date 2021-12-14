@@ -1,4 +1,8 @@
+//コライダクラスのインクルード
 #include"CCollider.h"
+//コリジョンマネージャクラスのインクルード
+#include"CCollisionManager.h"
+
 CCollider::CCollider(CCharacter* parent, CMatrix* matrix,
 	const CVector& position, float radius) {
 	//親設定
@@ -9,6 +13,8 @@ CCollider::CCollider(CCharacter* parent, CMatrix* matrix,
 	mPosition = position; //位置
 	//半径設定
 	mRadius = radius;
+	//コリジョンマネージャyに追加
+	CCollisionManager::Get()->Add(this);
 }
 
 CCharacter* CCollider::Parent() 
@@ -30,4 +36,9 @@ void CCollider::Render()
 	//球描画
 	glutWireSphere(mRadius, 16, 16);
 	glPopMatrix();
+}
+CCollider::~CCollider() {
+	//コリジョンリストから削除
+	CCollisionManager::Get()->Remove(this);
+
 }

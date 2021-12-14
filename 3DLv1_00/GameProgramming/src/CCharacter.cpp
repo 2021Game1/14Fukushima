@@ -4,7 +4,7 @@
 
 CCharacter::CCharacter() {
 	//タスクリストに追加
-	TaskManager.Add(this);
+	CTaskManager::Get()->Add(this);
 }
 
 void CCharacter::Model(CModel* m)
@@ -20,5 +20,5 @@ void CCharacter::Render()
 
 CCharacter::~CCharacter() {
 	//タスクリストから削除
-	TaskManager.Remove(this);
+	CTaskManager::Get()->Remove(this);
 }

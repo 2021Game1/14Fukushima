@@ -14,6 +14,7 @@
     <ClCompile Include="src\CBullet.cpp" />
     <ClCompile Include="src\CCharacter.cpp" />
     <ClCompile Include="src\CCollider.cpp" />
+    <ClCompile Include="src\CCollisionManager.cpp" />
     <ClCompile Include="src\CEnemy.cpp" />
     <ClCompile Include="src\CKey.cpp" />
     <ClCompile Include="src\CMaterial.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="src\CBullet.h" />
     <ClInclude Include="src\CCharacter.h" />
     <ClInclude Include="src\CCollider.h" />
+    <ClInclude Include="src\CCollisionManager.h" />
     <ClInclude Include="src\CEnemy.h" />
     <ClInclude Include="src\CKey.h" />
     <ClInclude Include="src\CMaterial.h" />
