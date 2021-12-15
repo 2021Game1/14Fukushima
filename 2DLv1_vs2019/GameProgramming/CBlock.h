@@ -5,6 +5,8 @@
 #include "CRectangle.h"
 //プレイヤークラスのインクルード
 #include"CPlayer.h"
+
+
 extern CTexture Block;
 
 

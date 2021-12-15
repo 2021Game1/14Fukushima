@@ -4,6 +4,10 @@
 #include<stdlib.h>
 #include<time.h>
 #include"CBlock.h"
+#include"CMapModel.h"
+
+//マップモデルクラスのインスタンス作成
+CMapModel mMapModel;
 
 #define WIDTH 800.0 //画面幅
 
@@ -11,6 +15,9 @@
 
 //スクリーンのスクロールスピード
 #define SCROLL_SPEED -2.0
+
+//モデルデータの指定
+#define MODEL_OBJ "MapDate.csv","Test.csv"
 
 //プレイヤーの残機
 int CSceneGame::Remain = 3;
@@ -54,7 +61,8 @@ void CSceneGame::Init()
 {
 		//シーンの設定
 		mScene = EGAME;
-
+		//モデルファイルの入力
+		mMapModel.Load(MODEL_OBJ);
 		//スクリーン一枚目
 		//スクリーンクラスのメンバ変数への代入
 		CSceneScreen* Screen = new CSceneScreen();
