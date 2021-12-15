@@ -5,6 +5,7 @@
 
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
+//プレイヤーのポインタ
 CPlayer* CPlayer::spInstance = nullptr;
 
 int CPlayer::mPlayer = 0;

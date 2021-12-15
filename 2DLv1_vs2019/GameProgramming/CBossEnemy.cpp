@@ -1,7 +1,7 @@
 #include"CBossEnemy.h"
 #include<time.h>
 
-int CBossEnemy::mBossEnemyLife = 2;
+int CBossEnemy::mBossEnemyLife = 15;
 
 extern CTexture Texture;
 

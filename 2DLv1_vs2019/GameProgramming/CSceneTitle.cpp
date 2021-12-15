@@ -12,13 +12,14 @@ void CSceneTitle::Init() {
 //更新処理のオーバーライド
 void CSceneTitle::Update() {
 		//文字列の描画
-		CText::DrawString("TITLE", -200, 0, 50, 50);
+		CText::DrawString("TITLE", -150, 100, 40, 40);
 		CText::DrawString("Push ENTER Key",
 			-200, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			//次のシーンはゲーム
 			mScene = EGAME;
 		}
+
 	
 
 

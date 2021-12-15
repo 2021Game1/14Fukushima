@@ -14,7 +14,8 @@ public:
 	void Update();
 	void Render();
 	CSceneScreen();
-	
+	bool Collision(CRectangle& r);
+	void Collision(CRectangle* i, CRectangle* y);
 };
 #endif
 

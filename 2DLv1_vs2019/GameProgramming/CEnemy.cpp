@@ -114,6 +114,7 @@ bool CEnemy::Collision(CRectangle& r) {
 				CItemD* ItemD = new CItemD;
 				CItemE* ItemE = new CItemE;
 
+				//アイテム１の設定
 				for (int j = 0; j < 1; j++) {
 					ItemA->x = x;
 					ItemA->y = y;
@@ -132,6 +133,7 @@ bool CEnemy::Collision(CRectangle& r) {
 					ItemA->mFy = -3;
 				}
 
+				//アイテム２の設定
 				for (int j = 0; j < 1; j++) {
 					ItemB->x = x;
 					ItemB->y = y;
@@ -150,6 +152,7 @@ bool CEnemy::Collision(CRectangle& r) {
 					ItemB->mFy = -3;
 				}
 
+				//アイテム3の設定
 				for (int j = 0; j < 1; j++) {
 					ItemC->x = x;
 					ItemC->y = y;
@@ -168,6 +171,7 @@ bool CEnemy::Collision(CRectangle& r) {
 					
 				}
 				
+				//アイテム４の設定
 				for (int j = 0; j < 1; j++) {
 					ItemD->x = x;
 					ItemD->y = y;
@@ -185,6 +189,8 @@ bool CEnemy::Collision(CRectangle& r) {
 					}
 					
 				}
+
+				//アイテム5の設定
 				for (int j = 0; j < 1; j++) {
 					ItemE->x = x;
 					ItemE->y = y;
@@ -206,7 +212,7 @@ bool CEnemy::Collision(CRectangle& r) {
 				srand((unsigned)time(NULL));
 				vel = (rand() % 100) + 1;
 
-
+				//アイテム1の出現確率(外れアイテム)
 				if (vel >= 0 && vel <= 50) {
 					ItemA->mEnabled = false;
 					ItemA->mTag = EENEMYITEM;
@@ -215,41 +221,48 @@ bool CEnemy::Collision(CRectangle& r) {
 
 					}
 				}
+				//アイテム2の出現確率
 				if (vel > 50 && vel <= 70) {
 					ItemB->mEnabled = true;
 					ItemB->mTag = EENEMYITEM;
 					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 					{
+						//ゲームのスコアが50増える
 						CSceneGame::ScoreCount += 50;
 					}
 					mEnabled = false;
 				}
+				//アイテム4の出現確率
 				if (vel > 70 && vel <= 80) {
 					ItemD->mEnabled = true;
 					ItemD->mTag = EENEMYITEM;
 					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 					{
+						//プレイヤーの残機を増やす
 						CSceneGame::Remain += 1;
 					}
 					mEnabled = false;
 				}
 
+				//アイテム5の出現確率
 				if (vel > 80 && vel <= 85) {
 					ItemE->mEnabled = true;
 					ItemE->mTag = EENEMYITEM;
 					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 					{
+						//制限時間延長(効果:大)
 						CSceneGame::Time += 21 * 60;
 					}
 					mEnabled = false;
 				}
 
+				//アイテム3の出現確率
 				if (vel > 85 && vel <= 100) {
-
 					ItemC->mEnabled = true;
 					ItemC->mTag = EENEMYITEM;
 					if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 					{
+						//制限時間延長(効果:少)
 						CSceneGame::Time += 10 * 60;
 					}
 					mEnabled = false;
