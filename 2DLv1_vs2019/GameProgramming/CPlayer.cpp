@@ -17,6 +17,7 @@ CPlayer::CPlayer()
 	mTag = EPLAYER;
 	mEnabled = true;
 	spInstance = this;
+	PlayerHit = true;
 	
 }
 
@@ -151,7 +152,14 @@ void CPlayer::Update() {
 							mFx = 0;
 						}
 					}
-					
+					if (HitCount > 0 && PlayerHit == false)
+					{
+						HitCount--;
+					}
+					if (HitCount == 0)
+					{
+						PlayerHit = true;
+					}
 }
 
 	
@@ -180,6 +188,15 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 					//Rectをyだけ移動する
 					y += my;
 				}
+				if (PlayerHit == true)
+				{
+					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0)
+					{
+						CSceneGame::Remain -= 1;
+					}
+					PlayerHit = false;
+					HitCount = 160;
+				}
 			}
 		}
 	}
@@ -187,17 +204,76 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
 				(*ry).mEnabled = false;
-				if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0) {
-					CSceneGame::Remain -= 1;
+				if (PlayerHit == true)
+				{
+					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0) {
+						CSceneGame::Remain -= 1;
+					}
+					PlayerHit = false;
+					HitCount = 80;
+				}
+				
+			}
+		}
+	}
+	if ((*ry).mTag == EENEMYITEM1) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				{
+					(*ry).mEnabled = false;
 				}
 			}
 		}
 	}
-	if ((*ry).mTag == EENEMYITEM) {
+	if ((*ry).mTag == EENEMYITEM2) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
-				(*ry).mEnabled = false;
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				{
+					//ゲームのスコアが50増える
+					CSceneGame::ScoreCount += 50;
+					(*ry).mEnabled = false;
+				}
 				
+
+			}
+		}
+	}
+	if ((*ry).mTag == EENEMYITEM3) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				{
+					//制限時間延長(効果:少)
+					CSceneGame::Time += 10 * 60;
+					(*ry).mEnabled = false;
+				}
+			}
+		}
+	}
+	if ((*ry).mTag == EENEMYITEM4) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				{
+					//制限時間延長(効果:大)
+					CSceneGame::Time += 21 * 60;
+					(*ry).mEnabled = false;
+				}
+			}
+		}
+	}if ((*ry).mTag == EENEMYITEM5) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				{
+					//制限時間延長(効果:大)
+					CSceneGame::Time += 21 * 60;
+					(*ry).mEnabled = false;
+				}
+				
+
 			}
 		}
 	}
@@ -207,26 +283,12 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 				(*ry).mEnabled = false;
 				if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0) {
 					CSceneGame::Remain -= 1;
+					PlayerHit = false;
+					HitCount = 80;
 				}
 			}
 		}
 	}
-	if ((*ry).mTag == EBLOCK) {
-		if ((*ry).mEnabled && (*ri).mEnabled) {
-			int mx, my;
-			if (CRectangle::Collision(ry, &mx, &my)) {
-				//abs(x)xの絶対値を求める
-				//移動量が少ない方向だけ移動させる
-				if (abs(mx) < abs(my)) {
-					//RectをXだけ移動する
-					x += mx;
-				}
-				else {
-					//Rectをyだけ移動する
-					y += my;
-				}
-			}
-		}
-	}
+
 }
 

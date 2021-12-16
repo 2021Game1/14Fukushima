@@ -9,6 +9,8 @@ public:
 	static CPlayer* spInstance;
 	int mFx, mFy;
 	int FireCount;
+	int PlayerHit;
+	int HitCount;
 	CPlayer();
 	void Update();
 	void Render();

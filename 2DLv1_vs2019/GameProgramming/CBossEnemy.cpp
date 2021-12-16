@@ -190,10 +190,6 @@ bool CBossEnemy::Collision(CRectangle& r) {
 
 		case EPLAYER:
 
-			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
-			{
-				CSceneGame::Remain -= 1;
-			}
 			break;
 		}
 		return true;

@@ -22,7 +22,11 @@ public:
 		EENEMYBULLET,   //敵の弾
 		EENEMY,         //敵
 		ESCREEN,        //スクリーン
-		EENEMYITEM,     //アイテム
+		EENEMYITEM1,     //アイテム1
+		EENEMYITEM2,     //アイテム2
+		EENEMYITEM3,     //アイテム3
+		EENEMYITEM4,     //アイテム4
+		EENEMYITEM5,     //アイテム5
 		EBOSSBULLET,    //ボスの弾
 		EBOSSENEMY,     //ボス
 		ESTAGEBLOCK,    //白黒ブロック

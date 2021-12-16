@@ -9,10 +9,11 @@ extern CTexture ItemTexture;
 CItemA::CItemA()
 : mFy(0),mFx(0)
 {
+	x, y = 0;
 	mEnabled = false;
 	w = 15;
 	h = 15;
-	mTag = CRectangle::EENEMYITEM;
+	mTag = CRectangle::EENEMYITEM1;
 }
 
 void CItemA::Update() {
@@ -43,12 +44,12 @@ bool CItemA::Collision(CRectangle& r) {
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
 		case EPLAYER:
-			//プレイヤーの弾に当たると、無効にする
-			mEnabled = false;
-			r.mEnabled = false;
 			
-			//プレイヤーに当たると、無効にする
-			mEnabled = false;
+				//プレイヤーに当たると、無効にする
+				mEnabled = false;
+				r.mEnabled = false;
+			
+			
 			break;
 		}
 		return true;
@@ -59,10 +60,11 @@ bool CItemA::Collision(CRectangle& r) {
 CItemB::CItemB()
 : mFy(0),mFx(0)
 {
+	x, y = 0;
 	mEnabled = false;
 	w = 15;
 	h = 15;
-	mTag = CRectangle::EENEMYITEM;
+	mTag = CRectangle::EENEMYITEM2;
 }
 
 void CItemB::Update() {
@@ -95,13 +97,11 @@ bool CItemB::Collision(CRectangle& r) {
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
 		case EPLAYER:
-			//プレイヤーに当たると、無効にする
-			mEnabled = false;
-			r.mEnabled = false;
-			//プレイヤーに当たると、無効にする
+				//プレイヤーに当たると、無効にする
+				mEnabled = false;
+				r.mEnabled = false;
 			
-			//プレイヤーに当たると、無効にする
-			mEnabled = false;
+			
 			break;
 		}
 		return true;
@@ -113,10 +113,11 @@ bool CItemB::Collision(CRectangle& r) {
 CItemC::CItemC()
 : mFy(0), mFx(0)
 {
+	x, y = 0;
 	mEnabled = false;
 	w = 15;
 	h = 15;
-	mTag = CRectangle::EENEMYITEM;
+	mTag = CRectangle::EENEMYITEM3;
 }
 
 void CItemC::Update() {
@@ -148,12 +149,10 @@ bool CItemC::Collision(CRectangle& r) {
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
 		case EPLAYER:
-			//プレイヤーの弾に当たると、無効にする
-			mEnabled = false;
-			r.mEnabled = false;
+				//プレイヤーの弾に当たると、無効にする
+				mEnabled = false;
+				r.mEnabled = false;
 			
-			//プレイヤーに当たると、無効にする
-			mEnabled = false;
 			break;
 		}
 		return true;
@@ -164,10 +163,11 @@ bool CItemC::Collision(CRectangle& r) {
 CItemD::CItemD()
 : mFy(0), mFx(0)
 {
+	x, y = 0;
 	mEnabled = false;
 	w = 15;
 	h = 15;
-	mTag = CRectangle::EENEMYITEM;
+	mTag = CRectangle::EENEMYITEM4;
 }
 
 void CItemD::Update(){
@@ -204,9 +204,6 @@ bool CItemD::Collision(CRectangle& r) {
 			mEnabled = false;
 			r.mEnabled = false;
 			
-			//プレイヤーに当たると、無効にする
-			mEnabled = false;
-			
 			break;
 		}
 		return true;
@@ -220,7 +217,7 @@ CItemE::CItemE()
 	mEnabled = false;
 	w = 15;
 	h = 15;
-	mTag = CRectangle::EENEMYITEM;
+	mTag = CRectangle::EENEMYITEM5;
 }
 
 void CItemE::Update() {
@@ -252,9 +249,10 @@ bool CItemE::Collision(CRectangle& r) {
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
 		case EPLAYER:
-			//プレイヤーの弾に当たると、無効にする
-			mEnabled = false;
-			r.mEnabled = false;
+			
+				//プレイヤーの弾に当たると、無効にする
+				mEnabled = false;
+				r.mEnabled = false;
 			
 			break;
 		}
