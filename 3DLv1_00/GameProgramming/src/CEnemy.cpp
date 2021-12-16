@@ -22,3 +22,12 @@ void CEnemy::Update() {
 	//位置を移動
 	mPosition = CVector(0.0f, 0.0f, 0.9f) * mMatrix;
 }
+//衝突処理
+//Collision(コライダ1,コライダ2)
+void CEnemy::Collision(CCollider* m, CCollider* o) {
+	//コライダのmとoが衝突しているかの判定
+	if (CCollider::Collision(m,o)){
+		//衝突している時は無効にする
+		mEnabled = false;
+	}
+}

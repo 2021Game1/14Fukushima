@@ -1,8 +1,9 @@
 #ifndef CTASK_H
 #define CTASK_H
-
+//タスクマネージャの宣言
 class CTaskManager;
-
+//コリジョンマネージャの宣言
+class CCollisionManager;
 /*
 * タスククラス
 * タスクリストの要素
@@ -11,7 +12,7 @@ class CTaskManager;
 class CTask {
 
 	friend CTaskManager;
-
+	friend CCollisionManager;
 public:
 
 	//デフォルトコンストラクタ

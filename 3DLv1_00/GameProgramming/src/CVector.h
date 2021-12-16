@@ -16,6 +16,8 @@ public:
 	float Y()const;
 	//Zの値を得る
 	float Z()const;
+	//ベクトルの長さを返す
+	float Length()const;
 	//デフォルトコンストラクタ
 	CVector();
 	//コンストラクタ

@@ -1,13 +1,13 @@
 #include "CTaskManager.h"
 
 //タスクマネージャのインスタンス
-CTaskManager* CTaskManager::mpInstance = 0;
+CTaskManager* CTaskManager::mpInstance = nullptr;
 
 //インスタンスの取得
 CTaskManager* CTaskManager::Get()
 {
 	//インスタンスが無ければ
-	if (mpInstance == 0)
+	if (mpInstance == nullptr)
 	{
 		//インスタンスを生成する
 		mpInstance = new CTaskManager();

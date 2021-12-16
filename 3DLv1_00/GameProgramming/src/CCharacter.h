@@ -7,7 +7,8 @@
 #include"CModel.h"
 //タスククラスのインクルード
 #include"CTask.h"
-
+//コライダクラスの宣言
+class CCollider;
 /*
 キャラクタークラス
 ゲームキャラクタの基本的な機能を定義する
@@ -26,7 +27,8 @@ public:
 	CCharacter();
 	//デストラクタ
 	~CCharacter();
-
+	//衝突処理
+	virtual void Collision(CCollider *m,CCollider *o){}
 };
 #endif 
 

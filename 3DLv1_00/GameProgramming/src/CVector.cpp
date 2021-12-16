@@ -1,4 +1,7 @@
+//ベクトルクラスのインクルード
 #include"CVector.h"
+//<math.h>のインクルード
+#include<math.h>
 //課題３　コンストラクタ
 CVector::CVector()
 	:mX(0.0f)
@@ -55,4 +58,9 @@ float CVector::Y()const
 float CVector::Z()const
 {
 	return mZ;
+}
+//ベクトルの長さを返す
+float CVector::Length()const {
+	//sprt関数で平方根を返す
+	return sqrtf(mX * mX + mY * mY + mZ * mZ);
 }

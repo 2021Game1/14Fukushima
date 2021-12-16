@@ -22,6 +22,9 @@ public:
 	void Render();
 	//弾の生存時間
 	int mLife;
+	//衝突処理
+	//Collision(コライダ1,コライダ2)
+	void Collision(CCollider* m, CCollider* o);
 	//デフォルトコンストラクタ
 	CBullet();
 private:
