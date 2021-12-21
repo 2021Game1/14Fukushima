@@ -20,6 +20,10 @@
 #include"CEnemy.h"
 //コリジョンマネージャクラスのインクルード
 #include"CCollisionManager.h"
+//ビルボードクラスのインクルード
+#include"CBillBoard.h"
+//カメラのクラスのインクルード
+#include"CCamera.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
@@ -51,7 +55,8 @@ void CSceneGame::Init() {
 		CVector(),CVector(0.1f,0.1f,0.1f));
 	new CEnemy(&mModelC5, CVector(30.0f, 10.0f, -130.0f),
 		CVector(), CVector(0.1f, 0.1f, 0.1f));
-
+	//ビルボードの生成
+	new CBillBoard(CVector(-6.0f, 3.0f, -10.0f), 1.0f, 1.0f);
 }
 
 void CSceneGame::Update() {
@@ -68,8 +73,10 @@ void CSceneGame::Update() {
 	//上方向を求める
 	u = CVector(0.0f,1.0f,0.0f) * mPlayer.MatirixRotate();
 	//カメラの設定
-	gluLookAt(e.X(), e.Y(), e.Z(), c.X(), c.Y(), c.Z(), u.X(), u.Y(), u.Z());
-	//mPlayer.Render();
+	//gluLookAt(e.X(), e.Y(), e.Z(), c.X(), c.Y(), c.Z(), u.X(), u.Y(), u.Z());
+	//カメラクラスの設定
+	Camera.Set(e, c, u);
+	Camera.Render();
 	
 	
 

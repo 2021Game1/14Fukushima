@@ -11,7 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CBillBoard.cpp" />
     <ClCompile Include="src\CBullet.cpp" />
+    <ClCompile Include="src\CCamera.cpp" />
     <ClCompile Include="src\CCharacter.cpp" />
     <ClCompile Include="src\CCollider.cpp" />
     <ClCompile Include="src\CCollisionManager.cpp" />
@@ -34,7 +36,9 @@
     <ClCompile Include="src\CMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CBillBoard.h" />
     <ClInclude Include="src\CBullet.h" />
+    <ClInclude Include="src\CCamera.h" />
     <ClInclude Include="src\CCharacter.h" />
     <ClInclude Include="src\CCollider.h" />
     <ClInclude Include="src\CCollisionManager.h" />
