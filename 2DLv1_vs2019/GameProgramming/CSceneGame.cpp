@@ -4,10 +4,8 @@
 #include<stdlib.h>
 #include<time.h>
 #include"CBlock.h"
-#include"CMapModel.h"
 #include"CItem.h"
-
-//マップモデルクラスのインスタンス作成
+#include"CMapModel.h"
 CMapModel mMapModel;
 
 #define WIDTH 800.0 //画面幅
@@ -64,28 +62,31 @@ void CSceneGame::Init()
 		mScene = EGAME;
 		//モデルファイルの入力
 		mMapModel.Load(MODEL_OBJ);
-		//スクリーン一枚目
-		//スクリーンクラスのメンバ変数への代入
-		CSceneScreen* Screen = new CSceneScreen();
-		//スクリーンに値を設定
-		Screen->x = 0;
-		Screen->y = 240;
-		//スクロールスピード
-		Screen->speed = SCROLL_SPEED;
-		//有効にする
-		Screen->mEnabled = true;
+		
+	//	//スクリーン一枚目
+	////スクリーンクラスのメンバ変数への代入
+	//	CSceneScreen* Screen = new CSceneScreen();
+	//	//スクリーンに値を設定
+	//	Screen->x = 0;
+	//	Screen->y = 240;
+	//	//スクロールスピード
+	//	Screen->speed = SCROLL_SPEED;
+	//	//有効にする
+	//	Screen->mEnabled = true;
 
-		//スクリーン２枚目
-		//スクリーンクラスのメンバ変数への代入
-		CSceneScreen* Screen2 = new CSceneScreen();
-		//スクリーンに値を設定
-		Screen2->x = 0;
-		Screen2->y = 1700;
-		//スクロールスピード
-		Screen2->speed = SCROLL_SPEED;
-		//有効にする
-		Screen2->mEnabled = true;
+	//	//スクリーン２枚目
+	//	//スクリーンクラスのメンバ変数への代入
+	//	CSceneScreen* Screen2 = new CSceneScreen();
+	//	//スクリーンに値を設定
+	//	Screen2->x = 0;
+	//	Screen2->y = 1700;
+	//	//スクロールスピード
+	//	Screen2->speed = SCROLL_SPEED;
+	//	//有効にする
+	//	Screen2->mEnabled = true;
 
+		
+		
 
 
 		//プレイヤークラスのメンバ変数への代入
@@ -99,7 +100,7 @@ void CSceneGame::Init()
 		Player->mEnabled = true;
 
 
-		
+
 	
 	
 	
@@ -414,6 +415,8 @@ void CSceneGame::Update() {
 */
 
 }
+
+
 
 
 //次のシーンの取得

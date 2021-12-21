@@ -3,6 +3,7 @@
 #include"CTexture.h"
 
 
+
 //スクリーンのポインタ
 CSceneScreen* CSceneScreen::spInstance = nullptr;
 
@@ -17,6 +18,7 @@ CSceneScreen::CSceneScreen()
 
 void CSceneScreen::Update()
 {
+	
 	y += speed;
 		if (y == -1200)
 			y = 1736;

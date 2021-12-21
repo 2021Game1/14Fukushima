@@ -1,5 +1,7 @@
 #ifndef CMAPMODEL_H
 #define CMAPMODEL_H
+//ブロッククラスのインクルード
+#include"CBlock.h"
 /*
 マップモデルクラス
 マップモデルクラスの入力や表示
@@ -12,6 +14,7 @@ public:
 	void Load(char* obj, char* mtl);
 
 
+	
 
 };
 #endif

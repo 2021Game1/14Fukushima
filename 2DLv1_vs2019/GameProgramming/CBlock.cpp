@@ -1,5 +1,5 @@
 #include"CBlock.h"
-
+#include"CSceneGame.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture BulletTexture;
 
@@ -38,14 +38,7 @@ bool CBlock::Collision(CRectangle& r) {
 	//親のCollisionメソッドを呼び出す
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
-		case EPLAYERBULLET:
-			//プレイヤーの弾に当たると、無効にする
-			mEnabled = false;
-			r.mEnabled = false;
-		case EPLAYER:
-			//プレイヤーに当たると、無効にする
-			mEnabled = false;
-			break;
+
 		}
 		return true;
 	}
@@ -55,7 +48,7 @@ bool CBlock::Collision(CRectangle& r) {
 void CBlock::Render()
 {
 	if (mEnabled) {
-		CRectangle::Render(BulletTexture, 106, 116, 106, 112);
+		CRectangle::Render(BulletTexture, 128, 135, 175, 158);
 	}
 
 }

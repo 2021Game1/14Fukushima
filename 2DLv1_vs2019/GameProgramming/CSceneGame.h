@@ -28,6 +28,11 @@ public:
 	//CEnemy Enemy[10];
 	//37
 	
+	//マップモデルファイルの入力
+	//Load(モデルファイル名,マテリアルファイル名)
+	void Load(char* obj, char* mtl);
+	//マップ
+	int MapInfo;
 
 	//初期化処理のオーバーライド
 	void Init();
