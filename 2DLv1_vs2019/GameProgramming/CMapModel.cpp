@@ -32,24 +32,29 @@ void CMapModel::Load(char* csv, char* mtl) {
 		//ssccanf(”—ñ,•ÏŠ·w’èq,•Ï”)
 		sscanf(buf, "%d, %d, %d, %d, %d, %d, %d, %d, %d,", &seq[0], &seq[1], &seq[2], &seq[3], &seq[4], &seq[5], &seq[6], &seq[7], &seq[8]);
 		for (int i = 0; i < 9; i++) {
-			switch (seq[i]) {
-			case 0: {
-				printf("%d\n", seq[i]);
-				
-			}
-				  break;
-			case 1: {
-				printf("%d\n", seq[i]);
-				
-			}
-				  break;
+			{
+				switch (seq[i]) {
+				case 0: {
+					printf("%d\n", seq[i]);
 
-			case 2: {
-				printf("%d\n", seq[i]);
-				
+				}
+					  break;
+				case 1: {
+					printf("%d\n", seq[i]);
+
+				}
+					  break;
+
+				case 2: {
+					printf("%d\n", seq[i]);
+
+				}
+					  break;
+
+				}
 			}
-				  break;
-			}
+
+
 		}
 		
 	}
