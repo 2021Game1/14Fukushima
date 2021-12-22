@@ -25,41 +25,31 @@ void CMapModel::Load(char* csv, char* mtl) {
 	//ファイルから1行入力
 	//fgets(入力エリア,エリアサイズ,ファイルポインタ)
 	//ファイルの最後になるとNULLを返す
-	//データを分割
-	char seq[20][9] = { "","","","","","","","","" };
-
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		//数列からデータを9つ変数へ代入する
+		//データを分割
+		int seq[9];
 		//ssccanf(数列,変換指定子,変数)
-		sscanf(buf, "%d, %d, %d, %d, %d, %d, %d, %d, %d,", &seq[0][], &seq[1][], &seq[2][], &seq[3][], &seq[4][], &seq[5][], &seq[6][], &seq[7][], &seq[8][]);
+		sscanf(buf, "%d, %d, %d, %d, %d, %d, %d, %d, %d,", &seq[0], &seq[1], &seq[2], &seq[3], &seq[4], &seq[5], &seq[6], &seq[7], &seq[8]);
 		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 20; j++){
-			switch (seq[j][i]) {
+			switch (seq[i]) {
 			case 0: {
-				printf("%d\n", seq[i][j]);
-
+				printf("%d\n", seq[i]);
+				
 			}
 				  break;
 			case 1: {
-				printf("%d\n", seq[i][j]);
-			CBlock* Block = new CBlock();
-			Block->x = i * 100 - 250;
-			Block->y = -500 + 250;
-			Block->h = 25;
-			Block->w = 25;
-			Block->mTag = CRectangle::EBLOCK;
-			Block->mEnabled = true;
+				printf("%d\n", seq[i]);
+				
 			}
 				  break;
 
 			case 2: {
-				printf("%d\n", seq[i][j]);
-		
+				printf("%d\n", seq[i]);
+				
 			}
 				  break;
 			}
-		}
-
 		}
 		
 	}
