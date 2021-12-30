@@ -30,6 +30,7 @@ void CSceneManager::Update() {
 	//次のシーンを取得し異なるか判定
 	if (mScene != mpScene->GetNextScene()) {
 		mScene = mpScene->GetNextScene();
+
 		delete mpScene;//今のシーン削除
 		//該当するシーンを生成
 		switch (mScene) {

@@ -245,8 +245,7 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 			if (CRectangle::Collision(*ry)) {
 				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 				{
-					//§ŒÀŠÔ‰„’·(Œø‰Ê:­)
-					CSceneGame::Time += 10 * 60;
+					CSceneGame::Remain +=1;
 					(*ry).mEnabled = false;
 				}
 			}
@@ -257,8 +256,8 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 			if (CRectangle::Collision(*ry)) {
 				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 				{
-					//§ŒÀŠÔ‰„’·(Œø‰Ê:‘å)
-					CSceneGame::Time += 21 * 60;
+					//§ŒÀŠÔ‰„’·(Œø‰Ê:­)
+					CSceneGame::Time += 10 * 60;
 					(*ry).mEnabled = false;
 				}
 			}
