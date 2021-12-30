@@ -6,11 +6,12 @@
 //プレイヤークラスのインクルード
 #include"CPlayer.h"
 
+#include"CMapModel.h"
 
 extern CTexture Block;
 
 
-class CBlock : public CRectangle {
+class CBlock : public CRectangle{
 public:
 
 	int mFx, mFy;

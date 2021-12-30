@@ -6,6 +6,7 @@
 #include"CBlock.h"
 #include"CItem.h"
 #include"CMapModel.h"
+
 CMapModel mMapModel;
 
 #define WIDTH 800.0 //画面幅
@@ -14,6 +15,8 @@ CMapModel mMapModel;
 
 //スクリーンのスクロールスピード
 #define SCROLL_SPEED -2.0
+
+CBlock mBlockModel;
 
 //モデルデータの指定
 #define MODEL_OBJ "MapDate.csv","Test.csv"
@@ -63,27 +66,27 @@ void CSceneGame::Init()
 		//モデルファイルの入力
 		mMapModel.Load(MODEL_OBJ);
 		
-	//	//スクリーン一枚目
-	////スクリーンクラスのメンバ変数への代入
-	//	CSceneScreen* Screen = new CSceneScreen();
-	//	//スクリーンに値を設定
-	//	Screen->x = 0;
-	//	Screen->y = 240;
-	//	//スクロールスピード
-	//	Screen->speed = SCROLL_SPEED;
-	//	//有効にする
-	//	Screen->mEnabled = true;
+		//スクリーン一枚目
+	//スクリーンクラスのメンバ変数への代入
+		CSceneScreen* Screen = new CSceneScreen();
+		//スクリーンに値を設定
+		Screen->x = 0;
+		Screen->y = 240;
+		//スクロールスピード
+		Screen->speed = SCROLL_SPEED;
+		//有効にする
+		Screen->mEnabled = true;
 
-	//	//スクリーン２枚目
-	//	//スクリーンクラスのメンバ変数への代入
-	//	CSceneScreen* Screen2 = new CSceneScreen();
-	//	//スクリーンに値を設定
-	//	Screen2->x = 0;
-	//	Screen2->y = 1700;
-	//	//スクロールスピード
-	//	Screen2->speed = SCROLL_SPEED;
-	//	//有効にする
-	//	Screen2->mEnabled = true;
+		//スクリーン２枚目
+		//スクリーンクラスのメンバ変数への代入
+		CSceneScreen* Screen2 = new CSceneScreen();
+		//スクリーンに値を設定
+		Screen2->x = 0;
+		Screen2->y = 1700;
+		//スクロールスピード
+		Screen2->speed = SCROLL_SPEED;
+		//有効にする
+		Screen2->mEnabled = true;
 
 		
 		
@@ -113,7 +116,7 @@ void CSceneGame::Init()
 
 void CSceneGame::Update() {
 
-
+	
 		//敵の出現する条件
 		if (GameTime % 280 == 140 && ScoreCount < 1000 && GameTime != 0)
 		{

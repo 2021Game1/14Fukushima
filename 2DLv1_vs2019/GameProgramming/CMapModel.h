@@ -14,6 +14,8 @@ public:
 	void Load(char* obj, char* mtl);
 	
 
+
+	
 	
 
 };
