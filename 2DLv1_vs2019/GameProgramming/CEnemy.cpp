@@ -16,9 +16,6 @@ CEnemy::CEnemy()
 	: mFx(0), mFy(0),mFireCount(0)
 {
 	{
-
-		w = 25;
-		h = 25;
 		//37
 	//	mEnabled = true;
 		mTag = CRectangle::EENEMY;
@@ -31,7 +28,7 @@ void CEnemy::Update() {
 	//mEnabled‚ªfalse‚È‚ç–ß‚é
 	if (!mEnabled)return;
 
-	if (y > 280)
+	if (y > 1200)
 	{
 		//“G‚Ìƒtƒ‰ƒO‚ğfalse‚É
 		mEnabled = false;

@@ -6,8 +6,7 @@ extern CTexture BulletTexture;
 CBlock::CBlock() 
 	: mFx(0), mFy(0)
 {
-	w = 25;
-	h = 25;
+
 	mTag = CRectangle::EBLOCK;
 }
 
@@ -16,9 +15,9 @@ void CBlock::Update()
 	//mEnabled‚ªfalse‚È‚ç–ß‚é
 	if (!mEnabled)return;
 
-	if (y < -280)
+	if (y < -450)
 	{
-		//“G‚Ìƒtƒ‰ƒO‚ðfalse‚É
+		
 		mEnabled = false;
 	}
 

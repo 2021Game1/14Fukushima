@@ -63,11 +63,9 @@ void CSceneGame::Init()
 {
 		//シーンの設定
 		mScene = EGAME;
-		//モデルファイルの入力
-		mMapModel.Load(MODEL_OBJ);
 		
 		//スクリーン一枚目
-	//スクリーンクラスのメンバ変数への代入
+		//スクリーンクラスのメンバ変数への代入
 		CSceneScreen* Screen = new CSceneScreen();
 		//スクリーンに値を設定
 		Screen->x = 0;
@@ -88,7 +86,8 @@ void CSceneGame::Init()
 		//有効にする
 		Screen2->mEnabled = true;
 
-		
+		//モデルファイルの入力
+		mMapModel.Load(MODEL_OBJ);
 		
 
 
@@ -108,7 +107,7 @@ void CSceneGame::Init()
 	
 	
 
-			
+		
 }
 
 
@@ -117,21 +116,7 @@ void CSceneGame::Init()
 void CSceneGame::Update() {
 
 	
-		//敵の出現する条件
-		if (GameTime % 280 == 140 && ScoreCount < 1000 && GameTime != 0)
-		{
-			/*srand(time(NULL));*/
-			//乱数値=rand()%乱数値の要素数+乱数値の最小値
-			val = rand() % 501 - 250;
-			CEnemy* Enemy = new CEnemy();
-			//敵に値を設定
-			Enemy->x = val;
-			Enemy->y = 250;
-			Enemy->mFy = -1;
-			//有効にする
-			Enemy->mEnabled = true;
-			
-		}
+
 
 		if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 		{
@@ -230,7 +215,7 @@ void CSceneGame::Update() {
 
 	}
 		//敵の出現する条件
-		if (GameTime % 140 == 70 && GameTime != 0)
+		if (GameTime % 140 == 70 && GameTime != 0 && Bossflug == 2)
 		{
 			/*srand(time(NULL));*/
 			//乱数値=rand()%乱数値の要素数+乱数値の最小値
