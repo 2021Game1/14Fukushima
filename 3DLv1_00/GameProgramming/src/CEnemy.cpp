@@ -1,4 +1,5 @@
 #include "CEnemy.h"
+#include "CEffect.h"
 
 //コンストラクタ
 //CEnemy(モデル,位置,回転,拡縮)
@@ -27,7 +28,9 @@ void CEnemy::Update() {
 void CEnemy::Collision(CCollider* m, CCollider* o) {
 	//コライダのmとoが衝突しているかの判定
 	if (CCollider::Collision(m,o)){
+		//エフェクト生成
+		new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
 		//衝突している時は無効にする
-		mEnabled = false;
+		//削除mEnabled = false;
 	}
 }
