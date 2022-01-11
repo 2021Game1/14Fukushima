@@ -16,8 +16,8 @@ void CBillBoard::Set(CVector pos, float w, float h) {
 	//大きさの設定
 	mScale = CVector(w, h, 0.0f);
 	//三角形の頂点座標設定
-	mT[0].Vertex(CVector(-1.0f, -1.0f, 0.0f),
-		CVector(-1.0f, 1.0f, 0.0f), CVector(1.0f, -1.0f, 0.0f));
+	mT[0].Vertex(CVector(1.0f, 1.0f, 0.0f),
+		CVector(-1.0f, -1.0f, 0.0f), CVector(1.0f, -1.0f, 0.0f));
 	mT[1].Vertex(CVector(-1.0f, 1.0f, 0.0f),
 		CVector(-1.0f, -1.0f, 0.0f), CVector(1.0f, 1.0f, 0.0f));
 	//法線をZ軸方向
@@ -66,3 +66,4 @@ void CBillBoard::Render(CMaterial* mpMaterial) {
 	//行列を戻す
 	glPopMatrix();
 }
+

@@ -1,11 +1,9 @@
 #ifndef CCAMERA_H
 #define CCAMERA_H
 #include "CVector.h"
-
 /*
 * カメラクラス
 */
-
 class CCamera {
 public:
 	//視点座標の取得

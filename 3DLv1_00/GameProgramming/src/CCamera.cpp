@@ -13,3 +13,7 @@ void CCamera::Set(const CVector& eye, const CVector& center, const CVector& up) 
 void CCamera::Render() {
 	gluLookAt(mEye.X(), mEye.Y(), mEye.Z(), mCenter.X(), mCenter.Y(), mCenter.Z(), mUp.X(), mUp.Y(), mUp.Z());
 }
+
+const CVector& CCamera::Eye() const {
+	return CCamera::mEye;
+}
