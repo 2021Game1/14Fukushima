@@ -1,5 +1,6 @@
 #include "CBullet.h"
 #include "CTexture.h"
+#include "CSceneGame.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture BulletTexture;
 

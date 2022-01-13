@@ -6,7 +6,6 @@
 #include"CItem.h"
 #include"CSceneTitle.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
-extern CTexture ItemTexture;
 extern CTexture Texture;
 
 //CBullet CEnemy::EBullet[20];
@@ -28,7 +27,7 @@ void CEnemy::Update() {
 	//mEnabledがfalseなら戻る
 	if (!mEnabled)return;
 
-	if (y > 1200)
+	if (y < -425)
 	{
 		//敵のフラグをfalseに
 		mEnabled = false;
@@ -78,9 +77,7 @@ void CEnemy::Update() {
 
 
 	}
-	if (y == -50) {
-		CEnemy::mFy = 2;
-	}
+
 
 
 }
@@ -103,7 +100,6 @@ bool CEnemy::Collision(CRectangle& r) {
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
-
 				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 				{
 					CSceneGame::ScoreCount += 100;
@@ -113,8 +109,6 @@ bool CEnemy::Collision(CRectangle& r) {
 			break;
 			
 		case EPLAYER:
-
-
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
 			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
@@ -132,6 +126,7 @@ bool CEnemy::Collision(CRectangle& r) {
 	}
 		return false;
 }
+
 void CEnemy::Render() {
 		if (mEnabled) {
 			CRectangle::Render(Texture, 140, 190, 75, 25);

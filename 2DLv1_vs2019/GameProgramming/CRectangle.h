@@ -29,7 +29,7 @@ public:
 		EENEMYITEM5,     //アイテム5
 		EBOSSBULLET,    //ボスの弾
 		EBOSSENEMY,     //ボス
-		ESTAGEBLOCK,    //白黒ブロック
+		ECOMET,    //小惑星
 	};
 	ETag mTag;	//列挙型の変数
 	//デフォルトコンストラクタ

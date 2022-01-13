@@ -8,7 +8,7 @@
 
 #include"CMapModel.h"
 
-extern CTexture Block;
+extern CTexture MoonBlock;
 
 
 class CBlock : public CRectangle{
@@ -23,5 +23,16 @@ public:
 	
 };
 
+class CComet : public CRectangle {
+public:
+
+	int mFx, mFy;
+	
+	void Update();
+	void Render();
+	CComet();
+	bool Collision(CRectangle& r);
+	void Collision(CRectangle* i, CRectangle* y);
+};
 #endif 
 

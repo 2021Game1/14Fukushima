@@ -16,8 +16,6 @@ CMapModel mMapModel;
 //スクリーンのスクロールスピード
 #define SCROLL_SPEED -2.0
 
-CBlock mBlockModel;
-
 //モデルデータの指定
 #define MODEL_OBJ "MapDate.csv","Test.csv"
 
@@ -25,7 +23,7 @@ CBlock mBlockModel;
 int CSceneGame::Remain = 3;
 
 //残り時間（30秒）
-int CSceneGame::Time = 31 * 60;
+int CSceneGame::Time = 256 * 60;
 
 //ゲームクリア
 int CSceneGame::CLEAR = 0;
@@ -64,27 +62,27 @@ void CSceneGame::Init()
 		//シーンの設定
 		mScene = EGAME;
 		
-		//スクリーン一枚目
-		//スクリーンクラスのメンバ変数への代入
-		CSceneScreen* Screen = new CSceneScreen();
-		//スクリーンに値を設定
-		Screen->x = 0;
-		Screen->y = 240;
-		//スクロールスピード
-		Screen->speed = SCROLL_SPEED;
-		//有効にする
-		Screen->mEnabled = true;
+		////スクリーン一枚目
+		////スクリーンクラスのメンバ変数への代入
+		//CSceneScreen* Screen = new CSceneScreen();
+		////スクリーンに値を設定
+		//Screen->x = 0;
+		//Screen->y = 240;
+		////スクロールスピード
+		//Screen->speed = SCROLL_SPEED;
+		////有効にする
+		//Screen->mEnabled = true;
 
-		//スクリーン２枚目
-		//スクリーンクラスのメンバ変数への代入
-		CSceneScreen* Screen2 = new CSceneScreen();
-		//スクリーンに値を設定
-		Screen2->x = 0;
-		Screen2->y = 1700;
-		//スクロールスピード
-		Screen2->speed = SCROLL_SPEED;
-		//有効にする
-		Screen2->mEnabled = true;
+		////スクリーン２枚目
+		////スクリーンクラスのメンバ変数への代入
+		//CSceneScreen* Screen2 = new CSceneScreen();
+		////スクリーンに値を設定
+		//Screen2->x = 0;
+		//Screen2->y = 1700;
+		////スクロールスピード
+		//Screen2->speed = SCROLL_SPEED;
+		////有効にする
+		//Screen2->mEnabled = true;
 
 		//モデルファイルの入力
 		mMapModel.Load(MODEL_OBJ);
@@ -115,83 +113,6 @@ void CSceneGame::Init()
 
 void CSceneGame::Update() {
 
-	
-
-
-		if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
-		{
-				if (GameTime % 100 == 50)
-				{
-					/*srand(time(NULL));*/
-					//乱数値=rand()%乱数値の要素数+乱数値の最小値
-					val = rand() % 501 - 250;
-					/*srand(time(NULL));*/
-					//乱数値=rand()%乱数値の要素数+乱数値の最小値
-					srand((unsigned)time(NULL));
-					vel = (rand() % 100) + 1;
-					for (int i = 0; i < 1; i++)
-					{
-						//アイテム1の出現確率(外れアイテム)
-						if (vel >= 0 && vel <= 70) {
-							CItemA* ItemA = new CItemA;
-							ItemA->x = val;
-							ItemA->y = 250;
-							ItemA->mFy = -3;
-							ItemA->mEnabled = false;
-							ItemA->mTag = CRectangle::EENEMYITEM1;
-						}
-					}
-					for (int i = 0; i < 1; i++)
-					{
-						//アイテム2の出現確率
-						if (vel > 70 && vel <= 80) {
-							CItemB* ItemB = new CItemB;
-							ItemB->x = val;
-							ItemB->y = 250;
-							ItemB->mFy = -3;
-							ItemB->mEnabled = true;
-							ItemB->mTag = CRectangle::EENEMYITEM2;
-						}
-					}
-					for (int i = 0; i < 1; i++)
-					{
-						//アイテム4の出現確率
-						if (vel > 80 && vel <= 90) {
-							CItemD* ItemD = new CItemD;
-							ItemD->x = val;
-							ItemD->y = 250;
-							ItemD->mFy = -3;
-							ItemD->mEnabled = true;
-							ItemD->mTag = CRectangle::EENEMYITEM3;
-						}
-					}
-					for (int i = 0; i < 1; i++)
-					{
-						//アイテム5の出現確率
-						if (vel > 90 && vel <= 95) {
-							CItemE* ItemE = new CItemE;
-							ItemE->x = val;
-							ItemE->y = 250;
-							ItemE->mFy = -3;
-							ItemE->mEnabled = true;
-							ItemE->mTag = CRectangle::EENEMYITEM4;
-						}
-					}
-					for (int i = 0; i < 1; i++)
-					{
-						//アイテム3の出現確率
-						if (vel > 95 && vel <= 100) {
-							CItemC* ItemC = new CItemC;
-							ItemC->x = val;
-							ItemC->y = 250;
-							ItemC->mFy = -3;
-							ItemC->mEnabled = true;
-							ItemC->mTag = CRectangle::EENEMYITEM5;
-						}
-					}
-
-				}
-		}
 
 	//ボスのフラグが2以外の時に出現する
 	if (Bossflug != 2)
@@ -214,6 +135,80 @@ void CSceneGame::Update() {
 		}
 
 	}
+	if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+	{
+		if (GameTime % 100 == 50 && Bossflug == 2)
+		{
+			/*srand(time(NULL));*/
+			//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			val = rand() % 501 - 250;
+			/*srand(time(NULL));*/
+			//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			srand((unsigned)time(NULL));
+			vel = (rand() % 100) + 1;
+			for (int i = 0; i < 1; i++)
+			{
+				//アイテム1の出現確率(外れアイテム)
+				if (vel >= 0 && vel <= 70) {
+					CItemA* ItemA = new CItemA;
+					ItemA->x = val;
+					ItemA->y = 250;
+					ItemA->mFy = -3;
+					ItemA->mEnabled = false;
+					ItemA->mTag = CRectangle::EENEMYITEM1;
+				}
+			}
+			for (int i = 0; i < 1; i++)
+			{
+				//アイテム2の出現確率
+				if (vel > 70 && vel <= 80) {
+					CItemB* ItemB = new CItemB;
+					ItemB->x = val;
+					ItemB->y = 250;
+					ItemB->mFy = -3;
+					ItemB->mEnabled = true;
+					ItemB->mTag = CRectangle::EENEMYITEM2;
+				}
+			}
+			for (int i = 0; i < 1; i++)
+			{
+				//アイテム4の出現確率
+				if (vel > 80 && vel <= 90) {
+					CItemD* ItemD = new CItemD;
+					ItemD->x = val;
+					ItemD->y = 250;
+					ItemD->mFy = -3;
+					ItemD->mEnabled = true;
+					ItemD->mTag = CRectangle::EENEMYITEM3;
+				}
+			}
+			for (int i = 0; i < 1; i++)
+			{
+				//アイテム5の出現確率
+				if (vel > 90 && vel <= 95) {
+					CItemE* ItemE = new CItemE;
+					ItemE->x = val;
+					ItemE->y = 250;
+					ItemE->mFy = -3;
+					ItemE->mEnabled = true;
+					ItemE->mTag = CRectangle::EENEMYITEM4;
+				}
+			}
+			for (int i = 0; i < 1; i++)
+			{
+				//アイテム3の出現確率
+				if (vel > 95 && vel <= 100) {
+					CItemC* ItemC = new CItemC;
+					ItemC->x = val;
+					ItemC->y = 250;
+					ItemC->mFy = -3;
+					ItemC->mEnabled = true;
+					ItemC->mTag = CRectangle::EENEMYITEM5;
+				}
+			}
+
+		}
+	}
 		//敵の出現する条件
 		if (GameTime % 140 == 70 && GameTime != 0 && Bossflug == 2)
 		{
@@ -225,6 +220,8 @@ void CSceneGame::Update() {
 			//敵に値を設定
 			Enemy2->x = val;
 			Enemy2->y = 250;
+			Enemy2->w = 25;
+			Enemy2->h = 25;
 			Enemy2->mFy = -1;
 			//有効にする
 			Enemy2->mEnabled = true;
@@ -346,7 +343,7 @@ void CSceneGame::Update() {
 			Remain = 3;
 			OVER = 0;
 			ScoreCount = 0;
-			Time = 31 * 60;
+			Time = 256 * 60;
 			Bossflug = 0;
 			EnemyCount = 0;
 			BossCount = 0;
@@ -365,7 +362,7 @@ void CSceneGame::Update() {
 			if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
 			ScoreCount = 0;
-			Time = 31 * 60;
+			Time = 256 * 60;
 			Bossflug = 0;
 			EnemyCount = 0;
 			BossCount = 0;

@@ -136,22 +136,6 @@ void CPlayer::Update() {
 							y = -300 + h;
 						}
 					}
-					if (CKey::Push('J'))
-					{
-						mFy = 1;
-						mFx = -1;
-					}
-					if (CKey::Push('L'))
-					{
-						mFy = 1;
-						mFx = 1;
-					}
-					if (!CKey::Push('J') && !CKey::Push('L')){
-						if (CKey::Push('W'))
-						{
-							mFx = 0;
-						}
-					}
 					if (HitCount > 0 && PlayerHit == false)
 					{
 						HitCount--;
@@ -160,6 +144,7 @@ void CPlayer::Update() {
 					{
 						PlayerHit = true;
 					}
+	
 }
 
 	
@@ -174,7 +159,7 @@ void CPlayer::Render() {
 
 //36
 void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
-	if ((*ry).mTag == EBOSSENEMY) {
+	if ((*ry).mTag == EBOSSENEMY || (*ry).mTag == EBLOCK) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			int mx, my;
 			if (CRectangle::Collision(ry, &mx, &my)) {
@@ -188,6 +173,7 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 					//Rect‚ðy‚¾‚¯ˆÚ“®‚·‚é
 					y += my;
 				}
+
 				if (PlayerHit == true)
 				{
 					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0)
@@ -200,6 +186,8 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 			}
 		}
 	}
+
+
 	if ((*ry).mTag == EENEMYBULLET) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
@@ -272,6 +260,20 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 					(*ry).mEnabled = false;
 				}
 				
+
+			}
+		}
+	}
+	if ((*ry).mTag == ECOMET) {
+		if ((*ry).mEnabled && (*ri).mEnabled) {
+			if (CRectangle::Collision(*ry)) {
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				{
+					
+					CSceneGame::Remain -= 1;
+					(*ry).mEnabled = false;
+				}
+
 
 			}
 		}

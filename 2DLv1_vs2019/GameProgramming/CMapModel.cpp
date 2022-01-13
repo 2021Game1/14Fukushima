@@ -46,10 +46,10 @@ void CMapModel::Load(char* csv, char* mtl) {
 			case 1: {
 				printf("%d", seq[j]);
 				CBlock* Block = new CBlock();
-				Block->x = j * 90 + -370;
-				Block->y = i * -100 + 1650;
-				Block->w = 25;
-				Block->h = 25;
+				Block->x = j * 90 + -360;
+				Block->y = i * -90 + 2350;
+				Block->w = 45;
+				Block->h = 45;
 				Block->mFx = 0;
 				Block->mFy = -1;
 				Block->mEnabled = true;
@@ -59,22 +59,22 @@ void CMapModel::Load(char* csv, char* mtl) {
 
 			case 2: {
 				printf("%d", seq[j]);
-				CBlock* Block2 = new CBlock();
-				Block2->x = j * 90 + -370;
-				Block2->y = i * -100 + 1650;
-				Block2->w = 25;
-				Block2->h = 25;
-				Block2->mFx = 0;
-				Block2->mFy = -1;
-				Block2->mEnabled = true;
-				Block2->mTag = CRectangle::EBLOCK;
+				CComet* Comet = new CComet();
+				Comet->x = j * 90 + -370;
+				Comet->y = i * -90 + 2350;
+				Comet->w = 45;
+				Comet->h = 45;
+				Comet->mFx = 0;
+				Comet->mFy = -1;
+				Comet->mEnabled = true;
+				Comet->mTag = CRectangle::ECOMET;
 			}
 				  break;
 			case 3: {
 				printf("%d", seq[j]);
 				CEnemy* Enemy = new CEnemy();
 				Enemy->x = j * 90 + -370;
-				Enemy->y = i * -100 + 1650;
+				Enemy->y = i * -90 + 2350;
 				Enemy->w = 25;
 				Enemy->h = 25;
 				Enemy->mFx = 0;
