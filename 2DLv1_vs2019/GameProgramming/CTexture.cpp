@@ -258,12 +258,7 @@ void CTexture::DrawImage(float left, float right, float bottom, float top, int t
 */
 }
 
-void CTexture::SetParts(int row, int col) {
-	mRow = row;
-	mCol = col;
-}
-
-void CTexture::DrawImage(float left, float right, float bottom, float top, int index) const {
+void CTexture::DrawImage(float left, float right, float bottom, float top, int index)  const {
 	int row = index / mCol + 1;
 	int col = index % mCol;
 	DrawImage(left, right, bottom, top,
@@ -272,6 +267,33 @@ void CTexture::DrawImage(float left, float right, float bottom, float top, int i
 		mHeader.height * row-- / mRow,
 		mHeader.height * row / mRow);
 }
+
+int CTexture::Row()
+{
+	return mRow;
+}
+
+int CTexture::Col()
+{
+	return mCol;
+}
+
+const STgamHeader& CTexture::Header() const
+{
+	return mHeader;
+}
+
+const GLuint& CTexture::Id() const
+{
+	return mId;
+}
+
+void CTexture::SetParts(int row, int col) {
+	mRow = row;
+	mCol = col;
+}
+
+
 
 //s”—ñ”‚Ìİ’è
 //SetRowCol(s”, —ñ”)
