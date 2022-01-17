@@ -3,8 +3,21 @@
 //コリジョンマネージャクラスのインクルード
 #include"CCollisionManager.h"
 
+//デフォルトコンストラクタの定義
+CCollider::CCollider()
+	:mpParent(nullptr)
+	, mpMatrix(&mMatrix)
+	, mType(ESPHERE)
+	, mRadius(0)
+{
+	//コリジョンマネージャに追加
+	CCollisionManager::Get()->Add(this);
+}
+
 CCollider::CCollider(CCharacter* parent, CMatrix* matrix,
-	const CVector& position, float radius) {
+	const CVector& position, float radius) 
+:CCollider()
+{
 	//親設定
 	mpParent = parent;
 	//親行列設定
@@ -14,7 +27,7 @@ CCollider::CCollider(CCharacter* parent, CMatrix* matrix,
 	//半径設定
 	mRadius = radius;
 	//コリジョンマネージャyに追加
-	CCollisionManager::Get()->Add(this);
+	//CCollisionManager::Get()->Add(this);
 }
 
 CCharacter* CCollider::Parent() 

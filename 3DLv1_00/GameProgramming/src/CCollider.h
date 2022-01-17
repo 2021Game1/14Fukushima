@@ -14,6 +14,13 @@ class CCollisionManager;
 */
 class CCollider : public CTransform,public CTask {
 public:
+	//コライダタイプ
+	enum EType {
+		ESPHERE,//球コライダ
+		ETRIANGLE,//三角コライダ
+	};
+	//デフォルトコンストラクタ
+	CCollider();
 	//friend コリジョンマネージャクラス
 	friend CCollisionManager;
 	//コンストラクタ
@@ -32,6 +39,9 @@ public:
 	static bool Collision(CCollider* m, CCollider* o);
 
 protected:
+	EType mType;//コライダタイプ
+	//頂点
+	CVector mV[3];
 	CCharacter* mpParent;//親
 	CMatrix* mpMatrix;//親行列
 	float mRadius;//半径
