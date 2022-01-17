@@ -131,6 +131,7 @@ void CEnemy::Render() {
 		if (mEnabled) {
 			CRectangle::Render(Texture, 140, 190, 75, 25);
 		}
+		
 	
 }
 //36

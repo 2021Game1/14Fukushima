@@ -109,6 +109,7 @@
     <ClInclude Include="CBlock.h" />
     <ClInclude Include="CBossEnemy.h" />
     <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CKey.h" />
