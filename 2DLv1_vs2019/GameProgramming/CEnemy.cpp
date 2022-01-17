@@ -5,6 +5,7 @@
 #include "CPlayer.h"
 #include"CItem.h"
 #include"CSceneTitle.h"
+#include"CEffect.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
 
@@ -100,6 +101,7 @@ bool CEnemy::Collision(CRectangle& r) {
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
+			
 				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 				{
 					CSceneGame::ScoreCount += 100;
@@ -137,4 +139,5 @@ void CEnemy::Render() {
 //36
 void CEnemy::Collision(CRectangle *i, CRectangle *y) {
 	Collision(*y);
+	new CEffect(*y, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
 }

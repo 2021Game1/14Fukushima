@@ -1,18 +1,17 @@
 #ifndef CEFFECT_H
 #define CEFFECT_H
-//マテリアルクラス
-#include"CMaterial.h"
-//ベクトルクラス
-#include"CVector.h"
+
+//レクタングルクラス
+#include"CRectangle.h"
 /*
 * エフェクトクラス
 * テクスチャのアニメーション
 */
-class CEffect{
+class CEffect : public CRectangle{
 public:
-	//コンストラクタ
-	//CEffect(位置,幅,高さ,テクスチャ名,行数,列数,1コマあたりのフレーム数)行数,列数,フレーム数はデフォルト引数で呼出し時省略可能
-	CEffect(const CVector pos, float w, float h, char* texture, int row = 1, int col = 1, int fps = 1);
+	////コンストラクタ
+	////CEffect(位置,幅,高さ,テクスチャ名,行数,列数,1コマあたりのフレーム数)行数,列数,フレーム数はデフォルト引数で呼出し時省略可能
+	//CEffect(const CRectangle pos, float w, float h, char* texture, int row = 1, int col = 1, int fps = 1);
 	//更新
 	void Update();
 	//描画
@@ -26,8 +25,7 @@ private:
 	int mFps;
 	//フレームカウンタ
 	int mFrame;
-	//マテリアル
-	static CMaterial sMaterial;
+
 };
 
 #endif //終了
