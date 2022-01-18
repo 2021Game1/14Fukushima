@@ -67,10 +67,9 @@ void CComet::Update()
 	//mEnabled‚ªfalse‚È‚ç–ß‚é
 	if (!mEnabled)return;
 
-	if (y < -450)
-	{
-
-		mEnabled = false;
+	if (y<645) {
+		x += mFx * 0;
+		y += mFy * 0;
 	}
 
 	//—LŒø‚ÈŽž

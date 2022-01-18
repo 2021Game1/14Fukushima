@@ -12,17 +12,11 @@ public:
 
 	//デフォルトコンストラクタ
 	CEffect();
+	//更新
+	void Update();
 	//描画
 	void Render();
-private:
-	//行数
-	int mRows;
-	//列数
-	int mCols;
-	//1コマのフレーム数
-	int mFps;
-	//フレームカウンタ
-	int mFrame;
+	int time = 0.3 * 60;
 
 };
 

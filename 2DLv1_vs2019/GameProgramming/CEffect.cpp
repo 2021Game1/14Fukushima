@@ -6,7 +6,19 @@ CEffect::CEffect()
 {
 	mTag = CRectangle::EEFFECT;
 }
+void CEffect::Update(){
+	if (mEnabled == true) {
+		if (time > 0) {
+			//§ŒÀŽžŠÔ‚ðŒ¸ŽZ‚µ‚Ä‚¢‚­
+			time--;
+		}
+		if (time <=  0) {
+			mEnabled = false;
+			time = 0.3 * 60;
+		}
+	}
 
+}
 
 
 

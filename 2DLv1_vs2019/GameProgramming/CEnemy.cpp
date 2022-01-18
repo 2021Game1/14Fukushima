@@ -109,19 +109,24 @@ bool CEnemy::Collision(CRectangle& r) {
 			Effect->h = 25;
 			Effect->mEnabled = true;
 			Effect->mTag = EEFFECT;
+
 			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 			{
 				CSceneGame::ScoreCount += 100;
 				CSceneGame::EnemyCount += 1;
 			}
-		}
 			break;
+		}
+		
+			
 			
 		case EPLAYER: {
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
 			CEffect* Effect2 = new CEffect();
 			//有効にする
+			Effect2->x = x;
+			Effect2->y = y;
 			Effect2->w = 25;
 			Effect2->h = 25;
 			Effect2->mEnabled = true;
@@ -152,5 +157,4 @@ void CEnemy::Render() {
 //36
 void CEnemy::Collision(CRectangle *i, CRectangle *y) {
 	Collision(*y);
-	/*new CEffect(*y, 1.0f, 1.0f, "exp.tga", 4, 4, 2);*/
 }

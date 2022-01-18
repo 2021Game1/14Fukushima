@@ -62,27 +62,27 @@ void CSceneGame::Init()
 		//シーンの設定
 		mScene = EGAME;
 		
-		////スクリーン一枚目
-		////スクリーンクラスのメンバ変数への代入
-		//CSceneScreen* Screen = new CSceneScreen();
-		////スクリーンに値を設定
-		//Screen->x = 0;
-		//Screen->y = 240;
-		////スクロールスピード
-		//Screen->speed = SCROLL_SPEED;
-		////有効にする
-		//Screen->mEnabled = true;
+		//スクリーン一枚目
+		//スクリーンクラスのメンバ変数への代入
+		CSceneScreen* Screen = new CSceneScreen();
+		//スクリーンに値を設定
+		Screen->x = 0;
+		Screen->y = 240;
+		//スクロールスピード
+		Screen->speed = SCROLL_SPEED;
+		//有効にする
+		Screen->mEnabled = true;
 
-		////スクリーン２枚目
-		////スクリーンクラスのメンバ変数への代入
-		//CSceneScreen* Screen2 = new CSceneScreen();
-		////スクリーンに値を設定
-		//Screen2->x = 0;
-		//Screen2->y = 1700;
-		////スクロールスピード
-		//Screen2->speed = SCROLL_SPEED;
-		////有効にする
-		//Screen2->mEnabled = true;
+		//スクリーン２枚目
+		//スクリーンクラスのメンバ変数への代入
+		CSceneScreen* Screen2 = new CSceneScreen();
+		//スクリーンに値を設定
+		Screen2->x = 0;
+		Screen2->y = 1700;
+		//スクロールスピード
+		Screen2->speed = SCROLL_SPEED;
+		//有効にする
+		Screen2->mEnabled = true;
 
 		//モデルファイルの入力
 		mMapModel.Load(MODEL_OBJ);
