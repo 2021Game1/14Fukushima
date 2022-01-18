@@ -13,6 +13,7 @@ CTexture Texture; //全体の画像
 CTexture BulletTexture; //弾の画像
 CTexture ItemTexture;//アイテムの画像
 CTexture MoonBlock;//ムーンブロック
+CTexture Effect;//エフェクト
 //シーンマネージャのインスタンス
 CSceneManager SceneManager;
 
@@ -24,6 +25,7 @@ void Init() {
 	BulletTexture.Load("BulletImage.tga");
 	ItemTexture.Load("Image.tga");
 	MoonBlock.Load("moonBLock.tga");
+	Effect.Load("exp.tga");
 	//文字画像の読み込み
 	CText::mFont.Load("font.tga");
 	//シーンマネージャの初期化

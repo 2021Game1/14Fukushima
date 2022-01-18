@@ -97,29 +97,42 @@ bool CEnemy::Collision(CRectangle& r) {
 	//親のCollisionメソッドを呼び出す
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
-		case EPLAYERBULLET:	
+		case EPLAYERBULLET: {
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
-			
-				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
-				{
-					CSceneGame::ScoreCount += 100;
-					CSceneGame::EnemyCount += 1;
-				}
-
+			CEffect* Effect = new CEffect();
+			//有効にする
+			Effect->x = x;
+			Effect->y = y;
+			Effect->w = 25;
+			Effect->h = 25;
+			Effect->mEnabled = true;
+			Effect->mTag = EEFFECT;
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
+			{
+				CSceneGame::ScoreCount += 100;
+				CSceneGame::EnemyCount += 1;
+			}
+		}
 			break;
 			
-		case EPLAYER:
+		case EPLAYER: {
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
+			CEffect* Effect2 = new CEffect();
+			//有効にする
+			Effect2->w = 25;
+			Effect2->h = 25;
+			Effect2->mEnabled = true;
+			Effect2->mTag = EEFFECT;
 			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 			{
 				CSceneGame::ScoreCount += 25;
 				CSceneGame::Remain -= 1;
 			}
 			break;
-
+		}
 
 
 			CSceneGame::GameTime = CSceneGame::GameTime + 1;
@@ -139,5 +152,5 @@ void CEnemy::Render() {
 //36
 void CEnemy::Collision(CRectangle *i, CRectangle *y) {
 	Collision(*y);
-	new CEffect(*y, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+	/*new CEffect(*y, 1.0f, 1.0f, "exp.tga", 4, 4, 2);*/
 }

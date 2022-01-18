@@ -30,6 +30,7 @@ public:
 		EBOSSBULLET,    //ボスの弾
 		EBOSSENEMY,     //ボス
 		ECOMET,    //小惑星
+		EEFFECT, //エフェクト
 	};
 	ETag mTag;	//列挙型の変数
 	//デフォルトコンストラクタ
