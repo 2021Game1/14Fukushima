@@ -55,8 +55,6 @@ void CMapModel::Load(char* csv, char* mtl) {
 				Block->y = i * -90 + 3180;
 				Block->w = 45;
 				Block->h = 45;
-				Block->mFx = 0;
-				Block->mFy = CComet::speed;
 				Block->mEnabled = true;
 				Block->mTag = CRectangle::EBLOCK;
 			}
@@ -69,8 +67,6 @@ void CMapModel::Load(char* csv, char* mtl) {
 				Comet->y = i * -90 + 3180;
 				Comet->w = 45;
 				Comet->h = 45;
-				Comet->mFx = 0;
-				Comet->mFy = CComet::speed;
 				Comet->mEnabled = true;
 				Comet->mTag = CRectangle::ECOMET;
 			}
@@ -83,7 +79,7 @@ void CMapModel::Load(char* csv, char* mtl) {
 				Enemy->w = 25;
 				Enemy->h = 25;
 				Enemy->mFx = 0;
-				Enemy->mFy = CComet::speed;
+				Enemy->mFy = -1;
 				Enemy->mEnabled = true;
 				Enemy->mTag = CRectangle::EENEMY;
 			}

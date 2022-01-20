@@ -29,7 +29,14 @@ void CBlock::Update()
 		x += mFx * 0;
 		y += mFy * 1;
 	}
-
+	if (CComet::speed == -1)
+	{
+		mFy = -1;
+	}
+	if (CComet::speed == 0)
+	{
+		mFy = 0;
+	}
 
 }
 bool CBlock::Collision(CRectangle& r) {
@@ -58,12 +65,14 @@ void CBlock::Collision(CRectangle* i, CRectangle* y) {
 	Collision(*y);
 }
 
-int CComet::speed = 0;
+int CComet::speed = -1;
 
 CComet::CComet() 
 	: mFx(0), mFy(0)
 {
 	mTag = CRectangle::ECOMET;
+
+	
 }
 
 void CComet::Update()
@@ -71,12 +80,12 @@ void CComet::Update()
 	//mEnabledがfalseなら戻る
 	if (!mEnabled)return;
 
-	if (y > 650) {
-		CComet::speed -= 1;
+	if (y > 345) {
+		CComet::speed = -1;
 	}
 
-	if (y < 650) {
-		CComet::speed == 0;
+	if (y < 345) {
+		CComet::speed = 0;
 	}
 	
 		//有効な時
@@ -86,38 +95,18 @@ void CComet::Update()
 		x += mFx * 0;
 		y += mFy * 1;
 	}
-	
-
-}
-
-bool CComet::Collision(CRectangle& r) {
-	//mEnabledがfalseなら戻る
-	if (!r.mEnabled)return false;
-	if (!mEnabled) return false;
-	//親のCollisionメソッドを呼び出す
-	if (CRectangle::Collision(r)) {
-		switch (r.mTag) {
-		case EPLAYERBULLET:
-			//プレイヤーの弾に当たると、無効にする
-			mEnabled = false;
-			r.mEnabled = false;
-
-
-			break;
-		case EPLAYER:
-			//プレイヤーに当たると、無効にする
-			mEnabled = false;
-			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
-			{
-				CSceneGame::ScoreCount += 25;
-				CSceneGame::Remain -= 1;
-			}
-			break;
-		}
-		return true;
+	if (CComet::speed == -1)
+	{
+		mFy = -1;
 	}
-	return false;
+	if (CComet::speed == 0)
+	{
+		mFy = 0;
+	}
+
 }
+
+
 
 void CComet::Render()
 {
@@ -127,6 +116,3 @@ void CComet::Render()
 
 }
 
-void CComet::Collision(CRectangle* i, CRectangle* y) {
-	Collision(*y);
-}

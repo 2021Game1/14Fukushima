@@ -33,8 +33,7 @@ public:
 	void Update();
 	void Render();
 	CComet();
-	bool Collision(CRectangle& r);
-	void Collision(CRectangle* i, CRectangle* y);
+
 
 	static int speed;
 

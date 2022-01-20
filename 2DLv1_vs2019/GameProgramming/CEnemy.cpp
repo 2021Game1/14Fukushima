@@ -6,6 +6,7 @@
 #include"CItem.h"
 #include"CSceneTitle.h"
 #include"CEffect.h"
+#include"CBlock.h"
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
 
@@ -44,6 +45,7 @@ void CEnemy::Update() {
 		x += mFx * 0;
 		y += mFy * 1;
 	}
+
 
 	//60フレームに1回発射
 	if (mFireCount > 0) {
