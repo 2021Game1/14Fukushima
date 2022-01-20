@@ -4,10 +4,13 @@
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture MoonBlock;
 
+
+
 CBlock::CBlock() 
 	: mFx(0), mFy(0)
 {
 	mTag = CRectangle::EBLOCK;
+	
 }
 
 void CBlock::Update() 
@@ -20,7 +23,6 @@ void CBlock::Update()
 		
 		mEnabled = false;
 	}
-
 	//有効な時
 	if (mEnabled) {
 		//移動
@@ -56,6 +58,8 @@ void CBlock::Collision(CRectangle* i, CRectangle* y) {
 	Collision(*y);
 }
 
+int CComet::speed = 0;
+
 CComet::CComet() 
 	: mFx(0), mFy(0)
 {
@@ -67,17 +71,22 @@ void CComet::Update()
 	//mEnabledがfalseなら戻る
 	if (!mEnabled)return;
 
-	if (y<645) {
-		x += mFx * 0;
-		y += mFy * 0;
+	if (y > 650) {
+		CComet::speed -= 1;
 	}
 
-	//有効な時
+	if (y < 650) {
+		CComet::speed == 0;
+	}
+	
+		//有効な時
+	
 	if (mEnabled) {
 		//移動
 		x += mFx * 0;
 		y += mFy * 1;
 	}
+	
 
 }
 

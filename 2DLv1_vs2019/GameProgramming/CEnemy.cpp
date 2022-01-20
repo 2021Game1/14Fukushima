@@ -9,6 +9,10 @@
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
 
+//CSoundクラスのインクルード
+#include "CSound.h"
+//外部変数の参照の作成
+extern CSound Se;
 //CBullet CEnemy::EBullet[20];
 
 //敵のデータ//
@@ -98,9 +102,13 @@ bool CEnemy::Collision(CRectangle& r) {
 	if (CRectangle::Collision(r)) {
 		switch (r.mTag) {
 		case EPLAYERBULLET: {
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
+			{
 			//プレイヤーの弾に当たると、無効にする
 			mEnabled = false;
 			r.mEnabled = false;
+			//サウンド再生
+			Se.Play();
 			CEffect* Effect = new CEffect();
 			//有効にする
 			Effect->x = x;
@@ -110,8 +118,7 @@ bool CEnemy::Collision(CRectangle& r) {
 			Effect->mEnabled = true;
 			Effect->mTag = EEFFECT;
 
-			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
-			{
+			
 				CSceneGame::ScoreCount += 100;
 				CSceneGame::EnemyCount += 1;
 			}
@@ -121,8 +128,12 @@ bool CEnemy::Collision(CRectangle& r) {
 			
 			
 		case EPLAYER: {
+			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
+			{
 			//プレイヤーに当たると、無効にする
 			mEnabled = false;
+			//サウンド再生
+			Se.Play();
 			CEffect* Effect2 = new CEffect();
 			//有効にする
 			Effect2->x = x;
@@ -131,8 +142,7 @@ bool CEnemy::Collision(CRectangle& r) {
 			Effect2->h = 25;
 			Effect2->mEnabled = true;
 			Effect2->mTag = EEFFECT;
-			if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
-			{
+			
 				CSceneGame::ScoreCount += 25;
 				CSceneGame::Remain -= 1;
 			}

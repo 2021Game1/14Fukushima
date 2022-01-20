@@ -9,11 +9,12 @@
 
 class CMapModel{
 public:
+	
 	//マップモデルファイルの入力
 	//Load(モデルファイル名,マテリアルファイル名)
 	void Load(char* obj, char* mtl);
 	
-
+	
 
 	
 	

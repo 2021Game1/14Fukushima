@@ -6,7 +6,12 @@
 #include"CBlock.h"
 #include"CItem.h"
 #include"CMapModel.h"
-
+//CSoundクラスのインクルード
+#include "CSound.h"
+//CSoundクラスのインスタンス作成
+CSound Bgm;
+CSound Se;
+CSound PlayerSe;
 CMapModel mMapModel;
 
 #define WIDTH 800.0 //画面幅
@@ -59,8 +64,16 @@ int CSceneGame::GameTime;
 
 void CSceneGame::Init() 
 {
-		//シーンの設定
-		mScene = EGAME;
+	//シーンの設定
+	mScene = EGAME;
+
+		//サウンド(wav)ファイルの読み込み
+		Bgm.Load("map.wav");
+		Se.Load("enemy.wav");
+		PlayerSe.Load("player.wav");
+		//サウンドファイルの繰り返し再生
+		Bgm.Repeat();
+		
 		
 		//スクリーン一枚目
 		//スクリーンクラスのメンバ変数への代入

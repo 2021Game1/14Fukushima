@@ -1,6 +1,10 @@
 #include "CMapModel.h"
 //標準入出力のインクルード
 #include <stdio.h>
+#include"CBlock.h"
+
+
+
 
 
 //モデルファイルの入力
@@ -8,6 +12,7 @@
 void CMapModel::Load(char* csv, char* mtl) {
 	//ファイルポインタ変数の作成
 	FILE* fp;
+
 
 
 
@@ -47,11 +52,11 @@ void CMapModel::Load(char* csv, char* mtl) {
 				printf("%d", seq[j]);
 				CBlock* Block = new CBlock();
 				Block->x = j * 90 + -360;
-				Block->y = i * -90 + 2350;
+				Block->y = i * -90 + 3180;
 				Block->w = 45;
 				Block->h = 45;
 				Block->mFx = 0;
-				Block->mFy = -1;
+				Block->mFy = CComet::speed;
 				Block->mEnabled = true;
 				Block->mTag = CRectangle::EBLOCK;
 			}
@@ -61,11 +66,11 @@ void CMapModel::Load(char* csv, char* mtl) {
 				printf("%d", seq[j]);
 				CComet* Comet = new CComet();
 				Comet->x = j * 90 + -370;
-				Comet->y = i * -90 + 2350;
+				Comet->y = i * -90 + 3180;
 				Comet->w = 45;
 				Comet->h = 45;
 				Comet->mFx = 0;
-				Comet->mFy = -1;
+				Comet->mFy = CComet::speed;
 				Comet->mEnabled = true;
 				Comet->mTag = CRectangle::ECOMET;
 			}
@@ -74,11 +79,11 @@ void CMapModel::Load(char* csv, char* mtl) {
 				printf("%d", seq[j]);
 				CEnemy* Enemy = new CEnemy();
 				Enemy->x = j * 90 + -370;
-				Enemy->y = i * -90 + 2350;
+				Enemy->y = i * -90 + 3180;
 				Enemy->w = 25;
 				Enemy->h = 25;
 				Enemy->mFx = 0;
-				Enemy->mFy = -1;
+				Enemy->mFy = CComet::speed;
 				Enemy->mEnabled = true;
 				Enemy->mTag = CRectangle::EENEMY;
 			}

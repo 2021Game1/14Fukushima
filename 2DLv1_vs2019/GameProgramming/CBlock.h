@@ -20,8 +20,10 @@ public:
 	CBlock();
 	bool Collision(CRectangle& r);
 	void Collision(CRectangle* i, CRectangle* y);
-	
+
 };
+
+
 
 class CComet : public CRectangle {
 public:
@@ -33,6 +35,9 @@ public:
 	CComet();
 	bool Collision(CRectangle& r);
 	void Collision(CRectangle* i, CRectangle* y);
+
+	static int speed;
+
 };
 #endif 
 

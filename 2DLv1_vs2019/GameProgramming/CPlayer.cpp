@@ -1,8 +1,10 @@
 #include "CPlayer.h"
 #include "CKey.h"
+#include"CSound.h"
 //37
 #include "CBullet.h"
-
+//外部変数の参照の作成
+extern CSound PlayerSe;
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
 //プレイヤーのポインタ
@@ -176,7 +178,7 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 
 				if (PlayerHit == true)
 				{
-					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0)
+					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0 && CSceneGame::Remain > 0)
 					{
 						CSceneGame::Remain -= 1;
 					}
@@ -194,8 +196,11 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 				(*ry).mEnabled = false;
 				if (PlayerHit == true)
 				{
-					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0) {
+					
+					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0 && CSceneGame::Remain > 0) {
 						CSceneGame::Remain -= 1;
+						//サウンド再生
+						PlayerSe.Play();
 					}
 					PlayerHit = false;
 					HitCount = 80;
@@ -282,10 +287,12 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
 				(*ry).mEnabled = false;
-				if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0) {
+				if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0 && CSceneGame::Remain > 0) {
 					CSceneGame::Remain -= 1;
 					PlayerHit = false;
 					HitCount = 80;
+					//サウンド再生
+					PlayerSe.Play();
 				}
 			}
 		}
