@@ -52,7 +52,7 @@ void CMapModel::Load(char* csv, char* mtl) {
 				printf("%d", seq[j]);
 				CBlock* Block = new CBlock();
 				Block->x = j * 90 + -360;
-				Block->y = i * -90 + 3180;
+				Block->y = i * -90 + 4300;
 				Block->w = 45;
 				Block->h = 45;
 				Block->mEnabled = true;
@@ -64,7 +64,7 @@ void CMapModel::Load(char* csv, char* mtl) {
 				printf("%d", seq[j]);
 				CComet* Comet = new CComet();
 				Comet->x = j * 90 + -370;
-				Comet->y = i * -90 + 3180;
+				Comet->y = i * -90 + 4300;
 				Comet->w = 45;
 				Comet->h = 45;
 				Comet->mEnabled = true;
@@ -75,7 +75,7 @@ void CMapModel::Load(char* csv, char* mtl) {
 				printf("%d", seq[j]);
 				CEnemy* Enemy = new CEnemy();
 				Enemy->x = j * 90 + -370;
-				Enemy->y = i * -90 + 3180;
+				Enemy->y = i * -90 + 4300;
 				Enemy->w = 25;
 				Enemy->h = 25;
 				Enemy->mFx = 0;

@@ -1,8 +1,11 @@
 #include"CBossEnemy.h"
 #include<time.h>
-
-int CBossEnemy::mBossEnemyLife = 15;
-
+//CSoundクラスのインクルード
+#include "CSound.h"
+#include"CEffect.h"
+int CBossEnemy::mBossEnemyLife = 13;
+//外部変数の参照の作成
+extern CSound Se;
 extern CTexture Texture;
 
 CBossEnemy::CBossEnemy()
@@ -102,45 +105,12 @@ void CBossEnemy::Update() {
 		if (CSceneGame::BossCount == 0)
 		{
 
-			if (CBossEnemy::y == 250 && CBossEnemy::x == 350)
-			{
-				CBossEnemy::mFy = -2;
-				CBossEnemy::mFx = 0;
-			}
-			if (CBossEnemy::y == 50 && CBossEnemy::x == 350)
+			if (CBossEnemy::y == 250 && CBossEnemy::x == 280)
 			{
 				CBossEnemy::mFy = 0;
 				CBossEnemy::mFx = -2;
-
 			}
-			if (CBossEnemy::y == 50 && CBossEnemy::x == -350)
-			{
-				CBossEnemy::mFy = -2;
-				CBossEnemy::mFx = 0;
-			}
-			if (CBossEnemy::x == -350 && CBossEnemy::y == -250)
-			{
-				CBossEnemy::mFx = 2;
-				CBossEnemy::mFy = 0;
-
-			}
-			if (CBossEnemy::x == 350 && CBossEnemy::y == -250)
-			{
-				CBossEnemy::mFx = 0;
-				CBossEnemy::mFy = 2;
-			}
-			if (CBossEnemy::x == 350 && CBossEnemy::y == -50)
-			{
-				CBossEnemy::mFx = -2;
-				CBossEnemy::mFy = 0;
-
-			}
-			if (CBossEnemy::y == -50 && CBossEnemy::x == -300)
-			{
-				CBossEnemy::mFx = 0;
-				CBossEnemy::mFy = 2;
-			}
-			if (CBossEnemy::y == 250 && CBossEnemy::x == -300)
+			if (CBossEnemy::y == 250 && CBossEnemy::x == -280)
 			{
 				CBossEnemy::mFx = 2;
 				CBossEnemy::mFy = 0;
@@ -170,7 +140,16 @@ bool CBossEnemy::Collision(CRectangle& r) {
 		case EPLAYERBULLET:
 			if (Hit == true) {
 				CBossEnemy::mBossEnemyLife -= 1;
-
+				//サウンド再生
+				Se.Play();
+				CEffect* Effect = new CEffect();
+				//有効にする
+				Effect->x = x;
+				Effect->y = y;
+				Effect->w = 30;
+				Effect->h = 30;
+				Effect->mEnabled = true;
+				Effect->mTag = EEFFECT;
 				if (CBossEnemy::mBossEnemyLife == 0)
 				{
 					//プレイヤーの弾に当たると、無効にする
@@ -188,7 +167,13 @@ bool CBossEnemy::Collision(CRectangle& r) {
 			}
 			break;
 
-		case EPLAYER:
+		case EPLAYER: {
+			
+		}
+			break;
+		
+		case EBLOCK:
+		
 
 			break;
 		}

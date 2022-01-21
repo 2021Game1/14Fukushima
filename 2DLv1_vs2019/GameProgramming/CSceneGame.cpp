@@ -12,6 +12,8 @@
 CSound Bgm;
 CSound Se;
 CSound PlayerSe;
+CSound ItemSe;
+CSound ShotSe;
 CMapModel mMapModel;
 
 #define WIDTH 800.0 //画面幅
@@ -28,7 +30,7 @@ CMapModel mMapModel;
 int CSceneGame::Remain = 3;
 
 //残り時間（30秒）
-int CSceneGame::Time = 256 * 60;
+int CSceneGame::Time = 121 * 60;
 
 //ゲームクリア
 int CSceneGame::CLEAR = 0;
@@ -41,6 +43,8 @@ int CSceneGame::ScoreCount = 0;
 
 //ボスが出現しているか、判別するフラグ
 int CSceneGame::Bossflug = 0;
+
+
 
 //ボスのカウンタ
 int CSceneGame::BossCount = 0;
@@ -71,6 +75,8 @@ void CSceneGame::Init()
 		Bgm.Load("map.wav");
 		Se.Load("enemy.wav");
 		PlayerSe.Load("player.wav");
+		ShotSe.Load("shot.wav");
+		ItemSe.Load("item.wav");
 		//サウンドファイルの繰り返し再生
 		Bgm.Repeat();
 		
@@ -126,12 +132,10 @@ void CSceneGame::Init()
 
 void CSceneGame::Update() {
 
-
-	//ボスのフラグが2以外の時に出現する
-	if (Bossflug != 2)
+	//スコアが1000以上か、等しいか
+	if (CComet::speed == 0 && CSceneGame::Remain > 0)
 	{
-		//スコアが1000以上か、等しいか
-		if (ScoreCount >= 1000)
+		if (Bossflug != 2)
 		{
 			//ボスエネミークラスのメンバ変数への代入
 			CBossEnemy* EBossEnemy = new CBossEnemy();
@@ -143,11 +147,14 @@ void CSceneGame::Update() {
 			EBossEnemy->mFy = 0;
 			//有効にする
 			EBossEnemy->mEnabled = true;
+			Remain = 3;
 			//処理をしたらフラグを2にする
 			Bossflug = 2;
-		}
 
+		}
 	}
+
+	
 	if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
 	{
 		if (GameTime % 100 == 50 && Bossflug == 2)
@@ -232,7 +239,7 @@ void CSceneGame::Update() {
 			CEnemy* Enemy2 = new CEnemy();
 			//敵に値を設定
 			Enemy2->x = val;
-			Enemy2->y = 250;
+			Enemy2->y = 225;
 			Enemy2->w = 25;
 			Enemy2->h = 25;
 			Enemy2->mFy = -1;
@@ -244,9 +251,8 @@ void CSceneGame::Update() {
 
 		//時間を加算する
 		GameTime = GameTime + 1;
-
-
 		
+	
 
 
 	
@@ -310,7 +316,7 @@ void CSceneGame::Update() {
 	}
 
 	//制限時間が0ではなく、プレイヤーの残機が0では無い時に有効にする
-	if (Time > 0 && Remain > 0) {
+	if (Time > 0 && Remain > 0 && CBossEnemy::mBossEnemyLife != 0) {
 		//制限時間を減算していく
 		Time--;
 	}
@@ -327,7 +333,7 @@ void CSceneGame::Update() {
 	}
 
 	//プレイヤーの残機が0ではなく、制限時間が0ではない時に有効にする
-	if (Remain != 0 && Time != 0)
+	if (Remain != 0 && Time != 0 && CBossEnemy::mBossEnemyLife != 0)
 	{
 		CText::DrawString("Score", -350, 250, 12, 12);
 		sprintf(buf, "%d", ScoreCount);
@@ -354,19 +360,19 @@ void CSceneGame::Update() {
 		CText::DrawString("Push ENETER Key", -210, -100, 16, 16);
 		if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
-			OVER = 0;
 			ScoreCount = 0;
-			Time = 256 * 60;
+			Time = 121 * 60;
 			Bossflug = 0;
 			EnemyCount = 0;
 			BossCount = 0;
-			CBossEnemy::mBossEnemyLife = 20;
+			CComet::speed = -1;
+			CBossEnemy::mBossEnemyLife = 13;
 			mScene = ETITLE;
 		}
 	}
 
 	if (Remain != 0) {
-		if (BossCount == 1){
+		if (CBossEnemy::mBossEnemyLife == 0){
 			CText::DrawString("GAME SCORE", -225, 0, 16, 16);
 			sprintf(buf, "%d", ScoreCount);
 			CText::DrawString(buf, 140, 0, 16, 16);
@@ -375,11 +381,12 @@ void CSceneGame::Update() {
 			if (CKey::Once(VK_RETURN)) {
 			Remain = 3;
 			ScoreCount = 0;
-			Time = 256 * 60;
+			Time = 121 * 60;
 			Bossflug = 0;
 			EnemyCount = 0;
 			BossCount = 0;
-			CBossEnemy::mBossEnemyLife = 20;
+			CComet::speed = -1;
+			CBossEnemy::mBossEnemyLife = 13;
 			mScene = ETITLE;
 			}
 		}

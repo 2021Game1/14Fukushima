@@ -1,10 +1,15 @@
 #include "CPlayer.h"
 #include "CKey.h"
-#include"CSound.h"
+//CSoundクラスのインクルード
+#include "CSound.h"
+
 //37
 #include "CBullet.h"
+#include"CEffect.h"
 //外部変数の参照の作成
 extern CSound PlayerSe;
+extern CSound ShotSe;
+extern CSound ItemSe;
 //extern：他のソースファイルの外部変数にアクセスする宣言
 extern CTexture Texture;
 //プレイヤーのポインタ
@@ -46,6 +51,8 @@ void CPlayer::Update() {
 			Bullet->mFx = mFx * 5;
 			Bullet->mFy = mFy * 5;
 			//有効にする
+			//サウンド再生
+			ShotSe.Play();
 			Bullet->mEnabled = true;
 			//プレイヤーの弾を設定
 			Bullet->mTag = CRectangle::EPLAYERBULLET;
@@ -68,7 +75,7 @@ void CPlayer::Update() {
 			if (CKey::Once(' ')) {
 			CBullet* Bullet2 = new CBullet();
 			//発射位置の設定
-			Bullet2->x = x + 5;
+			Bullet2->x = x;
 			Bullet2->y = y;
 			Bullet2->w = 10;
 			Bullet2->h = 10;
@@ -76,10 +83,12 @@ void CPlayer::Update() {
 			Bullet2->mFx = mFx * 5;
 			Bullet2->mFy = mFy * 5;
 			//有効にする
+			//サウンド再生
+			ShotSe.Play();
 			Bullet2->mEnabled = true;
 			//プレイヤーの弾を設定
 			Bullet2->mTag = CRectangle::EPLAYERBULLET;
-			FireCount = 10;
+			FireCount = 20;
 			}
 
 		}
@@ -95,7 +104,7 @@ void CPlayer::Update() {
 
 						if (CSceneGame::EnemyCount >= 14)
 						{
-							CPlayer::x -= 4;
+							CPlayer::x -= 2;
 						}
 						if (x - w < -400) {
 							CPlayer::x = -400 + w;
@@ -129,11 +138,11 @@ void CPlayer::Update() {
 						if (CSceneGame::EnemyCount >= 14)
 						{
 					
-							y += 3;
+							y += 2;
 						}
 					}
 					if (CKey::Push('S')) {
-						y -= 3;
+						y -= 2;
 						if (y - h < -300) {
 							y = -300 + h;
 						}
@@ -181,6 +190,16 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 					if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0 && CSceneGame::Remain > 0)
 					{
 						CSceneGame::Remain -= 1;
+						//サウンド再生
+						PlayerSe.Play();
+						CEffect* Effect = new CEffect();
+						//有効にする
+						Effect->x = x;
+						Effect->y = y;
+						Effect->w = 20;
+						Effect->h = 20;
+						Effect->mEnabled = true;
+						Effect->mTag = EEFFECT;
 					}
 					PlayerHit = false;
 					HitCount = 160;
@@ -201,6 +220,14 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 						CSceneGame::Remain -= 1;
 						//サウンド再生
 						PlayerSe.Play();
+						CEffect* Effect = new CEffect();
+						//有効にする
+						Effect->x = x;
+						Effect->y = y;
+						Effect->w = 20;
+						Effect->h = 20;
+						Effect->mEnabled = true;
+						Effect->mTag = EEFFECT;
 					}
 					PlayerHit = false;
 					HitCount = 80;
@@ -222,8 +249,10 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 	if ((*ry).mTag == EENEMYITEM2) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
-				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 				{
+					//サウンド再生
+					ItemSe.Play();
 					//ゲームのスコアが50増える
 					CSceneGame::ScoreCount += 50;
 					(*ry).mEnabled = false;
@@ -236,8 +265,10 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 	if ((*ry).mTag == EENEMYITEM3) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
-				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 				{
+					//サウンド再生
+					ItemSe.Play();
 					CSceneGame::Remain +=1;
 					(*ry).mEnabled = false;
 				}
@@ -247,8 +278,10 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 	if ((*ry).mTag == EENEMYITEM4) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
-				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 				{
+					//サウンド再生
+					ItemSe.Play();
 					//制限時間延長(効果:少)
 					CSceneGame::Time += 10 * 60;
 					(*ry).mEnabled = false;
@@ -258,8 +291,10 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 	}if ((*ry).mTag == EENEMYITEM5) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
-				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0)
+				if (CSceneGame::Time != 0 && CSceneGame::Remain > 0 && CBossEnemy::mBossEnemyLife != 0)
 				{
+					//サウンド再生
+					ItemSe.Play();
 					//制限時間延長(効果:大)
 					CSceneGame::Time += 21 * 60;
 					(*ry).mEnabled = false;
@@ -287,12 +322,25 @@ void CPlayer::Collision(CRectangle* ri, CRectangle* ry) {
 		if ((*ry).mEnabled && (*ri).mEnabled) {
 			if (CRectangle::Collision(*ry)) {
 				(*ry).mEnabled = false;
+				if (PlayerHit == true)
+				{
 				if (CSceneGame::Time != 0 && CBossEnemy::mBossEnemyLife != 0 && CSceneGame::Remain > 0) {
 					CSceneGame::Remain -= 1;
 					PlayerHit = false;
 					HitCount = 80;
 					//サウンド再生
 					PlayerSe.Play();
+					CEffect* Effect = new CEffect();
+					//有効にする
+					Effect->x = x;
+					Effect->y = y;
+					Effect->w = 20;
+					Effect->h = 20;
+					Effect->mEnabled = true;
+					Effect->mTag = EEFFECT;
+				}
+				PlayerHit = false;
+				HitCount = 80;
 				}
 			}
 		}
