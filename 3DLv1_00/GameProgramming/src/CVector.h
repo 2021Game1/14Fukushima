@@ -7,6 +7,9 @@
 */
 class CVector {
 public:
+	//正規化
+	//大きさ1のベクトルを返す
+	CVector Normalize()const;
 	//各地での値の選択
 	//Set(X座標、Y座標、Z座標)
 	void Set(float x, float y, float z);
@@ -18,6 +21,15 @@ public:
 	float Z()const;
 	//ベクトルの長さを返す
 	float Length()const;
+	//内積
+	//Dot(ベクトル)
+	float Dot(const CVector& v)const;
+	//外積
+	//Cross(ベクトル)
+	CVector Cross(const CVector& v)const;
+	//*演算子のオーバーロード
+	//CVector * floatの演算結果を返す
+	CVector operator*(const float& f)const;
 	//デフォルトコンストラクタ
 	CVector();
 	//コンストラクタ
