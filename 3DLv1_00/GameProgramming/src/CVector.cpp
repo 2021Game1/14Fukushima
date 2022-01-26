@@ -38,6 +38,14 @@ CVector CVector::operator*(const CMatrix& m)
 		mX * m.M(0, 2) + mY * m.M(1, 2) + mZ * m.M(2, 2) + m.M(3, 2)
 	);
 }
+//*演算子のオーバーロード
+//CVector * floatの演算結果を返す
+CVector CVector::operator*(const float& f)const 
+{
+	return CVector(
+		mX * f, mY * f, mZ * f
+	);
+}
 //内積
 //Dot(ベクトル)
 float CVector::Dot(const CVector& v)const {
@@ -45,8 +53,10 @@ float CVector::Dot(const CVector& v)const {
 }
 //外積
 //Cross(ベクトル)
-CVector::Cross(const CVector& v)const {
-	return mY * v.mZ - mZ * v.mY + mZ * v.mX - mX * v.mZ + mX * v.mY - mY * v.mX;
+CVector CVector::Cross(const CVector& v)const {
+	return CVector(
+		mY * v.mZ - mZ * v.mY, mZ * v.mX - mX * v.mZ , mX * v.mY - mY * v.mX
+	);
 }
 CVector CVector::Normalize()const {
 	//ベクトルの大きさで割ったベクトルを返す(長さ1のベクトル)

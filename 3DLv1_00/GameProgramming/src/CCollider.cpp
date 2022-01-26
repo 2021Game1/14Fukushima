@@ -2,6 +2,8 @@
 #include"CCollider.h"
 //コリジョンマネージャクラスのインクルード
 #include"CCollisionManager.h"
+//プレイヤークラスのインクルード
+#include"CPlayer.h"
 
 //デフォルトコンストラクタの定義
 CCollider::CCollider()
@@ -111,4 +113,8 @@ CCollider::~CCollider() {
 	//コリジョンリストから削除
 	CCollisionManager::Get()->Remove(this);
 
+}
+int CCollider::Type() {
+	return mType;
+	
 }

@@ -42,7 +42,8 @@ public:
 	//Collision(コライダ1,コライダ2)
 	//retrun:true(衝突している)false(衝突していない)
 	static bool Collision(CCollider* m, CCollider* o);
-
+	//Typeメソッド(mTypeの値を返す)
+	int Type();
 protected:
 	EType mType;//コライダタイプ
 	//頂点
