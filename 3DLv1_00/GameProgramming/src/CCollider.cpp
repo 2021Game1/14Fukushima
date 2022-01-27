@@ -62,17 +62,9 @@ bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 		return false;
 	}
 	//課題32
-//頂点3頂点1ベクトルと頂点2交点ベクトル外積を求め、
-//法線との内積がマイナスなら、三角形の外
+	//頂点3頂点1ベクトルと頂点2交点ベクトル外積を求め、
+	//法線との内積がマイナスなら、三角形の外
 	if ((v[0] - v[2]).Cross(cross - v[2]).Dot(normal) < 0.0f) {
-		//衝突していない(調整不要)
-		*a = CVector(0.0f, 0.0f, 0.0f);
-		return false;
-	}
-
-	//プラスは交差してない
-	if (dots * dote >= 0.0f)
-	{
 		//衝突していない(調整不要)
 		*a = CVector(0.0f, 0.0f, 0.0f);
 		return false;
