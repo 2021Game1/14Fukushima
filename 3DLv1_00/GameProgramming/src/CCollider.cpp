@@ -70,6 +70,11 @@ bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 		return false;
 	}
 
+	if (dots * dote >= 0.0f) {
+		//衝突していない(調整不要)
+		*a = CVector(0.0f, 0.0f, 0.0f);
+		return false;
+	}
 	//線分は面と交差している
 	//調整値計算(衝突しない位置まで戻す)
 	if (dots < 0.0f)
@@ -129,5 +134,4 @@ CCollider::~CCollider() {
 }
 int CCollider::Type() {
 	return mType;
-	
 }
