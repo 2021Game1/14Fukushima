@@ -8,6 +8,7 @@
 #include"CMapModel.h"
 //CSoundクラスのインクルード
 #include "CSound.h"
+#include"CEffect.h"
 //CSoundクラスのインスタンス作成
 CSound Bgm;
 CSound Se;
@@ -66,65 +67,65 @@ int CSceneGame::GameTime;
 
 
 
-void CSceneGame::Init() 
+void CSceneGame::Init()
 {
+
+	//エフェクトの画像読み込み
+	CEffect::LoadTexture("exp.tga");
+	//サウンド(wav)ファイルの読み込み
+	Bgm.Load("map.wav");
+	Se.Load("enemy.wav");
+	PlayerSe.Load("player.wav");
+	ShotSe.Load("shot.wav");
+	ItemSe.Load("item.wav");
+	//サウンドファイルの繰り返し再生
+	Bgm.Repeat();
 	//シーンの設定
 	mScene = EGAME;
 
-		//サウンド(wav)ファイルの読み込み
-		Bgm.Load("map.wav");
-		Se.Load("enemy.wav");
-		PlayerSe.Load("player.wav");
-		ShotSe.Load("shot.wav");
-		ItemSe.Load("item.wav");
-		//サウンドファイルの繰り返し再生
-		Bgm.Repeat();
-		
-		
-		//スクリーン一枚目
-		//スクリーンクラスのメンバ変数への代入
-		CSceneScreen* Screen = new CSceneScreen();
-		//スクリーンに値を設定
-		Screen->x = 0;
-		Screen->y = 240;
-		//スクロールスピード
-		Screen->speed = SCROLL_SPEED;
-		//有効にする
-		Screen->mEnabled = true;
+	//スクリーン一枚目
+	//スクリーンクラスのメンバ変数への代入
+	CSceneScreen* Screen = new CSceneScreen();
+	//スクリーンに値を設定
+	Screen->x = 0;
+	Screen->y = 240;
+	//スクロールスピード
+	Screen->speed = SCROLL_SPEED;
+	//有効にする
+	Screen->mEnabled = true;
 
-		//スクリーン２枚目
-		//スクリーンクラスのメンバ変数への代入
-		CSceneScreen* Screen2 = new CSceneScreen();
-		//スクリーンに値を設定
-		Screen2->x = 0;
-		Screen2->y = 1700;
-		//スクロールスピード
-		Screen2->speed = SCROLL_SPEED;
-		//有効にする
-		Screen2->mEnabled = true;
+	//スクリーン２枚目
+	//スクリーンクラスのメンバ変数への代入
+	CSceneScreen* Screen2 = new CSceneScreen();
+	//スクリーンに値を設定
+	Screen2->x = 0;
+	Screen2->y = 1700;
+	//スクロールスピード
+	Screen2->speed = SCROLL_SPEED;
+	//有効にする
+	Screen2->mEnabled = true;
 
-		//モデルファイルの入力
-		mMapModel.Load(MODEL_OBJ);
-		
-
-
-		//プレイヤークラスのメンバ変数への代入
-		CPlayer* Player = new CPlayer();
-		//プレイヤーに値を設定
-		Player->x = 0;
-		Player->y = -225;
-		Player->w = 20;
-		Player->h = 20;
-		//有効にする
-		Player->mEnabled = true;
+	//モデルファイルの入力
+	mMapModel.Load(MODEL_OBJ);
 
 
 
-	
-	
-	
+	//プレイヤークラスのメンバ変数への代入
+	CPlayer* Player = new CPlayer();
+	//プレイヤーに値を設定
+	Player->x = 0;
+	Player->y = -225;
+	Player->w = 20;
+	Player->h = 20;
+	//有効にする
+	Player->mEnabled = true;
 
-		
+
+
+
+
+
+
 }
 
 

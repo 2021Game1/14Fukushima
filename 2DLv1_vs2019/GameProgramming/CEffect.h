@@ -7,9 +7,14 @@
 * エフェクトクラス
 * テクスチャのアニメーション
 */
-class CEffect : public CRectangle{
-public:
+class CEffect : public CRectangle
+{
+	int mTime;
+	static CTexture mTexture;
 
+public:
+	static void LoadTexture(char* filename);
+	CEffect(int x, int y, int w, int h);
 	//デフォルトコンストラクタ
 	CEffect();
 	//更新

@@ -111,14 +111,7 @@ bool CEnemy::Collision(CRectangle& r) {
 			r.mEnabled = false;
 			//サウンド再生
 			Se.Play();
-			CEffect* Effect = new CEffect();
-			//有効にする
-			Effect->x = x;
-			Effect->y = y;
-			Effect->w = 25;
-			Effect->h = 25;
-			Effect->mEnabled = true;
-			Effect->mTag = EEFFECT;
+			new CEffect(x, y, 30, 30);
 
 			
 				CSceneGame::ScoreCount += 100;
@@ -136,14 +129,7 @@ bool CEnemy::Collision(CRectangle& r) {
 			mEnabled = false;
 			//サウンド再生
 			Se.Play();
-			CEffect* Effect2 = new CEffect();
-			//有効にする
-			Effect2->x = x;
-			Effect2->y = y;
-			Effect2->w = 25;
-			Effect2->h = 25;
-			Effect2->mEnabled = true;
-			Effect2->mTag = EEFFECT;
+			new CEffect(x, y, 30, 30);
 			
 				CSceneGame::ScoreCount += 25;
 				CSceneGame::Remain -= 1;
