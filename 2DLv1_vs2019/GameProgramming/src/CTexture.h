@@ -17,8 +17,8 @@ struct STgamHeader {
 //#include <map>
 
 class CTexture {
-	//	static std::map<std::string, CTexture>mTexFile;
-		//ファイル名
+//	static std::map<std::string, CTexture>mTexFile;
+	//ファイル名
 	char* mpName;
 public:
 	int Row();
@@ -33,7 +33,7 @@ public:
 	デフォルトコンストラクタ
 	*/
 	CTexture();
-	CTexture(char* file);
+	CTexture(char *file);
 	/*
 	デストラクタ（このインスタンスが破棄されるときに実行される）
 	*/
