@@ -39,18 +39,7 @@ void CBackground::Render()
 {
 	if (mEnabled)
 	{
-		if (m_BackgroundDrawCount <= 8) {
 			CRectangle::Render(mpBackground1, BACKGROUND_TOP, BACKGROUND_W, BACKGROUND_H, BACKGROUND_TOP);
-		}
-		if (m_BackgroundDrawCount >= 8 && m_BackgroundDrawCount <= 16) {
-			CRectangle::Render(mpBackground2, BACKGROUND_TOP, BACKGROUND_W, BACKGROUND_H, BACKGROUND_TOP);
-		}
-		if (m_BackgroundDrawCount >= 16 && m_BackgroundDrawCount <= 24) {
-			CRectangle::Render(mpBackground3, BACKGROUND_TOP, BACKGROUND_W, BACKGROUND_H, BACKGROUND_TOP);
-		}
-		if (m_BackgroundDrawCount >= 24 && m_BackgroundDrawCount < 25) {
-			CRectangle::Render(mpBackground4, BACKGROUND_TOP, BACKGROUND_W, BACKGROUND_H, BACKGROUND_TOP);
-		}
 	}
 }
 //”wŒi‚Ìƒ|ƒCƒ“ƒ^
@@ -73,12 +62,10 @@ void CBackground2::Update()
 {
 	
 	x += speed;
-	if (m_BackgroundDrawCount <= 24) {
+	
 		if (x == -BACKGROUND2_W) {
-			x = BACKGROUND2_W;
-			m_BackgroundDrawCount += 1;
+			mEnabled = false;
 		}
-	}
 }
 
 void CBackground2::Render()
@@ -115,11 +102,9 @@ void CBackground3::Update()
 {
 
 	x += speed;
-	if (m_BackgroundDrawCount <= 24) {
 		if (x == -BACKGROUND2_W) {
-			x = BACKGROUND2_W;
+			mEnabled = false;
 		}
-	}
 
 }
 
@@ -127,15 +112,9 @@ void CBackground3::Render()
 {
 	if (mEnabled)
 	{
-		if (m_BackgroundDrawCount <= 16) {
-			CRectangle::Render(mpBackground7, BACKGROUND_TOP, BACKGROUND2_W, BACKGROUND_H, BACKGROUND_TOP1);
-		}
-		if (m_BackgroundDrawCount >= 16 && m_BackgroundDrawCount <= 24) {
-			CRectangle::Render(mpBackground8, BACKGROUND_TOP, BACKGROUND_W, BACKGROUND_H, BACKGROUND_TOP);
-		}
-
+		CRectangle::Render(mpBackground7, BACKGROUND_TOP, BACKGROUND2_W, BACKGROUND_H, BACKGROUND_TOP1);
 	}
-}
+}	
 
 
 
