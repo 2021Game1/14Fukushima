@@ -15,6 +15,7 @@ CModel::CModel()
 }
 
 
+
 //モデルファイルの入力
 //Load(モデルファイル名,マテリアルファイル名)
 void CModel::Load(char* obj, char* mtl) {
@@ -185,8 +186,10 @@ void CModel::Load(char* obj, char* mtl) {
 	mpNormal = new float[mTriangles.size() * 9];
 	//全てのテクスチャマッピングの値をマテリアルの順番に保存する
 	mpTextureCoord = new float[mTriangles.size() * 6];
+	
 
 	int v = 0, t = 0;
+	
 	//マテリアル毎に頂点配列に設定する
 	for (int i = 0; i < mpMaterials.size(); i++)
 	{
@@ -232,6 +235,7 @@ void CModel::Load(char* obj, char* mtl) {
 		//頂点数を設定
 		mpMaterials[i]->VertexNum(v / 3);
 	}
+
 }
 
 void CModel::Render()
@@ -314,3 +318,7 @@ CModel::~CModel()
 	
 }
 
+std::vector<CTriangle> CModel::Triangles() const
+{
+	return mTriangles;
+}
