@@ -26,6 +26,8 @@
 #include"CCamera.h"
 //三角コライダクラスのインクルード
 #include"CColliderTriangle.h"
+//三角コライダの生成クラスのインクルード
+#include"CColliderMesh.h"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
@@ -35,10 +37,8 @@ CVector mEye;
 //マトリックスの変数
 CMatrix matrix;
 
-//三角コライダの作成1
-CColliderTriangle mColliderTriangle;
-//三角コライダの作成2
-CColliderTriangle mColliderTriangle2;
+//モデルからコライダを生成
+CColliderMash mColliderMesh;
 
 void CSceneGame::Init() {
 	mEye = CVector(1.0f, 2.0f, 3.0f);
@@ -62,10 +62,9 @@ void CSceneGame::Init() {
 		CVector(), CVector(0.1f, 0.1f, 0.1f));
 	//ビルボードの生成
 	new CBillBoard(CVector(-6.0f, 3.0f, -10.0f), 1.0f, 1.0f);
-	//三角コライダの確認1
-	mColliderTriangle.Set(NULL, NULL, CVector(-50.0f, 0.0f, -50.0f), CVector(-50.0f, 0.0f, 50.0f), CVector(50.0f, 0.0f, -50.0f));
-	//三角コライダの確認2
-	mColliderTriangle2.Set(NULL, NULL, CVector(50.0f, 0.0f, 50.0f), CVector(50.0f, 0.0f, -50.0f), CVector(-50.0f, 0.0f, 50.0f));
+	//背景モデルから三角コライダを生成
+	//親インスタンスと親行列はなし
+	mColliderMesh.Set(nullptr, nullptr, &mBackGround);
 }
 
 void CSceneGame::Update() {
