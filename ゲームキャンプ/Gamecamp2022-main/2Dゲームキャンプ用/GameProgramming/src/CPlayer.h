@@ -8,7 +8,6 @@ class CPlayer : public CRectangle {
 public:
 	int mFx, mFy;
 	//37
-	
 	CPlayer();
 
 

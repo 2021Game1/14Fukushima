@@ -1,9 +1,14 @@
 #include "CSceneGame.h"
-#include <stdio.h>
+#include"CText.h"
+#include<time.h>
 #include<stdlib.h>
+#include<stdio.h>
 //タスクマネージャクラスのインクルード
 #include "CTaskManager.h"
+int CSceneGame::EnemyScore = 0;
 
+//９文字まで描画できる変数
+char buf[10];
 
 void CSceneGame::Init() {
 	//シーンの設定
@@ -34,6 +39,8 @@ void CSceneGame::Update() {
 	mDs.Update();
 	mDf.Update();
 
+
+	
 
 
 

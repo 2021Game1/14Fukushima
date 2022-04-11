@@ -93,7 +93,7 @@ void CPlayer::Update() {
 		}
 
 
-		if (!CKey::Push('D')) {
+		if (!CKey::Push('D')&& x > -850) {
 			x -= 2;
 		}
 		//37

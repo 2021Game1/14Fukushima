@@ -28,7 +28,7 @@ public:
 
 	//デストラクタの宣言
 	~CSceneGame();
-
+	static int EnemyScore;
 private:
 	//残り時間（30秒）
 	int Time = INIT_TIME;

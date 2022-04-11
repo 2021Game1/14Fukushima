@@ -4,15 +4,76 @@
 #include "CRectangle.h"
 #include "CPlayer.h"
 
-class CScoreUi : public CRectangle {
+class CScoreUi0 : public CRectangle {
 	CPlayer mScore;
 public:
-	CScoreUi();
-	void Update();
+	CScoreUi0();
 	void Render();
-private:
-	int mScoreUi,mScoreCnt; 
 };
+
+class CScoreUi1 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi1();
+	void Render();
+};
+
+class CScoreUi2 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi2();
+	void Render();
+};
+
+class CScoreUi3 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi3();
+	void Render();
+};
+
+class CScoreUi4 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi4();
+	void Render();
+};
+
+class CScoreUi5 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi5();
+	void Render();
+};
+
+class CScoreUi6 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi6();
+	void Render();
+};
+
+class CScoreUi7 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi7();
+	void Render();
+};
+
+class CScoreUi8 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi8();
+	void Render();
+};
+
+class CScoreUi9 : public CRectangle {
+	CPlayer mScore;
+public:
+	CScoreUi9();
+	void Render();
+};
+
 class CHpUi : public CPlayer {
 
 public:

@@ -18,8 +18,10 @@
 #include"CEnemy.h"
 #include "CBackground.h"
 #include"CTaskManager.h"
+#include"CText.h"
 #include<time.h>
 #include<stdlib.h>
+#include<stdio.h>
 
 
 
@@ -33,6 +35,9 @@ private:
 	int mEnemydepth;
 	int mMakeTime;
 public:
+	
+	
+
 
 	void Init()
 	{
@@ -85,8 +90,6 @@ public:
 		Background5->speed = SCROLL_SPEED;
 		//—LŒø‚É‚·‚é
 		Background5->mEnabled = true;
-		
-
 	}
 
 	void Update() {
@@ -170,7 +173,8 @@ public:
 				}
 			}
 			mMakeTime = mMakeTime + 1;
-		
+
+			
 	}
 	
 
