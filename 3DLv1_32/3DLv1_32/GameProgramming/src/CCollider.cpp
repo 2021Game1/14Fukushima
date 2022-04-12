@@ -5,6 +5,16 @@
 //プレイヤークラスのインクルード
 #include"CPlayer.h"
 
+//優先度の変更
+void CCollider::ChangePriority()
+{
+	//自分の座標×親の変換行列を掛けてワールド座標を求める
+	CVector pos = mPosition * *mpMatrix;
+	//ベクトルの長さが優先度
+	mPriority = pos.Length();
+	CCollisionManager::Get()->Remove(this);//一旦削除
+	CCollisionManager::Get()->Add(this);//追加
+}
 //デフォルトコンストラクタの定義
 CCollider::CCollider()
 	:mpParent(nullptr)
@@ -162,3 +172,4 @@ CCollider::~CCollider() {
 int CCollider::Type() {
 	return mType;
 }
+

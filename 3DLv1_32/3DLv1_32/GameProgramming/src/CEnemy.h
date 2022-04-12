@@ -4,6 +4,8 @@
 #include "CCharacter.h"
 //コライダクラスのインクルード
 #include "CCollider.h"
+//タスクマネージャクラスのインクルード
+#include "CTaskManager.h"
 /*
 エネミークラス
 キャラクタクラスのインクルード

@@ -46,6 +46,8 @@ public:
 	//Collision(コライダ1,コライダ2)
 	//retrun:true(衝突している)false(衝突していない)
 	static bool Collision(CCollider* m, CCollider* o);
+	//優先度の変更
+	void ChangePriority();
 	//Typeメソッド(mTypeの値を返す)
 	int Type();
 protected:
