@@ -4,8 +4,12 @@
 #include"CCharacter.h"
 //三角形クラスのインクルード
 #include"CTriangle.h"
+//コリジョンマネージャクラスのインクルード
+#include"CCollisionManager.h"
 //コライダクラスのインクルード
 #include"CCollider.h"
+
+
 /*
 * 弾クラス
 * 三角形を飛ばす
@@ -25,6 +29,8 @@ public:
 	//衝突処理
 	//Collision(コライダ1,コライダ2)
 	void Collision(CCollider* m, CCollider* o);
+	//衝突処理
+	void TaskCollision();
 	//デフォルトコンストラクタ
 	CBullet();
 private:

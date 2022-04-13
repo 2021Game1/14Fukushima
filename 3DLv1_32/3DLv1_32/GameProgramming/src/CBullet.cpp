@@ -49,3 +49,12 @@ void CBullet::Collision(CCollider* m, CCollider* o) {
 		mEnabled = false;
 	}
 }
+//衝突処理
+void CBullet::TaskCollision()
+{
+	//コライダの優先度変更
+	mCollider.ChangePriority();
+	//衝突処理を実行
+	CCollisionManager::Get()->Collision(&mCollider, COLLISIONRANGE);
+
+}

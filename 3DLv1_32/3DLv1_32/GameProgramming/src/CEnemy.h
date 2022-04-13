@@ -4,8 +4,10 @@
 #include "CCharacter.h"
 //コライダクラスのインクルード
 #include "CCollider.h"
-//タスクマネージャクラスのインクルード
-#include "CTaskManager.h"
+//コリジョンマネージャクラスのインクルード
+#include"CCollisionManager.h"
+
+
 /*
 エネミークラス
 キャラクタクラスのインクルード
@@ -22,6 +24,8 @@ public:
 	//衝突処理
 	//Collision(コライダ1,コライダ2)
 	void Collision(CCollider* m, CCollider* o);
+	//衝突処理
+	void TaskCollision();
 
 private:
 	//コライダ

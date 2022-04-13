@@ -57,3 +57,15 @@ void CEnemy::Collision(CCollider* m, CCollider* o) {
 
 	}
 }
+//衝突処理
+void CEnemy::TaskCollision()
+{
+	//コライダの優先度変更
+	mCollider1.ChangePriority();
+	mCollider2.ChangePriority();
+	mCollider3.ChangePriority();
+	//衝突処理を実行
+	CCollisionManager::Get()->Collision(&mCollider1, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mCollider2, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mCollider3, COLLISIONRANGE);
+}

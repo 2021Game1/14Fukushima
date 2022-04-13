@@ -4,6 +4,8 @@
 #include"CCharacter.h"
 //弾クラスのインクルード
 #include"CBullet.h"
+//コリジョンマネージャクラスのインクルード
+#include"CCollisionManager.h"
 //線分コライダクラスのインクルード
 #include"CColliderLine.h"
 
@@ -22,6 +24,8 @@ public:
 	void Update();
 	//衝突処理
 	void Collision(CCollider* m, CCollider* o);
+	//衝突処理
+	void TaskCollision();
 private:
 
 	CColliderLine mLine; //線分コライダ

@@ -35,6 +35,18 @@ void CTaskManager::Update() {
 		task = task->mpNext;
 	}
 }
+//衝突処理
+void CTaskManager::TaskCollision()
+{
+	//先頭から最後まで繰り返し
+	CTask* task = mHead.mpNext;
+	while (task->mpNext){
+		//衝突処理を呼ぶ
+		task->TaskCollision();
+		//次へ
+		task = task->mpNext;
+	}
+}
 //リストの追加
 //Add(タスクのポインタ)
 void CTaskManager::Add(CTask* addTask){
