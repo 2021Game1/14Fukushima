@@ -157,6 +157,9 @@
     <ClCompile Include="src\CBillBoard.cpp">
       <Filter>三角形クラス\キャラクタ\ビルボード</Filter>
     </ClCompile>
+    <ClCompile Include="src\CUtil.cpp">
+      <Filter>ゲーム</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CColliderLine.h">
@@ -241,6 +244,9 @@
       <Filter>ゲーム</Filter>
     </ClInclude>
     <ClInclude Include="src\Update.h">
+      <Filter>ゲーム</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CUtil.h">
       <Filter>ゲーム</Filter>
     </ClInclude>
   </ItemGroup>

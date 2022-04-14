@@ -8,7 +8,10 @@
 #include"CCollisionManager.h"
 //線分コライダクラスのインクルード
 #include"CColliderLine.h"
-
+//テキストクラスのインクルード
+#include"CText.h"
+//ユーティリティクラスのインクルード
+#include"CUtil.h"
 
 /*
 プレイヤークラス
@@ -17,11 +20,14 @@
 
 class CPlayer : public CCharacter {
 public:
+	CText mText;
 	//CBulletクラスのインスタンス変数
 	/*CBullet bullet;*/
 	CPlayer();
 	//更新処理
 	void Update();
+	//描画処理
+	void Render();
 	//衝突処理
 	void Collision(CCollider* m, CCollider* o);
 	//衝突処理
