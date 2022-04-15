@@ -18,6 +18,8 @@
 #include"CTaskManager.h"
 //敵のクラスのインクルード
 #include"CEnemy.h"
+//敵2のクラスのインクルード
+#include"CEnemy2.h"
 //コリジョンマネージャクラスのインクルード
 #include"CCollisionManager.h"
 //ビルボードクラスのインクルード
@@ -64,6 +66,9 @@ void CSceneGame::Init() {
 		*mBackGroundMatrix,CVector(),CVector(0.1f,0.1f,0.1f));
 	new CEnemy(&mModelC5, CVector(30.0f, 10.0f, -130.0f)
 		*mBackGroundMatrix,CVector(), CVector(0.1f, 0.1f, 0.1f));
+	//敵機2のインスタンス作成
+	new CEnemy2(CVector(-5.0f, 1.0f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.1f, 0.1f, 0.1f));
+	new CEnemy2(CVector(5.0f, 1.0f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.1f, 0.1f, 0.1f));
 	//ビルボードの生成
 	new CBillBoard(CVector(-6.0f, 3.0f, -10.0f), 1.0f, 1.0f);
 	//背景モデルから三角コライダを生成

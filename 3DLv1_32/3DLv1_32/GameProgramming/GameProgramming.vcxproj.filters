@@ -160,6 +160,9 @@
     <ClCompile Include="src\CUtil.cpp">
       <Filter>ゲーム</Filter>
     </ClCompile>
+    <ClCompile Include="src\CEnemy2.cpp">
+      <Filter>三角形クラス\キャラクタ\敵</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CColliderLine.h">
@@ -248,6 +251,9 @@
     </ClInclude>
     <ClInclude Include="src\CUtil.h">
       <Filter>ゲーム</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEnemy2.h">
+      <Filter>三角形クラス\キャラクタ\敵</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
