@@ -1,4 +1,6 @@
 #include"CEnemy2.h"
+//プレイヤークラスのインクルード
+#include "CPlayer.h"
 
 #define OBJ "res\\f16.obj" //モデルのファイル
 #define MTL "res\\f16.mtl" //モデルのマテリアルファイル
@@ -35,7 +37,39 @@ CEnemy2::CEnemy2(const CVector& position,const CVector& rotation,const CVector& 
 //更新処理
 void CEnemy2::Update()
 {
-
+	//左向き(X軸)のベクトルを求める
+	CVector vx = CVector(1.0f, 0.0f, 0.0f) * mMatrixRotate;
+	//上向き(Y軸)のベクトルを求める
+	CVector vy = CVector(0.0f, 1.0f, 0.0f) * mMatrixRotate;
+	//前方向(Z軸)のベクトルを求める
+	CVector vz = CVector(0.0f, 0.0f, 1.0f) * mMatrixRotate;
+	//プレイヤーのポインタが0以外の時
+	CPlayer* player = CPlayer::Get();
+	if (player != nullptr) 
+	{
+		//プレイヤーまでのベクトルを求める
+		CVector vp = player->Position() - mPosition;
+		float dx = vp.Dot(vx); //左ベクトルとの内積を求める
+		float dy = vp.Dot(vy); //上ベクトルとの内積を求める
+		float dz = vp.Dot(vz); //前方向のベクトルとの内積を求める
+		if (dz < 30.0f)
+		{
+			//X軸のズレが2.0以下
+			if (-2.0f < dx && dx < 2.0f)
+			{
+				//Y軸のズレが2.0以下
+				if (-2.0f < dy && dy < 2.0f)
+				{
+					//弾を発射します
+					CBullet* bullet = new CBullet();
+					bullet->Set(0.1f, 1.5f);
+					bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
+					bullet->Rotation(mRotation);
+					bullet->Update();
+				}
+			}
+		}
+	}
 }
 //衝突処理
 //Collision(コライダ1,コライダ2)

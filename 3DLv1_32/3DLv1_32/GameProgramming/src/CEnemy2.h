@@ -10,6 +10,7 @@
 #include"CCollisionManager.h"
 //エフェクトクラスのインクルード
 #include "CEffect.h"
+
 /*
 エネミークラス
 キャラクタクラスを継承
