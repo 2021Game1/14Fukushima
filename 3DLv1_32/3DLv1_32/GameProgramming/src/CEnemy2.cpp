@@ -52,7 +52,7 @@ void CEnemy2::Update()
 		float dx = vp.Dot(vx); //左ベクトルとの内積を求める
 		float dy = vp.Dot(vy); //上ベクトルとの内積を求める
 		float dz = vp.Dot(vz); //前方向のベクトルとの内積を求める
-		if (dz < 30.0f)
+		if (0.0f < dz && dz < 30.0f)
 		{
 			//X軸のズレが2.0以下
 			if (-2.0f < dx && dx < 2.0f)
