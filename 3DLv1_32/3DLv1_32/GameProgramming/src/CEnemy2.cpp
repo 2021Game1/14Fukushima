@@ -4,12 +4,13 @@
 
 #define OBJ "res\\f16.obj" //モデルのファイル
 #define MTL "res\\f16.mtl" //モデルのマテリアルファイル
+#define HP 3	//耐久値
 
 CModel CEnemy2::sModel;//モデルデータ作成
 
 //デフォルトコンストラクタ
 CEnemy2::CEnemy2()
-:mCollider(this, &mMatrix,CVector(0.0f,0.0f,0.0f),0.4f)
+:mCollider(this, &mMatrix,CVector(0.0f,0.0f,0.0f),0.4f),mHp(HP)
 {
 	//モデルが無い時は読み込む
 	if (sModel.Triangles().size() == 0)
@@ -34,6 +35,45 @@ CEnemy2::CEnemy2(const CVector& position,const CVector& rotation,const CVector& 
 	CTaskManager::Get()->Remove(this);//削除して
 	CTaskManager::Get()->Add(this);//追加する
 }
+
+//衝突処理
+//Collision(コライダ1,コライダ2)
+void CEnemy2::Collision(CCollider* m, CCollider* o)
+{
+	//相手のコライダタイプの判定
+	switch (o->Type())
+	{
+	case CCollider::ESPHERE: { //球コライダの時
+			//コライダのmとoが衝突しているかの判定
+		if (CCollider::Collision(m, o)) {
+			//エフェクト生成
+			new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+			if (mHp >= 0)
+			{
+				mHp--;
+			}
+		}
+		break;
+	}
+
+	case CCollider::ETRIANGLE: { //三角コライダの時
+		CVector adjust; //調整値
+		//三角コライダと球コライダの衝突判定
+		if (CCollider::CollisionTriangleSphere(o, m, &adjust))
+		{
+			if (mHp <= 0)
+			{
+				mEnabled = false;
+			}
+			//衝突しない位置まで戻す
+			mPosition = mPosition + adjust;
+		}
+
+		break;
+	}
+
+	}
+}
 //更新処理
 void CEnemy2::Update()
 {
@@ -45,7 +85,7 @@ void CEnemy2::Update()
 	CVector vz = CVector(0.0f, 0.0f, 1.0f) * mMatrixRotate;
 	//プレイヤーのポインタが0以外の時
 	CPlayer* player = CPlayer::Get();
-	if (player != nullptr) 
+	if (player != nullptr)
 	{
 		//プレイヤーまでのベクトルを求める
 		CVector vp = player->Position() - mPosition;
@@ -70,36 +110,20 @@ void CEnemy2::Update()
 			}
 		}
 	}
-}
-//衝突処理
-//Collision(コライダ1,コライダ2)
-void CEnemy2::Collision(CCollider* m, CCollider* o)
-{
-	//相手のコライダタイプの判定
-	switch (o->Type())
+	//HPが0以下の時　撃破
+	if (mHp <= 0)
 	{
-	case CCollider::ESPHERE: { //球コライダの時
-			//コライダのmとoが衝突しているかの判定
-		if (CCollider::Collision(m, o)) {
-			//エフェクト生成
-			new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
-			//衝突している時は無効にする
-			//削除mEnabled = false;
-		}
-		break;
-	}
-
-	case CCollider::ETRIANGLE: { //三角コライダの時
-		CVector adjust; //調整値
-		//三角コライダと球コライダの衝突判定
-		if (CCollider::CollisionTriangleSphere(o, m, &adjust))
+		mHp--;
+		//15フレーム毎にエフェクト
+		if (mHp % 15 == 0)
 		{
-			//衝突しない位置まで戻す
-			mPosition = mPosition + adjust;
+			//エフェクト生成
+			new CEffect(mPosition, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
 		}
-		break;
-	}
-
+		//下降させる
+		mPosition = mPosition - CVector(0.0f, 0.03f, 0.0f);
+		CTransform::Update();
+		return;
 	}
 }
 void CEnemy2::TaskCollision()

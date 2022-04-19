@@ -33,6 +33,8 @@ private:
 	//コライダ
 	CCollider mCollider;
 
+	int mHp;//ヒットポイント
+
 };
 
 
