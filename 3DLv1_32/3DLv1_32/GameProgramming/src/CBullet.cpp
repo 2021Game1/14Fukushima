@@ -35,10 +35,7 @@ void CBullet::Render() {
 	//DIFFUSE黄色設定
 	float c[] = { 1.0f,1.0f,0.0f,1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, c);
-	//三角形描画
 	mT.Render(mMatrix);
-
-
 }
 //衝突処理
 //Collision(コライダ1,コライダ2)

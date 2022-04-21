@@ -12,6 +12,8 @@
 #include"CText.h"
 //ユーティリティクラスのインクルード
 #include"CUtil.h"
+//エフェクトクラスのインクルード
+#include "CEffect.h"
 
 /*
 プレイヤークラス
@@ -41,6 +43,7 @@ private:
 	CColliderLine mLine2;	//線分コライダ2
 	CColliderLine mLine3;	//線分コライダ3
 	CCollider mCollider;	//本体用コライダ
+	int mHp;			//ヒットポイント
 };
 #endif 
 

@@ -4,8 +4,11 @@
 #include "CCharacter.h"
 //コライダクラスのインクルード
 #include "CCollider.h"
+//タスクマネージャのインクルード
+#include"CTaskManager.h"
 //コリジョンマネージャクラスのインクルード
 #include"CCollisionManager.h"
+
 
 
 /*
@@ -14,7 +17,6 @@
 */
 class CEnemy : public CCharacter{
 public:
-
 	//コンストラクタ
 	//CEnemy(モデル,位置,回転,拡縮)
 	CEnemy(CModel* model, const CVector& position,

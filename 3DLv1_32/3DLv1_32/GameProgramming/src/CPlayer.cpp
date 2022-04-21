@@ -9,6 +9,7 @@
 #define ROTATION_XV CVector(1.0f,0.0f,0.0f)//回転速度
 #define VELOCITY CVector(0.0f,0.0f,0.1f)//移動速度
 
+
 CPlayer* CPlayer::spInstance = nullptr;
 
 //デフォルトコンストラクタ
@@ -16,27 +17,30 @@ CPlayer::CPlayer()
 	:mLine(this, &mMatrix, CVector(0.0f, 0.0f, -14.0f), CVector(0.0f, 0.0f, 17.0f)),
 	mLine2(this, &mMatrix, CVector(0.0f, 5.0f, -8.0f), CVector(0.0f, -3.0f, -8.0f)),
 	mLine3(this, &mMatrix, CVector(9.0f, 0.0f, -8.0f), CVector(-9.0f, 0.0f, -8.0f)),
-	mCollider(this, &mMatrix, CVector(0.0f, 0.0f, 0.0f), 0.5f)
+	mCollider(this, &mMatrix, CVector(0.0f, 0.0f, 0.0f), 0.5f),
+	mHp(10)
 {
 	//テクスチャファイルの読み込み(1行64列)
 	mText.LoadTexture("FontWhite.tga", 1, 64);
+
 	//インスタンスの設定
 	spInstance = this;
 	mTag = EPLAYER;
 }
 
 //更新処理
-void CPlayer::Update() {
+void CPlayer::Update() 
+{
+
 	//スペースキーを入力で弾を発射
 	//スペースキーを入力で弾を発射
-	if (CKey::Push(VK_SPACE)){
+	if (CKey::Push(VK_SPACE)) {
 		CBullet* bullet = new CBullet();
 		bullet->Set(0.1f, 1.5f);
 		bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
 		bullet->Rotation(mRotation);
 		bullet->Update();
 	//TaskManager.Add(bullet);
-		
 	}
 	//Dキー入力で回転
 	if (CKey::Push('D')) {
@@ -65,18 +69,32 @@ void CPlayer::Update() {
 		//X軸の回転値を加算
 		mRotation = mRotation + ROTATION_XV;
 	}
-	//変換行列の更新
 	CTransform::Update();
+	//HPが0以下の時　撃破
+	if (mHp <= 0)
+	{
+		mHp--;
+		//15フレーム毎にエフェクト
+		if (mHp % 15 == 0)
+		{
+			//エフェクト生成
+			new CEffect(mPosition, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+		}
+		//下降させる
+		mPosition = mPosition - CVector(0.0f, 0.03f, 0.0f);
+		CTransform::Update();
+		return;
+	}
 }
 
 
 //衝突処理
 void CPlayer::Collision(CCollider* m, CCollider* o) {
 	//自身のコライダタイプの判定
-	switch (m->Type()){
-	case CCollider::ELINE://線分コライダ
+	switch (m->Type()) {
+	case CCollider::ELINE: {//線分コライダ
 		//相手のコライダが三角コライダの時
-		if (o->Type() == CCollider::ETRIANGLE){
+		if (o->Type() == CCollider::ETRIANGLE) {
 			CVector adjust;//調整用ベクトル
 			//三角形と線分の衝突判定
 			CCollider::CollisionTriangleLine(o, m, &adjust);
@@ -87,6 +105,22 @@ void CPlayer::Collision(CCollider* m, CCollider* o) {
 		}
 		break;
 	}
+	}
+	switch (o->Type()) {
+	case CCollider::ESPHERE: { //球コライダの時
+				//コライダのmとoが衝突しているかの判定
+		if (CCollider::Collision(m, o)) {
+			//エフェクト生成
+			new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+			if (mHp >= 0)
+			{
+				mHp--;
+			}
+		}
+		break;
+	}
+	}
+	
 }
 
 //衝突処理
