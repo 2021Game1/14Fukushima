@@ -8,6 +8,10 @@
 #include"CTaskManager.h"
 //コリジョンマネージャクラスのインクルード
 #include"CCollisionManager.h"
+//ミサイルクラス
+#include"CMissile.h"
+//プレイヤークラスのインクルード
+#include "CPlayer.h"
 
 
 
@@ -30,6 +34,7 @@ public:
 	void TaskCollision();
 
 private:
+	int mFireCount;
 	//コライダ
 	CCollider mCollider1;
 	CCollider mCollider2;

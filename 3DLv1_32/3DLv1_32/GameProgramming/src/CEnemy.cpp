@@ -8,6 +8,7 @@ CEnemy::CEnemy(CModel* model, const CVector& position,
 	:mCollider1(this, &mMatrix, CVector(0.0f, 5.0f, 0.0f), 0.8f)
 	, mCollider2(this, &mMatrix, CVector(0.0f, 5.0f, 20.0f), 0.8f)
 	, mCollider3(this, &mMatrix, CVector(0.0f, 5.0f, -20.0f), 0.8f)
+	,mFireCount(90)
 {
 	//モデル,位置,回転,拡縮を設定する
 	mpModel = model; //敵のモデル設定
@@ -22,10 +23,30 @@ CEnemy::CEnemy(CModel* model, const CVector& position,
 
 //更新処理
 void CEnemy::Update() {
+
+	if (mFireCount <= 0)
+	{
+		mFireCount--;
+	}
+	if (mFireCount == 0)
+	{
+		for (int i = 0; i < 1; i++)
+		{
+			//弾を発射します
+			CMissile* missile = new CMissile();
+			missile->Scale(CVector(0.5f, 0.5f, 0.5f));
+			missile->Position(CVector(0.0f, 7.5f, 00.0f) * mMatrix);
+			missile->Rotation(mRotation);
+			missile->Update();
+			mFireCount == 90;
+		}
+	}
 	//行列を更新
 	CTransform::Update();
 	//位置を移動
 	mPosition = CVector(0.0f, 0.0f, 0.9f) * mMatrix;
+	
+	
 }
 //衝突処理
 //Collision(コライダ1,コライダ2)
