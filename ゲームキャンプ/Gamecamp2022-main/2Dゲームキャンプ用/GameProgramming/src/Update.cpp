@@ -10,14 +10,15 @@
 // テクスチャクラスのインクルード
 #include "CTexture.h"
 CTexture Texture; //マップの画像
-CTexture mpBackground1;
-CTexture mpBackground2;
-CTexture mpBackground3;
-CTexture mpBackground4;
-CTexture mpBackground5;
-CTexture mpBackground6;
-CTexture mpBackground7;
+CTexture mpBackground1; 
+CTexture mpBackground2;	
+CTexture mpBackground3; 
+CTexture mpBackground4; 
+CTexture mpBackground5; 
+CTexture mpBackground6; 
+CTexture mpBackground7; 
 CTexture mpBackground8;
+CTexture mpBackground20;//昼の背景　切り替わり
 CTexture PlayerTexture0; //プレイヤー立ち絵
 CTexture PlayerTexture1; //プレイヤー移動
 CTexture PlayerTexture2; //プレイヤージャンプ
@@ -52,6 +53,7 @@ void Init() {
 	mpBackground6.Load("res\\夜墓真ん中.png");
 	mpBackground7.Load("res\\お昼後ろ.png");
 	mpBackground8.Load("res\\夜ステージ１.png");
+	mpBackground20.Load("res\\背景 門.png");
 	EnemyMoveTexture1.Load("res\\スライム移動.png");
 	EnemyAttackTexture1.Load("res\\スライム攻撃.png");
 	EnemyAttackBulTex1.Load("res\\スライム遠距離攻撃.png");

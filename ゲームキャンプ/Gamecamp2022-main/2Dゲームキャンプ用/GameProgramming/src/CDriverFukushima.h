@@ -41,6 +41,15 @@ public:
 
 	void Init()
 	{
+		//マップの背景(ステージ)
+		//背景クラスのメンバ変数への代入
+		CBackground4* Background6 = new CBackground4();
+		//スクリーンに値を設定
+		Background6->x = BACKGROUND2_X;
+		Background6->y = 0;
+		Background6->speed = SCROLL_SPEED;
+		//有効にする
+		Background6->mEnabled = true;
 		//奥の背景
 		//背景クラスのメンバ変数への代入
 		CBackground* Background = new CBackground();
@@ -90,6 +99,8 @@ public:
 		Background5->speed = SCROLL_SPEED;
 		//有効にする
 		Background5->mEnabled = true;
+
+
 	}
 
 	void Update() {

@@ -20,12 +20,12 @@ extern CTexture mpBackground5;
 extern CTexture mpBackground6;
 extern CTexture mpBackground7;
 extern CTexture mpBackground8;
+extern CTexture mpBackground20;
 
 
 
 
 CBackground::CBackground()
-:m_BackgroundDrawCount(0)
 {
 	w = BACKGROUND1_W;
 	h = BACKGROUND1_H;
@@ -46,7 +46,6 @@ void CBackground::Render()
 CBackground2* CBackground2::spInstance = nullptr;
 
 CBackground2::CBackground2()
-:m_BackgroundDrawCount(0)
 {
 
 	spInstance = this;
@@ -72,21 +71,15 @@ void CBackground2::Render()
 {
 	if (mEnabled)
 	{
-		if (m_BackgroundDrawCount <= 16) {
-			CRectangle::Render(mpBackground5, BACKGROUND_TOP, BACKGROUND2_W, BACKGROUND_H, BACKGROUND_TOP1);
-		}
-		if (m_BackgroundDrawCount >= 16 && m_BackgroundDrawCount <= 24) {
-			CRectangle::Render(mpBackground6, BACKGROUND_TOP, BACKGROUND_W, BACKGROUND_H, BACKGROUND_TOP);
-			
-		}
+		CRectangle::Render(mpBackground5, BACKGROUND_TOP, BACKGROUND2_W, BACKGROUND_H, BACKGROUND_TOP1);
 	}
+
 }
 
 //”wŒi‚Ìƒ|ƒCƒ“ƒ^
 CBackground3* CBackground3::spInstance = nullptr;
 
 CBackground3::CBackground3()
-:m_BackgroundDrawCount(0)
 {
 
 	spInstance = this;
@@ -116,7 +109,38 @@ void CBackground3::Render()
 	}
 }	
 
+//”wŒi‚Ìƒ|ƒCƒ“ƒ^
+CBackground4* CBackground4::spInstance = nullptr;
 
+CBackground4::CBackground4()
+{
+
+	spInstance = this;
+	w = BACKGROUND1_W;
+	h = BACKGROUND1_H;
+	mTag = EBUCKGROUND;
+	mPriority = 1;
+	CTaskManager::Get()->Remove(this);
+	CTaskManager::Get()->Add(this);
+}
+
+void CBackground4::Update()
+{
+
+	x += speed;
+	if (x == -BACKGROUND2_W) {
+		mEnabled = false;
+	}
+
+}
+
+void CBackground4::Render()
+{
+	if (mEnabled)
+	{
+		CRectangle::Render(mpBackground20, BACKGROUND_TOP1, BACKGROUND_W, BACKGROUND_H, BACKGROUND_TOP);
+	}
+}
 
 
 

@@ -13,7 +13,6 @@ public:
 
 private:
 	void Render();
-	int m_BackgroundDrawCount;
 };
 
 class CBackground2 : public CRectangle{
@@ -28,7 +27,6 @@ public:
 private:
 	void Render();
 	void Update();
-	int m_BackgroundDrawCount;
 };
 
 class CBackground3 : public CRectangle{
@@ -43,7 +41,19 @@ public:
 private:
 	void Render();
 	void Update();
-	int m_BackgroundDrawCount;
+};
+class CBackground4 : public CRectangle {
+public:
+
+
+	CBackground4();
+	int speed;
+
+	static CBackground4* spInstance;
+
+private:
+	void Render();
+	void Update();
 };
 
 #endif //èIóπ
