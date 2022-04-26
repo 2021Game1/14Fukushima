@@ -3,10 +3,15 @@
 #include "glut.h"
 #include "CVector.h"
 #include "CCamera.h"
+#include "CModelX.h"
 #include "CUtil.h"
 
+//確認用インスタンス
+CModelX gModelX;
 
 void CSceneGame::Init() {
+	//3Dモデルファイルの読み込み
+	gModelX.Load(MODEL_FILE);
 	mFont.LoadTexture("FontG.png", 1, 4096 / 64);
 
 }
