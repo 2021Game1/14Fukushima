@@ -1,0 +1,7 @@
+﻿  CPlayer.cpp
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\3DLv1_32\GameProgramming\src\CPlayer.cpp(179,25): error C2601: 'CPlayer::Get': ローカル関数の定義が正しくありません。
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\3DLv1_32\GameProgramming\src\CPlayer.cpp(137): message : この行に含まれる '{' に対応するものがありません
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\3DLv1_32\GameProgramming\src\CPlayer.cpp(137): fatal error C1075: '{': 一致するトークンが見つかりませんでした
+  CSceneGame.cpp
+  CSceneManager.cpp
+  コードを生成中...
