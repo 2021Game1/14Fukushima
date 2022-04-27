@@ -149,32 +149,21 @@ void CPlayer::Render()
 	char buf[64];
 	if (mHp >= 0)
 	{
-	//Y座標の表示
-	//文字列の設定
-	sprintf(buf, "PY:%7.2f", mPosition.Y());
-	//文字列の描画
-	mText.DrawString(buf, 100, 30, 8, 16);
-
-	//X軸回転値の表示
-	//文字列の設定
-	sprintf(buf, "RX:%7.2f", mRotation.X());
-	//文字列の描画
-	mText.DrawString(buf, 100, 0, 8, 16);
-
-	//Y軸回転値の表示
-	//文字列の設定
-	sprintf(buf, "RY:%7.2f", mRotation.Y());
-	//文字列の描画
-	mText.DrawString(buf, 100, -100, 8, 16);
-	}
-
-	if (CPlayer::mHp <= 0)
-	{
+		//Y座標の表示
+		//文字列の設定
+		sprintf(buf, "PY:%7.2f", mPosition.Y());
 		//文字列の描画
-		mText.DrawString("GAMEOVER", -210, 85, 30, 30);
-		if (CKey::Push(VK_RETURN)) {
-			
-		}
+		mText.DrawString(buf, 100, 30, 8, 16);
+
+		//X軸回転値の表示
+		//文字列の設定
+		sprintf(buf, "RX:%7.2f", mRotation.X());
+		//文字列の描画
+		mText.DrawString(buf, 100, 0, 8, 16);
+
+		//Y軸回転値の表示
+		//文字列の設定
+		sprintf(buf, "RY:%7.2f", mRotation.Y());
 	}
 	//2Dの描画終了
 	CUtil::End2D();

@@ -15,7 +15,6 @@
 //エフェクトクラスのインクルード
 #include "CEffect.h"
 
-#include"CSceneManager.h"
 /*
 プレイヤークラス
 キャラクタークラスを継承
@@ -44,8 +43,6 @@ private:
 	CColliderLine mLine2;	//線分コライダ2
 	CColliderLine mLine3;	//線分コライダ3
 	CCollider mCollider;	//本体用コライダ
-	//シーンマネージャのインスタンス
-	CSceneManager SceneManager;
 };
 #endif 
 

@@ -1,5 +1,8 @@
-﻿  CPlayer.cpp
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\GameProgramming\src\CPlayer.cpp(154,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\GameProgramming\src\CPlayer.cpp(160,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\GameProgramming\src\CPlayer.cpp(166,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+﻿  CCollider.cpp
+  CEnemy.cpp
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\GameProgramming\src\CEnemy.cpp(41,15): warning C4553: '==': 式の結果が使用されていません。'=' を意図していますか?
+  CEnemy2.cpp
+  CSceneGame.cpp
+  CSceneManager.cpp
+  コードを生成中...
   GameProgramming.vcxproj -> C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\Debug\GameProgramming.exe
