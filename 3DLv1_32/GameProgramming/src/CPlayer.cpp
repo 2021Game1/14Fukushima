@@ -12,6 +12,8 @@
 
 CPlayer* CPlayer::spInstance = nullptr;
 
+
+
 //デフォルトコンストラクタ
 CPlayer::CPlayer()
 	:mLine(this, &mMatrix, CVector(0.0f, 0.0f, -14.0f), CVector(0.0f, 0.0f, 17.0f)),
@@ -19,9 +21,10 @@ CPlayer::CPlayer()
 	mLine3(this, &mMatrix, CVector(9.0f, 0.0f, -8.0f), CVector(-9.0f, 0.0f, -8.0f)),
 	mCollider(this, &mMatrix, CVector(0.0f, 0.0f, 0.0f), 0.5f),
 	mHp(10)
+	
 {
 	//テクスチャファイルの読み込み(1行64列)
-	mText.LoadTexture("FontWhite.tga", 1, 64);
+	mText.LoadTexture("FontGreen.tga", 1, 64);
 
 	//インスタンスの設定
 	spInstance = this;
@@ -165,16 +168,14 @@ void CPlayer::Render()
 	mText.DrawString(buf, 100, -100, 8, 16);
 	}
 
-	if (mHp <= 0)
+	if (CPlayer::mHp <= 0)
 	{
 		//文字列の描画
 		mText.DrawString("GAMEOVER", -210, 85, 30, 30);
-		if (CKey::Push(VK_END)) {
-
+		if (CKey::Push(VK_RETURN)) {
+			
 		}
-
 	}
-
 	//2Dの描画終了
 	CUtil::End2D();
 }

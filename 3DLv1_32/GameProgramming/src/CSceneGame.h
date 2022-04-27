@@ -20,6 +20,7 @@ public:
 	CModel mModelC5; //敵モデル
 	//プレイヤーの変数
 	CPlayer mPlayer;
+	EScene GetNextScene();
 
 };
 

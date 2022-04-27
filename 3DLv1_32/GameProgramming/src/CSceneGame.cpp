@@ -44,12 +44,17 @@ CMatrix matrix;
 //背景移動用の行列
 CMatrix mBackGroundMatrix;
 
+CCharacter character;
+
 //モデルからコライダを生成
 CColliderMash mColliderMesh;
 
+CText mText;
 
+CPlayer player;
 
 void CSceneGame::Init() {
+	mScene = EGAME;
 	mBackGroundMatrix.Translate(0.0f, 0.0f, -500.0f);
 	mEye = CVector(1.0f, 2.0f, 3.0f);
 	//モデルファイルの入力
@@ -58,6 +63,8 @@ void CSceneGame::Init() {
 	mBackGround.Load(MODEL_BACKGROUND);
 	//敵のモデルの読み込み
 	mModelC5.Load("res\\C5.obj","res\\C5.mtl");
+	//テクスチャファイルの読み込み(1行64列)
+	mText.LoadTexture("FontWhite.tga", 1, 64);
 	//マトリックスの描画変数
 	matrix.Print();
 	//プレイヤーのモデルポインタ
@@ -86,6 +93,8 @@ void CSceneGame::Update() {
 	CTaskManager::Get()->Update();
 	//コリジョンマネージャの衝突処理
 	CTaskManager::Get()->TaskCollision();
+
+
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点,注視点,上方向
 	//視点を求める
@@ -100,6 +109,22 @@ void CSceneGame::Update() {
 	Camera.Set(e, c, u);
 	Camera.Render();
 
+	//親の描画処理
+	character.Render();
+	//2Dの描画開始
+	CUtil::Start2D(-400, 400, -300, 300);
+	//描画色の設定(緑色の半透明)
+	glColor4f(0.0f, 1.0f, 0.0f, 0.8f);
+	if (player.mHp <= 0)
+	{
+		//文字列の描画
+		mText.DrawString("GAMEOVER", -210, 85, 30, 30);
+		if (CKey::Push(VK_RETURN)) {
+
+		}
+	}
+	//2Dの描画終了
+	CUtil::End2D();
 
 	
 
@@ -112,7 +137,10 @@ void CSceneGame::Update() {
 	CTaskManager::Get()->Delete();
 	//タスクマネージャの描画	
 	CTaskManager::Get()->Render();
-
+}
+//次のシーンの取得
+CScene::EScene CSceneGame::GetNextScene() {
+	return mScene;
 }
 	
 

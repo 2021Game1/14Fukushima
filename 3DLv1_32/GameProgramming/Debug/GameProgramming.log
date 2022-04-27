@@ -1,7 +1,5 @@
 ﻿  CPlayer.cpp
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\3DLv1_32\GameProgramming\src\CPlayer.cpp(179,25): error C2601: 'CPlayer::Get': ローカル関数の定義が正しくありません。
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\3DLv1_32\GameProgramming\src\CPlayer.cpp(137): message : この行に含まれる '{' に対応するものがありません
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\3DLv1_32\GameProgramming\src\CPlayer.cpp(137): fatal error C1075: '{': 一致するトークンが見つかりませんでした
-  CSceneGame.cpp
-  CSceneManager.cpp
-  コードを生成中...
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\GameProgramming\src\CPlayer.cpp(154,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\GameProgramming\src\CPlayer.cpp(160,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\GameProgramming\src\CPlayer.cpp(166,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  GameProgramming.vcxproj -> C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\3DLv1_32\Debug\GameProgramming.exe

@@ -2,6 +2,8 @@
 //タスクマネージャクラスのインクルード
 #include"CTaskManager.h"
 
+
+
 CCharacter::CCharacter() 
 :mTag(EZERO)
 {

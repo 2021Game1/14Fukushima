@@ -15,6 +15,7 @@
 //エフェクトクラスのインクルード
 #include "CEffect.h"
 
+#include"CSceneManager.h"
 /*
 プレイヤークラス
 キャラクタークラスを継承
@@ -35,7 +36,7 @@ public:
 	//衝突処理
 	void TaskCollision();
 	static CPlayer* Get();
-	
+	int mHp;
 private:
 	//プレイヤーのインスタンス
 	static CPlayer* spInstance;
@@ -43,7 +44,8 @@ private:
 	CColliderLine mLine2;	//線分コライダ2
 	CColliderLine mLine3;	//線分コライダ3
 	CCollider mCollider;	//本体用コライダ
-	int mHp;			//ヒットポイント
+	//シーンマネージャのインスタンス
+	CSceneManager SceneManager;
 };
 #endif 
 
