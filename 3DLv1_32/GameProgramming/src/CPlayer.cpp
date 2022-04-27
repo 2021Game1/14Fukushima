@@ -164,6 +164,7 @@ void CPlayer::Render()
 		//Y²‰ñ“]’l‚Ì•\¦
 		//•¶š—ñ‚Ìİ’è
 		sprintf(buf, "RY:%7.2f", mRotation.Y());
+		mText.DrawString(buf, 100, -100, 8, 16);
 	}
 	//2D‚Ì•`‰æI—¹
 	CUtil::End2D();

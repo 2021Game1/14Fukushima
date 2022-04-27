@@ -2,56 +2,12 @@
 #include "CSceneGame.h"
 //OpenGL
 #include"glut.h"
-//ベクトルクラスのインクルード
-#include"CVector.h"
-//三角形クラスのインクルード
-#include"CTriangle.h"
-//キークラスのインクルード
-#include"CKey.h"
-//マトリックスクラスのインクルード
-#include"CMatrix.h"
-//トランスフォームクラスのインクルード
-#include"CTransform.h"
-//キャラクタクラスのインクルード
-#include"CCharacter.h"
-//タスクマネージャクラスのインクルード
-#include"CTaskManager.h"
-//敵のクラスのインクルード
-#include"CEnemy.h"
-//敵2のクラスのインクルード
-#include"CEnemy2.h"
-//コリジョンマネージャクラスのインクルード
-#include"CCollisionManager.h"
-//ビルボードクラスのインクルード
-#include"CBillBoard.h"
-//カメラクラスのインクルード
-#include"CCamera.h"
-//三角コライダクラスのインクルード
-#include"CColliderTriangle.h"
-//三角コライダの生成クラスのインクルード
-#include"CColliderMesh.h"
-//ミサイルクラス
-#include"CMissile.h"
+
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj","res\\f14.mtl"
 #define MODEL_BACKGROUND "res\\sky.obj","res\\sky.mtl"
-//カメラの視点の変数
-CVector mEye;
 
-//マトリックスの変数
-CMatrix matrix;
 
-//背景移動用の行列
-CMatrix mBackGroundMatrix;
-
-CCharacter character;
-
-//モデルからコライダを生成
-CColliderMash mColliderMesh;
-
-CText mText;
-
-CPlayer player;
 
 void CSceneGame::Init() {
 	mScene = EGAME;
@@ -109,22 +65,9 @@ void CSceneGame::Update() {
 	Camera.Set(e, c, u);
 	Camera.Render();
 
-	//親の描画処理
-	character.Render();
-	//2Dの描画開始
-	CUtil::Start2D(-400, 400, -300, 300);
-	//描画色の設定(緑色の半透明)
-	glColor4f(0.0f, 1.0f, 0.0f, 0.8f);
-	if (player.mHp <= 0)
-	{
-		//文字列の描画
-		mText.DrawString("GAMEOVER", -210, 85, 30, 30);
-		if (CKey::Push(VK_RETURN)) {
 
-		}
-	}
-	//2Dの描画終了
-	CUtil::End2D();
+
+
 
 	
 
@@ -137,6 +80,22 @@ void CSceneGame::Update() {
 	CTaskManager::Get()->Delete();
 	//タスクマネージャの描画	
 	CTaskManager::Get()->Render();
+}
+void CSceneGame::Render() {
+	//2Dの描画開始
+	CUtil::Start2D(-400, 400, -300, 300);
+	//描画色の設定(緑色の半透明)
+	glColor4f(0.0f, 1.0f, 0.0f, 0.8f);
+	if (mPlayer.mHp <= 0)
+	{
+		//文字列の描画
+		mText.DrawString("GAMEOVER", -210, 85, 30, 30);
+		if (CKey::Push(VK_RETURN)) {
+
+		}
+	}
+	//2Dの描画終了
+	CUtil::End2D();
 }
 //次のシーンの取得
 CScene::EScene CSceneGame::GetNextScene() {
