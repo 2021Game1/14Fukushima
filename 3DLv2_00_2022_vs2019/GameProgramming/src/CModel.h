@@ -5,6 +5,8 @@
 #include "CTriangle.h"
 #include "CMaterial.h"
 
+
+
 /*
 モデルクラス
 モデルデータの入力や表示
@@ -38,5 +40,7 @@ private:
 	//テクスチャマッピングの保存(CVector型)
 	std::vector<CVector> uv;
 };
+
+
 
 #endif

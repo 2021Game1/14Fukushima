@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+
 #include "CModelX.h"
 #include "glut.h"
 
-
+#define COUNT_SET 1
 
 CModelX::CModelX() 
 	:mpPointer(nullptr)
@@ -11,6 +12,90 @@ CModelX::CModelX()
 	//mTokenを初期化
 	memset(mToken, 0, sizeof(mToken));
 }
+CModelX::~CModelX() {
+	if (mFrame.size() > 0)
+	{
+		delete mFrame[0];
+	}
+}
+
+/*
+CModelXFrame
+model:CModelXインスタンスへのポインタ
+フレームを作成する
+読み込み中にFrameが見つかれば、
+フレームを作成し、子フレームに追加する
+*/
+CModelXFrame::CModelXFrame(CModelX* model) {
+	//現在のフレーム配列の要素数を取得し設定する
+	mIndex = model->mFrame.size();
+	//CModelXのフレーム配列に追加する
+	model->mFrame.push_back(this);
+	//変換行列を単位行列にする
+	mTransformMatrix.Identity();
+	//次の単語(フレーム名の予定)を取得する
+	model->GetToken();//frame name
+	//フレーム名分エリアを確保する
+	mpName = new char[strlen(model->mToken) + 1];
+	//フレーム名をコピーする
+	strcpy(mpName, model->mToken);
+	//次の単語を({の予定)を取得する
+	model->GetToken();//{
+	//文字が無くなったら終わり
+	while (*model->mpPointer != '\0') {
+		//次の単語取得
+		model->GetToken();//Frame
+		//}かっこの場合は終了
+		if (strchr(model->mToken,'}'))break;
+		//新たなフレームの場合は、子フレームに追加
+		if (strcmp(model->mToken,"Frame") == 0) {
+			//フレームを作成し、 子フレームの配列に追加
+			mChild.push_back(
+				new CModelXFrame(model));
+
+		}
+		else {
+			//上記以外の要素は読み飛ばす
+			model->SkipNode();
+		}
+		//デバッグバージョンのみ有効
+#ifdef _DEBUG
+		printf("%s\n", mpName);
+#endif //DEBUG
+	}
+}
+/*
+SkipNode
+ノードを読み飛ばす
+*/
+void CModelX::SkipNode() {
+	//文字が終わったら終了
+	while (*mpPointer != '\0') {
+		GetToken();		//次の単語を取得
+		//{が見つかったらループ終了
+		if (strchr(mToken, '{'))break;
+	}
+	int count = COUNT_SET;
+	//文字が終わるか、カウントダウンが0になったら終了
+	while (*mpPointer != '\0' && count > 0) {
+		GetToken();
+		//{を見つけるとカウントアップ
+		if (strchr(mToken, '{')) {
+			count++;
+
+		}
+		//}を見つけるとカウントダウン
+		else if (strchr(mToken, '}')) {
+			count--;
+
+		}
+	}
+}
+
+/*
+GetToken
+文字列データから、単語を1つ取得する
+*/
 void CModelX::GetToken() {
 	char* p = mpPointer;
 	char* q = mToken;
@@ -50,6 +135,7 @@ void CModelX::GetToken() {
 	}
 }
 
+
 void CModelX::Load(char* file) {
 	//
 	//ファイルサイズを取得
@@ -82,9 +168,8 @@ void CModelX::Load(char* file) {
 		GetToken();		//単語の取得
 		//単語がFrameの場合
 		if (strcmp(mToken, "Frame") == 0) {
-			printf("%s", mToken);//Frame出力
-			GetToken();			//Frame名を取得
-			printf("%s\n", mToken);//Frame名を取得
+			//フレームを作成する
+			new CModelXFrame(this);
 		}
 		//単語がAnimationSetの場合
 		if (strcmp(mToken, "AnimationSet") == 0) {
@@ -95,10 +180,9 @@ void CModelX::Load(char* file) {
 	}
 	SAFE_DELETE_ARRAY(buf);	//確保した領域を開放する
 }
-/*
-GetToken
-文字列データから、単語を1つ取得する
-*/
+
+
+
 
 
 
