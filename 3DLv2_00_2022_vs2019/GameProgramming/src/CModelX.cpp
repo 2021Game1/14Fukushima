@@ -46,23 +46,23 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 		//次の単語取得
 		model->GetToken();//Frame
 		//}かっこの場合は終了
-		if (strchr(model->mToken,'}'))break;
+		if (strchr(model->mToken, '}'))break;
 		//新たなフレームの場合は、子フレームに追加
-		if (strcmp(model->mToken,"Frame") == 0) {
+		if (strcmp(model->mToken, "Frame") == 0) {
 			//フレームを作成し、 子フレームの配列に追加
-			mChild.push_back(
-				new CModelXFrame(model));
+			mChild.push_back(new CModelXFrame(model));
 
 		}
 		else {
 			//上記以外の要素は読み飛ばす
 			model->SkipNode();
 		}
-		//デバッグバージョンのみ有効
-#ifdef _DEBUG
-		printf("%s\n", mpName);
-#endif //DEBUG
+
 	}
+	//デバッグバージョンのみ有効
+#ifdef _DEBUG
+	printf("%s\n", mpName);
+#endif //DEBUG
 }
 /*
 SkipNode
@@ -80,15 +80,9 @@ void CModelX::SkipNode() {
 	while (*mpPointer != '\0' && count > 0) {
 		GetToken();
 		//{を見つけるとカウントアップ
-		if (strchr(mToken, '{')) {
-			count++;
-
-		}
+		if (strchr(mToken, '{'))count++;
 		//}を見つけるとカウントダウン
-		else if (strchr(mToken, '}')) {
-			count--;
-
-		}
+		else if (strchr(mToken, '}'))count--;
 	}
 }
 
@@ -171,15 +165,16 @@ void CModelX::Load(char* file) {
 			//フレームを作成する
 			new CModelXFrame(this);
 		}
-		//単語がAnimationSetの場合
-		if (strcmp(mToken, "AnimationSet") == 0) {
-			printf("%s", mToken);//AnimationSet出力
-			GetToken();			//AnimationSet名を取得
-			printf("%s\n", mToken);//AnimationSet名を取得
-		}
+		////単語がAnimationSetの場合
+		//if (strcmp(mToken, "AnimationSet") == 0) {
+		//	printf("%s", mToken);//AnimationSet出力
+		//	GetToken();			//AnimationSet名を取得
+		//	printf("%s\n", mToken);//AnimationSet名を取得
+		//}
 	}
 	SAFE_DELETE_ARRAY(buf);	//確保した領域を開放する
 }
+
 
 
 
