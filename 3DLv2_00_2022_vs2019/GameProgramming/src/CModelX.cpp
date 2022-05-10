@@ -53,6 +53,16 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 			mChild.push_back(new CModelXFrame(model));
 
 		}
+		//FrameTransformMatrix要素を見つけた時,mTransformMatrixに設定する
+		else if (strcmp(model->mToken, "FrameTransformMatrix") == 0)
+		{
+			model->GetToken();//{
+			for (int i = 0; i < mTransformMatrix.Size(); i++)
+			{
+				mTransformMatrix.M()[i] = model->GetFloatToken();
+			}
+			model->GetToken();//}
+		}
 		else {
 			//上記以外の要素は読み飛ばす
 			model->SkipNode();
@@ -62,8 +72,11 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 	//デバッグバージョンのみ有効
 #ifdef _DEBUG
 	printf("%s\n", mpName);
+	mTransformMatrix.Print();
 #endif //DEBUG
 }
+
+
 /*
 SkipNode
 ノードを読み飛ばす
@@ -129,6 +142,17 @@ void CModelX::GetToken() {
 	}
 }
 
+/*
+* GetFloatToken
+* 単語を浮動小数点型のデータで返す
+*/
+float CModelX::GetFloatToken() {
+	GetToken();
+	//atof
+	//文字列をfloat型へ変換
+	return atof(mToken);
+}
+
 
 void CModelX::Load(char* file) {
 	//
@@ -165,12 +189,6 @@ void CModelX::Load(char* file) {
 			//フレームを作成する
 			new CModelXFrame(this);
 		}
-		////単語がAnimationSetの場合
-		//if (strcmp(mToken, "AnimationSet") == 0) {
-		//	printf("%s", mToken);//AnimationSet出力
-		//	GetToken();			//AnimationSet名を取得
-		//	printf("%s\n", mToken);//AnimationSet名を取得
-		//}
 	}
 	SAFE_DELETE_ARRAY(buf);	//確保した領域を開放する
 }

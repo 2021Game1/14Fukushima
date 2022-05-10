@@ -1,14 +1,14 @@
 #ifndef CMATRIX_H
 #define CMATRIX_H
-class CVector;
 /*
 マトリクスクラス
 4行4列の行列データを扱います
 */
 class CMatrix {
 	//friend CVector; //フレンドクラスの設定
-
 public:
+	//2次元配列をmMの要素数を返すメソッド
+	int Size();
 	//表示確認用
 	//4×4の行列を画面出力
 	void Print();

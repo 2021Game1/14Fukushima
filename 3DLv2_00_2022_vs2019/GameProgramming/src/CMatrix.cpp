@@ -2,6 +2,11 @@
 //標準入出力関数のインクルード
 #include <stdio.h>
 
+int CMatrix::Size() 
+{
+	return sizeof(mM) / sizeof(float);
+}
+
 //表示確認用
 void CMatrix::Print() {
 	printf("%10f %10f %10f %10f\n",

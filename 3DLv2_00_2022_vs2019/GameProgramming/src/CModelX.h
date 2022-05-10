@@ -10,6 +10,9 @@
 //領域開放をマクロ化
 #define SAFE_DELETE_ARRAY(a) {if(a)delete[]a; a = 0;}
 
+//配列のサイズ取得をマクロ化
+#define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
+
 class CModelX; //CModelクラスの宣言
 //CModelXFrameクラスの定義
 class CModelXFrame {
@@ -31,7 +34,9 @@ public:
 		//名前のエリアを開放する
 		SAFE_DELETE_ARRAY(mpName);
 	}
+	
 };
+
 /*
 CModelX
 Xファイル形式の3Dモデルデータをプログラムで認識する
@@ -44,13 +49,15 @@ class CModelX {
 public:
 	CModelX();
 	~CModelX();
-
+	//浮動小数点データの取得
+	float GetFloatToken();
 	//ファイル読み込み
 	void Load(char* file);
 	//単語の取り出し
 	void GetToken();
 	//ノードの読み飛ばし
 	void SkipNode();
+	
 };
 
 #endif 

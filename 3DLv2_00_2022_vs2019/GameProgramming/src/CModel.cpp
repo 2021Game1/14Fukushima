@@ -230,6 +230,7 @@ void CModel::Load(char *obj, char *mtl) {
 
 }
 
+
 //•`‰æ
 void CModel::Render() {
 	//‰Â•Ï’·”z—ñ‚Ì—v‘f”‚¾‚¯ŒJ‚è•Ô‚µ
