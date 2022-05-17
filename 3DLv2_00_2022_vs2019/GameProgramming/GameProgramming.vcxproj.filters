@@ -75,9 +75,6 @@
     <ClCompile Include="src\CSound.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\CTask.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\CTaskManager.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>

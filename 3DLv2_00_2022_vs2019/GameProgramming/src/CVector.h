@@ -17,6 +17,12 @@ public:
 	float Y() const;
 	//Zの値を得る
 	float Z() const;
+	//Xの値を得る
+	void X(float f);
+	//Yの値を得る
+	void Y(float f);
+	//Zの値を得る
+	void Z(float f);
 	//デフォルトコンストラクタ
 	CVector();
 	//コンストラクタ

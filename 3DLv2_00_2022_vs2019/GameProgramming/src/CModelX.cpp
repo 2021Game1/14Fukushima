@@ -63,6 +63,9 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 			}
 			model->GetToken();//}
 		}
+		else if (strcmp(model->mToken, "Mesh") == 0) {
+			mMesh.Init(model);
+		}
 		else {
 			//上記以外の要素は読み飛ばす
 			model->SkipNode();
@@ -73,6 +76,7 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 #ifdef _DEBUG
 	printf("%s\n", mpName);
 	mTransformMatrix.Print();
+	
 #endif //DEBUG
 }
 
@@ -143,6 +147,15 @@ void CModelX::GetToken() {
 }
 
 /*
+* GetIntToken
+* 単語を整数型のデータで返す
+*/
+int CModelX::GetIntToken() {
+	GetToken();
+	return atoi(mToken);
+}
+
+/*
 * GetFloatToken
 * 単語を浮動小数点型のデータで返す
 */
@@ -152,6 +165,56 @@ float CModelX::GetFloatToken() {
 	//文字列をfloat型へ変換
 	return atof(mToken);
 }
+
+/*
+* Init
+* Meshのデータを取り込む
+*/
+void CMesh::Init(CModelX* model) {
+	model->GetToken();	//{or 名前
+	if (!strchr(model->mToken, '{')) {
+		//名前の場合、次が{
+		model->GetToken();		   //{
+	}
+	//頂点数の取得
+	mVertexNum = model->GetIntToken();
+	//頂点数分エリア確保
+	mpVertex = new CVector[mVertexNum];
+#ifdef _DEBUG
+	printf("%s%d \n", "VertexNum:",mVertexNum);
+#endif //DEBUG
+	//頂点数分データを取り込む
+	for (int i = 0; i < mVertexNum; i++) {
+		mpVertex[i].X(model->GetFloatToken());
+		mpVertex[i].Y(model->GetFloatToken());
+		mpVertex[i].Z(model->GetFloatToken());
+		
+		//デバッグバージョンのみ有効
+		#ifdef _DEBUG
+		printf("%10f %10f %10f \n", mpVertex[i].X(), mpVertex[i].Y(), mpVertex[i].Z());
+		#endif //DEBUG
+	}
+		mFaceNum = model->GetIntToken();		//面数読み込み
+		#ifdef _DEBUG
+		printf("%s%d \n", "FaceNum:", mFaceNum);
+		#endif //DEBUG
+		//頂点数は1面に３頂点
+		mpVertexIndex = new int[mFaceNum * 3];
+		for (int i = 0; i < mFaceNum*3; i+= 3)
+		{
+			model->GetToken();//頂点数読み飛ばし
+			mpVertexIndex[i] = model->GetIntToken();
+			mpVertexIndex[i + 1] = model->GetIntToken();
+			mpVertexIndex[i + 2] = model->GetIntToken();
+			//デバッグバージョンのみ有効
+			#ifdef _DEBUG
+			
+			printf("%d %d %d \n", mpVertexIndex[i], mpVertexIndex[i + 1], mpVertexIndex[i + 2]);
+			#endif //DEBUG
+		}
+
+}
+
 
 
 void CModelX::Load(char* file) {

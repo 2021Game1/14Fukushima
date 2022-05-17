@@ -3,7 +3,7 @@
 
 #include <vector>	 //vectorクラスのインクルード(動的配列)
 #include "CMatrix.h" //マトリクスクラスのインクルード
-
+#include "CVector.h"
 
 #define MODEL_FILE "res\\sample.blend.x"
 
@@ -14,11 +14,44 @@
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 class CModelX; //CModelクラスの宣言
+
+class CModelXFrame;
+
+//CMeshクラスの定義
+class CMesh{
+	friend CModelX;
+	friend CModelXFrame;
+
+	int mVertexNum;		//頂点数
+	CVector* mpVertex;	//頂点データ
+	int mFaceNum;		//画数
+	int* mpVertexIndex;	//面を構成する頂点座標
+
+public:
+	//コンストラクタ
+	CMesh()
+		:mVertexNum(0)
+		, mpVertex(nullptr)
+		, mFaceNum(0)
+		, mpVertexIndex(nullptr)
+	{}
+	//デストラクタ
+	~CMesh() {
+		SAFE_DELETE_ARRAY(mpVertex);
+		SAFE_DELETE_ARRAY(mpVertexIndex);
+	}
+	//読み込み処理
+	void Init(CModelX* model);
+};
+
+
 //CModelXFrameクラスの定義
 class CModelXFrame {
 	friend CModelX;
+	friend CMesh;
 	std::vector<CModelXFrame*>mChild; //子フレームの配列
 	CMatrix mTransformMatrix;		  //変換行列
+	CMesh mMesh;					  //Meshデータ
 	char* mpName;					  //フレーム名前
 	int mIndex;						  //フレーム番号
 public:
@@ -43,6 +76,7 @@ Xファイル形式の3Dモデルデータをプログラムで認識する
 */
 class CModelX {
 	friend CModelXFrame;
+	friend CMesh;
 	char* mpPointer;	//読み込み位置
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
@@ -57,6 +91,8 @@ public:
 	void GetToken();
 	//ノードの読み飛ばし
 	void SkipNode();
+	//整数データの取得
+	int GetIntToken();
 	
 };
 
