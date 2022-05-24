@@ -48,6 +48,7 @@ public:
 	//モデルクラスのインスタンス作成
 	CModel mModel; //プレイヤーモデル
 	CModel mBackGround; //背景モデル
+	CModel mMap;		//マップモデル
 	CModel mModelC5; //敵モデル
 	//プレイヤーの変数
 	CPlayer mPlayer;

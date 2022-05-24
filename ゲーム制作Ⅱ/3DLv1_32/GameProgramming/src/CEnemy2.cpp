@@ -2,8 +2,8 @@
 //プレイヤークラスのインクルード
 #include "CPlayer.h"
 
-#define OBJ "res\\f16.obj" //モデルのファイル
-#define MTL "res\\f16.mtl" //モデルのマテリアルファイル
+#define OBJ "res\\mini.obj" //モデルのファイル
+#define MTL "res\\mini.mtl" //モデルのマテリアルファイル
 #define HP 3	//耐久値
 #define VELOCITY 0.11f	   //速度
 
