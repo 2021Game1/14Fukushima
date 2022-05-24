@@ -47,6 +47,8 @@ public:
 	}
 	//読み込み処理
 	void Init(CModelX* model);
+	//描画
+	void Render();
 };
 
 
@@ -72,7 +74,8 @@ public:
 		//名前のエリアを開放する
 		SAFE_DELETE_ARRAY(mpName);
 	}
-	
+	//描画
+	void Render();
 };
 
 /*
@@ -92,6 +95,8 @@ public:
 	float GetFloatToken();
 	//ファイル読み込み
 	void Load(char* file);
+	//描画
+	void Render();
 	//単語の取り出し
 	void GetToken();
 	//ノードの読み飛ばし

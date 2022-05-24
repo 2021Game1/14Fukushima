@@ -3,11 +3,16 @@
 #include "glut.h"
 #include "CVector.h"
 #include "CCamera.h"
+#include "CMatrix.h"
 #include "CModelX.h"
+#include "CKey.h"
 #include "CUtil.h"
 
 //確認用インスタンス
 CModelX gModelX;
+
+//キー入力で回転
+CMatrix gMatrix;
 
 void CSceneGame::Init() {
 	//3Dモデルファイルの読み込み
@@ -30,8 +35,27 @@ void CSceneGame::Update() {
 	Camera.Set(e, c, u);
 	Camera.Render();
 
+	//X軸+回転
+	if (CKey::Push('K')) {
+		gMatrix = gMatrix * CMatrix().RotateX(1);
+	}
+	//Y軸+回転
+	if (CKey::Push('L')){
+		gMatrix = gMatrix * CMatrix().RotateY(1);
+	}
+	//X軸-回転
+	if (CKey::Push('I')) {
+		gMatrix = gMatrix * CMatrix().RotateX(-1);
+	}
+	//Y軸-回転
+	if (CKey::Push('J')) {
+		gMatrix = gMatrix * CMatrix().RotateY(-1);
+	}
+	//行列設定
+	glMultMatrixf(gMatrix.M());
 
-
+	//モデル描画
+	gModelX.Render();
 
 	//2D描画開始
 	CUtil::Start2D(0, 800, 0, 600);

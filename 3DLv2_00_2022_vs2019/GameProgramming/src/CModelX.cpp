@@ -235,11 +235,10 @@ void CMesh::Init(CModelX* model) {
 				model->GetToken();//3
 				ni = model->GetIntToken();
 				mpNormal[i] = pNormal[ni];
-				ni = model->GetIntToken();
 				mpNormal[i + 1] = pNormal[ni];
 				ni = model->GetIntToken();
 				mpNormal[i + 2] = pNormal[ni];
-
+				ni = model->GetIntToken();
 				//デバッグバージョンのみ有効
 				#ifdef _DEBUG
 				printf("%10f %10f %10f \n", mpNormal[i].X(), mpNormal[i].Y(), mpNormal[i].Z());
@@ -293,7 +292,42 @@ void CModelX::Load(char* file) {
 	SAFE_DELETE_ARRAY(buf);	//確保した領域を開放する
 }
 
+void CMesh::Render() {
+	/*頂点データ,法線データの配列を有効にする*/
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
 
+	/*頂点データ,法線データの場所を指定する*/
+	glVertexPointer(3, GL_FLOAT, 0, mpVertex);
+	glNormalPointer(GL_FLOAT, 0, mpNormal);
+
+	/*頂点のインデックスの場所を指定して図形を描画する*/
+	glDrawElements(GL_TRIANGLES, 3 * mFaceNum, GL_UNSIGNED_INT, mpVertexIndex);
+
+	/*頂点データ,法線データの配列を無効にする*/
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+}
+
+/*
+Render
+メッシュの面数が0以外なら描画する
+*/
+void CModelXFrame::Render() {
+	if (mMesh.mFaceNum != 0){
+		mMesh.Render();
+	}
+}
+
+/*
+Render
+全てのフレームの描画処理を呼び出す
+*/
+void CModelX::Render() {
+	for (size_t i = 0; i < mFrame.size(); i++){
+		mFrame[i]->Render();
+	}
+}
 
 
 
