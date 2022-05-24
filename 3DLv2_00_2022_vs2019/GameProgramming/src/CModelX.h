@@ -26,6 +26,8 @@ class CMesh{
 	CVector* mpVertex;	//頂点データ
 	int mFaceNum;		//画数
 	int* mpVertexIndex;	//面を構成する頂点座標
+	int mNormalNum;		//法線数
+	CVector* mpNormal;	//法線ベクトル
 
 public:
 	//コンストラクタ
@@ -34,11 +36,14 @@ public:
 		, mpVertex(nullptr)
 		, mFaceNum(0)
 		, mpVertexIndex(nullptr)
+		,mNormalNum(0)
+		,mpNormal(nullptr)
 	{}
 	//デストラクタ
 	~CMesh() {
 		SAFE_DELETE_ARRAY(mpVertex);
 		SAFE_DELETE_ARRAY(mpVertexIndex);
+		SAFE_DELETE_ARRAY(mpNormal);
 	}
 	//読み込み処理
 	void Init(CModelX* model);

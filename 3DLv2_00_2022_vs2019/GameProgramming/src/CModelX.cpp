@@ -208,11 +208,48 @@ void CMesh::Init(CModelX* model) {
 			mpVertexIndex[i + 2] = model->GetIntToken();
 			//デバッグバージョンのみ有効
 			#ifdef _DEBUG
-			
 			printf("%d %d %d \n", mpVertexIndex[i], mpVertexIndex[i + 1], mpVertexIndex[i + 2]);
 			#endif //DEBUG
 		}
+		model->GetToken();	//meshNormals
+		if (strcmp(model->mToken,"MeshNormals")==0){
+			model->GetToken();
+			//法線データ数を取得
+			mNormalNum = model->GetIntToken();
+			//法線のデータを配列に取り込む
+			CVector* pNormal = new CVector[mNormalNum];
+			for (int i = 0; i < mNormalNum; i++) {
+				pNormal[i].X(model->GetFloatToken());
+				pNormal[i].Y(model->GetFloatToken());
+				pNormal[i].Z(model->GetFloatToken());
+			}
+			//法線数=面数×3
+			mNormalNum = model->GetIntToken() * 3;	//FaceNum
+			int ni;
+			//頂点毎に法線データを設定する
+			mpNormal = new CVector[mNormalNum];
+			#ifdef _DEBUG
+			printf("%s%d \n", "NormalNum:", mNormalNum);
+			#endif //DEBUG
+			for (int i = 0; i < mNormalNum; i += 3){
+				model->GetToken();//3
+				ni = model->GetIntToken();
+				mpNormal[i] = pNormal[ni];
+				ni = model->GetIntToken();
+				mpNormal[i + 1] = pNormal[ni];
+				ni = model->GetIntToken();
+				mpNormal[i + 2] = pNormal[ni];
 
+				//デバッグバージョンのみ有効
+				#ifdef _DEBUG
+				printf("%10f %10f %10f \n", mpNormal[i].X(), mpNormal[i].Y(), mpNormal[i].Z());
+				printf("%10f %10f %10f \n", mpNormal[i + 1].X(), mpNormal[i + 1].Y(), mpNormal[i + 1].Z());
+				printf("%10f %10f %10f \n", mpNormal[i + 2].X(), mpNormal[i + 2].Y(), mpNormal[i + 2].Z());
+				#endif //DEBUG
+			}
+			delete[]pNormal;
+			model->GetToken();		//}
+		}
 }
 
 
