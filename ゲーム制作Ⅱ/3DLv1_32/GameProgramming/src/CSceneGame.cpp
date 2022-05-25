@@ -9,16 +9,17 @@
 #define MODEL_MAP "res\\colision.obj","res\\colision.mtl"
 
 
+
 void CSceneGame::Init() {
 
 	mBackGroundMatrix.Translate(0.0f, 0.0f, 50.0f);
 	mEye = CVector(1.0f, 2.0f, 3.0f);
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
-	//マップモデルファイルの入力
-	mMap.Load(MODEL_MAP);
 	//背景モデルファイルの入力
-	mBackGround.Load(MODEL_BACKGROUND);
+	/*mBackGround.Load(MODEL_BACKGROUND);*/
+	//マップのモデルファイルの入力
+	mMap.Load(MODEL_MAP);
 	//敵のモデルの読み込み
 	mModelC5.Load("res\\C5.obj","res\\C5.mtl");
 	//マトリックスの描画変数
@@ -66,7 +67,7 @@ void CSceneGame::Update() {
 
 	
 
-	mMap.Render();
+
 	//背景モデルの描画
 	mBackGround.Render();
 	//コリジョンマネージャのコライダ描画

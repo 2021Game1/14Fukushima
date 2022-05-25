@@ -23,6 +23,8 @@ public:
 	//描画
 	//Render(行列)
 	void Render(const CMatrix& m);
+	//三角形の判定
+	
 	//デストラクタ
 	~CModel();
 	//デフォルトコンストラクタ

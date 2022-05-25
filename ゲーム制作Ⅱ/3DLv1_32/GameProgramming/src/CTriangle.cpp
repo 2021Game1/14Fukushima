@@ -74,6 +74,14 @@ void CTriangle::Render(const CMatrix&m) {
 	glEnd();
 }
 
+bool CTriangle::IsTriangle()
+{
+	CVector normal = (mV[1] - mV[0]).Cross(mV[2] - mV[0]);
+	if (normal.Length() > 0.0f)
+		return true;
+	return false;
+}
+
 void CTriangle::MaterialIdx(int idx) {
 	mMaterialIdx = idx;
 }
@@ -113,3 +121,4 @@ const CVector& CTriangle::UV2() const
 {
 	return mUv[2];
 }
+

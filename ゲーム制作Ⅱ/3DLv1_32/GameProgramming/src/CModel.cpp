@@ -253,6 +253,7 @@ void CModel::Render()
 
 //描画
 void CModel::Render(const CMatrix& m) {
+
 	//行列の退避
 	glPushMatrix();
 	//合成行列を掛ける
@@ -271,7 +272,7 @@ void CModel::Render(const CMatrix& m) {
 	glNormalPointer(GL_FLOAT, 0, mpNormal);
 	//テクスチャコードの配列を指定する
 	glTexCoordPointer(2, GL_FLOAT, 0, mpTextureCoord);
-
+	
 	int first = 0; //描画位置
 	//マテリアル毎に描画する
 	for (int i = 0; i < mpMaterials.size(); i++)
@@ -320,7 +321,6 @@ CModel::~CModel()
 	}
 	
 }
-
 std::vector<CTriangle> CModel::Triangles() const
 {
 	return mTriangles;

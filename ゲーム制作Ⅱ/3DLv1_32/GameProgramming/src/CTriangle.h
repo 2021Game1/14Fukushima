@@ -18,6 +18,8 @@ public:
 	void Normal(const CVector& v0, const CVector& v1, const CVector& v2);
 	//描画
 	void Render();
+	//三角形の判定
+	bool IsTriangle();
 	//マテリアル番号の取得
 	int MaterialIdx();
 	//マテリアル番号の設定
