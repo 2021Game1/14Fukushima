@@ -46,7 +46,7 @@ CTexture* CMaterial::Texture()
 
 //デフォルトコンストラクタ
 CMaterial::CMaterial()
-:mVertexNum(0)
+:mVertexNum(0),mpTextureFilename(nullptr)
 {
 	//名前を0で埋め
 	memset(mName, 0, sizeof(mName));
@@ -90,4 +90,54 @@ void CMaterial::Disabled()
 		//テクスチャを無効にする
 		glDisable(GL_TEXTURE_2D);
 	}
+}
+/*
+Materialデータの読み込みと設定
+*/
+CMaterial::CMaterial(CModelX* model)
+:mpTextureFilename(nullptr)
+{
+	model->GetToken();// { ? name
+	if (strcmp(model->Token(),"{")) {
+		//{でないときはマテリアル名
+		strcpy(mName, model->Token());
+		model->GetToken();
+	}
+
+	mDiffuse[0] = model->GetFloatToken();
+	mDiffuse[1] = model->GetFloatToken();
+	mDiffuse[2] = model->GetFloatToken();
+	mDiffuse[3] = model->GetFloatToken();
+
+	mPower = model->GetFloatToken();
+
+	mSpecular[0] = model->GetFloatToken();
+	mSpecular[1] = model->GetFloatToken();
+	mSpecular[2] = model->GetFloatToken();
+
+	mEmissive[0] = model->GetFloatToken();
+	mEmissive[1] = model->GetFloatToken();
+	mEmissive[2] = model->GetFloatToken();
+
+	model->GetToken(); //TextureFilename of }
+
+	if (strcmp(model->Token(), "TextureFilename") == 0) {
+		//テクスチャありの場合、テクスチャファイル名の取得
+		model->GetToken(); //{
+		model->GetToken(); // filename
+		mpTextureFilename =
+			new char[strlen(model->Token()) + 1];
+		strcpy(mpTextureFilename, model->Token());
+		model->GetToken();//}
+		model->GetToken();//}
+	}
+
+
+}
+CMaterial::~CMaterial() {
+	if (mpTextureFilename)
+	{
+		delete[]mpTextureFilename;
+	}
+	mpTextureFilename = nullptr;
 }

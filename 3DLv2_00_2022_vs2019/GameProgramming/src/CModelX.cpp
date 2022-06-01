@@ -3,6 +3,7 @@
 
 #include "CModelX.h"
 #include "glut.h"
+#include "CMaterial.h"
 
 #define COUNT_SET 1
 
@@ -146,25 +147,7 @@ void CModelX::GetToken() {
 	}
 }
 
-/*
-* GetIntToken
-* 単語を整数型のデータで返す
-*/
-int CModelX::GetIntToken() {
-	GetToken();
-	return atoi(mToken);
-}
 
-/*
-* GetFloatToken
-* 単語を浮動小数点型のデータで返す
-*/
-float CModelX::GetFloatToken() {
-	GetToken();
-	//atof
-	//文字列をfloat型へ変換
-	return atof(mToken);
-}
 
 /*
 * Init
@@ -181,38 +164,43 @@ void CMesh::Init(CModelX* model) {
 	//頂点数分エリア確保
 	mpVertex = new CVector[mVertexNum];
 #ifdef _DEBUG
-	printf("%s%d \n", "VertexNum:",mVertexNum);
+	printf("%s%d \n", "VertexNum:", mVertexNum);
 #endif //DEBUG
 	//頂点数分データを取り込む
 	for (int i = 0; i < mVertexNum; i++) {
 		mpVertex[i].X(model->GetFloatToken());
 		mpVertex[i].Y(model->GetFloatToken());
 		mpVertex[i].Z(model->GetFloatToken());
-		
+
 		//デバッグバージョンのみ有効
-		#ifdef _DEBUG
+#ifdef _DEBUG
 		printf("%10f %10f %10f \n", mpVertex[i].X(), mpVertex[i].Y(), mpVertex[i].Z());
-		#endif //DEBUG
+#endif //DEBUG
 	}
-		mFaceNum = model->GetIntToken();		//面数読み込み
-		#ifdef _DEBUG
-		printf("%s%d \n", "FaceNum:", mFaceNum);
-		#endif //DEBUG
-		//頂点数は1面に３頂点
-		mpVertexIndex = new int[mFaceNum * 3];
-		for (int i = 0; i < mFaceNum*3; i+= 3)
-		{
-			model->GetToken();//頂点数読み飛ばし
-			mpVertexIndex[i] = model->GetIntToken();
-			mpVertexIndex[i + 1] = model->GetIntToken();
-			mpVertexIndex[i + 2] = model->GetIntToken();
-			//デバッグバージョンのみ有効
-			#ifdef _DEBUG
-			printf("%d %d %d \n", mpVertexIndex[i], mpVertexIndex[i + 1], mpVertexIndex[i + 2]);
-			#endif //DEBUG
-		}
+	mFaceNum = model->GetIntToken();		//面数読み込み
+#ifdef _DEBUG
+	printf("%s%d \n", "FaceNum:", mFaceNum);
+#endif //DEBUG
+	//頂点数は1面に３頂点
+	mpVertexIndex = new int[mFaceNum * 3];
+	for (int i = 0; i < mFaceNum * 3; i += 3)
+	{
+		model->GetToken();//頂点数読み飛ばし
+		mpVertexIndex[i] = model->GetIntToken();
+		mpVertexIndex[i + 1] = model->GetIntToken();
+		mpVertexIndex[i + 2] = model->GetIntToken();
+		//デバッグバージョンのみ有効
+#ifdef _DEBUG
+		printf("%d %d %d \n", mpVertexIndex[i], mpVertexIndex[i + 1], mpVertexIndex[i + 2]);
+#endif //DEBUG
+	}
+	//文字が無くなったら終わり
+	while (model->mpPointer != '\0') {
 		model->GetToken();	//meshNormals
-		if (strcmp(model->mToken,"MeshNormals")==0){
+		//}かっこの場合は終了
+		if (strchr(model->mToken, '}'))
+			break;
+		if (strcmp(model->mToken, "MeshNormals") == 0) {
 			model->GetToken();
 			//法線データ数を取得
 			mNormalNum = model->GetIntToken();
@@ -228,10 +216,10 @@ void CMesh::Init(CModelX* model) {
 			int ni;
 			//頂点毎に法線データを設定する
 			mpNormal = new CVector[mNormalNum];
-			#ifdef _DEBUG
+#ifdef _DEBUG
 			printf("%s%d \n", "NormalNum:", mNormalNum);
-			#endif //DEBUG
-			for (int i = 0; i < mNormalNum; i += 3){
+#endif //DEBUG
+			for (int i = 0; i < mNormalNum; i += 3) {
 				model->GetToken();//3
 				ni = model->GetIntToken();
 				mpNormal[i] = pNormal[ni];
@@ -240,16 +228,51 @@ void CMesh::Init(CModelX* model) {
 				mpNormal[i + 2] = pNormal[ni];
 				ni = model->GetIntToken();
 				//デバッグバージョンのみ有効
-				#ifdef _DEBUG
+#ifdef _DEBUG
 				printf("%10f %10f %10f \n", mpNormal[i].X(), mpNormal[i].Y(), mpNormal[i].Z());
 				printf("%10f %10f %10f \n", mpNormal[i + 1].X(), mpNormal[i + 1].Y(), mpNormal[i + 1].Z());
 				printf("%10f %10f %10f \n", mpNormal[i + 2].X(), mpNormal[i + 2].Y(), mpNormal[i + 2].Z());
-				#endif //DEBUG
+#endif //DEBUG
 			}
 			delete[]pNormal;
 			model->GetToken();		//}
 		}
+	
+	
+	//MeshMaterialListの時
+	else if (strcmp(model->mToken,"MeshMaterialList") == 0) {
+		model->GetToken();//{
+		//Materialの数
+		mMaterialNum = model->GetIntToken();
+		//FaceNum
+		mMaterialIndexNum = model->GetIntToken();
+		//マテリアルインデックスの作成
+		mpMaterialIndex = new int[mMaterialIndexNum];
+		for (int i = 0; i < mMaterialIndexNum; i++) {
+			mpMaterialIndex[i] = model->GetIntToken();
+		}
+		//マテリアルデータの作成
+		for (int i = 0; i < mMaterialNum; i++){
+			model->GetToken(); //Material
+			if (strcmp(model->mToken,"Material") == 0) {
+				mMaterial.push_back(new CMaterial(model));
+			}
+		}
+		model->GetToken();   //}End of MeshMaterialList
+	}
+	else if (strcmp(model->mToken,"SkinWeights")==0){
+			//CSkinWeightsクラスのインスタンスを作成し、配列に追加
+			mSkinWeights.push_back(new CSkinWeights(model));
+		}
+	else
+		{
+			//以外のノードは読み飛ばし
+			model->SkipNode();
+		}
+	}
+	
 }
+
 
 
 
@@ -302,13 +325,60 @@ void CMesh::Render() {
 	glNormalPointer(GL_FLOAT, 0, mpNormal);
 
 	/*頂点のインデックスの場所を指定して図形を描画する*/
-	glDrawElements(GL_TRIANGLES, 3 * mFaceNum, GL_UNSIGNED_INT, mpVertexIndex);
-
+	for (int i = 0; i < mFaceNum; i++) {
+		//マテリアルを適用する
+		mMaterial[mpMaterialIndex[i]]->Enabled();
+		glDrawElements(GL_TRIANGLES, 3,GL_UNSIGNED_INT, (mpVertexIndex + i * 3));
+	}
 	/*頂点データ,法線データの配列を無効にする*/
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
+CSkinWeights::CSkinWeights(CModelX* model)
+	:mpFrameName(0)
+	,mFrameindex(0)
+	,mIndexNum(0)
+	,mpIndex(nullptr)
+	,mpWeight(nullptr)
+{
+	model->GetToken();	//{
+	model->GetToken();  //FrameName
+	//フレーム名エリア確保、設定
+	mpFrameName = new char[strlen(model->Token()) + 1];
+	strcpy(mpFrameName, model->Token());
+	printf("%s%s \n", "SkinWeights ", mpFrameName);
+
+	//頂点番号数
+	mIndexNum = model->GetIntToken();
+	//頂点番号数が0を超える
+	if (mIndexNum > 0) {
+		//頂点番号と頂点ウェイトのエリア確保
+		mpIndex = new int[mIndexNum];
+		mpWeight = new float[mIndexNum];
+		//頂点番号取得
+		for (int i = 0; i < mIndexNum; i++)
+			mpIndex[i] = model->GetIntToken();
+		//頂点ウェイト取得
+		for (int i = 0; i < mIndexNum; i++)
+			mpWeight[i] = model->GetFloatToken();
+		printf("%d %f\n", *mpIndex, *mpWeight);
+	}
+	
+	//オフセット行列取得
+	for (int i = 0; i < 16; i++) {
+		mOffset.M()[i] = model->GetFloatToken();
+	}
+	
+	printf("%s\n", "・・・頂点番号分・・・");
+	mOffset.Print();
+	model->GetToken();		//}
+	
+
+	
+	
+	
+}
 /*
 Render
 メッシュの面数が0以外なら描画する
@@ -329,7 +399,32 @@ void CModelX::Render() {
 	}
 }
 
+/*
+* GetIntToken
+* 単語を整数型のデータで返す
+*/
+int CModelX::GetIntToken() {
+	GetToken();
+	return atoi(mToken);
+}
+/*
+*
+*
+*/
+char* CModelX::Token() {
+	return &mToken[0];
+}
 
+/*
+* GetFloatToken
+* 単語を浮動小数点型のデータで返す
+*/
+float CModelX::GetFloatToken() {
+	GetToken();
+	//atof
+	//文字列をfloat型へ変換
+	return atof(mToken);
+}
 
 
 

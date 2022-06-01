@@ -5,6 +5,7 @@
 #include "CMatrix.h" //マトリクスクラスのインクルード
 #include "CVector.h"
 
+
 #define MODEL_FILE "res\\sample.blend.x"
 
 //領域開放をマクロ化
@@ -17,16 +18,52 @@ class CModelX; //CModelクラスの宣言
 
 class CModelXFrame;
 
+class CMesh;//フレンド定義用
+
+class CMaterial;
+
+/*
+CSkinWeights
+スキンウェイトクラス
+*/
+class CSkinWeights {
+	friend CModelX;
+	friend CMesh;
+	char* mpFrameName; //フレーム名
+	int mFrameindex;   //フレーム番号
+	int mIndexNum;	   //頂点番号数
+	int* mpIndex;   //頂点番号配列
+	float* mpWeight;   //頂点ウェイト配列
+	CMatrix mOffset;   //オフセットマトリックス
+public:
+	CSkinWeights(CModelX* model);
+	~CSkinWeights() {
+		SAFE_DELETE_ARRAY(mpFrameName);
+		SAFE_DELETE_ARRAY(mpIndex);
+		SAFE_DELETE_ARRAY(mpWeight);
+	}
+	const int& FrameIndex();
+	const CMatrix& Offset();
+
+
+};
+
 //CMeshクラスの定義
 class CMesh{
 	friend CModelX;
 	friend CModelXFrame;
+	friend CSkinWeights;
 
 	int mVertexNum;		//頂点数
 	CVector* mpVertex;	//頂点データ
 	int mFaceNum;		//画数
 	int* mpVertexIndex;	//面を構成する頂点座標
 	int mNormalNum;		//法線数
+	int mMaterialNum;	//マテリアル数
+	int mMaterialIndexNum;	//マテリアル番号数(面数)
+	int* mpMaterialIndex;//マテリアル番号
+	std::vector<CMaterial*>mMaterial;//マテリアルデータ
+	std::vector<CSkinWeights*>mSkinWeights;//スキンウェイト
 	CVector* mpNormal;	//法線ベクトル
 
 public:
@@ -38,12 +75,21 @@ public:
 		, mpVertexIndex(nullptr)
 		,mNormalNum(0)
 		,mpNormal(nullptr)
+		,mMaterialNum(0)
+		,mMaterialIndexNum(0)
+		,mpMaterialIndex(nullptr)
 	{}
 	//デストラクタ
 	~CMesh() {
 		SAFE_DELETE_ARRAY(mpVertex);
 		SAFE_DELETE_ARRAY(mpVertexIndex);
 		SAFE_DELETE_ARRAY(mpNormal);
+		SAFE_DELETE_ARRAY(mpMaterialIndex);
+		//スキンウェイトの削除
+		for (size_t i = 0; i < mSkinWeights.size(); i++)
+		{
+			delete mSkinWeights[i];
+		}
 	}
 	//読み込み処理
 	void Init(CModelX* model);
@@ -78,6 +124,7 @@ public:
 	void Render();
 };
 
+
 /*
 CModelX
 Xファイル形式の3Dモデルデータをプログラムで認識する
@@ -85,6 +132,7 @@ Xファイル形式の3Dモデルデータをプログラムで認識する
 class CModelX {
 	friend CModelXFrame;
 	friend CMesh;
+	friend CSkinWeights;
 	char* mpPointer;	//読み込み位置
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
@@ -103,8 +151,13 @@ public:
 	void SkipNode();
 	//整数データの取得
 	int GetIntToken();
+	//
+	char* Token();
 	
+	void Token(char* token);
 };
+
+
 
 #endif 
 
