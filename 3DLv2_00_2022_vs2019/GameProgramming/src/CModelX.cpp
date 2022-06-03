@@ -74,11 +74,11 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 
 	}
 	//デバッグバージョンのみ有効
-#ifdef _DEBUG
-	printf("%s\n", mpName);
-	mTransformMatrix.Print();
-	
-#endif //DEBUG
+//#ifdef _DEBUG
+//	printf("%s\n", mpName);
+//	mTransformMatrix.Print();
+//	
+//#endif //DEBUG
 }
 
 
@@ -163,24 +163,24 @@ void CMesh::Init(CModelX* model) {
 	mVertexNum = model->GetIntToken();
 	//頂点数分エリア確保
 	mpVertex = new CVector[mVertexNum];
-#ifdef _DEBUG
-	printf("%s%d \n", "VertexNum:", mVertexNum);
-#endif //DEBUG
+//#ifdef _DEBUG
+//	printf("%s%d \n", "VertexNum:", mVertexNum);
+//#endif //DEBUG
 	//頂点数分データを取り込む
 	for (int i = 0; i < mVertexNum; i++) {
 		mpVertex[i].X(model->GetFloatToken());
 		mpVertex[i].Y(model->GetFloatToken());
 		mpVertex[i].Z(model->GetFloatToken());
 
-		//デバッグバージョンのみ有効
-#ifdef _DEBUG
-		printf("%10f %10f %10f \n", mpVertex[i].X(), mpVertex[i].Y(), mpVertex[i].Z());
-#endif //DEBUG
+//		//デバッグバージョンのみ有効
+//#ifdef _DEBUG
+//		printf("%10f %10f %10f \n", mpVertex[i].X(), mpVertex[i].Y(), mpVertex[i].Z());
+//#endif //DEBUG
 	}
 	mFaceNum = model->GetIntToken();		//面数読み込み
-#ifdef _DEBUG
-	printf("%s%d \n", "FaceNum:", mFaceNum);
-#endif //DEBUG
+//#ifdef _DEBUG
+//	printf("%s%d \n", "FaceNum:", mFaceNum);
+//#endif //DEBUG
 	//頂点数は1面に３頂点
 	mpVertexIndex = new int[mFaceNum * 3];
 	for (int i = 0; i < mFaceNum * 3; i += 3)
@@ -190,9 +190,9 @@ void CMesh::Init(CModelX* model) {
 		mpVertexIndex[i + 1] = model->GetIntToken();
 		mpVertexIndex[i + 2] = model->GetIntToken();
 		//デバッグバージョンのみ有効
-#ifdef _DEBUG
-		printf("%d %d %d \n", mpVertexIndex[i], mpVertexIndex[i + 1], mpVertexIndex[i + 2]);
-#endif //DEBUG
+//#ifdef _DEBUG
+//		printf("%d %d %d \n", mpVertexIndex[i], mpVertexIndex[i + 1], mpVertexIndex[i + 2]);
+//#endif //DEBUG
 	}
 	//文字が無くなったら終わり
 	while (model->mpPointer != '\0') {
@@ -216,9 +216,9 @@ void CMesh::Init(CModelX* model) {
 			int ni;
 			//頂点毎に法線データを設定する
 			mpNormal = new CVector[mNormalNum];
-#ifdef _DEBUG
-			printf("%s%d \n", "NormalNum:", mNormalNum);
-#endif //DEBUG
+//#ifdef _DEBUG
+//			printf("%s%d \n", "NormalNum:", mNormalNum);
+//#endif //DEBUG
 			for (int i = 0; i < mNormalNum; i += 3) {
 				model->GetToken();//3
 				ni = model->GetIntToken();
@@ -228,11 +228,11 @@ void CMesh::Init(CModelX* model) {
 				mpNormal[i + 2] = pNormal[ni];
 				ni = model->GetIntToken();
 				//デバッグバージョンのみ有効
-#ifdef _DEBUG
-				printf("%10f %10f %10f \n", mpNormal[i].X(), mpNormal[i].Y(), mpNormal[i].Z());
-				printf("%10f %10f %10f \n", mpNormal[i + 1].X(), mpNormal[i + 1].Y(), mpNormal[i + 1].Z());
-				printf("%10f %10f %10f \n", mpNormal[i + 2].X(), mpNormal[i + 2].Y(), mpNormal[i + 2].Z());
-#endif //DEBUG
+//#ifdef _DEBUG
+//				printf("%10f %10f %10f \n", mpNormal[i].X(), mpNormal[i].Y(), mpNormal[i].Z());
+//				printf("%10f %10f %10f \n", mpNormal[i + 1].X(), mpNormal[i + 1].Y(), mpNormal[i + 1].Z());
+//				printf("%10f %10f %10f \n", mpNormal[i + 2].X(), mpNormal[i + 2].Y(), mpNormal[i + 2].Z());
+//#endif //DEBUG
 			}
 			delete[]pNormal;
 			model->GetToken();		//}
@@ -351,6 +351,7 @@ CSkinWeights::CSkinWeights(CModelX* model)
 
 	//頂点番号数
 	mIndexNum = model->GetIntToken();
+
 	//頂点番号数が0を超える
 	if (mIndexNum > 0) {
 		//頂点番号と頂点ウェイトのエリア確保
@@ -362,15 +363,18 @@ CSkinWeights::CSkinWeights(CModelX* model)
 		//頂点ウェイト取得
 		for (int i = 0; i < mIndexNum; i++)
 			mpWeight[i] = model->GetFloatToken();
-		printf("%d %f\n", *mpIndex, *mpWeight);
+		
 	}
 	
+	for (int i = 0; i < mIndexNum; i++)
+	{
+		printf("%d %f\n", mpIndex[i], mpWeight[i]);
+	}
+
 	//オフセット行列取得
 	for (int i = 0; i < 16; i++) {
 		mOffset.M()[i] = model->GetFloatToken();
 	}
-	
-	printf("%s\n", "・・・頂点番号分・・・");
 	mOffset.Print();
 	model->GetToken();		//}
 	
