@@ -23,6 +23,23 @@ class CMesh;//フレンド定義用
 class CMaterial;
 
 /*
+CAnimationSet
+アニメーションセット
+*/
+class CAnimationSet {
+	friend CModelX;
+	//アニメーションセット名
+	char* mpName;
+
+public:
+	CAnimationSet(CModelX* model);
+	~CAnimationSet()
+	{
+		SAFE_DELETE_ARRAY(mpName);
+	}
+};
+
+/*
 CSkinWeights
 スキンウェイトクラス
 */
@@ -133,9 +150,11 @@ class CModelX {
 	friend CModelXFrame;
 	friend CMesh;
 	friend CSkinWeights;
+	friend CAnimationSet;
 	char* mpPointer;	//読み込み位置
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
+	std::vector<CAnimationSet*>mAnimationSet; //アニメーションセットの配列
 public:
 	CModelX();
 	~CModelX();

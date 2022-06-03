@@ -13,13 +13,84 @@ CModelX::CModelX()
 	//mTokenを初期化
 	memset(mToken, 0, sizeof(mToken));
 }
+
 CModelX::~CModelX() {
 	if (mFrame.size() > 0)
 	{
 		delete mFrame[0];
 	}
+	for(size_t i =0;i< mAnimationSet.size();i++)
+	{
+		delete mAnimationSet[i];
+	}
 }
 
+CSkinWeights::CSkinWeights(CModelX* model)
+	:mpFrameName(0)
+	, mFrameindex(0)
+	, mIndexNum(0)
+	, mpIndex(nullptr)
+	, mpWeight(nullptr)
+{
+	model->GetToken();	//{
+	model->GetToken();  //FrameName
+	//フレーム名エリア確保、設定
+	mpFrameName = new char[strlen(model->Token()) + 1];
+	strcpy(mpFrameName, model->Token());
+	printf("%s%s \n", "SkinWeights ", mpFrameName);
+
+	//頂点番号数
+	mIndexNum = model->GetIntToken();
+
+	//頂点番号数が0を超える
+	if (mIndexNum > 0) {
+		//頂点番号と頂点ウェイトのエリア確保
+		mpIndex = new int[mIndexNum];
+		mpWeight = new float[mIndexNum];
+		//頂点番号取得
+		for (int i = 0; i < mIndexNum; i++)
+			mpIndex[i] = model->GetIntToken();
+		//頂点ウェイト取得
+		for (int i = 0; i < mIndexNum; i++)
+			mpWeight[i] = model->GetFloatToken();
+
+	}
+	for (int i = 0; i < mIndexNum; i++)
+	{
+		printf("%d %f\n", mpIndex[i], mpWeight[i]);
+	}
+	//オフセット行列取得
+	for (int i = 0; i < 16; i++) {
+		mOffset.M()[i] = model->GetFloatToken();
+	}
+	mOffset.Print();
+	model->GetToken();		//}
+}
+
+
+/*
+CAnimationSet
+*/
+CAnimationSet::CAnimationSet(CModelX* model) 
+:mpName(nullptr)
+{
+	model->mAnimationSet.push_back(this);
+	model->GetToken();
+	//アニメーション名を退避
+	mpName = new char[strlen(model->mToken) + 1];
+	strcpy(mpName, model->mToken);
+	model->GetToken();
+	while (*model->mpPointer != '\0'){
+		model->GetToken();//} or Animation
+		if (strchr(model->mToken, '}'))break;
+		if(strcmp(model->mToken,"Animation")==0)
+		{
+			//とりあえず読み飛ばし
+			model->SkipNode();
+		}
+	}
+	printf("%s%s\n","AnimationSet:",mpName);
+}
 /*
 CModelXFrame
 model:CModelXインスタンスへのポインタ
@@ -73,11 +144,6 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 		}
 
 	}
-	//デバッグバージョンのみ有効
-//#ifdef _DEBUG
-//	printf("%s\n", mpName);
-//	mTransformMatrix.Print();
-//	
 //#endif //DEBUG
 }
 
@@ -163,24 +229,17 @@ void CMesh::Init(CModelX* model) {
 	mVertexNum = model->GetIntToken();
 	//頂点数分エリア確保
 	mpVertex = new CVector[mVertexNum];
-//#ifdef _DEBUG
-//	printf("%s%d \n", "VertexNum:", mVertexNum);
-//#endif //DEBUG
+
 	//頂点数分データを取り込む
 	for (int i = 0; i < mVertexNum; i++) {
 		mpVertex[i].X(model->GetFloatToken());
 		mpVertex[i].Y(model->GetFloatToken());
 		mpVertex[i].Z(model->GetFloatToken());
 
-//		//デバッグバージョンのみ有効
-//#ifdef _DEBUG
-//		printf("%10f %10f %10f \n", mpVertex[i].X(), mpVertex[i].Y(), mpVertex[i].Z());
-//#endif //DEBUG
+	//デバッグバージョンのみ有効
 	}
 	mFaceNum = model->GetIntToken();		//面数読み込み
-//#ifdef _DEBUG
-//	printf("%s%d \n", "FaceNum:", mFaceNum);
-//#endif //DEBUG
+
 	//頂点数は1面に３頂点
 	mpVertexIndex = new int[mFaceNum * 3];
 	for (int i = 0; i < mFaceNum * 3; i += 3)
@@ -190,9 +249,7 @@ void CMesh::Init(CModelX* model) {
 		mpVertexIndex[i + 1] = model->GetIntToken();
 		mpVertexIndex[i + 2] = model->GetIntToken();
 		//デバッグバージョンのみ有効
-//#ifdef _DEBUG
-//		printf("%d %d %d \n", mpVertexIndex[i], mpVertexIndex[i + 1], mpVertexIndex[i + 2]);
-//#endif //DEBUG
+
 	}
 	//文字が無くなったら終わり
 	while (model->mpPointer != '\0') {
@@ -216,9 +273,7 @@ void CMesh::Init(CModelX* model) {
 			int ni;
 			//頂点毎に法線データを設定する
 			mpNormal = new CVector[mNormalNum];
-//#ifdef _DEBUG
-//			printf("%s%d \n", "NormalNum:", mNormalNum);
-//#endif //DEBUG
+
 			for (int i = 0; i < mNormalNum; i += 3) {
 				model->GetToken();//3
 				ni = model->GetIntToken();
@@ -227,12 +282,7 @@ void CMesh::Init(CModelX* model) {
 				ni = model->GetIntToken();
 				mpNormal[i + 2] = pNormal[ni];
 				ni = model->GetIntToken();
-				//デバッグバージョンのみ有効
-//#ifdef _DEBUG
-//				printf("%10f %10f %10f \n", mpNormal[i].X(), mpNormal[i].Y(), mpNormal[i].Z());
-//				printf("%10f %10f %10f \n", mpNormal[i + 1].X(), mpNormal[i + 1].Y(), mpNormal[i + 1].Z());
-//				printf("%10f %10f %10f \n", mpNormal[i + 2].X(), mpNormal[i + 2].Y(), mpNormal[i + 2].Z());
-//#endif //DEBUG
+
 			}
 			delete[]pNormal;
 			model->GetToken();		//}
@@ -311,6 +361,11 @@ void CModelX::Load(char* file) {
 			//フレームを作成する
 			new CModelXFrame(this);
 		}
+
+		//単語がAnimationSetの場合
+		else if (strcmp(mToken, "AnimationSet") == 0) {
+			new CAnimationSet(this);
+		}
 	}
 	SAFE_DELETE_ARRAY(buf);	//確保した領域を開放する
 }
@@ -335,60 +390,12 @@ void CMesh::Render() {
 	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
-CSkinWeights::CSkinWeights(CModelX* model)
-	:mpFrameName(0)
-	,mFrameindex(0)
-	,mIndexNum(0)
-	,mpIndex(nullptr)
-	,mpWeight(nullptr)
-{
-	model->GetToken();	//{
-	model->GetToken();  //FrameName
-	//フレーム名エリア確保、設定
-	mpFrameName = new char[strlen(model->Token()) + 1];
-	strcpy(mpFrameName, model->Token());
-	printf("%s%s \n", "SkinWeights ", mpFrameName);
-
-	//頂点番号数
-	mIndexNum = model->GetIntToken();
-
-	//頂点番号数が0を超える
-	if (mIndexNum > 0) {
-		//頂点番号と頂点ウェイトのエリア確保
-		mpIndex = new int[mIndexNum];
-		mpWeight = new float[mIndexNum];
-		//頂点番号取得
-		for (int i = 0; i < mIndexNum; i++)
-			mpIndex[i] = model->GetIntToken();
-		//頂点ウェイト取得
-		for (int i = 0; i < mIndexNum; i++)
-			mpWeight[i] = model->GetFloatToken();
-		
-	}
-	
-	for (int i = 0; i < mIndexNum; i++)
-	{
-		printf("%d %f\n", mpIndex[i], mpWeight[i]);
-	}
-
-	//オフセット行列取得
-	for (int i = 0; i < 16; i++) {
-		mOffset.M()[i] = model->GetFloatToken();
-	}
-	mOffset.Print();
-	model->GetToken();		//}
-	
-
-	
-	
-	
-}
 /*
 Render
 メッシュの面数が0以外なら描画する
 */
 void CModelXFrame::Render() {
-	if (mMesh.mFaceNum != 0){
+	if (mMesh.mFaceNum != 0) {
 		mMesh.Render();
 	}
 }
@@ -398,7 +405,7 @@ Render
 全てのフレームの描画処理を呼び出す
 */
 void CModelX::Render() {
-	for (size_t i = 0; i < mFrame.size(); i++){
+	for (size_t i = 0; i < mFrame.size(); i++) {
 		mFrame[i]->Render();
 	}
 }
