@@ -37,7 +37,7 @@ CSkinWeights::CSkinWeights(CModelX* model)
 	//フレーム名エリア確保、設定
 	mpFrameName = new char[strlen(model->Token()) + 1];
 	strcpy(mpFrameName, model->Token());
-	printf("%s%s \n", "SkinWeights ", mpFrameName);
+	/*printf("SkinWeights\\%s \n",mpFrameName);*///課題10
 
 	//頂点番号数
 	mIndexNum = model->GetIntToken();
@@ -55,18 +55,49 @@ CSkinWeights::CSkinWeights(CModelX* model)
 			mpWeight[i] = model->GetFloatToken();
 
 	}
-	for (int i = 0; i < mIndexNum; i++)
-	{
-		printf("%d %f\n", mpIndex[i], mpWeight[i]);
-	}
+	//for (int i = 0; i < mIndexNum; i++)
+	//{
+	//	printf("%d %f\n", mpIndex[i], mpWeight[i]);課題10
+	//}
 	//オフセット行列取得
 	for (int i = 0; i < 16; i++) {
 		mOffset.M()[i] = model->GetFloatToken();
 	}
-	mOffset.Print();
+	//mOffset.Print();課題10
 	model->GetToken();		//}
 }
 
+/*
+CAnimation
+*/
+CAnimation::CAnimation(CModelX* model)
+	:mpFrameName(nullptr)
+	, mFrameIndex(0)
+{
+	model->GetToken();//{ or Animation Name
+	if (strchr(model->mToken, '{')) {
+		model->GetToken();
+	}
+	else {
+		model->GetToken();//{
+		model->GetToken();//{
+	}
+
+	model->GetToken();//FrameName
+	mpFrameName = new char[strlen(model->mToken) + 1];
+	strcpy(mpFrameName, model->mToken);
+	mFrameIndex =
+		model->FindFrame(model->mToken)->mIndex;
+	model->GetToken();//}
+	while (*model->mpPointer != '\0') {
+		model->GetToken();//} or AnimationKey
+		if (strchr(model->mToken, '}'))break;
+		if (strcmp(model->mToken, "AnimationKey") == 0) {
+			model->SkipNode();
+		}
+	}
+	printf("Animation:%s\n", mpFrameName);
+}
 
 /*
 CAnimationSet
@@ -83,14 +114,16 @@ CAnimationSet::CAnimationSet(CModelX* model)
 	while (*model->mpPointer != '\0'){
 		model->GetToken();//} or Animation
 		if (strchr(model->mToken, '}'))break;
-		if(strcmp(model->mToken,"Animation")==0)
-		{
-			//とりあえず読み飛ばし
-			model->SkipNode();
+		if(strcmp(model->mToken,"Animation")==0){
+			//Animation要素読み込み
+			mAnimation.push_back(new CAnimation(model));
 		}
 	}
-	printf("%s%s\n","AnimationSet:",mpName);
+	/*printf("AnimationSet:%s\n",mpName);*///課題11
 }
+
+
+
 /*
 CModelXFrame
 model:CModelXインスタンスへのポインタ
@@ -388,6 +421,24 @@ void CMesh::Render() {
 	/*頂点データ,法線データの配列を無効にする*/
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+}
+/*
+FindFrame
+フレーム名に該当するフレームのアドレスを返す
+*/
+CModelXFrame* CModelX::FindFrame(char* name) {
+	//イテレータの作成
+	std::vector<CModelXFrame*>::iterator itr;
+	//先頭から最後まで繰り返す
+	for (itr = mFrame.begin();itr != mFrame.end(); itr++){
+		//名前が一致したか?
+		if (strcmp(name, (*itr)->mpName) == 0) {
+			//一致したらそのアドレスを返す
+			return *itr;
+		}
+	}
+	//一致したらするフレームが無い場合は　nullptrを返す
+	return nullptr;
 }
 
 /*

@@ -22,6 +22,28 @@ class CMesh;//フレンド定義用
 
 class CMaterial;
 
+class CAnimationSet;//フレンド用
+
+
+/*
+CAnimation
+アニメーションクラス
+*/
+class CAnimation {
+	friend CAnimationSet;
+	friend CModelX;
+
+	char* mpFrameName;//フレーム名
+	int mFrameIndex; //フレーム番号
+
+public:
+	CAnimation(CModelX* model);
+
+	~CAnimation(){
+		SAFE_DELETE_ARRAY(mpFrameName);
+	}
+};
+
 /*
 CAnimationSet
 アニメーションセット
@@ -30,12 +52,17 @@ class CAnimationSet {
 	friend CModelX;
 	//アニメーションセット名
 	char* mpName;
-
+	//アニメーション
+	std::vector<CAnimation*>mAnimation;
 public:
 	CAnimationSet(CModelX* model);
 	~CAnimationSet()
 	{
 		SAFE_DELETE_ARRAY(mpName);
+		//アニメーション要素の削除
+		for (size_t i = 0; i < mAnimation.size(); i++){
+			delete mAnimation[i];
+		}
 	}
 };
 
@@ -119,6 +146,7 @@ public:
 class CModelXFrame {
 	friend CModelX;
 	friend CMesh;
+	friend CAnimation;
 	std::vector<CModelXFrame*>mChild; //子フレームの配列
 	CMatrix mTransformMatrix;		  //変換行列
 	CMesh mMesh;					  //Meshデータ
@@ -151,6 +179,7 @@ class CModelX {
 	friend CMesh;
 	friend CSkinWeights;
 	friend CAnimationSet;
+	friend CAnimation;
 	char* mpPointer;	//読み込み位置
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
@@ -172,8 +201,10 @@ public:
 	int GetIntToken();
 	//
 	char* Token();
+	//フレーム名に該当するフレームにアドレスを返す
+	CModelXFrame* FindFrame(char* name);
 	
-	void Token(char* token);
+
 };
 
 
