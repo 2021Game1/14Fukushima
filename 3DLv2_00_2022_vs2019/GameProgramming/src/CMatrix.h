@@ -42,6 +42,8 @@ public:
 	//*演算子のオーバーロード
 	//CMatrix * CMatrix の演算結果を返す
 	CMatrix operator*(const CMatrix &m);
+	//クォータニオン
+	CMatrix Quaternion(float x, float y, float z, float w);
 private:
 	//4×4の行列データを設定
 	float mM[4][4];

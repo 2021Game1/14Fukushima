@@ -14,16 +14,31 @@
 //配列のサイズ取得をマクロ化
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
-class CModelX; //CModelクラスの宣言
+class CModelX;//フレンドクラス用
 
-class CModelXFrame;
+class CModelXFrame;//フレンドクラス用
 
-class CMesh;//フレンド定義用
+class CMesh;//フレンドクラス用
 
-class CMaterial;
+class CMaterial;//フレンドクラス用
 
-class CAnimationSet;//フレンド用
+class CAnimationSet;//フレンドクラス用
 
+class CAnimation;//フレンドクラス用
+/*
+CAnimationKey
+アニメーションキークラス
+*/
+class CAnimationKey{
+	friend CAnimation;
+	friend CAnimationSet;
+	friend CModelX;
+
+	//時間
+	float mTime;
+	//行列
+	CMatrix mMatrix;
+};
 
 /*
 CAnimation
@@ -32,10 +47,12 @@ CAnimation
 class CAnimation {
 	friend CAnimationSet;
 	friend CModelX;
+	friend CAnimationKey;
 
 	char* mpFrameName;//フレーム名
 	int mFrameIndex; //フレーム番号
-
+	int mKeyNum;	//キー数(時間数)
+	CAnimationKey* mpKey;	//キーの配列
 public:
 	CAnimation(CModelX* model);
 
@@ -50,6 +67,7 @@ CAnimationSet
 */
 class CAnimationSet {
 	friend CModelX;
+	friend CAnimationKey;
 	//アニメーションセット名
 	char* mpName;
 	//アニメーション
@@ -180,6 +198,7 @@ class CModelX {
 	friend CSkinWeights;
 	friend CAnimationSet;
 	friend CAnimation;
+	friend CAnimationKey;
 	char* mpPointer;	//読み込み位置
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
