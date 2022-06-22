@@ -6,8 +6,6 @@
 #include"CPlayer.h"
 //ベクトルクラスのインクルード
 #include"CVector.h"
-//ミサイルクラス
-#include"CMissile.h"
 //三角形クラスのインクルード
 #include"CTriangle.h"
 //タスクマネージャクラスのインクルード
@@ -49,13 +47,16 @@ public:
 	CModel mModel; //プレイヤーモデル
 	CModel mBackGround; //背景モデル
 	CModel mModelC5; //敵モデル
-	CModel mMap;     //マップ
+	CModel mMap; //マップモデル
+	CModel mColision;     //コリジョンマップ
 	//プレイヤーの変数
 	CPlayer mPlayer;
 	//カメラの視点の変数
 	CVector mEye;
 	//マトリックスの変数
 	CMatrix matrix;
+	//マップ移動用の行列
+	CMatrix mMapMatrix;
 	//背景移動用の行列
 	CMatrix mBackGroundMatrix;
 	//モデルからコライダを生成

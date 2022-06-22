@@ -8,11 +8,13 @@
 #include"CMaterial.h"
 //マトリックスクラスのインクルード
 #include"CMatrix.h"
+
 /*
 モデルクラス
 モデルデータの入力や表示
 */
-class CModel {
+class CModel{
+	friend CTriangle;
 public:
 	//モデルファイルの入力
 	//Load(モデルファイル名、マテリアルファイル名）
@@ -24,7 +26,7 @@ public:
 	//Render(行列)
 	void Render(const CMatrix& m);
 	//三角形の判定
-	
+	void IsTriangle();
 	//デストラクタ
 	~CModel();
 	//デフォルトコンストラクタ

@@ -163,9 +163,6 @@
     <ClCompile Include="src\CEnemy2.cpp">
       <Filter>三角形クラス\キャラクタ\敵</Filter>
     </ClCompile>
-    <ClCompile Include="src\CMissile.cpp">
-      <Filter>三角形クラス\キャラクタ\弾</Filter>
-    </ClCompile>
     <ClCompile Include="src\CSceneTitle.cpp">
       <Filter>マネージャ\シーンマネージャ</Filter>
     </ClCompile>
@@ -260,9 +257,6 @@
     </ClInclude>
     <ClInclude Include="src\CEnemy2.h">
       <Filter>三角形クラス\キャラクタ\敵</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CMissile.h">
-      <Filter>三角形クラス\キャラクタ\弾</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneTitle.h">
       <Filter>マネージャ\シーンマネージャ</Filter>

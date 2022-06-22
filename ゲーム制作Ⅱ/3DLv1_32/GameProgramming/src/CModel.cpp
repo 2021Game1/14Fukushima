@@ -16,7 +16,9 @@ CModel::CModel()
 
 }
 
+void CModel::IsTriangle() {
 
+}
 
 
 //モデルファイルの入力
@@ -241,6 +243,8 @@ void CModel::Load(char* obj, char* mtl) {
 
 }
 
+
+
 void CModel::Render()
 {
 	for (int i = 0; i < mTriangles.size(); i++)
@@ -274,6 +278,7 @@ void CModel::Render(const CMatrix& m) {
 	glTexCoordPointer(2, GL_FLOAT, 0, mpTextureCoord);
 	
 	int first = 0; //描画位置
+	
 	//マテリアル毎に描画する
 	for (int i = 0; i < mpMaterials.size(); i++)
 	{

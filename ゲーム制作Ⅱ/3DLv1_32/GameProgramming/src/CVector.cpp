@@ -58,6 +58,7 @@ CVector CVector::Cross(const CVector& v)const {
 		mY * v.mZ - mZ * v.mY, mZ * v.mX - mX * v.mZ , mX * v.mY - mY * v.mX
 	);
 }
+
 CVector CVector::Normalize()const {
 	//ベクトルの大きさで割ったベクトルを返す(長さ1のベクトル)
 	return *this * (1.0f / Length());
@@ -88,3 +89,4 @@ float CVector::Length()const {
 	//sprt関数で平方根を返す
 	return sqrtf(mX * mX + mY * mY + mZ * mZ);
 }
+

@@ -2,10 +2,10 @@
 //プレイヤークラスのインクルード
 #include "CPlayer.h"
 
-#define OBJ "res\\mini.obj" //モデルのファイル
-#define MTL "res\\mini.mtl" //モデルのマテリアルファイル
+#define OBJ "res\\Police.obj" //モデルのファイル
+#define MTL "res\\Police.mtl" //モデルのマテリアルファイル
 #define HP 3	//耐久値
-#define VELOCITY 0.11f	   //速度
+#define VELOCITY 0.18f	   //速度
 
 CModel CEnemy2::sModel;//モデルデータ作成
 
@@ -103,12 +103,12 @@ void CEnemy2::Update()
 				//Y軸のズレが2.0以下
 				if (-2.0f < dy && dy < 2.0f)
 				{
-					//弾を発射します
-					CBullet* bullet = new CBullet();
-					bullet->Set(0.1f, 1.5f);
-					bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
-					bullet->Rotation(mRotation);
-					bullet->Update();
+					////弾を発射します
+					//CBullet* bullet = new CBullet();
+					//bullet->Set(0.1f, 1.5f);
+					//bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
+					//bullet->Rotation(mRotation);
+					//bullet->Update();
 				}
 			}
 		}
@@ -128,15 +128,15 @@ void CEnemy2::Update()
 	{
 		mRotation = mRotation + CVector(0.0f, -1.0f, 0.0f);//右へ回転
 	}
-	//上下方向へ回転
-	if (dy > margin)
-	{
-		mRotation = mRotation + CVector(-1.0f, 0.0f, 0.0f);//上へ
-	}
-	else if (dy < -margin)
-	{
-		mRotation = mRotation + CVector(1.0f, 0.0f, 0.0f);//下へ
-	}
+	////上下方向へ回転
+	//if (dy > margin)
+	//{
+	//	mRotation = mRotation + CVector(-1.0f, 0.0f, 0.0f);//上へ
+	//}
+	//else if (dy < -margin)
+	//{
+	//	mRotation = mRotation + CVector(1.0f, 0.0f, 0.0f);//下へ
+	//}
 	//移動する
 	mPosition = mPosition + CVector(0.0f, 0.0f, VELOCITY) * mMatrixRotate;
 	CTransform::Update();
@@ -164,10 +164,10 @@ void CEnemy2::Update()
 			//エフェクト生成
 			new CEffect(mPosition, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
 		}
-		//下降させる
-		mPosition = mPosition - CVector(0.0f, 0.03f, 0.0f);
-		CTransform::Update();
-		return;
+		////下降させる
+		//mPosition = mPosition - CVector(0.0f, 0.03f, 0.0f);
+		//CTransform::Update();
+		//return;
 	}
 }
 void CEnemy2::TaskCollision()

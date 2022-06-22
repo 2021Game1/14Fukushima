@@ -4,10 +4,12 @@
 //優先度の変更
 void CColliderTriangle::ChangePriority()
 {
+	
 	//mV[0]とmV[1]とmV[2]の中心を求める
 	CVector pos = (mV[0] * *mpMatrix + mV[1] * *mpMatrix + mV[2] * *mpMatrix) * (1.0f / 3.0f);
 	//ベクトルの長さが優先度
 	mPriority = pos.Length();
+
 	CCollisionManager::Get()->Remove(this); //一旦削除
 	CCollisionManager::Get()->Add(this); //追加
 }
@@ -23,12 +25,14 @@ void CColliderTriangle::Set(CCharacter* parent, CMatrix* matrix, const CVector& 
 	mpParent = parent;//親設定
 	if (matrix)
 		mpMatrix = matrix;//親行列あれば設定
-	//三角形頂点設定
-	mV[0] = v0;
-	mV[1] = v1;
-	mV[2] = v2;
-
+		//三角形頂点設定
+		mV[0] = v0;
+		mV[1] = v1;
+		mV[2] = v2;
 }
+
+
+
 
 void CColliderTriangle::Render()
 {
@@ -48,13 +52,15 @@ void CColliderTriangle::Render()
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, c);
 	glColor4fv(c);
 
-	//三角形描画
-	glBegin(GL_TRIANGLES);
-	glVertex3f(mV[0].X(), mV[0].Y(), mV[0].Z());
-	glVertex3f(mV[1].X(), mV[1].Y(), mV[1].Z());
-	glVertex3f(mV[2].X(), mV[2].Y(), mV[2].Z());
-	glEnd();
-	
+
+		//三角形描画
+		glBegin(GL_TRIANGLES);
+		glVertex3f(mV[0].X(), mV[0].Y(), mV[0].Z());
+		glVertex3f(mV[1].X(), mV[1].Y(), mV[1].Z());
+		glVertex3f(mV[2].X(), mV[2].Y(), mV[2].Z());
+		glEnd();
+
+
 	//ライトオン
 	glEnable(GL_LIGHTING);
 	//アルファブレンド無効

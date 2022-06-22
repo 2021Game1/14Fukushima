@@ -10,11 +10,12 @@ void CCollider::ChangePriority()
 {
 	//自分の座標×親の変換行列を掛けてワールド座標を求める
 	CVector pos = mPosition * *mpMatrix;
-	//ベクトルの長さが優先度
-	mPriority = pos.Length();
-	CCollisionManager::Get()->Remove(this);//一旦削除
-	CCollisionManager::Get()->Add(this);//追加
+		 //ベクトルの長さが優先度
+		 mPriority = pos.Length();
+		 CCollisionManager::Get()->Remove(this);//一旦削除
+		 CCollisionManager::Get()->Add(this);//追加
 }
+
 //デフォルトコンストラクタの定義
 CCollider::CCollider()
 	:mpParent(nullptr)
@@ -44,6 +45,7 @@ CCollider::CCollider(CCharacter* parent, CMatrix* matrix,
 
 bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 	CVector v[3], sv, ev;
+	
 	//各コライダの頂点をワールド座標へ変換
 	v[0] = t->mV[0] * *t->mpMatrix;
 	v[1] = t->mV[1] * *t->mpMatrix;
@@ -56,6 +58,13 @@ bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 	CVector v0sv = sv - v[0];
 	//三角形の頂点から線分終点へのベクトルを求める
 	CVector v0ev = ev - v[0];
+	//三角の頂点から線分始点へのベクトルを求める
+	CVector v1sv = sv + v[0];
+	//三角形の頂点から線分終点へのベクトルを求める
+	CVector v1ev = ev + v[0];
+	//線分が面と交差しているか内積で確認する
+	float dots1 = v1sv.Dot(normal);
+	float dote1 = v1ev.Dot(normal);
 	//線分が面と交差しているか内積で確認する
 	float dots = v0sv.Dot(normal);
 	float dote = v0ev.Dot(normal);
@@ -76,7 +85,7 @@ bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 		*a = CVector(0.0f, 0.0f, 0.0f);
 		return false;
 	}
-	
+
 	//頂点2頂点3ベクトルと頂点2交点ベクトル外積を求め、
 	//法線との内積がマイナスなら、三角形の外
 	if ((v[2] - v[1]).Cross(cross - v[1]).Dot(normal) < 0.0f) {
@@ -84,6 +93,7 @@ bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 		*a = CVector(0.0f, 0.0f, 0.0f);
 		return false;
 	}
+
 	//課題32
 	//頂点3頂点1ベクトルと頂点3交点ベクトル外積を求め、
 	//法線との内積がマイナスなら、三角形の外
@@ -92,6 +102,7 @@ bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 			*a = CVector(0.0f, 0.0f, 0.0f);
 			return false;
 	}
+
 
 	//線分は面と交差している
 	//調整値計算(衝突しない位置まで戻す)
@@ -105,11 +116,13 @@ bool CCollider::CollisionTriangleLine(CCollider* t, CCollider* l, CVector* a) {
 		*a = normal * -dote;
 	}
 	return true;
+
+
 }
 //CollisionTriangleSphere(三角コライダ,球コライダ,調整値)
 //retrun:ture(衝突している)false(衝突していない)
 //調整値:衝突しない位置まで戻す値
-bool CCollider::CollisionTriangleSphere(CCollider* t, CCollider* s, CVector* a) 
+bool CCollider::CollisionTriangleSphere(CCollider* t, CCollider* s, CVector* a)
 {
 	CVector v[3], sv, ev;
 	//各コライダの頂点をワールド座標へ変換
@@ -118,13 +131,17 @@ bool CCollider::CollisionTriangleSphere(CCollider* t, CCollider* s, CVector* a)
 	v[2] = t->mV[2] * *t->mpMatrix;
 	//面の法線を、外積を正規化して求める
 	CVector normal = (v[1] - v[0]).Cross(v[2] - v[0]).Normalize();
-	//線コライダをワールド座標で作成
-	sv = s->mPosition * *s->mpMatrix + normal * s->mRadius;
-	ev = s->mPosition * *s->mpMatrix - normal * s->mRadius;
-	CColliderLine line(NULL, NULL, sv, ev);
-	//三角コライダと線コライダの衝突処理
-	return CollisionTriangleLine(t, &line, a);
+	if (normal.Length() > -1.0) {
+		//線コライダをワールド座標で作成
+		sv = s->mPosition * *s->mpMatrix + normal * s->mRadius;
+		ev = s->mPosition * *s->mpMatrix - normal * s->mRadius;
+		CColliderLine line(NULL, NULL, sv, ev);
+		//三角コライダと線コライダの衝突処理
+		return CollisionTriangleLine(t, &line, a);
+	}
 }
+
+
 
 CCharacter* CCollider::Parent() 
 {
@@ -163,6 +180,8 @@ bool CCollider::Collision(CCollider* m, CCollider* o) {
 	}
 	//衝突していない
 	return false;
+
+
 }
 CCollider::~CCollider() {
 	//コリジョンリストから削除

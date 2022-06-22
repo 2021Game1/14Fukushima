@@ -39,10 +39,13 @@ public:
 private:
 	//プレイヤーのインスタンス
 	static CPlayer* spInstance;
-	CColliderLine mLine;	//線分コライダ
-	CColliderLine mLine2;	//線分コライダ2
-	CColliderLine mLine3;	//線分コライダ3
 	CCollider mCollider;	//本体用コライダ
+	float mVelocity;
+	float mAcceleration;
+	int mTime;
+	long start, end;
+	char in[100];
+	double total_time;
 };
 #endif 
 

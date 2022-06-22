@@ -27,6 +27,7 @@ public:
 	//外積
 	//Cross(ベクトル)
 	CVector Cross(const CVector& v)const;
+	CVector SideCheck(const CVector& v)const;
 	//*演算子のオーバーロード
 	//CVector * floatの演算結果を返す
 	CVector operator*(const float& f)const;

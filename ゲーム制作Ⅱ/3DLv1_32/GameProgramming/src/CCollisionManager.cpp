@@ -66,6 +66,5 @@ void CCollisionManager::Collision(CCollider *c,int range) {
 			c->mpParent->Collision(c, task);
 		//Œ»ÝˆÊ’u‚ðŽŸ‚É‚·‚é
 			task = (CCollider*)task->mpNext;
-		
 	}
 }

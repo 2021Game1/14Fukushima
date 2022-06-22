@@ -32,13 +32,6 @@ void CEnemy::Update() {
 	{
 		for (int i = 0; i < 1; i++)
 		{
-			//’e‚ğ”­Ë‚µ‚Ü‚·
-			CMissile* missile = new CMissile();
-			missile->Scale(CVector(0.5f, 0.5f, 0.5f));
-			missile->Position(CVector(0.0f, 7.5f, 0.0f) * mMatrix);
-			missile->Rotation(mRotation);
-			missile->Update();
-			mFireCount == 90;
 		}
 	}
 	//s—ñ‚ğXV
