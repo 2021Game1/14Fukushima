@@ -58,7 +58,7 @@ void CSceneGame::Update() {
 	//注視点を求める
 	c = mPlayer.Position();
 	//上方向を求める
-	u = CVector(0.0f,2.0f,0.0f) * mPlayer.MatirixRotate();
+	u = CVector(0.0f,3.0f,0.0f) * mPlayer.MatirixRotate();
 	//カメラの設定
 	//gluLookAt(e.X(), e.Y(), e.Z(), c.X(), c.Y(), c.Z(), u.X(), u.Y(), u.Z());
 	//カメラクラスの設定
