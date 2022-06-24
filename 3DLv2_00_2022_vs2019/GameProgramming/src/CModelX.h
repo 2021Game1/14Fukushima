@@ -67,9 +67,14 @@ CAnimationSet
 */
 class CAnimationSet {
 	friend CModelX;
+	friend CAnimation;
 	friend CAnimationKey;
 	//アニメーションセット名
 	char* mpName;
+	float mTime;    //現在の時間
+	float mWeight;  //重み
+	float mMaxTime; //最大時間
+
 	//アニメーション
 	std::vector<CAnimation*>mAnimation;
 public:
@@ -81,6 +86,14 @@ public:
 		for (size_t i = 0; i < mAnimation.size(); i++){
 			delete mAnimation[i];
 		}
+	}
+	void CAnimationSet::Time(float time)
+	{
+		mTime = time;
+	}
+	void CAnimationSet::Weught(float weight)
+	{
+		mWeight = weight;
 	}
 };
 
@@ -161,7 +174,7 @@ public:
 
 
 //CModelXFrameクラスの定義
-class CModelXFrame {
+class CModelXFrame { //フレーム=ボーン
 	friend CModelX;
 	friend CMesh;
 	friend CAnimation;
@@ -185,6 +198,8 @@ public:
 	}
 	//描画
 	void Render();
+
+private:
 };
 
 
@@ -203,6 +218,7 @@ class CModelX {
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
 	std::vector<CAnimationSet*>mAnimationSet; //アニメーションセットの配列
+
 public:
 	CModelX();
 	~CModelX();
@@ -216,12 +232,17 @@ public:
 	void GetToken();
 	//ノードの読み飛ばし
 	void SkipNode();
+	//フレームの変換行列をアニメーションデータで更新する
+	void AnimateFrame();
 	//整数データの取得
 	int GetIntToken();
 	//
 	char* Token();
 	//フレーム名に該当するフレームにアドレスを返す
 	CModelXFrame* FindFrame(char* name);
+
+	std::vector<CAnimationSet*>& AnimationSet();
+
 	
 
 };

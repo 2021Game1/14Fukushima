@@ -22,6 +22,12 @@ void CSceneGame::Init() {
 }
 
 void CSceneGame::Update() {
+	//最初のアニメーションの現在の時間を45にする
+	gModelX.AnimationSet()[0]->Time(45);
+	//最初のアニメーション重みを1.0(100%)にする
+	gModelX.AnimationSet()[0]->Weught(1.0f);
+	//フレームの変換行列をアニメーションで更新する
+	gModelX.AnimateFrame();
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める
