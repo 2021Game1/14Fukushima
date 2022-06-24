@@ -202,7 +202,7 @@ CMatrix CMatrix::operator+(const CMatrix& m) {
 	t.mM[3][0] = m.mM[3][0] + mM[3][0];
 	t.mM[3][1] = m.mM[3][1] + mM[3][1];
 	t.mM[3][2] = m.mM[3][2] + mM[3][2];
-	t.mM[3][3] = m.mM[3][3] + mM[3][2];
+	t.mM[3][3] = m.mM[3][3] + mM[3][3];
 	return t;
 }
 //+=演算子のオーバーロード
@@ -226,6 +226,6 @@ void  CMatrix::operator+=(const CMatrix& m){
 	mM[3][0] += m.mM[3][0];
 	mM[3][1] += m.mM[3][1];
 	mM[3][2] += m.mM[3][2];
-	mM[3][3] += m.mM[3][2];
+	mM[3][3] += m.mM[3][3];
 
 }

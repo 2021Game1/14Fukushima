@@ -180,6 +180,7 @@ class CModelXFrame { //フレーム=ボーン
 	friend CAnimation;
 	std::vector<CModelXFrame*>mChild; //子フレームの配列
 	CMatrix mTransformMatrix;		  //変換行列
+	CMatrix mCombinedMatrix;		  //合成行列
 	CMesh mMesh;					  //Meshデータ
 	char* mpName;					  //フレーム名前
 	int mIndex;						  //フレーム番号
@@ -198,6 +199,8 @@ public:
 	}
 	//描画
 	void Render();
+	//合成行列の作成
+	void AnimateCombined(CMatrix* parent);
 
 private:
 };
@@ -234,6 +237,9 @@ public:
 	void SkipNode();
 	//フレームの変換行列をアニメーションデータで更新する
 	void AnimateFrame();
+	//フレームメソッド
+	
+
 	//整数データの取得
 	int GetIntToken();
 	//
@@ -242,6 +248,7 @@ public:
 	CModelXFrame* FindFrame(char* name);
 
 	std::vector<CAnimationSet*>& AnimationSet();
+	std::vector<CModelXFrame*>& Frames();
 
 	
 

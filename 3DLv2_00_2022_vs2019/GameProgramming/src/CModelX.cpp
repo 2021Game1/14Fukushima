@@ -274,15 +274,17 @@ void CModelX::AnimateFrame()
 
 			}
 
+
 		}
+
 	}
+	//////フレームサイズ分繰り返す
+	//for (int i = 0; i < mFrame.size(); i++)
+	//{
+	//	printf("Frame:%s\n", mFrame[i]->mpName);
+	//	mFrame[i]->mTransformMatrix.Print();
+	//}
 	
-	//フレームサイズ分繰り返す
-	for (int i = 0; i < mFrame.size(); i++)
-	{
-		printf("Frame:%s\n", mFrame[i]->mpName);
-		mFrame[i]->mTransformMatrix.Print();
-	}
 }
 
 
@@ -294,7 +296,7 @@ CAnimationSet
 */
 CAnimationSet::CAnimationSet(CModelX* model) 
 :mpName(nullptr)
-,mTime(45)
+,mTime(0)
 ,mWeight(0)
 ,mMaxTime(0)
 {
@@ -373,6 +375,7 @@ CModelXFrame::CModelXFrame(CModelX* model) {
 		}
 
 	}
+
 //#endif //DEBUG
 }
 
@@ -636,6 +639,23 @@ CModelXFrame* CModelX::FindFrame(char* name) {
 	//一致したらするフレームが無い場合は　nullptrを返す
 	return nullptr;
 }
+/*
+AnimateCombined
+合成行列の作成
+*/
+void CModelXFrame::AnimateCombined(CMatrix* parent) {
+	//自分の変換行列に、親からの変換行列を掛ける
+	mCombinedMatrix = mTransformMatrix * (*parent);
+	//子フレームの合成行列を作成
+	for (size_t i = 0; i < mChild.size(); i++) {
+		mChild[i]->AnimateCombined(&mCombinedMatrix);
+	}
+		printf("Frame:%s\n", mpName);
+		mCombinedMatrix.Print();
+
+}
+
+
 
 /*
 Render
@@ -645,6 +665,7 @@ void CModelXFrame::Render() {
 	if (mMesh.mFaceNum != 0) {
 		mMesh.Render();
 	}
+
 }
 
 /*
@@ -655,6 +676,7 @@ void CModelX::Render() {
 	for (size_t i = 0; i < mFrame.size(); i++) {
 		mFrame[i]->Render();
 	}
+
 }
 
 /*
@@ -689,6 +711,11 @@ std::vector<CAnimationSet*>& CModelX::AnimationSet()
 	return mAnimationSet;
 }
 
+std::vector<CModelXFrame*>& CModelX::Frames(){
+	
+	return mFrame;
+
+}
 
 
 
