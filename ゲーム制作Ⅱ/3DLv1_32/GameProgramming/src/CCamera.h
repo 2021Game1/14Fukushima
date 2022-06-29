@@ -22,7 +22,6 @@ private:
 	//ã•ûŒü
 	CVector mUp;
 };
-//ƒJƒƒ‰‚ÌŠO•”QÆ
 extern CCamera Camera;
 #endif 
 

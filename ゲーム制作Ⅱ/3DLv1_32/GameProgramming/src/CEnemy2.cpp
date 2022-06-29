@@ -64,6 +64,7 @@ void CEnemy2::Collision(CCollider* m, CCollider* o)
 		//三角コライダと球コライダの衝突判定
 		if (CCollider::CollisionTriangleSphere(o, m, &adjust))
 		{
+			mHp--;
 			if (mHp <= 0)
 			{
 				mEnabled = false;

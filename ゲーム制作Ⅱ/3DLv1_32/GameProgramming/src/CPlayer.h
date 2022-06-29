@@ -14,6 +14,8 @@
 #include"CUtil.h"
 //エフェクトクラスのインクルード
 #include "CEffect.h"
+//カメラクラスのインクルード
+#include "CCamera.h"
 
 /*
 プレイヤークラス
@@ -36,16 +38,14 @@ public:
 	void TaskCollision();
 	static CPlayer* Get();
 	int mHp;
+
 private:
 	//プレイヤーのインスタンス
 	static CPlayer* spInstance;
 	CCollider mCollider;	//本体用コライダ
 	float mVelocity;
 	float mAcceleration;
-	int mTime;
-	long start, end;
-	char in[100];
-	double total_time;
+	
 };
 #endif 
 

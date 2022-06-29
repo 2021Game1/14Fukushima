@@ -22,7 +22,7 @@ CPlayer* CPlayer::spInstance = nullptr;
 //デフォルトコンストラクタ
 CPlayer::CPlayer()
 	:mCollider(this, &mMatrix, CVector(0.0f, 0.0f, 0.0f), 0.5f),
-	mHp(10), mVelocity(0.0f),mAcceleration(0.1f),mTime(0.0f)
+	mHp(10), mVelocity(0.0f),mAcceleration(0.001f)
 	
 {
 	//テクスチャファイルの読み込み(1行64列)
@@ -54,45 +54,44 @@ void CPlayer::Update()
 		}
 		mPosition = mPosition + (VELOCITY * mVelocity) * mMatrixRotate;
 	}
-	else{ 
+	else {
 		if (mVelocity > 0.0f) {
 			mVelocity -= mAcceleration;
 			mPosition = mPosition + (VELOCITY * mVelocity) * mMatrixRotate;
 		}
 	}
 	//Aキー入力で回転
-	if (CKey::Push('W') && CKey::Push('A')) {
+	if (CKey::Push('A') && mVelocity > 0.0f) {
 		//Y軸の回転値を増加
 		mRotation = mRotation  + ROTATION_YV;
+
 	}
 	//Dキー入力で回転
-	if (CKey::Push('W') && CKey::Push('D')) {
+	if (CKey::Push('D') && mVelocity > 0.0f) {
 		//Y軸の回転値を減少
 		mRotation = mRotation - ROTATION_YV;
 	}
+
 	
 
 		//Sキー入力で後退
-		if (CKey::Push('S')) {
-			if (mVelocity <= 0.0f)
-			{
-				//Z軸方向の値を回転させ移動させる
-				mPosition = mPosition - (VELOCITY * mAcceleration) * mMatrixRotate;
-			}
-			//Aキー入力で回転
-			if (CKey::Push('A')) {
-				//Y軸の回転値を増加
-				mRotation = mRotation + ROTATION_YV;
-			}
-			//Dキー入力で回転
-			if (CKey::Push('D')) {
-				//Y軸の回転値を減少
-				mRotation = mRotation - ROTATION_YV;
-			}
+	if (CKey::Push('S')) {
+		if (mVelocity <= 0.0f)
+		{
+			//Z軸方向の値を回転させ移動させる
+			mPosition = mPosition - (VELOCITY * mAcceleration) * mMatrixRotate;
 		}
-
-	
-
+		//Aキー入力で回転
+		if (CKey::Push('A') && mVelocity <= 0.0f) {
+			//Y軸の回転値を増加
+			mRotation = mRotation + ROTATION_YV;
+		}
+		//Dキー入力で回転
+		if (CKey::Push('D') && mVelocity <= 0.0f) {
+			//Y軸の回転値を減少
+			mRotation = mRotation - ROTATION_YV;
+		}
+	}
 
 	CTransform::Update();
 }
@@ -143,13 +142,13 @@ void CPlayer::Render()
 		//文字列の設定
 		sprintf(buf, "PX:%7.2f", mPosition.X());
 		//文字列の描画
-		mText.DrawString(buf, 100, 30, 8, 16);
+		mText.DrawString(buf, 150, 30, 8, 16);
 
 		//Y座標の表示
 		//文字列の設定
 		sprintf(buf, "PZ:%7.2f", mPosition.Z());
 		//文字列の描画
-		mText.DrawString(buf, 100, 0, 8, 16);
+		mText.DrawString(buf, 150, 0, 8, 16);
 
 	
 

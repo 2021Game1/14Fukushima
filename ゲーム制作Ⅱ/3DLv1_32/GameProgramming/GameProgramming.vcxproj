@@ -26,6 +26,7 @@
     <ClCompile Include="src\CKey.cpp" />
     <ClCompile Include="src\CMaterial.cpp" />
     <ClCompile Include="src\CModel.cpp" />
+    <ClCompile Include="src\CMoney.cpp" />
     <ClCompile Include="src\CPlayer.cpp" />
     <ClCompile Include="src\CSceneGame.cpp" />
     <ClCompile Include="src\CSceneManager.cpp" />
@@ -55,10 +56,12 @@
     <ClInclude Include="src\CEffect.h" />
     <ClInclude Include="src\CEnemy.h" />
     <ClInclude Include="src\CEnemy2.h" />
+    <ClInclude Include="src\CGameTest.h" />
     <ClInclude Include="src\CKey.h" />
     <ClInclude Include="src\CMaterial.h" />
     <ClInclude Include="src\CMatrix.h" />
     <ClInclude Include="src\CModel.h" />
+    <ClInclude Include="src\CMoney.h" />
     <ClInclude Include="src\CPlayer.h" />
     <ClInclude Include="src\CScene.h" />
     <ClInclude Include="src\CSceneGame.h" />

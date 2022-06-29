@@ -1,0 +1,34 @@
+# Blender MTL File: 'None'
+# Material Count: 3
+
+newmtl Blinds_Roman_Hobbled_Blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\mokek\\OneDrive\\デスクトップ\\ゲーム制作素材\\money\\model\\Blinds_Roman_Hobbled_Blue.jpg
+
+newmtl Color_001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.886275 0.886275 0.886275
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+
+newmtl drop-result
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\mokek\\OneDrive\\デスクトップ\\ゲーム制作素材\\money\\model\\drop-result.tmp

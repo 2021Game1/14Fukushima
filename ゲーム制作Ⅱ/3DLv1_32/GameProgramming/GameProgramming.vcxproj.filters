@@ -166,6 +166,9 @@
     <ClCompile Include="src\CSceneTitle.cpp">
       <Filter>マネージャ\シーンマネージャ</Filter>
     </ClCompile>
+    <ClCompile Include="src\CMoney.cpp">
+      <Filter>三角形クラス\キャラクタ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CColliderLine.h">
@@ -260,6 +263,12 @@
     </ClInclude>
     <ClInclude Include="src\CSceneTitle.h">
       <Filter>マネージャ\シーンマネージャ</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CMoney.h">
+      <Filter>三角形クラス\キャラクタ</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CGameTest.h">
+      <Filter>ゲーム</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
