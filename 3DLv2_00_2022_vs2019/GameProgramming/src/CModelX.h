@@ -6,7 +6,7 @@
 #include "CVector.h"
 
 
-#define MODEL_FILE "res\\sample.blend.x"
+#define MODEL_FILE "res\\ラグナ.x"
 
 //領域開放をマクロ化
 #define SAFE_DELETE_ARRAY(a) {if(a)delete[]a; a = 0;}
@@ -232,7 +232,7 @@ class CModelX {
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
 	std::vector<CAnimationSet*>mAnimationSet; //アニメーションセットの配列
-
+	std::vector<CMaterial*>mMaterial; //マテリアルの配列
 public:
 	CModelX();
 	~CModelX();
@@ -259,10 +259,12 @@ public:
 	char* Token();
 	//フレーム名に該当するフレームにアドレスを返す
 	CModelXFrame* FindFrame(char* name);
+	//マテリアルの検索
+	CMaterial* FindMaterial(char* name);
 
 	std::vector<CAnimationSet*>& AnimationSet();
 	std::vector<CModelXFrame*>& Frames();
-
+	std::vector<CMaterial*>& Material();
 	
 
 };

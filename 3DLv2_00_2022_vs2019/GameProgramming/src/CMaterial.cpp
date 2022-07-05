@@ -46,12 +46,13 @@ CTexture* CMaterial::Texture()
 
 //デフォルトコンストラクタ
 CMaterial::CMaterial()
-:mVertexNum(0),mpTextureFilename(nullptr)
+	:mVertexNum(0), mpTextureFilename(nullptr)
 {
 	//名前を0で埋め
 	memset(mName, 0, sizeof(mName));
 	//0で埋める
 	memset(mDiffuse, 0, sizeof(mDiffuse));
+
 }
 
 //マテリアルを有効にする
@@ -93,6 +94,7 @@ void CMaterial::Disabled()
 }
 /*
 Materialデータの読み込みと設定
+コンストラクタ
 */
 CMaterial::CMaterial(CModelX* model)
 :mpTextureFilename(nullptr)
@@ -131,7 +133,8 @@ CMaterial::CMaterial(CModelX* model)
 		model->GetToken();//}
 		model->GetToken();//}
 	}
-
+	//CModelXにマテリアルを追加する
+	model->Material().push_back(this);
 
 }
 //クォータニオンで回転行列を設定する
