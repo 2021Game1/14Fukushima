@@ -95,6 +95,10 @@ public:
 	{
 		mWeight = weight;
 	}
+
+	float Time();
+
+	float MaxTime();
 };
 
 /*
@@ -140,7 +144,8 @@ class CMesh{
 	std::vector<CMaterial*>mMaterial;//マテリアルデータ
 	std::vector<CSkinWeights*>mSkinWeights;//スキンウェイト
 	CVector* mpNormal;	//法線ベクトル
-
+	CVector* mpAnimateVertex; //アニメーション用頂点
+	CVector* mpAnimateNormal; //アニメーション用法線
 public:
 	//コンストラクタ
 	CMesh()
@@ -153,6 +158,8 @@ public:
 		,mMaterialNum(0)
 		,mMaterialIndexNum(0)
 		,mpMaterialIndex(nullptr)
+		,mpAnimateVertex(nullptr)
+		,mpAnimateNormal(nullptr)
 	{}
 	//デストラクタ
 	~CMesh() {
@@ -160,6 +167,8 @@ public:
 		SAFE_DELETE_ARRAY(mpVertexIndex);
 		SAFE_DELETE_ARRAY(mpNormal);
 		SAFE_DELETE_ARRAY(mpMaterialIndex);
+		SAFE_DELETE_ARRAY(mpAnimateVertex);
+		SAFE_DELETE_ARRAY(mpAnimateNormal);
 		//スキンウェイトの削除
 		for (size_t i = 0; i < mSkinWeights.size(); i++)
 		{
@@ -170,6 +179,8 @@ public:
 	void Init(CModelX* model);
 	//描画
 	void Render();
+	//頂点にアニメーション適用
+	void AnimateVertex(CModelX* model);
 };
 
 
@@ -201,7 +212,7 @@ public:
 	void Render();
 	//合成行列の作成
 	void AnimateCombined(CMatrix* parent);
-
+	const CMatrix& CombinedMatrix();
 private:
 };
 
@@ -237,8 +248,10 @@ public:
 	void SkipNode();
 	//フレームの変換行列をアニメーションデータで更新する
 	void AnimateFrame();
-	//フレームメソッド
-	
+	//スキンウェイトのフレーム番号設定
+	void SetSkinWeightFrameIndex();
+	//頂点にアニメーション適用
+	void AnimeteVertex();
 
 	//整数データの取得
 	int GetIntToken();

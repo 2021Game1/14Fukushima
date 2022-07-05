@@ -23,6 +23,9 @@ public:
 	void Y(float f);
 	//Zの値を得る
 	void Z(float f);
+	//+=演算子のオーバーロード
+	//CVector1 += CVector2の演算を行う
+	void operator+=(const CVector& v);
 	//デフォルトコンストラクタ
 	CVector();
 	//コンストラクタ

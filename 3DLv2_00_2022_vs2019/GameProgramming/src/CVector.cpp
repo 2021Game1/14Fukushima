@@ -105,6 +105,13 @@ CVector CVector::operator+(const CVector &v) const
 {
 	return CVector(mX + v.mX, mY + v.mY, mZ + v.mZ);
 }
+//+=演算子のオーバーロード
+//CVector1 += CVector2の演算を行う
+void CVector::operator+=(const CVector& v) {
+	mX += v.mX;
+	mY += v.mY;
+	mZ += v.mZ;
+}
 
 //Y軸での回転角度の取得
 //度度を返す（Z軸＋が0度）

@@ -22,8 +22,8 @@ void CSceneGame::Init() {
 }
 
 void CSceneGame::Update() {
-	//最初のアニメーションの現在の時間45をにする
-	gModelX.AnimationSet()[0]->Time(0);
+	gModelX.AnimationSet()[0]->Time(gModelX.AnimationSet()[0]->Time() + 1.0f);
+	gModelX.AnimationSet()[0]->Time((int)gModelX.AnimationSet()[0]->Time() % (int)(gModelX.AnimationSet()[0]->MaxTime() + 1));
 	//最初のアニメーション重みを1.0(100%)にする
 	gModelX.AnimationSet()[0]->Weught(1.0f);
 	//フレームの変換行列をアニメーションで更新する
@@ -38,7 +38,7 @@ void CSceneGame::Update() {
 	c = CVector();
 	//上方向を求める
 	u = CVector(0.0f, 1.0f, 0.0f);
-
+	
 	//カメラクラスの設定
 	Camera.Set(e, c, u);
 	Camera.Render();
@@ -61,7 +61,9 @@ void CSceneGame::Update() {
 	}
 	//行列設定
 	glMultMatrixf(gMatrix.M());
-
+	
+	//頂点にアニメーション適用する
+	gModelX.AnimeteVertex();
 	//モデル描画
 	gModelX.Render();
 
