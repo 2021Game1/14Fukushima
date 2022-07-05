@@ -22,6 +22,7 @@ public:
 	CMoney();
 	//CEnemy(位置,回転,拡縮)
 	CMoney(const CVector& position, const CVector& rotation, const CVector& scale);
+	void Update();
 	//衝突処理
 	//Collision(コライダ1,コライダ2)
 	void Collision(CCollider* m, CCollider* o);

@@ -76,18 +76,17 @@ public:
 		mBackGround.Load(MODEL_BACKGROUND);
 		//マップコリジョンのモデルファイルの入力
 		mColision.Load(MODEL_COLISION);
-		//敵のモデルの読み込み
-		mModelC5.Load("res\\C5.obj", "res\\C5.mtl");
 		//マトリックスの描画変数
 		matrix.Print();
 		//プレイヤーのモデルポインタ
 		mPlayer.Model(&mModel);
 		mPlayer.Scale(CVector(0.5f, 0.5f, 0.5f));
-		mPlayer.Position(CVector(92.0f, -0.1f, 76.0f) * mBackGroundMatrix);
+		mPlayer.Position(CVector(92.0f, -0.5f, 76.0f) * mBackGroundMatrix);
 		mPlayer.Rotation(CVector(0.0f, -180.0f, 0.0f));
 		//敵機2のインスタンス作成
-		new CEnemy2(CVector(-5.0f, -0.1f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
-		new CEnemy2(CVector(5.0f, -0.1f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CEnemy2(CVector(-5.0f, -0.3f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CEnemy2(CVector(5.0f, -0.3f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CMoney(CVector(90.0f, -0.5f, 70.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
 		//ビルボードの生成
 		/*new CBillBoard(CVector(-6.0f, 3.0f, -10.0f), 1.0f, 1.0f);*/
 		//背景モデルから三角コライダを生成
@@ -95,6 +94,7 @@ public:
 		mColliderMesh.Set(nullptr, &mBackGroundMatrix, &mColision);
 		//親インスタンスと親行列はなし
 		ColliderMesh.Set(nullptr, &mBackGroundMatrix, &mBackGround);
+
 	}
 
 	void  Update() {

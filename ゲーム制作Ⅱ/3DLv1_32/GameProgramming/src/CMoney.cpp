@@ -1,5 +1,6 @@
 #include "CMoney.h"
 
+
 #define OBJ "res\\money.obj" //モデルのファイル
 #define MTL "res\\money.mtl" //モデルのマテリアルファイル
 
@@ -54,6 +55,11 @@ void CMoney::Collision(CCollider* m, CCollider* o)
 		}
 	}
 	
+}
+
+void CMoney::Update() {
+		mRotation = mRotation + CVector(0.0f, -1.0f, 0.0f);//右へ回転
+		CTransform::Update();
 }
 
 void CMoney::TaskCollision()

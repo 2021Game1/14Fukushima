@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd C:\\Users\\mokek\\OneDrive\\デスクトップ\\ゲーム制作素材\\money\\model\\Blinds_Roman_Hobbled_Blue.jpg
+map_Kd moneymodel\\Blinds_Roman_Hobbled_Blue.jpg
 
 newmtl Color_001
 Ns 250.000000
@@ -31,4 +31,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd C:\\Users\\mokek\\OneDrive\\デスクトップ\\ゲーム制作素材\\money\\model\\drop-result.tmp
+map_Kd moneymodel\\drop-result.tmp
