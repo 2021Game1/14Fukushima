@@ -36,6 +36,7 @@
     <ClCompile Include="src\CTriangle.cpp" />
     <ClCompile Include="src\CUtil.cpp" />
     <ClCompile Include="src\CVector.cpp" />
+    <ClCompile Include="src\CXCharacter.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Update.cpp" />
   </ItemGroup>
@@ -67,6 +68,7 @@
     <ClInclude Include="src\CTriangle.h" />
     <ClInclude Include="src\CUtil.h" />
     <ClInclude Include="src\CVector.h" />
+    <ClInclude Include="src\CXCharacter.h" />
     <ClInclude Include="src\Update.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

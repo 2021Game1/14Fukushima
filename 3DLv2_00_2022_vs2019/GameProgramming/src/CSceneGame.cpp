@@ -4,32 +4,27 @@
 #include "CVector.h"
 #include "CCamera.h"
 #include "CMatrix.h"
-#include "CModelX.h"
 #include "CKey.h"
 #include "CUtil.h"
 
-//確認用インスタンス
-CModelX gModelX;
 
-//キー入力で回転
-CMatrix gMatrix;
 
 void CSceneGame::Init() {
 	//3Dモデルファイルの読み込み
 	gModelX.Load(MODEL_FILE);
+	//キャラクタにモデルを設定
+	mCaracter.Init(&gModelX);
 	mFont.LoadTexture("FontG.png", 1, 4096 / 64);
 
 }
 
 void CSceneGame::Update() {
-	gModelX.AnimationSet()[0]->Time(gModelX.AnimationSet()[0]->Time() + 1.0f);
-	gModelX.AnimationSet()[0]->Time((int)gModelX.AnimationSet()[0]->Time() % (int)(gModelX.AnimationSet()[0]->MaxTime() + 1));
-	//最初のアニメーション重みを1.0(100%)にする
-	gModelX.AnimationSet()[0]->Weught(1.0f);
-	//フレームの変換行列をアニメーションで更新する
-	gModelX.AnimateFrame();
-	//フレームの合成行列を計算する
-	gModelX.Frames()[0]->AnimateCombined(&gMatrix);
+	if (mCaracter.IsAnimationFinished()){
+		mCaracter.ChangeAnimation(i, true, 60);
+		i++;
+	}
+	
+	mCaracter.Update(CMatrix());
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める
@@ -65,7 +60,7 @@ void CSceneGame::Update() {
 	//頂点にアニメーション適用する
 	gModelX.AnimeteVertex();
 	//モデル描画
-	gModelX.Render();
+	mCaracter.Render();
 
 	//2D描画開始
 	CUtil::Start2D(0, 800, 0, 600);
@@ -74,5 +69,6 @@ void CSceneGame::Update() {
 
 	//2Dの描画終了
 	CUtil::End2D();
+
 }
 
