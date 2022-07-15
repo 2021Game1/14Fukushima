@@ -13,18 +13,16 @@ void CSceneGame::Init() {
 	//3Dモデルファイルの読み込み
 	gModelX.Load(MODEL_FILE);
 	//キャラクタにモデルを設定
-	mCaracter.Init(&gModelX);
+	mPlayer.Init(&gModelX);
 	mFont.LoadTexture("FontG.png", 1, 4096 / 64);
 
 }
 
 void CSceneGame::Update() {
-	if (mCaracter.IsAnimationFinished()){
-		mCaracter.ChangeAnimation(i, true, 60);
-		i++;
-	}
+	//キャラクタクラスの更新
+	mPlayer.Update();
 	
-	mCaracter.Update(CMatrix());
+	
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める
@@ -60,7 +58,7 @@ void CSceneGame::Update() {
 	//頂点にアニメーション適用する
 	gModelX.AnimeteVertex();
 	//モデル描画
-	mCaracter.Render();
+	mPlayer.Render();
 
 	//2D描画開始
 	CUtil::Start2D(0, 800, 0, 600);

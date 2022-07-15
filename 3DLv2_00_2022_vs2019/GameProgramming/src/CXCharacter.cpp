@@ -1,5 +1,9 @@
 #include"CXCharacter.h"
 
+CXCharacter::CXCharacter() 
+{
+	mScale = CVector(1.0f, 1.0f, 1.0f);
+}
 /*
 Init
 初期化処理
@@ -41,6 +45,14 @@ void CXCharacter::ChangeAnimation(int index, bool loop, float framesize) {
 	mpModel->AnimationSet()[mAnimationIndex]->Time(mAnimationFrame);
 	//アニメーションの重みを1.0(100%)にする
 	mpModel->AnimationSet()[mAnimationIndex]->Weught(1.0f);
+}
+
+//更新処理
+void CXCharacter::Update() {
+	//変換行列の更新
+	CTransform::Update();
+	//アニメーションを更新する
+	Update(mMatrix);
 }
 
 /*

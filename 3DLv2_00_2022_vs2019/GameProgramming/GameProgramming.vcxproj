@@ -37,6 +37,7 @@
     <ClCompile Include="src\CUtil.cpp" />
     <ClCompile Include="src\CVector.cpp" />
     <ClCompile Include="src\CXCharacter.cpp" />
+    <ClCompile Include="src\CXPlayer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Update.cpp" />
   </ItemGroup>
@@ -70,6 +71,7 @@
     <ClInclude Include="src\CVector.h" />
     <ClInclude Include="src\CXCharacter.h" />
     <ClInclude Include="src\Update.h" />
+    <ClInclude Include="src\CXPlayer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8802AF2F-2920-4700-89F2-CA6778727283}</ProjectGuid>
