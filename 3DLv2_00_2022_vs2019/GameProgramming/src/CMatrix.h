@@ -4,6 +4,9 @@
 マトリクスクラス
 4行4列の行列データを扱います
 */
+#include"CVector.h"
+class CVector;
+
 class CMatrix {
 	//friend CVector; //フレンドクラスの設定
 public:
@@ -36,6 +39,12 @@ public:
 	//回転行列（X軸）の作成
 	//RotateX(角度)
 	CMatrix RotateX(float degree);
+	//X軸のベクトルを得る
+	CVector VectorX();
+	//Y軸のベクトルを得る
+	CVector VectorY();
+	//Z軸のベクトルを得る
+	CVector VectorZ();
 	//移動行列の作成
 	//Translate(移動量X, 移動量Y, 移動量Z)
 	CMatrix Translate(float mx, float my, float mz);

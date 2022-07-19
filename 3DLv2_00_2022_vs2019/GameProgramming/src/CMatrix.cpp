@@ -229,3 +229,15 @@ void  CMatrix::operator+=(const CMatrix& m){
 	mM[3][3] += m.mM[3][3];
 
 }
+CVector CMatrix::VectorX()
+{
+	return CVector(mM[0][0], mM[0][1], mM[0][2]);
+}
+CVector CMatrix::VectorY() 
+{
+	return CVector(mM[1][0], mM[1][1], mM[1][2]);
+}
+CVector CMatrix::VectorZ() 
+{
+	return CVector(mM[2][0], mM[2][1], mM[2][2]);
+}
