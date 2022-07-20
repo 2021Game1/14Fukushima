@@ -2,7 +2,7 @@
 #include "CSceneGame.h"
 //OpenGL
 #include"glut.h"
-
+ 
 
 
 
@@ -15,9 +15,9 @@ void CSceneGame::Update() {
 	CTaskManager::Get()->Update();
 	//コリジョンマネージャの衝突処理
 	CTaskManager::Get()->TaskCollision();
-
+	
 	mGameTest.Update();
-
+	
 	////コリジョンマネージャのコライダ描画
 	//CCollisionManager::Get()->Render();
 	//タスクリストの削除

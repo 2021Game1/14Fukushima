@@ -53,6 +53,8 @@ class CGameTest {
 	CModel mModelC5; //敵モデル
 	CModel mMap; //マップモデル
 	CModel mColision;     //コリジョンマップ
+	//確認用インスタンス
+	CMoney gMoney;
 	//プレイヤーの変数
 	CPlayer mPlayer;
 	//カメラの視点の変数
@@ -64,6 +66,7 @@ class CGameTest {
 	//モデルからコライダを生成
 	CColliderMash mColliderMesh;
 	CColliderMash ColliderMesh;
+
 public:
 	void Init() {
 		mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
@@ -84,9 +87,8 @@ public:
 		mPlayer.Position(CVector(92.0f, -0.5f, 76.0f) * mBackGroundMatrix);
 		mPlayer.Rotation(CVector(0.0f, -180.0f, 0.0f));
 		//敵機2のインスタンス作成
-		new CEnemy2(CVector(-5.0f, -0.3f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
-		new CEnemy2(CVector(5.0f, -0.3f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
-		new CMoney(CVector(90.0f, -0.5f, 70.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+		new CEnemy2(CVector(-5.0f, -0.5f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CEnemy2(CVector(5.0f, -0.5f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
 		//ビルボードの生成
 		/*new CBillBoard(CVector(-6.0f, 3.0f, -10.0f), 1.0f, 1.0f);*/
 		//背景モデルから三角コライダを生成
@@ -98,6 +100,8 @@ public:
 	}
 
 	void  Update() {
+
+
 		//カメラのパラメータを作成する
 		CVector e, c, u;//視点,注視点,上方向
 			//視点を求める
@@ -116,6 +120,7 @@ public:
 		//背景モデルの描画
 		mBackGround.Render();
 	}
+
 
 
 

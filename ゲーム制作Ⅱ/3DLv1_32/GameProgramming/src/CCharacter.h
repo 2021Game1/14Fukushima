@@ -41,6 +41,8 @@ public:
 	//Õ“Ëˆ—
 	virtual void Collision(CCollider *m,CCollider *o){}
 
+
+
 protected:
 	ETag mTag;
 };

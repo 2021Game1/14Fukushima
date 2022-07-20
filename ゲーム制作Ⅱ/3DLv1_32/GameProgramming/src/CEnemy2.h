@@ -34,7 +34,10 @@ private:
 	CCollider mCollider;
 	CVector mPoint;		//目標地点
 	int mHp;			//ヒットポイント
-
+	float mVelocity;
+	float mAcceleration;
+	float CEnemy2::Velocity;
+	float CEnemy2::Acceleration;
 };
 
 

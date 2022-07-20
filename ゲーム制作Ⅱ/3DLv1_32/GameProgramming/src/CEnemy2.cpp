@@ -6,12 +6,14 @@
 #define MTL "res\\Police.mtl" //モデルのマテリアルファイル
 #define HP 3	//耐久値
 #define VELOCITY 0.18f	   //速度
+#define _VELOCITY 0.0f //初期化
+#define ACCELERATION 0.01f    //加速度
 
 CModel CEnemy2::sModel;//モデルデータ作成
 
 //デフォルトコンストラクタ
 CEnemy2::CEnemy2()
-:mCollider(this, &mMatrix,CVector(0.0f,0.0f,0.0f),0.4f),mHp(HP)
+:mCollider(this, &mMatrix,CVector(0.0f,0.0f,0.0f),0.4f),mHp(HP),mVelocity(_VELOCITY),mAcceleration(ACCELERATION)
 {
 	//モデルが無い時は読み込む
 	if (sModel.Triangles().size() == 0)
@@ -51,10 +53,6 @@ void CEnemy2::Collision(CCollider* m, CCollider* o)
 		if (CCollider::Collision(m, o)) {
 			//エフェクト生成
 			new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
-			if (mHp >= 0)
-			{
-				mHp--;
-			}
 		}
 		break;
 	}
@@ -64,11 +62,6 @@ void CEnemy2::Collision(CCollider* m, CCollider* o)
 		//三角コライダと球コライダの衝突判定
 		if (CCollider::CollisionTriangleSphere(o, m, &adjust))
 		{
-			mHp--;
-			if (mHp <= 0)
-			{
-				mEnabled = false;
-			}
 			//衝突しない位置まで戻す
 			mPosition = mPosition + adjust;
 		}
@@ -101,15 +94,13 @@ void CEnemy2::Update()
 			//X軸のズレが2.0以下
 			if (-2.0f < dx && dx < 2.0f)
 			{
-				//Y軸のズレが2.0以下
-				if (-2.0f < dy && dy < 2.0f)
-				{
-					////弾を発射します
-					//CBullet* bullet = new CBullet();
-					//bullet->Set(0.1f, 1.5f);
-					//bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
-					//bullet->Rotation(mRotation);
-					//bullet->Update();
+				if (-2.0f < dz && dz < 2.0f) {
+					//弾を発射します
+					CBullet* bullet = new CBullet();
+					bullet->Set(0.1f, 1.5f);
+					bullet->Position(CVector(0.0f, 0.0f, 10.0f) * mMatrix);
+					bullet->Rotation(mRotation);
+					bullet->Update();
 				}
 			}
 		}
@@ -122,12 +113,12 @@ void CEnemy2::Update()
 	//左右方向への回転
 	if (dx > margin)
 	{
-		mRotation = mRotation + CVector(0.0f, 1.0f, 0.0f);//左へ回転
+		mRotation = mRotation + CVector(0.0f, 1.2f, 0.0f);//左へ回転
 	}
 	//左右方向への回転
 	else if (dx < -margin)
 	{
-		mRotation = mRotation + CVector(0.0f, -1.0f, 0.0f);//右へ回転
+		mRotation = mRotation + CVector(0.0f, -1.2f, 0.0f);//右へ回転
 	}
 	////上下方向へ回転
 	//if (dy > margin)
@@ -138,8 +129,14 @@ void CEnemy2::Update()
 	//{
 	//	mRotation = mRotation + CVector(1.0f, 0.0f, 0.0f);//下へ
 	//}
-	//移動する
-	mPosition = mPosition + CVector(0.0f, 0.0f, VELOCITY) * mMatrixRotate;
+
+	if (mVelocity < 1.7f){
+		mVelocity = mVelocity + mAcceleration;
+	}
+	mPosition = mPosition + (CVector(0.0f,0.0f, VELOCITY) * mVelocity) * mMatrixRotate;
+
+
+	
 	CTransform::Update();
 	//およそ3秒毎に目標地点を更新
 	int r = rand() % 180; //rand()は整数の乱数を返す

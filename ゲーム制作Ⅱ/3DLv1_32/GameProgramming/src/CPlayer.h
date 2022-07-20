@@ -37,14 +37,15 @@ public:
 	//衝突処理
 	void TaskCollision();
 	static CPlayer* Get();
-	int mHp;
+	
 
+	int mHp;
 private:
 	//プレイヤーのインスタンス
 	static CPlayer* spInstance;
 	CCollider mCollider;	//本体用コライダ
-	float mVelocity;
-	float mAcceleration;
+	float Velocity;
+	float Acceleration;
 	
 };
 #endif 

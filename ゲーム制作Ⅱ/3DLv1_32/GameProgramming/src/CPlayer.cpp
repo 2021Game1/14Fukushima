@@ -8,11 +8,11 @@
 //タスクマネージャクラスのインクルード
 #include"CTaskManager.h"
 
-#define ROTATION_YV CVector(0.0f,1.0f,0.0f)//回転速度
+#define ROTATION_YV CVector(0.0f,1.1f,0.0f)//回転速度
 #define VELOCITY CVector(0.0f,0.0f,1.0f)//移動速度
-#define MAX_VELOCITY 0.6f//最高速度
+#define MAX_VELOCITY 0.4f//最高速度
 #define _VELOCITY  0.0f//初期化
-
+#define ACCELERATION 0.001f    //加速度
 
 
 CPlayer* CPlayer::spInstance = nullptr;
@@ -24,7 +24,7 @@ CPlayer* CPlayer::spInstance = nullptr;
 //デフォルトコンストラクタ
 CPlayer::CPlayer()
 	:mCollider(this, &mMatrix, CVector(0.0f, 0.0f, 0.0f), 0.5f),
-	mHp(10), mVelocity(_VELOCITY),mAcceleration(0.001f)
+	mHp(10), Velocity(_VELOCITY),Acceleration(ACCELERATION)
 	
 {
 	//テクスチャファイルの読み込み(1行64列)
@@ -50,66 +50,66 @@ void CPlayer::Update()
 		//Wキー入力で前進
 	if (CKey::Push('W')) {
 		//Z軸方向の値を回転させ移動させる
-		if (mVelocity < 0.6f)
+		if (Velocity < MAX_VELOCITY)
 		{
-			mVelocity += mAcceleration;
+			Velocity += Acceleration;
 		}
-		mPosition = mPosition + (VELOCITY * mVelocity) * mMatrixRotate;
+		mPosition = mPosition + (VELOCITY * Velocity) * mMatrixRotate;
 	}
 	else if (!CKey::Push('S')){
-		if (mVelocity > 0.001f) {
-			mVelocity -= mAcceleration;
-			mPosition = mPosition + (VELOCITY * mVelocity) * mMatrixRotate;
+		if (Velocity > 0.001f) {
+			Velocity -= Acceleration;
+			mPosition = mPosition + (VELOCITY * Velocity) * mMatrixRotate;
 		}
-		mVelocity -= mAcceleration;
+		Velocity -= Acceleration;
 	}
 	//Aキー入力で回転
-	if (CKey::Push('A') && mVelocity > _VELOCITY) {
+	if (CKey::Push('A') && Velocity > _VELOCITY) {
 		//Y軸の回転値を増加
 		mRotation = mRotation  + ROTATION_YV;
 
 	}
 	//Dキー入力で回転
-	if (CKey::Push('D') && mVelocity > _VELOCITY) {
+	if (CKey::Push('D') && Velocity > _VELOCITY) {
 		//Y軸の回転値を減少
 		mRotation = mRotation - ROTATION_YV;
 	}
 
 	//Sキー入力で後退
 	if (CKey::Push('S')) {
-		if (mVelocity > -0.1f) {
-			mVelocity -= mAcceleration;
+		if (Velocity > -0.1f) {
+			Velocity -= Acceleration;
 		}
 		//Z軸方向の値を回転させ移動させる
-		mPosition = mPosition + (VELOCITY * mVelocity) * mMatrixRotate;
+		mPosition = mPosition + (VELOCITY * Velocity) * mMatrixRotate;
 	
 		//Aキー入力で回転
-		if (CKey::Push('A') && mVelocity <= _VELOCITY) {
+		if (CKey::Push('A') && Velocity <= _VELOCITY) {
 			//Y軸の回転値を増加
 			mRotation = mRotation + ROTATION_YV;
 
 		}
 		//Dキー入力で回転
-		if (CKey::Push('D') && mVelocity <= _VELOCITY) {
+		if (CKey::Push('D') && Velocity <= _VELOCITY) {
 			//Y軸の回転値を減少
 			mRotation = mRotation - ROTATION_YV;
 		}
 	}
 	else if (!CKey::Push('W')) {
-		if (mVelocity < -0.001f) {
-			mVelocity += mAcceleration;
-			mPosition = mPosition + (VELOCITY * mVelocity) * mMatrixRotate;
+		if (Velocity < -0.001f) {
+			Velocity += Acceleration;
+			mPosition = mPosition + (VELOCITY * Velocity) * mMatrixRotate;
 		}
-		mVelocity += mAcceleration;
+		Velocity += Acceleration;
 	}
 
 
 	//Iキーでブレーキ
 	if (CKey::Push('I')) {
-		if (mVelocity > 0.0f)
+		if (Velocity > 0.0f)
 		{
-			mVelocity -= mAcceleration + mAcceleration;
-			mPosition = mPosition - (VELOCITY * mAcceleration) * mMatrixRotate;
+			Velocity -= Acceleration + Acceleration;
+			mPosition = mPosition - (VELOCITY * Acceleration) * mMatrixRotate;
 		}
 	}
 

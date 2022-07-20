@@ -10,16 +10,23 @@
 #include"CCollisionManager.h"
 //エフェクトクラスのインクルード
 #include "CEffect.h"
+//ユーティリティクラスのインクルード
+#include"CUtil.h"
+//テキストクラスのインクルード
+#include"CText.h"
+
+//領域開放をマクロ化
+#define SAFE_DELETE_ARRAY(a) {if(a)delete[]a; a = 0;}
 
 /*
 マネークラス
 キャラクタクラスを継承
 */
-
 class CMoney : public CCharacter{
 public:
-	//コンストラクタ
+	//デフォルトコンストラクタ
 	CMoney();
+
 	//CEnemy(位置,回転,拡縮)
 	CMoney(const CVector& position, const CVector& rotation, const CVector& scale);
 	void Update();
@@ -32,6 +39,13 @@ private:
 	static CModel mModel;
 	//コライダ
 	CCollider mCollider;
+	CVector mMoneyIndex;
+	CMatrix mBackGroundMatrix;
+	int mRepop;
+	int vel;
+	int mMoney;
+	CText mText;
+
 };
 
 #endif 
