@@ -12,6 +12,7 @@ class CXPlayer : public CXCharacter {
 public:
 	void Update();
 
+
 };
 #endif 
 
