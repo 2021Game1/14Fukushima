@@ -78,9 +78,9 @@ class CGameTest {
 	char flag[12];
 public:
 	void Init() {
-		Bgm.Load("res\\音楽\\Sunrise.wav");
-		Se1.Load("res\\音楽\\clock.wav");
-		Se2.Load("res\\音楽\\money.wav");
+		//Bgm.Load("res\\音楽\\Sunrise.wav");
+		//Se1.Load("res\\音楽\\clock.wav");
+		//Se2.Load("res\\音楽\\money.wav");	BGM SE等々
 		//サウンドファイルの繰り返し再生
 		Bgm.Repeat(0.3);
 		
