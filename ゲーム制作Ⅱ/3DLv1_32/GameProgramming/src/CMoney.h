@@ -41,10 +41,6 @@ private:
 	CCollider mCollider;
 	CVector mMoneyIndex;
 	CMatrix mBackGroundMatrix;
-	int mRepop;
-	int vel;
-	int mMoney;
-	CText mText;
 
 };
 

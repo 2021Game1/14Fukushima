@@ -17,9 +17,9 @@ void CSceneGame::Update() {
 	CTaskManager::Get()->TaskCollision();
 	
 	mGameTest.Update();
-	
-	////コリジョンマネージャのコライダ描画
-	//CCollisionManager::Get()->Render();
+
+	//コリジョンマネージャのコライダ描画
+	CCollisionManager::Get()->Render();
 	//タスクリストの削除
 	CTaskManager::Get()->Delete();
 	//タスクマネージャの描画	

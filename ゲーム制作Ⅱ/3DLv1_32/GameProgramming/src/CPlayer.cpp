@@ -8,7 +8,7 @@
 //タスクマネージャクラスのインクルード
 #include"CTaskManager.h"
 
-#define ROTATION_YV CVector(0.0f,1.1f,0.0f)//回転速度
+#define ROTATION_YV CVector(0.0f,1.2f,0.0f)//回転速度
 #define VELOCITY CVector(0.0f,0.0f,1.0f)//移動速度
 #define MAX_VELOCITY 0.4f//最高速度
 #define _VELOCITY  0.0f//初期化
@@ -23,7 +23,7 @@ CPlayer* CPlayer::spInstance = nullptr;
 
 //デフォルトコンストラクタ
 CPlayer::CPlayer()
-	:mCollider(this, &mMatrix, CVector(0.0f, 0.0f, 0.0f), 0.5f),
+	:mCollider(this, &mMatrix, CVector(0.0f, 1.0f, 0.0f), 0.4f),
 	mHp(10), Velocity(_VELOCITY),Acceleration(ACCELERATION)
 	
 {
@@ -132,7 +132,6 @@ void CPlayer::Collision(CCollider* m, CCollider* o) {
 			mPosition = mPosition + adjust;
 			//行列の更新
 			CTransform::Update();
-			
 		}
 		break;
 	}
@@ -171,6 +170,11 @@ void CPlayer::Render()
 		//文字列の描画
 		mText.DrawString(buf, 150, 0, 8, 16);
 
+		////スコアの表示
+		////文字列の設定
+		//sprintf(buf, "MONEY:%d", mMoney);
+		////文字列の描画
+		//mText.DrawString(buf, -380, 268, 16, 16);
 	
 
 	//2Dの描画終了

@@ -33,6 +33,8 @@
 #include"CCharacter.h"
 //三角コライダの生成クラスのインクルード
 #include"CColliderMesh.h"
+//CSoundクラスのインクルード
+#include "CSound.h"
 
 #include"CMoney.h"
 
@@ -66,9 +68,22 @@ class CGameTest {
 	//モデルからコライダを生成
 	CColliderMash mColliderMesh;
 	CColliderMash ColliderMesh;
-
+	//CSoundクラスのインスタンス作成
+	CSound Bgm;
+	CSound Se1;//時間切れ
+	CSound Se2;//取得音
+	int mRepop;
+	int vel;
+	int index;
+	char flag[12];
 public:
 	void Init() {
+		Bgm.Load("res\\音楽\\Sunrise.wav");
+		Se1.Load("res\\音楽\\clock.wav");
+		Se2.Load("res\\音楽\\money.wav");
+		//サウンドファイルの繰り返し再生
+		Bgm.Repeat(0.3);
+		
 		mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 		mEye = CVector(1.0f, 2.0f, 3.0f);
 		//モデルファイルの入力
@@ -89,6 +104,8 @@ public:
 		//敵機2のインスタンス作成
 		new CEnemy2(CVector(-5.0f, -0.5f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
 		new CEnemy2(CVector(5.0f, -0.5f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CEnemy2(CVector(92.0f, -0.5f, 100.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CEnemy2(CVector(87.0f, -0.5f, 100.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
 		//ビルボードの生成
 		/*new CBillBoard(CVector(-6.0f, 3.0f, -10.0f), 1.0f, 1.0f);*/
 		//背景モデルから三角コライダを生成
@@ -96,20 +113,101 @@ public:
 		mColliderMesh.Set(nullptr, &mBackGroundMatrix, &mColision);
 		//親インスタンスと親行列はなし
 		ColliderMesh.Set(nullptr, &mBackGroundMatrix, &mBackGround);
-
 	}
 
 	void  Update() {
+		if (mRepop % 100 == 50) {
+			//乱数値=rand()%乱数値の要素数+乱数値の最小値
+			srand((unsigned)time(NULL));
+			vel = (rand() % 100) + 1;
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 0 && vel <= 7 && !(flag[0] == 1)) {
+						new CMoney(CVector(75.0f, -0.5f, 76.5f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[0] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 8 && vel <= 15 && !(flag[1] == 1)) {
+						new CMoney(CVector(73.5f, -0.5f, 154.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[1] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 16 && vel <= 23 && !(flag[2] == 1)) {
+						new CMoney(CVector(0.0f, -0.5f, 159.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[2] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 24 && vel <= 31 && !(flag[3] == 1)) {
+						new CMoney(CVector(-61.5f, -0.5f, 158.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[3] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 32 && vel <= 39 && !(flag[4] == 1)) {
+						new CMoney(CVector(-62.5f, -0.5f, 105.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[4] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 40 && vel <= 47 && !(flag[5] == 1)) {
+						new CMoney(CVector(-16.0f, -0.5f, 0.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[5] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++ && !(flag[6] == 1)) {
+					if (vel >= 48 && vel <= 55) {
+						new CMoney(CVector(27.0f, -0.5f, 56.5f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[6] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 56 && vel <= 63 && !(flag[7] == 1)) {
+						new CMoney(CVector(73.5f, -0.5f, -35.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[7] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 64 && vel <= 71 && !(flag[8] == 1)) {
+						new CMoney(CVector(-53.0f, -0.5f, -35.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[8] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 78 && vel <= 85 && !(flag[9] == 1)) {
+						new CMoney(CVector(-62.5f, -0.5f, 42.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[9] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 86 && vel <= 93 && !(flag[10] == 1)) {
+						new CMoney(CVector(-20.0f, -0.5f, 58.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[10] += 1;
+					}
+				}
+				for (int i = 0; i < 1; i++) {
+					if (vel >= 94 && vel <= 101 && !(flag[11] == 1)) {
+						new CMoney(CVector(50.0f, -0.5f, 50.5f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
+						flag[11] += 1;
+					}
+				}
+				for (int i = 0; i < 11; i++){
+					if (vel >= 0 && vel <= 101 && flag[i] == 1) {
+						flag[i] == 0;
+					}
+				}
 
-
+		}
+		mRepop = mRepop + 1;
 		//カメラのパラメータを作成する
 		CVector e, c, u;//視点,注視点,上方向
 			//視点を求める
-		e = mPlayer.Position() + CVector(0.0f, 1.0f, -2.5f) * mPlayer.MatirixRotate();
+		e = mPlayer.Position() + CVector(0.0f, 1.2f, -3.0f) * mPlayer.MatirixRotate();
 		//注視点を求める
 		c = mPlayer.Position();
 		//上方向を求める
-		u = CVector(0.0f, 3.0f, 0.0f) * mPlayer.MatirixRotate();
+		u = CVector(0.0f, 4.0f, 0.0f) * mPlayer.MatirixRotate();
 		//カメラの設定
 		//gluLookAt(e.X(), e.Y(), e.Z(), c.X(), c.Y(), c.Z(), u.X(), u.Y(), u.Z());
 		//カメラクラスの設定

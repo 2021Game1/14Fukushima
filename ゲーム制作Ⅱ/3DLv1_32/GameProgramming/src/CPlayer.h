@@ -46,7 +46,6 @@ private:
 	CCollider mCollider;	//本体用コライダ
 	float Velocity;
 	float Acceleration;
-	
 };
 #endif 
 

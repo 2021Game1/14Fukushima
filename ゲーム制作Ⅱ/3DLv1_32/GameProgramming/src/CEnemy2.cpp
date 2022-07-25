@@ -13,7 +13,7 @@ CModel CEnemy2::sModel;//モデルデータ作成
 
 //デフォルトコンストラクタ
 CEnemy2::CEnemy2()
-:mCollider(this, &mMatrix,CVector(0.0f,0.0f,0.0f),0.4f),mHp(HP),mVelocity(_VELOCITY),mAcceleration(ACCELERATION)
+:mCollider(this, &mMatrix,CVector(0.0f,0.0f,0.0f),0.4f),mHp(HP),Velocity(_VELOCITY),Acceleration(ACCELERATION)
 {
 	//モデルが無い時は読み込む
 	if (sModel.Triangles().size() == 0)
@@ -64,6 +64,8 @@ void CEnemy2::Collision(CCollider* m, CCollider* o)
 		{
 			//衝突しない位置まで戻す
 			mPosition = mPosition + adjust;
+			//行列の更新
+			CTransform::Update();
 		}
 
 		break;
