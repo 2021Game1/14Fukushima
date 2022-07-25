@@ -80,9 +80,9 @@ public:
 	void Init() {
 		//Bgm.Load("res\\音楽\\Sunrise.wav");
 		//Se1.Load("res\\音楽\\clock.wav");
-		//Se2.Load("res\\音楽\\money.wav");	BGM SE等々
-		//サウンドファイルの繰り返し再生
-		Bgm.Repeat(0.3);
+		//Se2.Load("res\\音楽\\money.wav");	
+		////サウンドファイルの繰り返し再生
+		//Bgm.Repeat(0.3);
 		
 		mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 		mEye = CVector(1.0f, 2.0f, 3.0f);
