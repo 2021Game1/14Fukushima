@@ -5,6 +5,10 @@
 #define OBJ "res\\goldbar.obj" //モデルのファイル
 #define MTL "res\\goldbar.mtl" //モデルのマテリアルファイル
 
+#include"CSceneGame.h"
+#include"CSound.h"
+
+extern CSound Se2;
 
 CModel CMoney::mModel;//モデルデータ作成
 
@@ -61,6 +65,8 @@ void CMoney::Collision(CCollider* m, CCollider* o)
 			if (CCollider::Collision(m, o)) {
 				//エフェクト生成
 				new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+				Se2.Play();
+				CSceneGame::Score += 100;
 				mEnabled = false;
 			}
 			break;

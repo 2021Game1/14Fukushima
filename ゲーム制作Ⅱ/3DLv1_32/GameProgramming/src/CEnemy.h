@@ -33,10 +33,7 @@ public:
 
 private:
 	int mFireCount;
-	//ƒRƒ‰ƒCƒ_
-	CCollider mCollider1;
-	CCollider mCollider2;
-	CCollider mCollider3;
+
 };
 #endif // !CENEMY_H
 

@@ -16,6 +16,7 @@ public:
 
 	CGameTest mGameTest;
 	int Repoptime;
+	int static Score;
 
 };
 

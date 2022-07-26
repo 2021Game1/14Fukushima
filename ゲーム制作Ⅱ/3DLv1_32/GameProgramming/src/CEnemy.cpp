@@ -5,10 +5,7 @@
 //CEnemy(ƒ‚ƒfƒ‹,ˆÊ’u,‰ñ“],Šgk)
 CEnemy::CEnemy(CModel* model, const CVector& position,
 	const CVector& rotation, const CVector& scale)
-	:mCollider1(this, &mMatrix, CVector(0.0f, 5.0f, 0.0f), 0.8f)
-	, mCollider2(this, &mMatrix, CVector(0.0f, 5.0f, 20.0f), 0.8f)
-	, mCollider3(this, &mMatrix, CVector(0.0f, 5.0f, -20.0f), 0.8f)
-	,mFireCount(90)
+	:mFireCount(90)
 {
 	//ƒ‚ƒfƒ‹,ˆÊ’u,‰ñ“],Šgk‚ðÝ’è‚·‚é
 	mpModel = model; //“G‚Ìƒ‚ƒfƒ‹Ý’è
@@ -74,12 +71,5 @@ void CEnemy::Collision(CCollider* m, CCollider* o) {
 //Õ“Ëˆ—
 void CEnemy::TaskCollision()
 {
-	//ƒRƒ‰ƒCƒ_‚Ì—Dæ“x•ÏX
-	mCollider1.ChangePriority();
-	mCollider2.ChangePriority();
-	mCollider3.ChangePriority();
-	//Õ“Ëˆ—‚ðŽÀs
-	CCollisionManager::Get()->Collision(&mCollider1, COLLISIONRANGE);
-	CCollisionManager::Get()->Collision(&mCollider2, COLLISIONRANGE);
-	CCollisionManager::Get()->Collision(&mCollider3, COLLISIONRANGE);
+
 }

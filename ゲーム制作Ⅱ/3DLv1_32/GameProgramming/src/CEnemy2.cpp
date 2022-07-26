@@ -13,7 +13,7 @@ CModel CEnemy2::sModel;//モデルデータ作成
 
 //デフォルトコンストラクタ
 CEnemy2::CEnemy2()
-:mCollider(this, &mMatrix,CVector(0.0f,0.0f,0.0f),0.4f),mHp(HP),Velocity(_VELOCITY),Acceleration(ACCELERATION)
+:mCollider(this, &mMatrix,CVector(0.0f,2.0f,0.0f),0.4f),mHp(HP),mVelocity(_VELOCITY),mAcceleration(ACCELERATION)
 {
 	//モデルが無い時は読み込む
 	if (sModel.Triangles().size() == 0)

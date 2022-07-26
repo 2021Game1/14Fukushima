@@ -15,6 +15,7 @@
 //テキストクラスのインクルード
 #include"CText.h"
 
+
 //領域開放をマクロ化
 #define SAFE_DELETE_ARRAY(a) {if(a)delete[]a; a = 0;}
 
@@ -41,6 +42,7 @@ private:
 	CCollider mCollider;
 	CVector mMoneyIndex;
 	CMatrix mBackGroundMatrix;
+
 
 };
 

@@ -3,10 +3,12 @@
 //OpenGL
 #include"glut.h"
  
+int CSceneGame::Score;
 
-
+CSound Se2;//Žæ“¾‰¹
 
 void CSceneGame::Init() {
+	Se2.Load("res\\‰¹Šy\\money.wav");
 	mGameTest.Init();
 }
 
