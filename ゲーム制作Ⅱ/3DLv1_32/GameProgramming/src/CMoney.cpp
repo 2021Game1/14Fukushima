@@ -14,7 +14,7 @@ CModel CMoney::mModel;//モデルデータ作成
 
 //デフォルトコンストラクタ
 CMoney::CMoney()
-	:mCollider(this, &mMatrix, CVector(0.0f, 1.0f, 0.0f), 0.4f)
+	:mCollider(this, &mMatrix, CVector(0.0f, 1.5f, 0.0f), 1.0f)
 {
 	//モデルが無い時は読み込む
 	if (mModel.Triangles().size() == 0)
@@ -24,6 +24,7 @@ CMoney::CMoney()
 	//モデルのポインタ設定
 	mpModel = &mModel;
 	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
+	mTag = EITEM;
 }
 
 
@@ -60,19 +61,27 @@ void CMoney::Collision(CCollider* m, CCollider* o)
 	//相手のコライダタイプの判定
 	switch (o->Type())
 	{
-		case CCollider::ESPHERE: { //球コライダの時
-			//コライダのmとoが衝突しているかの判定
-			if (CCollider::Collision(m, o)) {
-				//エフェクト生成
-				new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
-				Se2.Play();
-				CSceneGame::Score += 100;
-				mEnabled = false;
-			}
+	case CCollider::ESPHERE: { //球コライダの時
+				//コライダのmとoが衝突しているかの判定
+				if (CCollider::Collision(m, o)) {
+					if (o->Parent()->Tag() == EPLAYER)
+					{
+						//エフェクト生成
+						new CEffect(o->Parent()->Position(), 4.0f, 4.0f, "item.png", 4, 5, 2);
+						Se2.Play();
+						CSceneGame::Score += 100;
+						mEnabled = false;
+					}
+					if (o->Parent()->Tag() == EITEM)
+					{
+						mEnabled = false;
+					}
+
+				}
 			break;
 		}
 	}
-	
+
 }
 
 void CMoney::Update() {

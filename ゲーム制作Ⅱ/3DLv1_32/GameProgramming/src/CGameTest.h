@@ -57,8 +57,6 @@ class CGameTest {
 	CModel mModelC5; //敵モデル
 	CModel mMap; //マップモデル
 	CModel mColision;     //コリジョンマップ
-	//確認用インスタンス
-	CMoney gMoney;
 	//プレイヤーの変数
 	CPlayer mPlayer;
 	//カメラの視点の変数
@@ -72,16 +70,12 @@ class CGameTest {
 	CColliderMash ColliderMesh;
 	//CSoundクラスのインスタンス作成
 	CSound Bgm;
-	CSound Se1;//時間切れ
 	int mRepop;
 	int vel;
-	int index;
-	char flag[12];
 public:
 	
 	void Init() {
 		Bgm.Load("res\\音楽\\Sunrise.wav");
-		Se1.Load("res\\音楽\\clock.wav");
 			
 		////サウンドファイルの繰り返し再生
 		Bgm.Repeat(0.3);
@@ -123,78 +117,66 @@ public:
 			srand((unsigned)time(NULL));
 			vel = (rand() % 100) + 1;
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 0 && vel <= 7 && !(flag[0] == 1)) {
+					if (vel >= 0 && vel <= 7) {
 						new CMoney(CVector(75.0f, -0.5f, 76.5f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[0] = 1;
 					}
+
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 8 && vel <= 15 && !(flag[1] == 1)) {
+					if (vel >= 8 && vel <= 15) {
 						new CMoney(CVector(73.5f, -0.5f, 134.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[1] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 16 && vel <= 23 && !(flag[2] == 1)) {
+					if (vel >= 16 && vel <= 23) {
 						new CMoney(CVector(0.0f, -0.5f, 159.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[2] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 24 && vel <= 31 && !(flag[3] == 1)) {
+					if (vel >= 24 && vel <= 31) {
 						new CMoney(CVector(-61.5f, -0.5f, 158.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[3] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 32 && vel <= 39 && !(flag[4] == 1)) {
+					if (vel >= 32 && vel <= 39) {
 						new CMoney(CVector(-62.5f, -0.5f, 105.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[4] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 40 && vel <= 47 && !(flag[5] == 1)) {
+					if (vel >= 40 && vel <= 47) {
 						new CMoney(CVector(-16.0f, -0.5f, 0.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[5] = 1;
 					}
 				}
-				for (int i = 0; i < 1; i++ && !(flag[6] == 1)) {
+				for (int i = 0; i < 1; i++) {
 					if (vel >= 48 && vel <= 55) {
 						new CMoney(CVector(27.0f, -0.5f, 56.5f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[6] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 56 && vel <= 63 && !(flag[7] == 1)) {
+					if (vel >= 56 && vel <= 63) {
 						new CMoney(CVector(73.5f, -0.5f, -35.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[7] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 64 && vel <= 71 && !(flag[8] == 1)) {
+					if (vel >= 64 && vel <= 71) {
 						new CMoney(CVector(-53.0f, -0.5f, -35.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[8] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 78 && vel <= 85 && !(flag[9] == 1)) {
+					if (vel >= 78 && vel <= 85) {
 						new CMoney(CVector(-62.5f, -0.5f, 42.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[9] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 86 && vel <= 93 && !(flag[10] == 1)) {
+					if (vel >= 86 && vel <= 93) {
 						new CMoney(CVector(-20.0f, -0.5f, 58.0f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[10] = 1;
 					}
 				}
 				for (int i = 0; i < 1; i++) {
-					if (vel >= 94 && vel <= 101 && !(flag[11] == 1)) {
+					if (vel >= 94 && vel <= 101) {
 						new CMoney(CVector(50.0f, -0.5f, 50.5f) * mBackGroundMatrix, CVector(), CVector(0.5f, 0.5f, 0.5f));
-						flag[11] = 1;
 					}
 				}
-
 		}
 		mRepop = mRepop + 1;
 		//カメラのパラメータを作成する

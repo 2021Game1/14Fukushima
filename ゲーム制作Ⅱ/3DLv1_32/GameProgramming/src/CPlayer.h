@@ -16,6 +16,7 @@
 #include "CEffect.h"
 //カメラクラスのインクルード
 #include "CCamera.h"
+#include"CSound.h"
 
 /*
 プレイヤークラス
@@ -25,6 +26,7 @@
 class CPlayer : public CCharacter {
 public:
 	CText mText;
+	float Velocity;
 	//CBulletクラスのインスタンス変数
 	/*CBullet bullet;*/
 	CPlayer();
@@ -37,15 +39,12 @@ public:
 	//衝突処理
 	void TaskCollision();
 	static CPlayer* Get();
-	
-
-	int mHp;
 private:
 	//プレイヤーのインスタンス
 	static CPlayer* spInstance;
 	CCollider mCollider;	//本体用コライダ
-	float Velocity;
 	float Acceleration;
+	int mHp;
 };
 #endif 
 

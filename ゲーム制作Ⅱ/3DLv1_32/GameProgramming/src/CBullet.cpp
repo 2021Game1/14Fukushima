@@ -40,10 +40,18 @@ void CBullet::Render() {
 //衝突処理
 //Collision(コライダ1,コライダ2)
 void CBullet::Collision(CCollider* m, CCollider* o) {
+	//相手のコライダタイプの判定
+	switch (o->Type())
+	{
+	case CCollider::ESPHERE: { //球コライダの時
 	//コライダのmとoが衝突しているかを判定
-	if (CCollider::Collision(m,o)){
-		//衝突している時は無効にする
-		mEnabled = false;
+		if (CCollider::Collision(m, o) && EPLAYER) {
+			//衝突している時は無効にする
+			mEnabled = false;
+		}
+		break;
+	}
+
 	}
 }
 //衝突処理

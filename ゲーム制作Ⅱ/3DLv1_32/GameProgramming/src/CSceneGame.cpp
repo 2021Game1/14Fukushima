@@ -6,9 +6,11 @@
 int CSceneGame::Score;
 
 CSound Se2;//æ“¾‰¹
+CSound Se3;//Õ“Ë‰¹1
 
 void CSceneGame::Init() {
 	Se2.Load("res\\‰¹Šy\\money.wav");
+	Se3.Load("res\\‰¹Šy\\crash.wav");
 	mGameTest.Init();
 }
 

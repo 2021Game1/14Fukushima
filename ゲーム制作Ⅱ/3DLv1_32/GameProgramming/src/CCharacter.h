@@ -25,7 +25,7 @@ public:
 		EENEMY,			//敵
 		EBULLETPLAYER,	//プレイヤー弾
 		EBULLETENEMY,	//敵弾
-		EMISSILE,		//ミサイル
+		EITEM,			//アイテム
 	};
 	//タグの取得
 	ETag Tag();

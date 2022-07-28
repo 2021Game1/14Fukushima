@@ -4,7 +4,6 @@
 
 #define OBJ "res\\Police.obj" //モデルのファイル
 #define MTL "res\\Police.mtl" //モデルのマテリアルファイル
-#define HP 3	//耐久値
 #define VELOCITY 0.18f	   //速度
 #define _VELOCITY 0.0f //初期化
 #define ACCELERATION 0.01f    //加速度
@@ -13,7 +12,7 @@ CModel CEnemy2::sModel;//モデルデータ作成
 
 //デフォルトコンストラクタ
 CEnemy2::CEnemy2()
-:mCollider(this, &mMatrix,CVector(0.0f,2.0f,0.0f),0.4f),mHp(HP),mVelocity(_VELOCITY),mAcceleration(ACCELERATION)
+:mCollider(this, &mMatrix,CVector(0.0f,2.0f,0.0f),0.4f),mVelocity(_VELOCITY),mAcceleration(ACCELERATION)
 {
 	//モデルが無い時は読み込む
 	if (sModel.Triangles().size() == 0)
@@ -22,6 +21,7 @@ CEnemy2::CEnemy2()
 	}
 	//モデルのポインタ設定
 	mpModel = &sModel;
+	mTag = EENEMY;
 }
 //コンストラクタ
 //CEnemy(位置,回転,拡縮)
@@ -51,8 +51,12 @@ void CEnemy2::Collision(CCollider* m, CCollider* o)
 	case CCollider::ESPHERE: { //球コライダの時
 			//コライダのmとoが衝突しているかの判定
 		if (CCollider::Collision(m, o)) {
-			//エフェクト生成
-			new CEffect(o->Parent()->Position(), 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+			if (o->Parent()->Tag() == EPLAYER)
+			{
+				//エフェクト生成
+				new CEffect(mPosition, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+				
+			}
 		}
 		break;
 	}
@@ -133,7 +137,7 @@ void CEnemy2::Update()
 	//}
 
 	if (mVelocity < 1.7f){
-		mVelocity = mVelocity + mAcceleration;
+		mVelocity += mAcceleration;
 	}
 	mPosition = mPosition + (CVector(0.0f,0.0f, VELOCITY) * mVelocity) * mMatrixRotate;
 
@@ -154,21 +158,7 @@ void CEnemy2::Update()
 			mPoint = mPoint * CMatrix().RotateY(45);
 		}
 	}
-	//HPが0以下の時　撃破
-	if (mHp <= 0)
-	{
-		mHp--;
-		//15フレーム毎にエフェクト
-		if (mHp % 15 == 0)
-		{
-			//エフェクト生成
-			new CEffect(mPosition, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
-		}
-		////下降させる
-		//mPosition = mPosition - CVector(0.0f, 0.03f, 0.0f);
-		//CTransform::Update();
-		//return;
-	}
+
 }
 void CEnemy2::TaskCollision()
 {

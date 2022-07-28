@@ -1,10 +1,19 @@
 #include "CEffect.h"
 CMaterial CEffect::sMaterial;//マテリアル.テクスチャ
 
+
 CEffect::CEffect(const CVector& pos, float w, float h, char* texture, int row, int col, int fps) : CBillBoard(pos, w, h), mRows(row), mCols(col), mFps(fps), mFrame(0) {
 	//テクスチャを読んでない場合は読む
 	if (sMaterial.Texture()->Id() == 0)
 	{
+		sMaterial.Texture()->Load(texture);
+		sMaterial.Diffuse()[0] = 1.0f;
+		sMaterial.Diffuse()[1] = 1.0f;
+		sMaterial.Diffuse()[2] = 1.0f;
+		sMaterial.Diffuse()[3] = 1.0f;
+	}
+
+	else if(!sMaterial.Texture()->Id() == 0){
 		sMaterial.Texture()->Load(texture);
 		sMaterial.Diffuse()[0] = 1.0f;
 		sMaterial.Diffuse()[1] = 1.0f;
@@ -42,3 +51,8 @@ void CEffect::Render()
 	CBillBoard::Render(&sMaterial);
 	glEnable(GL_DEPTH_TEST);//深度テスト有効
 }
+
+
+
+
+
