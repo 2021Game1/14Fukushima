@@ -173,17 +173,17 @@ void CPlayer::Render()
 	glColor4f(0.0f, 1.0f, 0.0f, 0.8f);
 	//文字列編集エリアの作成
 	char buf[64];
-		//Y座標の表示
-		//文字列の設定
-		sprintf(buf, "PX:%7.2f", mPosition.X());
-		//文字列の描画
-		mText.DrawString(buf, 150, 30, 8, 16);
+	////Y座標の表示
+	////文字列の設定
+	//sprintf(buf, "PX:%7.2f", mPosition.X());
+	////文字列の描画
+	//mText.DrawString(buf, 150, 30, 8, 16);
 
-		//Y座標の表示
-		//文字列の設定
-		sprintf(buf, "PZ:%7.2f", mPosition.Z());
-		//文字列の描画
-		mText.DrawString(buf, 150, 0, 8, 16);
+	////Y座標の表示
+	////文字列の設定
+	//sprintf(buf, "PZ:%7.2f", mPosition.Z());
+	////文字列の描画
+	//mText.DrawString(buf, 150, 0, 8, 16);
 
 	//スコアの表示
 	//文字列の設定
