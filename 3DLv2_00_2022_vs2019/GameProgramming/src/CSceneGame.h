@@ -5,6 +5,7 @@
 #include "CXCharacter.h"
 #include "CText.h"
 #include "CXPlayer.h"
+#include "CXEnemy.h"
 
 /*
 ゲームのシーン
@@ -17,6 +18,8 @@ class CSceneGame : public CScene {
 	CXPlayer mPlayer;
 	//キー入力で回転
 	CMatrix gMatrix;
+	//敵のインスタンス
+	CXEnemy mEnemy;
 public:
 	//初期化処理のオーバーライド
 	void Init();

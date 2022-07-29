@@ -31,7 +31,7 @@ CModelX::~CModelX() {
 
 CSkinWeights::CSkinWeights(CModelX* model)
 	:mpFrameName(0)
-	, mFrameindex(0)
+	, mFrameIndex(0)
 	, mIndexNum(0)
 	, mpIndex(nullptr)
 	, mpWeight(nullptr)
@@ -298,7 +298,7 @@ void CMesh::AnimateVertex(CModelX* model) {
 	//スキンウェイトの繰り返し
 	for (size_t i = 0; i < mSkinWeights.size(); i++) {
 		//フレーム番号取得
-		int frameIndex = mSkinWeights[i]->mFrameindex;
+		int frameIndex = mSkinWeights[i]->mFrameIndex;
 		//オフセット行列とフレーム行列を合成
 		CMatrix mSkinningMatrix = mSkinWeights[i]->mOffset * model->mFrame[frameIndex]->CombinedMatrix();
 		//頂点数分繰り返し
@@ -744,7 +744,7 @@ void CModelX::SetSkinWeightFrameIndex() {
 				//フレーム名のフレームを取得する
 				CModelXFrame* frame = FindFrame(mFrame[i]->mMesh.mSkinWeights[j]->mpFrameName);
 				//フレーム番号を設定する
-				mFrame[i]->mMesh.mSkinWeights[j]->mFrameindex = frame->mIndex;
+				mFrame[i]->mMesh.mSkinWeights[j]->mFrameIndex = frame->mIndex;
 
 			}
 		}
@@ -768,6 +768,44 @@ CMaterial* CModelX::FindMaterial(char* name) {
 	return NULL;
 }
 
+void CModelX::AnimateVertex(CMatrix* mat) {
+	//フレーム数分繰り返し
+	for (size_t i = 0; i < mFrame.size(); i++){
+		//メッシュに面があれば
+		if (mFrame[i]->mMesh.mFaceNum > 0){
+			//頂点をアニメーションで更新する
+			mFrame[i]->
+				mMesh.AnimateVertex(mat);
+		}
+	}
+}
+
+void CMesh::AnimateVertex(CMatrix* mat) {
+	//アニメーション用の頂点エリアクリア
+	memset(mpAnimateVertex, 0, sizeof(CVector) * mVertexNum);
+	memset(mpAnimateNormal, 0, sizeof(CVector) * mNormalNum);
+	//スキンウェイト分繰り返し
+	for (size_t i = 0; i < mSkinWeights.size(); i++){
+		//フレーム番号取得
+		int frameIndex = mSkinWeights[i]->mFrameIndex;
+		//フレーム合成行列にオフセット行列を合計
+		CMatrix mSkinningMatrix = mSkinWeights[i]->mOffset * mat[frameIndex];
+		//頂点数分繰り返し
+		for (int j = 0; j < mSkinWeights[i]->mIndexNum; j++){
+			//頂点番号取得
+			int index = mSkinWeights[i]->mpIndex[j];
+			//重み取得
+			float weight = mSkinWeights[i]->mpWeight[j];
+			//頂点と法線を更新する
+			mpAnimateVertex[index] += mpVertex[index] * mSkinningMatrix * weight;
+			mpAnimateNormal[index] += mpNormal[index] * mSkinningMatrix * weight;
+		}
+	}
+	//法線を正規化する
+	for (int i = 0; i < mNormalNum; i++) {
+		mpAnimateNormal[i] = mpAnimateNormal[i].Normalize();
+	}
+}
 
 
 /*

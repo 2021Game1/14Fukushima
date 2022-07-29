@@ -23,6 +23,8 @@ void CXCharacter::Init(CModelX* model) {
 		Time(mAnimationFrame);
 	//アニメーションの重みを1.0(100%)にする
 	mpModel->AnimationSet()[mAnimationIndex]->Weught(1.0f);
+	//合成行列退避エリアの確保
+	mpCombinedMatrix = new CMatrix[model->Frames().size()];
 }
 /*
 ChangeAnimation
@@ -66,6 +68,7 @@ void CXCharacter::Update(CMatrix& matrix) {
 		mpModel->AnimationSet()[mAnimationIndex]->Time(
 			mpModel->AnimationSet()[mAnimationIndex]->MaxTime() * 
 			mAnimationFrame / mAnimationFramesize);
+		
 		//フレームを進める
 		mAnimationFrame++;
 	}
@@ -83,18 +86,24 @@ void CXCharacter::Update(CMatrix& matrix) {
 					MaxTime());
 		}
 	}
+	mpModel->AnimationSet()[mAnimationIndex]->Weught(1.0f);
 	//フレームの変換行列をアニメーションで更新する
 	mpModel->AnimateFrame();
 	//フレームの合成行列を計算する
 	mpModel->Frames()[0]->AnimateCombined(&matrix);
-	//頂点にアニメーションを適用する
-	mpModel->AnimeteVertex();
+	for (size_t i = 0; i < mpModel->Frames().size(); i++){
+		mpCombinedMatrix[i] =
+			mpModel->Frames()[i]->CombinedMatrix();
+		mpModel->AnimationSet()[mAnimationIndex]->Weught(0.0f);
+	}
 }
 
 /*
 描画する
 */
 void CXCharacter::Render() {
+	//頂点にアニメーションを適用する
+	mpModel->AnimateVertex(mpCombinedMatrix);
 	mpModel->Render();
 }
 

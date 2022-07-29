@@ -109,7 +109,7 @@ class CSkinWeights {
 	friend CModelX;
 	friend CMesh;
 	char* mpFrameName; //フレーム名
-	int mFrameindex;   //フレーム番号
+	int mFrameIndex;   //フレーム番号
 	int mIndexNum;	   //頂点番号数
 	int* mpIndex;   //頂点番号配列
 	float* mpWeight;   //頂点ウェイト配列
@@ -184,6 +184,8 @@ public:
 	void Render();
 	//頂点にアニメーション適用
 	void AnimateVertex(CModelX* model);
+	//アニメーションの頂点計算を指定した合成行列を使って計算
+	void AnimateVertex(CMatrix*);
 };
 
 
@@ -255,7 +257,8 @@ public:
 	void SetSkinWeightFrameIndex();
 	//頂点にアニメーション適用
 	void AnimeteVertex();
-
+	//アニメーションの頂点計算を指定した合成行列を使って計算
+	void AnimateVertex(CMatrix*);
 	//整数データの取得
 	int GetIntToken();
 	//
