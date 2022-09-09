@@ -203,6 +203,9 @@ class CModelXFrame { //フレーム=ボーン
 public:
 	//コンストラクタ
 	CModelXFrame(CModelX* model);
+	CModelXFrame()
+		:mpName(nullptr)
+		, mIndex(0) {}
 	//デストラクタ
 	~CModelXFrame() {
 		//子フレームを全て開放する

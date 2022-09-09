@@ -8,14 +8,17 @@
 #include "CUtil.h"
 #include "CCollisionManager.h"
 
+CModelX gKnight;
 
 void CSceneGame::Init() {
 	//3Dモデルファイルの読み込み
 	gModelX.Load(MODEL_FILE);
+	//3Dモデルファイルの読み込み
+	gKnight.Load("res\\knight\\knight_low.X");
 	//キャラクタにモデルを設定
 	mPlayer.Init(&gModelX);
 	//敵の初期設定
-	mEnemy.Init(&gModelX);
+	mEnemy.Init(&gKnight);
 	//敵の配置
 	mEnemy.Position(CVector(7.0f, 0.0f, 0.0f));
 	mFont.LoadTexture("FontG.png", 1, 4096 / 64);
