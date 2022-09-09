@@ -6,7 +6,21 @@ CXEnemy::CXEnemy()
 , mColSphereSword(this, nullptr, CVector(-10.0f, 10.0f, 50.0f), 0.3f)
 {
 }
-
+void CXEnemy::Collision(CCollider* m, CCollider* o){
+	switch (m->Type(),o->Type())
+	{
+	case CCollider::ESPHERE: {
+		//コライダのmとoが衝突しているかの判定
+		if (CCollider::Collision(m, o)) {
+			if (o->Parent()->Tag() == EPLAYER && o->ESWORD)
+			{
+				//30フレーム掛けてダウンし、繰り返さない
+				ChangeAnimation(11, false, 30);
+			}
+		}
+	}
+	}
+}
 void CXEnemy::Init(CModelX* model)
 {
 	CXCharacter::Init(model);

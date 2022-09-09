@@ -66,6 +66,8 @@ void CSceneGame::Update() {
 	mPlayer.Render();
 	//ƒRƒ‰ƒCƒ_‚Ì•`‰æ
 	CCollisionManager::Get()->Render();
+	//Õ“Ëˆ—
+	CCollisionManager::Get()->Collision();
 	//“G•`‰æ
 	mEnemy.Render();
 
