@@ -56,6 +56,7 @@ public:
 	//タグの設定
 	//Tag(タグ)
 	void Tag(ETag tag);
+	void Matrix(CMatrix* m);
 protected:
 	CCharacter* mpParent;//親
 	CMatrix* mpMatrix;//親行列

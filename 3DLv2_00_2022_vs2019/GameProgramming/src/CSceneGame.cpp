@@ -6,7 +6,7 @@
 #include "CMatrix.h"
 #include "CKey.h"
 #include "CUtil.h"
-
+#include "CCollisionManager.h"
 
 
 void CSceneGame::Init() {
@@ -64,6 +64,8 @@ void CSceneGame::Update() {
 	gModelX.AnimeteVertex();
 	//ƒ‚ƒfƒ‹•`‰æ
 	mPlayer.Render();
+	//ƒRƒ‰ƒCƒ_‚Ì•`‰æ
+	CCollisionManager::Get()->Render();
 	//“G•`‰æ
 	mEnemy.Render();
 
