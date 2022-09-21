@@ -262,6 +262,14 @@ public:
 	void AnimeteVertex();
 	//アニメーションの頂点計算を指定した合成行列を使って計算
 	void AnimateVertex(CMatrix*);
+	/*
+	アニメーションを抜き出す
+	idx:分割したいアニメーションの番号
+	start:分割したいアニメーションの開始時間
+	end:分割したいアニメーションの終了時間
+	name:追加するアニメーションのセット名
+	*/
+	void CModelX::SeparateAnimationSet(int idx, int strat, int end, char* name);
 	//整数データの取得
 	int GetIntToken();
 	//

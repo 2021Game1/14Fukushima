@@ -10,7 +10,9 @@ public:
 	void Init(CModelX* model);
 	CXEnemy();
 	CCollider mColSphereHead;//頭
-	CCollider mColSphereSword;//剣
+	CCollider mColSphereSword0;//剣
+	CCollider mColSphereSword1;//剣
+	CCollider mColSphereSword2;//剣
 private:
 	//コライダの宣言
 	CCollider mColSphereBody; //身体

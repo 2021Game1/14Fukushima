@@ -1,9 +1,11 @@
 #include "CXEnemy.h"
 //コライダ初期化
 CXEnemy::CXEnemy()
-:mColSphereBody(this, nullptr, CVector(), 0.5)
-, mColSphereHead(this, nullptr, CVector(0.0f, 5.0f, -3.0f), 0.5f)
-, mColSphereSword(this, nullptr, CVector(-10.0f, 10.0f, 50.0f), 0.3f)
+:mColSphereBody(this, nullptr, CVector(0.5,-1.0f,0.0f), 1.0f)
+, mColSphereHead(this, nullptr, CVector(0.0f, 1.0f, 0.0f), 1.5f)
+, mColSphereSword0(this, nullptr, CVector(0.7f, 3.5f, -0.2f), 0.5f)
+, mColSphereSword1(this, nullptr, CVector(0.5f, 2.5f, -0.2f), 0.5f)
+, mColSphereSword2(this, nullptr, CVector(0.3f, 1.5f, -0.2f), 0.5f)
 {
 }
 void CXEnemy::Collision(CCollider* m, CCollider* o){
@@ -25,7 +27,11 @@ void CXEnemy::Init(CModelX* model)
 {
 	CXCharacter::Init(model);
 	//合成行列の設定
-	mColSphereBody.Matrix(&mpCombinedMatrix[8]);
-	mColSphereHead.Matrix(&mpCombinedMatrix[11]);
-	mColSphereSword.Matrix(&mpCombinedMatrix[21]);
+	mColSphereBody.Matrix(&mpCombinedMatrix[1]);
+	//頭
+	mColSphereHead.Matrix(&mpCombinedMatrix[1]);
+	//剣
+	mColSphereSword0.Matrix(&mpCombinedMatrix[26]);
+	mColSphereSword0.Matrix(&mpCombinedMatrix[26]);
+	mColSphereSword0.Matrix(&mpCombinedMatrix[26]);
 }

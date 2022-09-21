@@ -29,6 +29,37 @@ CModelX::~CModelX() {
 	}
 }
 
+void CModelX::SeparateAnimationSet(int idx, int start, int end, char* name)
+{
+	CAnimationSet* anim = mAnimationSet[idx];//分割するアニメーションセットを確定
+	CAnimationSet* as = new CAnimationSet(this);//アニメーションセット生成
+	as->mpName = new char[strlen(name) + 1];
+	strcpy(as->mpName, name);
+	as->mMaxTime = end - start;
+	for (size_t i = 0; i < anim->mAnimation.size(); i++) {//既存アニメーション分繰り返し
+		CAnimation* animation = new CAnimation(this);//アニメーション生成
+		animation->mpFrameName = new char[strlen(anim->mAnimation[i]->mpFrameName) + 1];
+		strcpy(animation->mpFrameName, anim->mAnimation[i]->mpFrameName);
+		animation->mFrameIndex = anim->mAnimation[i]->mFrameIndex;
+		animation->mKeyNum = end - start + 1;
+		animation->mpKey = new CAnimationKey[animation->mKeyNum];//アニメーションキー生成
+		animation->mKeyNum = 0;
+		for (int j = start; j <= end && j < anim->mAnimation[i]->mKeyNum; j++) {
+			if (j < anim->mAnimation[i]->mKeyNum)
+			{
+				animation->mpKey[animation->mKeyNum] = anim->mAnimation[i]->mpKey[j];
+			}
+			else
+			{
+				animation->mpKey[animation->mKeyNum] =
+					anim->mAnimation[i]->mpKey[anim->mAnimation[i]->mKeyNum - 1];
+			}
+			animation->mpKey[animation->mKeyNum].mTime = animation->mKeyNum++;
+		}//アニメーションキーコピー
+		as->mAnimation.push_back(animation);//アニメーション追加
+	}
+	mAnimationSet.push_back(as);//アニメーションセット追加
+}
 
 
 
