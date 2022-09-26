@@ -55,7 +55,7 @@ class CAnimation {
 	CAnimationKey* mpKey;	//ÉLÅ[ÇÃîzóÒ
 public:
 	CAnimation(CModelX* model);
-
+	CAnimation();
 	~CAnimation(){
 		SAFE_DELETE_ARRAY(mpFrameName);
 	}
@@ -79,6 +79,7 @@ class CAnimationSet {
 	std::vector<CAnimation*>mAnimation;
 public:
 	CAnimationSet(CModelX* model);
+	CAnimationSet();
 	~CAnimationSet()
 	{
 		SAFE_DELETE_ARRAY(mpName);

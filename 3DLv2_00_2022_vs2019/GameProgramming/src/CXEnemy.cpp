@@ -2,7 +2,7 @@
 //ÉRÉâÉCÉ_èâä˙âª
 CXEnemy::CXEnemy()
 :mColSphereBody(this, nullptr, CVector(0.5,-1.0f,0.0f), 1.0f)
-, mColSphereHead(this, nullptr, CVector(0.0f, 1.0f, 0.0f), 1.5f)
+, mColSphereHead(this, nullptr, CVector(0.0f, 1.f, 0.0f), 1.5f)
 , mColSphereSword0(this, nullptr, CVector(0.7f, 3.5f, -0.2f), 0.5f)
 , mColSphereSword1(this, nullptr, CVector(0.5f, 2.5f, -0.2f), 0.5f)
 , mColSphereSword2(this, nullptr, CVector(0.3f, 1.5f, -0.2f), 0.5f)
@@ -32,6 +32,6 @@ void CXEnemy::Init(CModelX* model)
 	mColSphereHead.Matrix(&mpCombinedMatrix[1]);
 	//åï
 	mColSphereSword0.Matrix(&mpCombinedMatrix[26]);
-	mColSphereSword0.Matrix(&mpCombinedMatrix[26]);
-	mColSphereSword0.Matrix(&mpCombinedMatrix[26]);
+	mColSphereSword1.Matrix(&mpCombinedMatrix[26]);
+	mColSphereSword2.Matrix(&mpCombinedMatrix[26]);
 }
