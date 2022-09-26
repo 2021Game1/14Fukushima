@@ -54,7 +54,7 @@ void CEnemy2::Collision(CCollider* m, CCollider* o)
 			if (o->Parent()->Tag() == EPLAYER)
 			{
 				//エフェクト生成
-				new CEffect(mPosition, 1.0f, 1.0f, "exp.tga", 4, 4, 2);
+				new CEffect(mPosition, 2.0f, 2.0f, "exp.tga", 4, 4, 2);
 				
 			}
 		}
@@ -126,15 +126,6 @@ void CEnemy2::Update()
 	{
 		mRotation = mRotation + CVector(0.0f, -1.2f, 0.0f);//右へ回転
 	}
-	////上下方向へ回転
-	//if (dy > margin)
-	//{
-	//	mRotation = mRotation + CVector(-1.0f, 0.0f, 0.0f);//上へ
-	//}
-	//else if (dy < -margin)
-	//{
-	//	mRotation = mRotation + CVector(1.0f, 0.0f, 0.0f);//下へ
-	//}
 
 	if (mVelocity < 1.7f){
 		mVelocity += mAcceleration;

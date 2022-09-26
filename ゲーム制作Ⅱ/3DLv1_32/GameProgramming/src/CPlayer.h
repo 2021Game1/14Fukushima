@@ -26,7 +26,7 @@
 class CPlayer : public CCharacter {
 public:
 	CText mText;
-	float Velocity;
+	
 	//CBulletクラスのインスタンス変数
 	/*CBullet bullet;*/
 	CPlayer();
@@ -44,6 +44,7 @@ private:
 	static CPlayer* spInstance;
 	CCollider mCollider;	//本体用コライダ
 	float Acceleration;
+	float Velocity;
 	int mHp;
 };
 #endif 

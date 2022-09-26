@@ -100,8 +100,8 @@ public:
 		//敵機2のインスタンス作成
 		new CEnemy2(CVector(-5.0f, -0.8f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
 		new CEnemy2(CVector(5.0f, -0.8f, -10.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
-		new CEnemy2(CVector(92.0f, -0.8f, 100.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
-		new CEnemy2(CVector(87.0f, -0.8f, 100.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CEnemy2(CVector(80.0f, -0.8f, 100.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
+		new CEnemy2(CVector(60.0f, -0.8f, 100.0f) * mBackGroundMatrix, CVector(), CVector(0.16f, 0.16f, 0.16f));
 		//ビルボードの生成
 		/*new CBillBoard(CVector(-6.0f, 3.0f, -10.0f), 1.0f, 1.0f);*/
 		//背景モデルから三角コライダを生成
