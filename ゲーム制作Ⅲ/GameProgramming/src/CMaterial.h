@@ -3,12 +3,13 @@
 #include "CTexture.h"
 #include "CModelX.h"
 #define MATERIAL_NAME_LEN 64
-
+class CMyShader;
 /*
 マテリアルクラス
 マテリアルのデータを扱う
 */
 class CMaterial {
+	friend CMyShader;
 public:
 //	void Diffuse(float r, float g, float b, float a);
 	//頂点数の設定

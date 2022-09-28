@@ -42,7 +42,7 @@ void CMyShader::Render(CModelX* model, CMesh* mesh, CMatrix* pCombinedMatrix) {
 	glUniform3fv(glGetUniformLocation(GetProgram(), "lightDiffuseColor"), 1, (float*)&diffuse);
 	//スキンメッシュ行列設定
 	int MatrixLocation = glGetUniformLocation(GetProgram(), "Transforms");
-	glUniformMatrix4fv(MatrixLocation, model->mFrame.size(), GL_FALSE, model->mpSkinningMatrix[0].mF);
+	glUniformMatrix4fv(MatrixLocation, model->mFrame.size(), GL_FALSE, model->mpSkinningMatrix[0].M());
 	/*
 	ワールドトランスフォーム
 	*/

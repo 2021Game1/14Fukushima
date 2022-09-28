@@ -1,4 +1,5 @@
 #include "CMatrix.h"
+#include"CVector.h"
 //標準入出力関数のインクルード
 #include <stdio.h>
 

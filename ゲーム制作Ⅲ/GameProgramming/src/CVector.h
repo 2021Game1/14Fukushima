@@ -1,8 +1,8 @@
 #ifndef CVECTOR_H
 #define CVECTOR_H
 
+
 #include"CMatrix.h"
-class CMatrix;
 /*
 ベクトルクラス
 ベクトルデータを扱います
@@ -65,5 +65,6 @@ public:
 private:
 	//3D各軸での値を設定
 	float mX, mY, mZ;
+	
 };
 #endif

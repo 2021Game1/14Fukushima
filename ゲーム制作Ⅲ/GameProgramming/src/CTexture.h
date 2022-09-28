@@ -20,8 +20,10 @@ struct STgamHeader {
 テクスチャークラス
 */
 //#include <map>
+class CMyShader;
 
 class CTexture {
+	friend CMyShader;
 public:
 	int Row();
 	int Col();
