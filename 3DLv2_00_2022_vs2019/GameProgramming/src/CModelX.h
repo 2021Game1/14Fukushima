@@ -15,7 +15,7 @@
 //配列のサイズ取得をマクロ化
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
 
-
+class CMyShader;
 
 class CModelX;//フレンドクラス用
 
@@ -111,6 +111,7 @@ CSkinWeights
 class CSkinWeights {
 	friend CModelX;
 	friend CMesh;
+	friend CMyShader;
 	char* mpFrameName; //フレーム名
 	int mFrameIndex;   //フレーム番号
 	int mIndexNum;	   //頂点番号数
@@ -135,6 +136,7 @@ class CMesh{
 	friend CModelX;
 	friend CModelXFrame;
 	friend CSkinWeights;
+	friend CMyShader;
 	//頂点バッファ識別子
 	GLuint mMyVertexBufferId;
 	//頂点バッファの作成
@@ -202,6 +204,7 @@ class CModelXFrame { //フレーム=ボーン
 	friend CModelX;
 	friend CMesh;
 	friend CAnimation;
+	friend CMyShader;
 	std::vector<CModelXFrame*>mChild; //子フレームの配列
 	CMatrix mTransformMatrix;		  //変換行列
 	CMatrix mCombinedMatrix;		  //合成行列
@@ -243,6 +246,7 @@ class CModelX {
 	friend CAnimationSet;
 	friend CAnimation;
 	friend CAnimationKey;
+	friend CMyShader;
 	//シェーダー用スキンマトリックス
 	CMatrix* mpSkinningMatrix;
 	CMyShader mShader; //シェーダーのインスタンス

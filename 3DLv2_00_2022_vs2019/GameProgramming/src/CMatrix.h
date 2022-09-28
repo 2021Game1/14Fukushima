@@ -4,10 +4,12 @@
 マトリクスクラス
 4行4列の行列データを扱います
 */
+class CMyShader;
 
 class CVector;
 
 class CMatrix {
+	friend CMyShader;
 public:
 	//2次元配列をmMの要素数を返すメソッド
 	int Size();
