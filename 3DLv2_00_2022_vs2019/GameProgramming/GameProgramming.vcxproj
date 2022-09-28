@@ -70,6 +70,7 @@
     <ClInclude Include="src\CTriangle.h" />
     <ClInclude Include="src\CUtil.h" />
     <ClInclude Include="src\CVector.h" />
+    <ClInclude Include="src\CVertex.h" />
     <ClInclude Include="src\CXCharacter.h" />
     <ClInclude Include="src\CXEnemy.h" />
     <ClInclude Include="src\Update.h" />

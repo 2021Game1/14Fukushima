@@ -1,5 +1,4 @@
 #include "CVector.h"
-#include"CMatrix.h"
 #define  _USE_MATH_DEFINES
 #include <math.h>
 

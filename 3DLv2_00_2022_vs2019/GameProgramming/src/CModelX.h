@@ -4,6 +4,7 @@
 #include <vector>	 //vectorクラスのインクルード(動的配列)
 #include "CMatrix.h" //マトリクスクラスのインクルード
 #include "CVector.h"
+#include"CMyShader.h"//シェーダーのインクルード
 
 
 #define MODEL_FILE "res\\ラグナ.x"
@@ -13,6 +14,8 @@
 
 //配列のサイズ取得をマクロ化
 #define ARRAY_SIZE(a) (sizeof(a)/sizeof(a[0]))
+
+
 
 class CModelX;//フレンドクラス用
 
@@ -48,7 +51,6 @@ class CAnimation {
 	friend CAnimationSet;
 	friend CModelX;
 	friend CAnimationKey;
-
 	char* mpFrameName;//フレーム名
 	int mFrameIndex; //フレーム番号
 	int mKeyNum;	//キー数(時間数)
@@ -133,7 +135,10 @@ class CMesh{
 	friend CModelX;
 	friend CModelXFrame;
 	friend CSkinWeights;
-
+	//頂点バッファ識別子
+	GLuint mMyVertexBufferId;
+	//頂点バッファの作成
+	void CreateVertexBuffer();
 	int mVertexNum;		//頂点数
 	CVector* mpVertex;	//頂点データ
 	int mFaceNum;		//画数
@@ -143,6 +148,7 @@ class CMesh{
 	int mMaterialIndexNum;	//マテリアル番号数(面数)
 	int* mpMaterialIndex;//マテリアル番号
 	float* mpTextureCoords;//テクスチャファイル座標データ
+	std::vector<int>mMaterialVertexCount;//マテリアル毎の面数
 	std::vector<CMaterial*>mMaterial;//マテリアルデータ
 	std::vector<CSkinWeights*>mSkinWeights;//スキンウェイト
 	CVector* mpNormal;	//法線ベクトル
@@ -163,6 +169,7 @@ public:
 		,mpAnimateVertex(nullptr)
 		,mpAnimateNormal(nullptr)
 		,mpTextureCoords(nullptr)
+		, mMyVertexBufferId(0)
 	{}
 	//デストラクタ
 	~CMesh() {
@@ -222,7 +229,6 @@ public:
 	//合成行列の作成
 	void AnimateCombined(CMatrix* parent);
 	const CMatrix& CombinedMatrix();
-private:
 };
 
 
@@ -237,6 +243,9 @@ class CModelX {
 	friend CAnimationSet;
 	friend CAnimation;
 	friend CAnimationKey;
+	//シェーダー用スキンマトリックス
+	CMatrix* mpSkinningMatrix;
+	CMyShader mShader; //シェーダーのインスタンス
 	char* mpPointer;	//読み込み位置
 	char mToken[1024];  //取り出した単語の領域
 	std::vector<CModelXFrame*>mFrame;	//フレームの配列
@@ -263,6 +272,8 @@ public:
 	void AnimeteVertex();
 	//アニメーションの頂点計算を指定した合成行列を使って計算
 	void AnimateVertex(CMatrix*);
+	//シェーダーを使った描画
+	void RenderShader(CMatrix* m);
 	/*
 	アニメーションを抜き出す
 	idx:分割したいアニメーションの番号
