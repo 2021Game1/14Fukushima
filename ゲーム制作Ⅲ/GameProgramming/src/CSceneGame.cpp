@@ -1,5 +1,6 @@
 #include "CSceneGame.h"
 //OpenGL
+
 #include "glut.h"
 #include "CVector.h"
 #include "CCamera.h"
@@ -21,6 +22,7 @@ CSceneGame* CSceneGame::GetInstance()
 	return mpSceneGameInstance;
 }
 void CSceneGame::Init() {
+	mCountStart = false;
 	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 	//3Dモデルファイルの読み込み
 	gModelX.Load(MODEL_FILE);
@@ -52,27 +54,27 @@ void CSceneGame::Init() {
 	mMap.Model(&gMap);
 	//親インスタンスと親行列はなし
 	mColliderMesh.Set(nullptr, &mBackGroundMatrix, &gCollision);
+	//カメラ初期化
+	Camera.Init();
 }
 
 void CSceneGame::Update() {
-	Camera.Update();
+	//一度だけ通る
+	if (mCountStart == false) {
+		mCountStart = true;
+		mStartTime = clock(); //計測開始時刻を入れる
+		//カメラ初期化
+		Camera.Init();
+	}
+
+	
 	//キャラクタクラスの更新
 	mPlayer.Update();
 	//敵の更新
 	mEnemy.Update();
-	//カメラのパラメータを作成する
-	CVector e, c, u;//視点,注視点,上方向
-		//視点を求める
-	e = mPlayer.Position() + CVector(0.0f, 1.2f, -3.0f) * mPlayer.MatrixRotate();
-	//注視点を求める
-	c = mPlayer.Position();
-	//上方向を求める
-	u = CVector(0.0f, 4.0f, 0.0f) * mPlayer.MatrixRotate();
-	//カメラクラスの設定
-	Camera.Set(e, c, u);
+	Camera.Render();
 	
 
-	Camera.Render();
 
 
 	//行列設定
@@ -84,6 +86,7 @@ void CSceneGame::Update() {
 	mPlayer.Render();
 		//マップモデルの描画
 	mMap.Render();
+	
 	//コライダの描画
 	CCollisionManager::Get()->Render();
 	//衝突処理

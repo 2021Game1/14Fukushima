@@ -11,6 +11,7 @@ class CVector;
 class CMatrix {
 	friend CMyShader;
 public:
+
 	//2次元配列をmMの要素数を返すメソッド
 	int Size();
 	//表示確認用
@@ -64,9 +65,28 @@ public:
 	void operator+=(const CMatrix& m);
 	//クォータニオン
 	CMatrix Quaternion(float x, float y, float z, float w);
+	CMatrix Inverse(void);
+	CVector GetXVec();
+	CVector GetYVec();
+	CVector GetZVec();
+	CVector GetPos();
 private:
 	//4×4の行列データを設定
 	float mM[4][4];
+	union {
+		//4×4の行列データを設定
+		float mM[4][4];
+		//1次元配列として使う
+		float mF[16];
+		struct
+		{
+			float	m00, m10, m20, m30,
+				m01, m11, m21, m31,
+				m02, m12, m22, m32,
+				m03, m13, m23, m33;
+		};
+	};
+
 };
 #endif
 

@@ -113,6 +113,12 @@ void CVector::operator+=(const CVector& v) {
 	mY += v.mY;
 	mZ += v.mZ;
 }
+void CVector::operator-=(const CVector& v)
+{
+	mX -= v.mX;
+	mY -= v.mY;
+	mZ -= v.mZ;
+}
 
 //Y軸での回転角度の取得
 //度度を返す（Z軸＋が0度）

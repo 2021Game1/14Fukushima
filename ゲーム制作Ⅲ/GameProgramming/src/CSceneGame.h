@@ -1,5 +1,6 @@
 #ifndef CSCENEGAME_H
 #define CSCENEGAME_H
+#include <time.h>
 #include "CScene.h"
 #include "CModelX.h"
 #include "CXCharacter.h"
@@ -31,6 +32,8 @@ class CSceneGame : public CScene {
 	CMap mMap;
 	//マップ移動用の行列
 	CMatrix mBackGroundMatrix;
+	clock_t mStartTime, mEndTime;//計測開始時刻、計測終了時刻
+	bool mCountStart; //クリア時間計測開始用
 	//モデルからコライダを生成
 	CColliderMesh mColliderMesh;
 	//staticでポインタを作る

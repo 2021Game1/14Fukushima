@@ -9,11 +9,12 @@ public:
 	void Collision(CCollider* m, CCollider* o);
 	void Init(CModelX* model);
 	CXEnemy();
+
+private:
 	CCollider mColSphereHead;//頭
 	CCollider mColSphereSword0;//剣
 	CCollider mColSphereSword1;//剣
 	CCollider mColSphereSword2;//剣
-private:
 	//コライダの宣言
 	CCollider mColSphereBody; //身体
 };

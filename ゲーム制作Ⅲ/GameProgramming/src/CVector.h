@@ -28,6 +28,9 @@ public:
 	//+=演算子のオーバーロード
 	//CVector1 += CVector2の演算を行う
 	void operator+=(const CVector& v);
+	//-=演算子のオーバーロード
+	//CVector1 -= CVector2 の演算を行う
+	void operator-=(const CVector& v);
 	//デフォルトコンストラクタ
 	CVector();
 	//コンストラクタ
