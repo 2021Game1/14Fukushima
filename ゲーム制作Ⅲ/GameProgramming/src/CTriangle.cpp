@@ -1,5 +1,6 @@
-#include "CTriangle.h"
 #include "glut.h"
+#include "CTriangle.h"
+
 
 void CTriangle::MaterialIdx(int idx)
 {

@@ -1,4 +1,14 @@
 #include"CXPlayer.h"
+#include"CSceneGame.h"
+#include "CCamera.h"
+#define GRAVITY 0.1f//重力
+
+CXPlayer* CXPlayer::mpPlayerInstance;
+//プレイヤーのポインタを返すことで、座標などが参照できるようになる
+CXPlayer* CXPlayer::GetInstance()
+{
+	return mpPlayerInstance;
+}
 
 //コライダ初期化
 CXPlayer::CXPlayer()
@@ -16,8 +26,10 @@ void CXPlayer::Init(CModelX* model)
 	mColSphereBody.Matrix(&mpCombinedMatrix[9]);
 	mColSphereHead.Matrix(&mpCombinedMatrix[12]);
 	mColSphereSword.Matrix(&mpCombinedMatrix[22]);
+
 }
 void CXPlayer::Update() {
+	CSceneGame* tSceneGame = CSceneGame::GetInstance();
 	if (CKey::Once(' ')) {
 		ChangeAnimation(3, false, 30);
 	}
@@ -35,12 +47,12 @@ void CXPlayer::Update() {
 		//Wキー入力で前進
 		if (CKey::Push('W')) {
 			mPosition = mPosition + (mMatrixRotate.VectorZ() * 0.1f);
-			ChangeAnimation(1, true, 60);
+			ChangeAnimation(0, true, 60);
 
 		}
 		else if (mAnimationIndex == 1)
 		{
-			ChangeAnimation(0, true, 60);
+			ChangeAnimation(1, true, 60);
 		}
 		//Aキーを押すと２度回転
 		if (CKey::Push('A')) {
@@ -53,7 +65,22 @@ void CXPlayer::Update() {
 	}
 
 
-
-
 	CXCharacter::Update();
+}
+void CXPlayer::Collision(CCollider* m, CCollider* o) {
+	//自身のコライダタイプの判定
+	switch (m->Type()) {
+	case CCollider::ESPHERE: {//球コライダ
+		//相手のコライダが三角コライダの時
+		if (o->Type() == CCollider::ETRIANGLE) {
+			CVector adjust;//調整用ベクトル
+			//三角形と球の衝突判定
+			CCollider::CollisionTriangleSphere(o, m, &adjust);
+			//位置の更新(mPosition + adjust)
+			mPosition = mPosition + adjust;
+			//行列の更新
+			CTransform::Update();
+		}
+	}
+	}
 }

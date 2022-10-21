@@ -8,11 +8,26 @@
 #include "CUtil.h"
 #include "CCollisionManager.h"
 
-CModelX gKnight;
 
+#define MODEL_MAP "res\\map\\map.obj","res\\map\\map.mtl"
+#define COLLISION_MAP "res\\map\\Collision.obj","res\\map\\Collision.mtl"
+
+
+
+CSceneGame* CSceneGame::mpSceneGameInstance;
+//プレイヤーのポインタを返すことで、座標などが参照できるようになる
+CSceneGame* CSceneGame::GetInstance()
+{
+	return mpSceneGameInstance;
+}
 void CSceneGame::Init() {
+	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 	//3Dモデルファイルの読み込み
 	gModelX.Load(MODEL_FILE);
+	//マップモデルファイルの入力
+	gMap.Load(MODEL_MAP);
+	//マップのコライダファイルの入力
+	gCollision.Load(COLLISION_MAP);
 	//3Dモデルファイルの読み込み
 	gKnight.Load("res\\knight\\knight_low.X");
 	gKnight.SeparateAnimationSet(0, 10, 80, "walk");//1:移動
@@ -33,45 +48,33 @@ void CSceneGame::Init() {
 	//敵の配置
 	mEnemy.Position(CVector(7.0f, 0.0f, 0.0f));
 	mEnemy.ChangeAnimation(2, true, 200);
-	mFont.LoadTexture("FontG.png", 1, 4096 / 64);
-
+	mFont.LoadTexture("font\\FontG.png", 1, 4096 / 64);
+	mMap.Model(&gMap);
+	//親インスタンスと親行列はなし
+	mColliderMesh.Set(nullptr, &mBackGroundMatrix, &gCollision);
 }
 
 void CSceneGame::Update() {
+	Camera.Update();
 	//キャラクタクラスの更新
 	mPlayer.Update();
 	//敵の更新
 	mEnemy.Update();
-	
 	//カメラのパラメータを作成する
-	CVector e, c, u;//視点、注視点、上方向
-	//視点を求める
-	e = CVector(1.0f, 2.0f, 10.0f);
+	CVector e, c, u;//視点,注視点,上方向
+		//視点を求める
+	e = mPlayer.Position() + CVector(0.0f, 1.2f, -3.0f) * mPlayer.MatrixRotate();
 	//注視点を求める
-	c = CVector();
+	c = mPlayer.Position();
 	//上方向を求める
-	u = CVector(0.0f, 1.0f, 0.0f);
-	
+	u = CVector(0.0f, 4.0f, 0.0f) * mPlayer.MatrixRotate();
 	//カメラクラスの設定
 	Camera.Set(e, c, u);
+	
+
 	Camera.Render();
 
-	//X軸+回転
-	if (CKey::Push('K')) {
-		gMatrix = gMatrix * CMatrix().RotateX(1);
-	}
-	//Y軸+回転
-	if (CKey::Push('L')){
-		gMatrix = gMatrix * CMatrix().RotateY(1);
-	}
-	//X軸-回転
-	if (CKey::Push('I')) {
-		gMatrix = gMatrix * CMatrix().RotateX(-1);
-	}
-	//Y軸-回転
-	if (CKey::Push('J')) {
-		gMatrix = gMatrix * CMatrix().RotateY(-1);
-	}
+
 	//行列設定
 	glMultMatrixf(gMatrix.M());
 	
@@ -79,12 +82,15 @@ void CSceneGame::Update() {
 	gModelX.AnimeteVertex();
 	//モデル描画
 	mPlayer.Render();
+		//マップモデルの描画
+	mMap.Render();
 	//コライダの描画
 	CCollisionManager::Get()->Render();
 	//衝突処理
 	CCollisionManager::Get()->Collision();
 	//敵描画
 	mEnemy.Render();
+
 
 
 	//2D描画開始
@@ -94,6 +100,7 @@ void CSceneGame::Update() {
 
 	//2Dの描画終了
 	CUtil::End2D();
+
 
 }
 

@@ -7,7 +7,7 @@
 #include"CMyShader.h"//シェーダーのインクルード
 
 
-#define MODEL_FILE "res\\ラグナ.x"
+#define MODEL_FILE "res\\paladin\\paladin.x"
 
 //領域開放をマクロ化
 #define SAFE_DELETE_ARRAY(a) {if(a)delete[]a; a = 0;}

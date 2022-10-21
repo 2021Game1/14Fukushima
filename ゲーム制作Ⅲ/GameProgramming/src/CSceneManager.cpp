@@ -1,5 +1,5 @@
 #include "CSceneManager.h"
-#include "CSceneGame.h"
+
 
 //コンストラクタ
 CSceneManager::CSceneManager()

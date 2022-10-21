@@ -3,6 +3,7 @@
 #include "glut.h"
 #include "GLFW/glfw3.h"
 #include "Update.h"
+#include "CInput.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -92,7 +93,7 @@ int main(void)
 		glfwTerminate();
 		return -1;
 	}
-
+	CInput::Window(window);
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 

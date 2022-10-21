@@ -17,7 +17,6 @@ public:
 	//デフォルトコンストラクタ
 	CModel();
 	~CModel();
-
 	//モデルファイルの入力
 	//Load(モデルファイル名, マテリアルファイル名)
 	void Load(char *obj, char *mtl);
