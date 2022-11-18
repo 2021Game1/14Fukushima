@@ -10,7 +10,13 @@ CCamera* CCamera::mpCameraInstance;
 #define WINDOW_HEIGHT 600
 #define WIN_CENTRAL_X WINDOW_WIDTH/2 //画面の中央（X軸）
 #define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
+#define TARGETLOOK_Y 0.9f			//ターゲット時のカメラ高さ
+#define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
 
+CCamera* CCamera::Instance()
+{
+	return mpCameraInstance;
+}
 void CCamera::Init()
 {
 	//カメラのパラメータを作成する
@@ -25,6 +31,15 @@ void CCamera::Init()
 	//カメラクラスの設定
 	Set(e, c, u);
 }
+float CCamera::mLerp(float start, float point, float rate)
+{
+	return start + rate * (point - start);
+
+}
+void CCamera::SetTarget(const CVector& target)
+{
+	mTarget = target;
+}
 
 const CVector& CCamera::Eye() const
 {
@@ -32,50 +47,32 @@ const CVector& CCamera::Eye() const
 }
 
 void CCamera::Update() {
-	static int oldMouseX(0), oldMouseY(0);
-	int mouseX(0), mouseY(0);
-	CInput::GetMousePosWin(&mouseX, &mouseY);
-
-	float moveX = (float)(oldMouseX - mouseX);
-	float moveY = (float)(oldMouseY - mouseY);
-
-	//マウスを画面中央に固定
+	CInput::GetMousePosWin(&mMouseX, &mMouseY);
+	float moveX = (float)(mOldMouseX - mMouseX);
+	float moveY = (float)(mOldMouseY - mMouseY);
+	//マウスカーソルが動いた方向にカメラの原点をあわせる
+	if (mSkip == false) {
+			if (moveX != 0) mAngleX += (moveX * 0.005f);
+			if (moveY != 0) mAngleY += (moveY * 0.005f);
+	}
+	mSkip = false;
 	int X = WIN_CENTRAL_X;
 	int Y = WIN_CENTRAL_Y;
 	CInput::SetMousePosW(X, Y);
-	oldMouseX = X;
-	oldMouseY = Y;
-
-
-	/*
-	oldMouseX = mouseX;
-	oldMouseY = mouseY;
-	*/
-	if (CKey::Push(VK_RIGHT)) {
-		mAngleX += 0.1f;
-	}
-	if (CKey::Push(VK_LEFT)) {
-		mAngleX -= 0.1f;
-	}
-	if (CKey::Push(VK_UP)) {
-		mAngleY += 0.01f;
-	}
-	if (CKey::Push(VK_DOWN)) {
-		mAngleY -= 0.01f;
-	}
+	mOldMouseX = X;
+	mOldMouseY = Y;
 
 	//Y軸制限 0～3.14が180度範囲
 	if (mAngleY < 0.05f) mAngleY = 0.05f;
 	if (mAngleY > 1.51f) mAngleY = 1.51f;
-	if (mAngleDelayY < 0.05f) mAngleDelayY = 0.05f;
-	if (mAngleDelayY > 1.51f) mAngleDelayY = 1.51f;
 
-	mPos.mX = mTarget.mX + (sinf(mAngleX)) * (mDist * sinf(mAngleY));
-	mPos.mY = mTarget.mY + cosf(mAngleY) * mDist;
-	mPos.mZ = mTarget.mZ + (cosf(mAngleX)) * (mDist * sinf(mAngleY));
+
+	mPos.X(mTarget.X() + (sinf(mAngleX)) * (mDist * sinf(mAngleY)));
+	mPos.Y(mTarget.Y() + cosf(mAngleY) * mDist);
+	mPos.Z(mTarget.Z() + (cosf(mAngleX)) * (mDist * sinf(mAngleY)));
 
 	mCenter = mTarget;
-	mCenter.mY += CAMERA_HEAD_ADJUST;//頭上補正
+	mCenter.Y(mCenter.Y() + CAMERA_HEAD_ADJUST);
 	mEye = mPos;
 
 	//線コライダセット
@@ -83,33 +80,46 @@ void CCamera::Update() {
 	CInput::InputReset();
 	
 }
-
 CMatrix CCamera::GetMat() {
 	return mMatrix;
 }
-
-
 void CCamera::Set(const CVector& eye, const CVector& center,
 	const CVector& up) {
 	mEye = eye;
 	mCenter = center;
 	mUp = up;
+
+	mPos = eye;
+	mTarget = center;
+	mAngleX = 0.0f;
+	mAngleY = 1.0f;
+	mDist = DEF_CAMERA_DIST;
+	mAngleDelayX = mAngleX;
+	mAngleDelayY = mAngleY;
 }
 
 void CCamera::Render() {
-	//gluLookAt(mEye.mX, mEye.mY, mEye.mZ,
-	//	mCenter.mX, mCenter.mY, mCenter.mZ,
-	//	mUp.mX, mUp.mY, mUp.mZ);
 	gluLookAt(mEye.X(), mEye.Y(), mEye.Z(),
 		mCenter.X(), mCenter.Y(), mCenter.Z(),
 		mUp.X(), mUp.Y(), mUp.Z());
-
-	//カメラ行列格納
+	//モデルビュー行列の取得
 	glGetFloatv(GL_MODELVIEW_MATRIX, mMatrix.M());
 }
 
 CCamera::CCamera()
-
+	:mSkip(true)
+	, mAngleX(0.0f)
+	, mAngleY(0.0f)
+	, mDist(0.0f)
+	, mOldMouseX(0)
+	, mOldMouseY(0)
+	, mMouseX(0)
+	, mMouseY(0)
+	, mAngleDelayX(0.0f)
+	, mAngleDelayY(0.0f)
+	, mRotRad(0.0f)
+	, mOldMousePosX(0)
+	, mOldMousePosY(0)
 {
 //優先度を設定
 mPriority = 100;
@@ -118,10 +128,11 @@ CTaskManager::Get()->Add(this);//追加する
 mpCameraInstance = this;
 }
 
+
 void CCamera::Collision(CCollider* m, CCollider* o) {
 	//自身のコライダタイプの判定
 	switch (m->Type()) {
-	case CCollider::ELINE: {//球コライダ
+	case CCollider::ELINE: {//線コライダ
 		//相手のコライダが三角コライダの時
 		if (o->Type() == CCollider::ETRIANGLE) {
 			CVector adjust;//調整用ベクトル
@@ -131,8 +142,50 @@ void CCamera::Collision(CCollider* m, CCollider* o) {
 				mColliderLine.Set(this, nullptr, mEye, mCenter);
 			}
 		}
-
 	}
 	}
 
 }
+//ターゲットになっている敵の方向へカメラを向かせる処理
+void CCamera::TargetLook()
+{
+		//プレイヤーから現在のカメラの始点までのベクトル
+		CVector vec1 = CXPlayer::GetInstance()->Position() - mEye;
+		//プレイヤーからカメラを移動させたい位置までのベクトル
+		CVector vec2 = CXPlayer::GetInstance()->Position() - mPos;
+		//高さは0にする
+		vec1.Y(0.0f);
+		vec2.Y(0.0f);
+		//ベクトルの長さをもとめる
+		float len1 = vec1.Length();
+		float len2 = vec2.Length();
+		float dot = (vec1.X() * vec2.X()) + (vec1.Y() * vec2.Y()) + (vec1.Z() * vec2.Z());	//内積
+		float cross = (vec1.Y() * vec2.Z() - vec1.Z() * vec2.Y(),vec1.Z() * vec2.X() - vec1.X()* vec2.Z(),vec1.X() * vec2.Y() - vec1.Y() *vec2.X());//外積
+		float cos_sita = dot / (len1 * len2);	//コサインシータを求める
+		mRotRad = acosf(cos_sita);	//回転させたい角度を設定
+		//NaN判定
+		if (isnan(mRotRad)) {
+			mRotRad = 0.0f;
+		}
+		//外積で回転させる方向を判断
+		if (cross > 0.0f) {
+			//アングルXを減算、左方向へ回転
+			mAngleX -= mLerp(0.0f, mRotRad, ROTATION_RATE);
+		}
+		else if (cross < 0.0f) {
+			//アングルXを加算、右方向へ回転
+			mAngleX += mLerp(0.0f, mRotRad, ROTATION_RATE);
+		}
+		//アングルYを変更
+		mAngleY = mLerp(mAngleY, TARGETLOOK_Y, 0.1f);
+
+	//アングル遅延の値を合わせておく
+	mAngleDelayX = mAngleX;
+	mAngleDelayY = mAngleY;
+}
+
+
+
+
+
+

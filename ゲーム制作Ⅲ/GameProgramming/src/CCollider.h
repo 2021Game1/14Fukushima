@@ -17,6 +17,7 @@ public:
 		ESPHERE,//球コライダ
 		ETRIANGLE,//三角コライダ
 		ELINE, //線分コライダ
+		ECAPSUL, //カプセルコライダ
 	};
 	//親ポインタの取得
 	CCharacter* Parent();
@@ -24,7 +25,9 @@ public:
 	{
 		EBODY,		//本体
 		ESEARCH,	//サーチ用
-		ESWORD		//剣
+		ESHIERD,		//盾
+		ESWORD,		//剣
+		EARM		//腕
 	};
 
 	//デフォルトコンストラクタ
@@ -48,6 +51,12 @@ public:
 	//retrun:true（衝突している）false(衝突していない)
 	//調整値:衝突しない位置まで戻す値
 	static bool CollisionTriangleSphere(CCollider *triangle, CCollider *sphere, CVector *adjust);
+	//カプセルコライダ同士の衝突判定
+	//CollisionCapsule(コライダ1, コライダ2, 調整ベクトル)
+	static bool CollisionCapsule(CCollider* m, CCollider* o, CVector* adjust);
+	
+
+
 	//優先度の変更
 	virtual void ChangePriority();
 	//コライダ種類の取得
@@ -66,6 +75,9 @@ protected:
 	//頂点
 	CVector mV[3];
 	ETag mTag;
+	//2線間の最短ベクトルを求める
+	//VectorLineMinDist(線1始点, 線1終点, 線2始点, 線2終点)
+	static CVector VectorLineMinDist(const CVector& Start1, const CVector& End1, const CVector& Start2, const CVector& End2);
 };
 
 #endif

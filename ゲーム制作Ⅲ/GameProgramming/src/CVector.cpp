@@ -74,6 +74,8 @@ CVector CVector::operator-(const CVector &v) const
 	return CVector(mX - v.mX, mY - v.mY, mZ - v.mZ);
 }
 
+
+
 //ベクトルの長さを返す
 float CVector::Length() const {
 	return sqrtf(mX * mX + mY * mY + mZ * mZ);
@@ -119,7 +121,11 @@ void CVector::operator-=(const CVector& v)
 	mY -= v.mY;
 	mZ -= v.mZ;
 }
-
+CVector CVector::operator/(const float& f) {
+	//	float div = 1.0f / f;
+	return CVector(mX / f, mY / f, mZ / f);
+	//	return operator*(div);
+}
 //Y軸での回転角度の取得
 //度度を返す（Z軸＋が0度）
 float CVector::GetRotationY() const

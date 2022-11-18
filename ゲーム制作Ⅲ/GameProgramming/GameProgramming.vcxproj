@@ -16,6 +16,7 @@
     <ClCompile Include="src\CCamera.cpp" />
     <ClCompile Include="src\CCharacter.cpp" />
     <ClCompile Include="src\CCollider.cpp" />
+    <ClCompile Include="src\CColliderCapsule.cpp" />
     <ClCompile Include="src\CColliderLine.cpp" />
     <ClCompile Include="src\CColliderMesh.cpp" />
     <ClCompile Include="src\CColliderTriangle.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="src\CCamera.h" />
     <ClInclude Include="src\CCharacter.h" />
     <ClInclude Include="src\CCollider.h" />
+    <ClInclude Include="src\CColliderCapsule.h" />
     <ClInclude Include="src\CColliderLine.h" />
     <ClInclude Include="src\CColliderMesh.h" />
     <ClInclude Include="src\CColliderTriangle.h" />
@@ -65,6 +67,7 @@
     <ClInclude Include="src\CModel.h" />
     <ClInclude Include="src\CModelX.h" />
     <ClInclude Include="src\CMyShader.h" />
+    <ClInclude Include="src\CRes.h" />
     <ClInclude Include="src\CScene.h" />
     <ClInclude Include="src\CSceneGame.h" />
     <ClInclude Include="src\CSceneManager.h" />

@@ -28,6 +28,7 @@ public:
 	void Update();
 	//前方の取得
 	CVector Foward();
+	
 protected: //子クラスはアクセス可能
 	CVector mPosition;	//位置
 	CVector mRotation;	//回転

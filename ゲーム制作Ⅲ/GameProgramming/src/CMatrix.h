@@ -63,6 +63,7 @@ public:
 	//+=演算子のオーバーロード
 	//CMatrix1 += CMatrix2の演算を行う
 	void operator+=(const CMatrix& m);
+	CVector operator*(const CVector& v);
 	//クォータニオン
 	CMatrix Quaternion(float x, float y, float z, float w);
 	CMatrix Inverse(void);
@@ -71,8 +72,6 @@ public:
 	CVector GetZVec();
 	CVector GetPos();
 private:
-	//4×4の行列データを設定
-	float mM[4][4];
 	union {
 		//4×4の行列データを設定
 		float mM[4][4];

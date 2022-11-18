@@ -150,13 +150,58 @@ bool CCollider::CollisionTriangleSphere(CCollider *t, CCollider *s, CVector *a)
 	v[2] = t->mV[2] * *t->mpMatrix;
 	//面の法線を、外積を正規化して求める
 	CVector normal = (v[1] - v[0]).Cross(v[2] - v[0]).Normalize();
-	//線コライダをワールド座標で作成
-	sv = s->mPosition * *s->mpMatrix + normal * s->mRadius;
-	ev = s->mPosition * *s->mpMatrix - normal * s->mRadius;
-	CColliderLine line(NULL, NULL, sv, ev);
-	//三角コライダと線コライダの衝突処理
-	return CollisionTriangleLine(t, &line, a);
+	if (normal.Length() > -1.0) {
+		//線コライダをワールド座標で作成
+		sv = s->mPosition * *s->mpMatrix + normal * s->mRadius;
+		ev = s->mPosition * *s->mpMatrix - normal * s->mRadius;
+		CColliderLine line(NULL, NULL, sv, ev);
+		//三角コライダと線コライダの衝突処理
+		return CollisionTriangleLine(t, &line, a);
+	}
 }
+
+//カプセルコライダ同士の衝突判定
+//CollisionCapsule(コライダ1, コライダ2, 調整ベクトル)
+bool CCollider::CollisionCapsule(CCollider* m, CCollider* o
+	, CVector* adjust)
+{
+	CVector mpos = m->mPosition * *m->mpMatrix;
+	CVector opos = o->mPosition * *o->mpMatrix;
+
+	//Y軸をカットする
+	mpos.Y(0.0f);
+	opos.Y(0.0f);
+
+	mpos = opos - mpos;
+	float length = mpos.Length();
+	float radius = m->mRadius + o->mRadius;
+	//衝突しているとき
+	if (radius > length) {
+		*adjust = mpos * (radius - length);
+		return true;
+	}
+	//衝突していないとき
+	return false;
+}
+
+
+//おおよそゼロか？
+bool NearZero(float f)
+{
+	if (fabs(f) <= 0.001f)
+		return true;
+	return false;
+}
+
+
+
+
+
+
+
+
+
+
 
 //優先度の変更
 void CCollider::ChangePriority()

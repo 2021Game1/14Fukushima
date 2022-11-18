@@ -291,6 +291,15 @@ CMatrix CMatrix::Inverse(void)
 	return tmp;
 };
 
+CVector CMatrix::operator*(const CVector& v) {
+
+	return CVector(
+		v.X() * mM[0][0] + v.Y() * mM[1][0] + v.Z() * mM[2][0] + mM[3][0],
+		v.X() * mM[0][1] + v.Y() * mM[1][1] + v.Z() * mM[2][1] + mM[3][1],
+		v.X() * mM[0][2] + v.Y() * mM[1][2] + v.Z() * mM[2][2] + mM[3][2]
+	);
+}
+
 CVector CMatrix::GetXVec() {
 	return CVector(m00, m01, m02);
 }

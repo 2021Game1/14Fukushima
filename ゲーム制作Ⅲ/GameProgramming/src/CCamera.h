@@ -2,16 +2,16 @@
 #define CCAMERA_H
 #include "CInput.h"
 #include "CVector.h"
-#include "CCollider.h"
-#include "CColliderLine.h"
 #include "CCharacter.h"
+#include "CColliderLine.h"
+
 
 /*
 カメラクラス
 */
 #define DEF_CAMERA_DIST 8.0f
-#define CAMERA_HEAD_ADJUST 3.0f	//注視点の高さ調整
-class CCamera : CCharacter{
+#define CAMERA_HEAD_ADJUST 2.0f	//注視点の高さ調整
+class CCamera : public CCharacter{
 public:
 	//回転
 	CVector mRotation;
@@ -22,37 +22,56 @@ public:
 	//Set(視点, 注視点, 上方向)
 	void Set(const CVector& eye, const CVector& center,
 		const CVector& up);
+	void SetTarget(const CVector& target);
+	void Init();
 	//カメラ更新
 	void Update();
-	//カメラ初期化
-	void Init();
 	//カメラ適用
 	void Render();
 	//ベクトル取得
 	CMatrix GetMat();
 	//当たり判定
 	void Collision(CCollider* m, CCollider* o);
+	//線形補間
+	float mLerp(float start, float point, float rate);
+	//ターゲットへカメラを向かせる処理
+	void TargetLook();
 	//staticでポインタを作る
 	static CCamera* mpCameraInstance;
+	//インスタンスの取得
+	static CCamera* Instance();
 	//視点
 	CVector mEye;
+private:
+	//注視点
+	CVector mCenter;
 	//上方向
 	CVector mUp;
+	//モデルビュー行列
+	CMatrix mModelView;
+
 	//コライダ
 	CColliderLine mColliderLine;
 	//重複するがカメラ制御用
-	CVector mCenter;	//注視点
-	//重複するがカメラ制御用
 	CVector mPos;		//位置
 	CVector mTarget;	//ターゲット
+	float	mDist;	//距離
+	float mRotRad;		//回転させたい角度
+	float mOldMousePosX, mOldMousePosY;
+
+	bool mSkip;
+	CTransform mTransform; //回転縮小用行列
+	
+
 	float	mAngleX;	//アングル
 	float	mAngleY;	//アングル
-	float	mDist;	//距離
-
-private:
 	//アングル遅延用、通常モード時に使用
 	float mAngleDelayX;
 	float mAngleDelayY;
+	//マウスの座標保持用
+	int mOldMouseX, mOldMouseY; //以前の座標
+	int mMouseX, mMouseY;		//現在の座標
+
 };
 
 //カメラの外部参照
