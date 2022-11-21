@@ -54,7 +54,9 @@ public:
 	//カプセルコライダ同士の衝突判定
 	//CollisionCapsule(コライダ1, コライダ2, 調整ベクトル)
 	static bool CollisionCapsule(CCollider* m, CCollider* o, CVector* adjust);
-	
+	//2線間の最短ベクトルを求める
+	//VectorLineMinDist(線1始点, 線1終点, 線2始点, 線2終点)
+	static CVector VectorLineMinDist(const CVector& Start1, const CVector& End1, const CVector& Start2, const CVector& End2);
 
 
 	//優先度の変更
@@ -75,9 +77,7 @@ protected:
 	//頂点
 	CVector mV[3];
 	ETag mTag;
-	//2線間の最短ベクトルを求める
-	//VectorLineMinDist(線1始点, 線1終点, 線2始点, 線2終点)
-	static CVector VectorLineMinDist(const CVector& Start1, const CVector& End1, const CVector& Start2, const CVector& End2);
+	
 };
 
 #endif

@@ -31,7 +31,6 @@ public:
 	CXEnemy::EEnemyState GetState();	//プレイヤーの状態を取得する
 protected:
 	//コライダの宣言
-	CCollider mColSphereHead;	//頭
 	CCollider mColSphereRightarm1;	//右腕1
 	CCollider mColSphereLeftarm1;	//左腕
 	CCollider mColSphereRightarm2;	//右腕2

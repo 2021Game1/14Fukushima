@@ -423,42 +423,46 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		//相手のコライダがカプセルコライダの時
 		if (o->Type() == CCollider::ECAPSUL) {
 			CVector adjust;//調整用ベクトル
-			CCollider::CollisionCapsule(o, m, &adjust);
-			//位置の更新(mPosition + adjust)
-			mPosition = mPosition + adjust;
-			//行列の更新
-			CTransform::Update();
+			if (CCollider::CollisionCapsule(o, m, &adjust))
+			{
+				//位置の更新(mPosition + adjust)
+				mPosition = mPosition + adjust;
+				//行列の更新
+				CTransform::Update();
+
+			}
 
 			break;
 		}
 		else if (o->Type() == CCollider::ETRIANGLE) {
 			CVector adjust;//調整用ベクトル
-			CCollider::CollisionTriangleLine(o, m, &adjust);
-			//位置の更新(mPosition + adjust)
-			mPosition = mPosition + adjust;
-			//行列の更新
-			CTransform::Update();
-
+			if (CCollider::CollisionTriangleLine(o, m, &adjust))
+			{
+				//位置の更新(mPosition + adjust)
+				mPosition = mPosition + adjust;
+				//行列の更新
+				CTransform::Update();
+			}
 			break;
 		}
-		else if (o->Type() == CCollider::ESPHERE) {
-			CVector adjust;//調整用ベクトル
-			//コライダのmとoが衝突しているかの判定
-			if (CCollider::CollisionCapsule(m, o, &adjust)) {
-				//相手の親のタグがプレイヤー
-				if (o->Parent()->Tag() == EENEMY)
-				{
-					//相手のコライダのタグが剣
-					if (o->Tag() == CCollider::EARM) {
-						if (CXEnemy::GetInstance()->GetIsHit() == true) {
-							mState = EKNOCKBACK;
-							mHp = mHp - 1;
-						}
-					}
-				}
-			
-			}
-		}
+		//if (o->Type() == CCollider::ESPHERE) {
+		//	CVector adjust;//調整用ベクトル
+		//	//コライダのmとoが衝突しているかの判定
+		//		CCollider::Collision(m, o);
+		//		//相手の親のタグがプレイヤー
+		//		if (o->Parent()->Tag() == EENEMY)
+		//		{
+		//			//相手のコライダのタグが剣
+		//			if (o->Tag() == CCollider::EARM) {
+		//				if (CXEnemy::GetInstance()->GetIsHit() == true) {
+		//					mState = EKNOCKBACK;
+		//					mHp = mHp - 1;
+		//				}
+		//			}
+		//		}
+		//	
+		//	
+		//}
 	}
 	}		
 }

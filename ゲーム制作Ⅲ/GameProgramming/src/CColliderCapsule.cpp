@@ -21,6 +21,7 @@ void CColliderCapsule::Set(CCharacter* parent, CMatrix* matrix
 }
 
 
+
 void CColliderCapsule::Render()
 {
 	//アルファブレンドを有効にする
@@ -48,7 +49,7 @@ void CColliderCapsule::Render()
 	//球描画
 	glutWireSphere(mRadius, 16, 16);
 	glPopMatrix();
-
+	
 	//行列退避
 	glPushMatrix();
 	center = v1 - (v1 - v0).Normalize() * mRadius;
@@ -72,6 +73,7 @@ void CColliderCapsule::Render()
 
 	//rotate Y-axis
 	CMatrix rot;
+
 	if (lineXZ.Length() > 0.001)
 	{
 		rot.M()[0] = rot.M()[4 * 2 + 2] = lineXZ.Z();
@@ -102,6 +104,7 @@ void CColliderCapsule::Render()
 
 
 
+
 //優先度の変更
 void CColliderCapsule::ChangePriority()
 {
@@ -112,6 +115,7 @@ void CColliderCapsule::ChangePriority()
 	CCollisionManager::Get()->Remove(this); //一旦削除
 	CCollisionManager::Get()->Add(this); //追加
 }
+
 
 
 

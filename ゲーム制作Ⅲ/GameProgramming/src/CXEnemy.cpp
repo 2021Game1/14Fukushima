@@ -23,7 +23,6 @@ CXEnemy::CXEnemy()
 	,mColSphereRightarm2(this, nullptr, CVector(), 1.0)
 	,mColSphereLeftarm1(this, nullptr, CVector(), 1.0)
 	,mColSphereLeftarm2(this, nullptr, CVector(), 1.0)
-	,mColSphereHead(this, nullptr, CVector(), 1.0)
 {
 	mpEnemyInstance = this;
 	//初期状態を設定
@@ -34,7 +33,6 @@ CXEnemy::CXEnemy()
 	mColSphereRightarm2.Tag(CCollider::EARM);	//手
 	mColSphereLeftarm1.Tag(CCollider::EARM);	//手
 	mColSphereLeftarm2.Tag(CCollider::EARM);	//手
-	mColSphereHead.Tag(CCollider::EBODY);		//頭
 }
 //CXEnemy(位置、回転、拡縮）
 CXEnemy::CXEnemy(const CVector& position, const CVector& rotation, const CVector& scale)
@@ -60,7 +58,6 @@ void CXEnemy::Init(CModelX* model)
 	mColSphereRightarm2.Matrix(&mpCombinedMatrix[62]);
 	mColSphereLeftarm1.Matrix(&mpCombinedMatrix[41]);
 	mColSphereLeftarm2.Matrix(&mpCombinedMatrix[27]);
-	mColSphereHead.Matrix(&mpCombinedMatrix[50]);
 	mPosition.Set(10.0f, 0.0f, 0.0);	//位置を設定
 	mScale.Set(3.0f, 3.0f, 3.0f);//スケール設定
 	mRotation.Set(0.0f, 0.0f, 0.0f);	//回転を設定
@@ -388,7 +385,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-	if (o->Type() == CCollider::ESPHERE)
+	if (o->Type() == CCollider::ECAPSUL && m->Type() == CCollider::ECAPSUL)
 	{
 		CVector adjust;//調整用ベクトル
 		//コライダのmとoが衝突しているかの判定
@@ -396,14 +393,10 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 			//相手の親のタグがプレイヤー
 			if (o->Parent()->Tag() == EPLAYER)
 			{
-				//相手のコライダのタグが剣
-				if (o->Tag() == CCollider::ESWORD) {
-					if (CXPlayer::GetInstance()->GetIsHit() == true)
-					{
-						mState = EKNOCKBACK;
-						mHp = mHp - 1;
-					}
-				}
+				//位置の更新(mPosition + adjust)
+				mPosition = mPosition + adjust;
+				//行列の更新
+				CTransform::Update();
 			}
 		}
 
