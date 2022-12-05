@@ -8,7 +8,8 @@ class CMap : public CCharacter{
 public:
 	void Collision(CCollider* m, CCollider* o);
 	CMap();
-private:
+	
+
 
 };
 

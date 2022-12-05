@@ -6,30 +6,6 @@
 #include "CVector.h"
 #include"CMyShader.h"//シェーダーのインクルード
 
-//プレイヤのアニメーションモデル
-#define PLAYER_MODEL_FILE "res\\paladin\\paladin.x"
-#define PLAYER_ANIMATION_ATTACKSP1 "res\\paladin\\Attack1.x"
-#define PLAYER_ANIMATION_ATTACKSP2 "res\\paladin\\Attack2.x"
-#define PLAYER_ANIMATION_ATTACKSP3 "res\\paladin\\Attack3.x"
-#define PLAYER_ANIMATION_GUARD "res\\paladin\\Guard.x"
-#define PLAYER_ANIMATION_GUARDIDLE "res\\paladin\\GuardIdle.x"
-#define PLAYER_ANIMATION_IDLE "res\\paladin\\Idle.x"
-#define PLAYER_ANIMATION_KNOCKBACK "res\\paladin\\KnockBack.x"
-#define PLAYER_ANIMATION_DEATH "res\\paladin\\Death.x"
-
-//エネミーのアニメーションモデル
-#define ENEMY_MODEL_FILE "res\\mutant\\mutant.x"
-#define ENEMY_ANIMATION_ATTACKSP1 "res\\mutant\\Attack1.x"
-#define ENEMY_ANIMATION_ATTACKSP2 "res\\mutant\\Attack2.x"
-#define ENEMY_ANIMATION_ATTACKSP4 "res\\mutant\\Attack4.x"
-#define ENEMY_ANIMATION_WALK "res\\mutant\\Walk.x"
-#define ENEMY_ANIMATION_DASH "res\\mutant\\Dash.x"
-#define ENEMY_ANIMATION_IDLE "res\\mutant\\Idle.x"
-#define ENEMY_ANIMATION_KNOCKBACK "res\\mutant\\KnockBack.x"
-#define ENEMY_ANIMATION_DEATH "res\\mutant\\Death.x"
-
-
-
 //領域開放をマクロ化
 #define SAFE_DELETE_ARRAY(a) {if(a)delete[]a; a = 0;}
 

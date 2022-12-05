@@ -66,7 +66,6 @@ public:
 	//度度を返す（Z軸＋が0度）
 	//GetRotationX(Y軸方向)
 	float GetRotationX(CVector& y) const;
-
 protected:
 	//3D各軸での値を設定
 	float mX, mY, mZ;	

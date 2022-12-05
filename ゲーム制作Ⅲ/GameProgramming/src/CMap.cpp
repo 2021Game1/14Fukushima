@@ -3,6 +3,7 @@
 //ƒRƒ‰ƒCƒ_‰Šú‰»
 CMap::CMap()
 {
+	
 }
 void CMap::Collision(CCollider* m, CCollider* o) {
 	switch (m->Type())

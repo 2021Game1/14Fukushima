@@ -10,8 +10,6 @@
 ゲームのシーン
 */
 class CSceneGame : public CScene {
-	//staticでポインタを作る
-	static CSceneGame* mpSceneGameInstance;
 	CRes mRes;
 public:
 	//初期化処理のオーバーライド

@@ -57,7 +57,7 @@ public:
 	tbottom:‰æ‘œ‰ºÀ•W
 	ttop:‰æ‘œãÀ•W
 	*/
-	void DrawImage(float left, float right, float bottom, float top, float tleft, float tright, float tbottom, float ttop) ;
+	void DrawImage(float left, float right, float bottom, float top, float tleft, float tright, float tbottom, float ttop);
 	void DrawImage(float left, float right, float bottom, float top, int tleft, int tright, int tbottom, int ttop);
 	void DrawImage(float left, float right, float bottom, float top, int index);
 	void Destory();

@@ -14,6 +14,13 @@ CEffect::CEffect(const CVector &pos, float w, float h, char *texture, int row, i
 		sMaterial.Diffuse()[2] = 1.0f;
 		sMaterial.Diffuse()[3] = 1.0f;
 	}
+	else if (!sMaterial.Texture()->Id() == 0) {
+		sMaterial.Texture()->Load(texture);
+		sMaterial.Diffuse()[0] = 1.0f;
+		sMaterial.Diffuse()[1] = 1.0f;
+		sMaterial.Diffuse()[2] = 1.0f;
+		sMaterial.Diffuse()[3] = 1.0f;
+	}
 }
 
 void CEffect::Update() {

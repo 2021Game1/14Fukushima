@@ -320,7 +320,6 @@ CCollider::ETag CCollider::Tag()
 {
 	return mTag;
 }
-
 void CCollider::Tag(ETag tag)
 {
 	mTag = tag;

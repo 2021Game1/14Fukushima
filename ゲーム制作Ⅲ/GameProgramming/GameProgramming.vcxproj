@@ -30,6 +30,7 @@
     <ClCompile Include="src\CModel.cpp" />
     <ClCompile Include="src\CModelX.cpp" />
     <ClCompile Include="src\CMyShader.cpp" />
+    <ClCompile Include="src\CRes.cpp" />
     <ClCompile Include="src\CSceneGame.cpp" />
     <ClCompile Include="src\CSceneManager.cpp" />
     <ClCompile Include="src\CShader.cpp" />

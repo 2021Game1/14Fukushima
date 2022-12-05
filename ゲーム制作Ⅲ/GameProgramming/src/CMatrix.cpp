@@ -299,7 +299,6 @@ CVector CMatrix::operator*(const CVector& v) {
 		v.X() * mM[0][2] + v.Y() * mM[1][2] + v.Z() * mM[2][2] + mM[3][2]
 	);
 }
-
 CVector CMatrix::GetXVec() {
 	return CVector(m00, m01, m02);
 }

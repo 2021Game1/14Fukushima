@@ -19,6 +19,13 @@ CCamera* CCamera::Instance()
 }
 void CCamera::Init()
 {
+	int viewport[4];
+	/* 現在のビューポートを保存しておく */
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	mScreenWidth = viewport[2]; //幅を取得
+	mScreenHeight = viewport[3]; //高さを取得
+	//プロジェクション行列の取得
+	glGetFloatv(GL_PROJECTION_MATRIX, mProjection.M());
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める
@@ -126,6 +133,7 @@ mPriority = 100;
 CTaskManager::Get()->Remove(this);//
 CTaskManager::Get()->Add(this);//追加する
 mpCameraInstance = this;
+
 }
 
 
@@ -183,6 +191,29 @@ void CCamera::TargetLook()
 	mAngleDelayX = mAngleX;
 	mAngleDelayY = mAngleY;
 }
+
+//ワールド座標をスクリーン座標へ変換する
+//WorldToScreen(スクリーン座標, ワールド座標)
+bool CCamera::WorldToScreen(CVector* screen, const CVector& world)
+{
+	//座標変換
+	CVector modelview_pos = world * mModelView;
+	CVector screen_pos = modelview_pos * mProjection;
+
+	//画面外なのでリターン
+	if (modelview_pos.Z() >= 0.0f) {
+		return false;
+	}
+	//座標調整
+	screen_pos = screen_pos * (1.0f / -modelview_pos.Z());
+
+	//スクリーン変換
+	screen->X((1.0f + screen_pos.X()) * mScreenWidth * 0.5f);
+	screen->Y((1.0f + screen_pos.Y()) * mScreenHeight * 0.5f);
+	screen->Z(screen_pos.Z());
+	return true;
+}
+
 
 
 
