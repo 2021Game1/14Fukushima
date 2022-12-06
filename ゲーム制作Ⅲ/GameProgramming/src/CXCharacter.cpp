@@ -1,5 +1,7 @@
 #include"CXCharacter.h"
 
+
+
 CXCharacter::CXCharacter() 
 {
 	mScale = CVector(1.0f, 1.0f, 1.0f);

@@ -1,5 +1,7 @@
 #include "CRes.h"
 
+
+
 CRes* CRes::mpRes_Instance = nullptr;												//リソースのインスタンス変数の初期化
 
 void CRes::Init() {
@@ -16,10 +18,13 @@ void CRes::Init() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_IDLE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_KNOCKBACK);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
+	//キャラクタのUI追加
+	gCharacter_Ui_Hp_GreenGauge.Load2D(CHARACTER_UI_HP_GREENGAUGE);
+	gCharacter_Ui_Hp_RedGauge.Load2D(CHARACTER_UI_HP_REDGAUGE);
 	//プレイヤのUIの追加
-	gCharacter_Ui_Hp_GreenGauge.Load(CHARACTER_UI_HP_GREENGAUGE);
-	gCharacter_Ui_Hp_RedGauge.Load(CHARACTER_UI_HP_REDGAUGE);
-	gPlayer_Ui_Hp_Frame.Load(PLAYER_UI_HP_FRAME);
+	gPlayer_Ui_Hp_Frame.Load2D(PLAYER_UI_HP_FRAME);
+	//敵のUIの追加
+	gEnemy_Ui_Hp_Frame.Load2D(ENEMY_UI_HP_FRAME);
 	//カメラ初期化
 	Camera.Init();
 	//マップモデルファイルの入力
@@ -73,7 +78,7 @@ void CRes::Update() {
 	mEnemy.Render();
 	mPlayer.Render2D();
 }
-//プレイヤーのポインタを返すことで、座標などが参照できるようになる
+//リソースのポインタを返すことで、座標などが参照できるようになる
 CRes* CRes::GetInstance()
 {
 	return mpRes_Instance;
@@ -91,7 +96,11 @@ CTexture& CRes::GetInUiHpRedGauge()
 {
 	return gCharacter_Ui_Hp_RedGauge;
 }
-CTexture& CRes::GetInUiHpFrame()
+CTexture& CRes::GetInPlayerUiHpFrame()
 {
 	return gPlayer_Ui_Hp_Frame;
+}
+CTexture& CRes::GetInEnemyUiHpFrame()
+{
+	return gEnemy_Ui_Hp_Frame;
 }

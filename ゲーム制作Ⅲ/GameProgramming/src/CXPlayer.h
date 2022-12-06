@@ -9,6 +9,7 @@
 #include"CInput.h"
 #include"CTexture.h"
 #include"CEffect.h"
+
 /*
 CXPlayer
 */

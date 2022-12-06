@@ -47,6 +47,10 @@ public:
 	*/
 	void Load(const char* file);
 	/*
+	* 	モデル画像ファイルの読み込み（テクスチャファイルの読み込み）
+	*/
+	void Load2D(const char* file);
+	/*
 	DrawImage
 	left:四角形左座標
 	right:四角形右座標
@@ -72,7 +76,6 @@ private:
 	STgamHeader mHeader;
 	//テクスチャID
 	GLuint mId;
-	//
 	int mRow;//行数
 	int mCol;//列数
 };

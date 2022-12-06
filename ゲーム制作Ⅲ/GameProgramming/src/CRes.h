@@ -1,5 +1,6 @@
 #ifndef CRES_H
 #define CRES_H
+
 #include "CVector.h"
 #include "CCamera.h"
 #include "CMatrix.h"
@@ -46,7 +47,8 @@
 //画像,UI
 #define CHARACTER_UI_HP_GREENGAUGE "res\\ui\\HP_Gauge.png"
 #define CHARACTER_UI_HP_REDGAUGE "res\\ui\\HP_RedGauge.png"
-#define PLAYER_UI_HP_FRAME "res\\ui\\HP_Bar.png"
+#define PLAYER_UI_HP_FRAME "res\\ui\\Player_HP_Frame.png"
+#define ENEMY_UI_HP_FRAME "res\\ui\\Enemy_HP_Frame.png"
 
 
 
@@ -58,10 +60,8 @@ public:
 	CText& GetInUiFont();
 	CTexture& GetInUiHpGreenGauge();
 	CTexture& GetInUiHpRedGauge();
-	CTexture& GetInUiHpFrame();
-	CTexture& GetInEfAttackSp1();
-	CTexture& GetInEfAttackSp2();
-	CTexture& GetInEfAttackSp3();
+	CTexture& GetInPlayerUiHpFrame();
+	CTexture& GetInEnemyUiHpFrame();
 	static CRes* GetInstance();//staticで処理を作る
 private:
 	//フォント
@@ -88,10 +88,13 @@ private:
 	CMatrix mBackGroundMatrix;
 	//モデルからコライダを生成
 	CColliderMesh mColliderMesh;
-	//プレイヤのUIインスタンス
+	//キャラクタのUIインスタンス
 	CTexture gCharacter_Ui_Hp_GreenGauge;
 	CTexture gCharacter_Ui_Hp_RedGauge;
+	//プレイヤのUIインスタンス
 	CTexture gPlayer_Ui_Hp_Frame;
+	//敵のUIインスタンス
+	CTexture gEnemy_Ui_Hp_Frame;
 	static CRes* mpRes_Instance;//別のクラスでリソースの変数を呼び出す場合,staticでポインタを作る
 };
 #endif

@@ -5,6 +5,7 @@
 #include"CMatrix.h"
 #include"CCharacter.h"
 
+
 class CXCharacter : public CCharacter {
 public:
 	//デフォルトコンストラクタ

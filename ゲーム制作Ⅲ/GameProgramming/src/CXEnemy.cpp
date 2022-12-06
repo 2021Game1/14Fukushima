@@ -1,26 +1,28 @@
-#include "CXEnemy.h"
+#include"CXEnemy.h"
 #include"CUtil.h"
-#include"CXPlayer.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include"CXPlayer.h"
+#include "CRes.h"
 
-#define ATTACK_DIS 5.2f		//攻撃可能になる距離
-#define SPEED_MOVE 0.1f		//通常移動のスピード
-#define SPEED_DASH 0.15f	//走行の移動速度
-#define SPEED_STOP 0.0f		//停止
+#define ENEMY_ATTACK_DIS 5.2f		//攻撃可能になる距離
+#define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
+#define ENEMY_SPEED_DASH 0.15f	//走行の移動速度
+#define ENEMY_SPEED_STOP 0.0f		//停止
 #define ENEMY_RECEPTION 10	//入力の当たり判定の受付時間
 #define ENEMY_OUTRECEPTION 60 //当たり判定の受付終了
-#define SEARCH_DIS 20.0f	//走行を開始する距離
-#define WALK_DIS 24.0f		//歩行を開始する距離
-#define GRAVITY 0.9			//重力
-#define CHASE_DIS_MAX 25.0f	//走行可能な最大距離
+#define ENEMY_SEARCH_DIS 20.0f	//走行を開始する距離
+#define ENEMY_WALK_DIS 24.0f		//歩行を開始する距離
+#define ENEMY_GRAVITY 0.9			//重力
+#define ENEMY_CHASE_DIS_MAX 25.0f	//走行可能な最大距離
+#define ENEMY_GAUGE_WID_MAX 480	//ゲージの幅の最大値
 
 
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
 
 //コライダ初期化
 CXEnemy::CXEnemy()
-	:mEnemy_Hp(3)
+	:mEnemy_Hp(100)
 	,mEnemy_Speed(0.0f)
 	,mEnemy_Turnspeed(0.0f)
 	,mEnemy_PlayerDis(0.0f)
@@ -28,6 +30,8 @@ CXEnemy::CXEnemy()
 	,mEnemy_ColSphereBody(this, nullptr, CVector(0.0f, 90.0f, 0.0f), CVector(0.0f, -130.0f, 30.0f), 1.3)
 	,mEnemy_ColSphereRightarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(0.0f, -90.0f, 0.0f), 1.5)
 	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(-30.0f, -90.0f, 30.0f), 0.8)
+	,mEnemy_HpMax(100)
+
 {
 	mpEnemy_Instance = this;
 	//初期状態を設定
@@ -117,7 +121,7 @@ void CXEnemy::Update() {
 	}
 	//移動する
 	mPosition += mEnemy_MoveDir * mEnemy_Speed;
-	mPosition.Y(mPosition.Y() * GRAVITY);
+	mPosition.Y(mPosition.Y() * ENEMY_GRAVITY);
 
 	//移動方向リセット
 	mEnemy_MoveDir = CVector(0.0f, 0.0f, 0.0f);
@@ -133,6 +137,44 @@ void CXEnemy::Update() {
 	CXCharacter::Update();
 
 }
+void CXEnemy::Render2D()
+{
+	//自分が死亡状態の時リターンする
+	if (mEnemy_State == EDEATH)return;
+	//2D描画開始
+	CUtil::Start2D(0, 800, 0, 600);
+
+	CVector ret;
+	CVector tpos;
+	tpos = mpCombinedMatrix[30].GetPos();
+
+	mEnemy_Camera.WorldToScreen(&ret, tpos);
+
+	float HpRate = (float)mEnemy_Hp / (float)mEnemy_HpMax; //体力最大値に対する、現在の体力の割合
+	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
+	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より大きい時
+	if (mEnemy_FollowGaugeWid > HpGaugeWid) {
+		//線形補間で被ダメージ分後追いするゲージの幅を設定する
+		mEnemy_FollowGaugeWid = Camera.mLerp(mEnemy_FollowGaugeWid, HpGaugeWid, 0.025f);
+	}
+	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より小さいとき
+	else if (mEnemy_FollowGaugeWid < HpGaugeWid) {
+		//被ダメージ分後追いするゲージの幅に体力ゲージの幅を設定する
+		mEnemy_FollowGaugeWid = HpGaugeWid;
+	}
+
+	//画面外の時に表示しない
+	if (ret.X() > 0 && ret.X() < 800) {
+		//ゲージ背景
+		CRes::GetInstance()->GetInEnemyUiHpFrame().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + 30.0f, ret.Y() + 45.0f, 210, 290, 63, 0);
+		//被ダメージ分後追いするゲージを表示
+		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + 30.0f, ret.Y() + 45.0f, 443, 443, 36, 36);
+		//体力ゲージ
+		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + 30.0f, ret.Y() + 45.0f, 0, 0, 0, 0);
+	}
+	//2Dの描画終了
+	CUtil::End2D();
+}
 
 void CXEnemy::Idle()
 {
@@ -140,11 +182,11 @@ void CXEnemy::Idle()
 	if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH) 
 	{
 		//プレイヤーが一定距離まで近づくと追跡状態へ移行
-		if (mEnemy_PlayerDis <= SEARCH_DIS) 
+		if (mEnemy_PlayerDis <= ENEMY_SEARCH_DIS)
 		{
 			mEnemy_State = EDASH;
 		}
-		else if (mEnemy_PlayerDis <= WALK_DIS)
+		else if (mEnemy_PlayerDis <= ENEMY_WALK_DIS)
 		{
 			mEnemy_State = EAUTOMOVE;
 		}
@@ -162,15 +204,15 @@ void CXEnemy::Move(){
 	ChangeAnimation(3, true, 50);
 	//移動スピードを変更
 	//プレイヤーが攻撃可能な距離にいないとき
-	if (mEnemy_PlayerDis > ATTACK_DIS) 
+	if (mEnemy_PlayerDis > ENEMY_ATTACK_DIS)
 	{
-		mEnemy_Speed = SPEED_MOVE;
+		mEnemy_Speed = ENEMY_SPEED_MOVE;
 	}
 	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= ATTACK_DIS) 
+	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
 	{
 		//移動スピードを停止する
-		mEnemy_Speed = SPEED_STOP;
+		mEnemy_Speed = ENEMY_SPEED_STOP;
 	}
 	mPosition = mPosition + CVector(0.0f, 0.0f, mEnemy_Speed) * mMatrixRotate;
 	//プレイヤーに向かって回転する処理
@@ -210,7 +252,7 @@ void CXEnemy::Move(){
 	}
 	int random = 0;
 	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= ATTACK_DIS) 
+	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
 	{
 		//ランダムで攻撃を行うかどうかを判定する
 		random = rand() % 1;
@@ -233,7 +275,7 @@ void CXEnemy::Move(){
 		}
 	}
 	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= CHASE_DIS_MAX) 
+	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}
@@ -244,16 +286,16 @@ void CXEnemy::Dash()
 {
 	ChangeAnimation(4, true, 40);
 	//プレイヤーが攻撃可能な距離にいないとき
-	if (mEnemy_PlayerDis > ATTACK_DIS) 
+	if (mEnemy_PlayerDis > ENEMY_ATTACK_DIS)
 	{
 		//移動スピードを変更
-		mEnemy_Speed = SPEED_DASH;
+		mEnemy_Speed = ENEMY_SPEED_DASH;
 	}
 	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= ATTACK_DIS) 
+	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
 	{
 		//移動スピードを停止する
-		mEnemy_Speed = SPEED_STOP;
+		mEnemy_Speed = ENEMY_SPEED_STOP;
 	}
 	mPosition = mPosition + CVector(0.0f, 0.0f, mEnemy_Speed) * mMatrixRotate;
 	//プレイヤーに向かって回転する処理
@@ -287,7 +329,7 @@ void CXEnemy::Dash()
 	//およそ1秒毎に目標地点を更新
 	int r = rand() % 25; //rand()は整数の乱数を返す
 						  //%25は25で割った余りを求める
-	if (mEnemy_PlayerDis > ATTACK_DIS) 
+	if (mEnemy_PlayerDis > ENEMY_ATTACK_DIS)
 	{
 		if (r == 0)
 		{
@@ -297,7 +339,7 @@ void CXEnemy::Dash()
 
 	int random = 0;
 	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= ATTACK_DIS) 
+	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
 	{
 		//ランダムで攻撃を行うかどうかを判定する
 		random = rand() % 50;
@@ -321,7 +363,7 @@ void CXEnemy::Dash()
 	}
 
 	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= CHASE_DIS_MAX) 
+	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}
@@ -335,7 +377,7 @@ void CXEnemy::Attack_1()
 	ChangeAnimation(1, false, 60);
 	mEnemy_IsHit = false; //ヒット判定終了
 	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= CHASE_DIS_MAX) 
+	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}
@@ -365,7 +407,7 @@ void CXEnemy::Attack_2()
 	ChangeAnimation(2, false, 60);
 	mEnemy_IsHit = false; //ヒット判定終了
 	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= CHASE_DIS_MAX) 
+	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}

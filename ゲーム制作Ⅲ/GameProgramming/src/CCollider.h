@@ -65,7 +65,6 @@ public:
 	EType Type();
 	//タグの取得
 	ETag Tag();
-	CMatrix* GetInMatrix();
 	//タグの設定
 	//Tag(タグ)
 	void Tag(ETag tag);

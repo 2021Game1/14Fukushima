@@ -36,29 +36,48 @@ void CTexture::Destory() {
 		mpName = nullptr;
 	}
 }
+#include<string>
 
+
+#include <string>
+void CTexture::Load(const char* filename) {
+	//ファイルオープン
+	std::string file(filename);
+	file = RES_DIR + file;	//ファイル名の退避
+	mpName = new char[strlen(filename) + 1];
+	strcpy(mpName, filename);
+	//画像データ
+	unsigned char* data;
+	//ファイルの入力
+	data = SOIL_load_image(file.data(), &mHeader.width,
+		&mHeader.height, &mHeader.depth,
+		SOIL_LOAD_AUTO);
+	//テクスチャの作成
+	mId = SOIL_create_OGL_texture(data,
+		mHeader.width, mHeader.height, mHeader.depth,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_POWER_OF_TWO
+		| SOIL_FLAG_MIPMAPS
+		| SOIL_FLAG_MULTIPLY_ALPHA
+		| SOIL_FLAG_COMPRESS_TO_DXT
+		| SOIL_FLAG_DDS_LOAD_DIRECT
+		| SOIL_FLAG_INVERT_Y
+		| SOIL_FLAG_TEXTURE_REPEATS
+	);
+	//データの解放
+	SOIL_free_image_data(data);
+	mHeader.depth *= 8;
+	return;
+}
 #include <assert.h>
 #include "CKey.h"
-
-void CTexture::Load(const char* filename) {
+void CTexture::Load2D(const char* filename){
 
 	//null 以外はエラー
 	assert(mpName == nullptr);
 
 	mpName = new char[strlen(filename) + 1];
 	strcpy(mpName, filename);
-
-	//mId = SOIL_load_OGL_texture(
-	//	filename,
-	//	SOIL_LOAD_AUTO,
-	//	SOIL_CREATE_NEW_ID,
-	//	SOIL_FLAG_POWER_OF_TWO
-	//	| SOIL_FLAG_MIPMAPS
-	//	| SOIL_FLAG_MULTIPLY_ALPHA
-	//	| SOIL_FLAG_COMPRESS_TO_DXT
-	//	| SOIL_FLAG_DDS_LOAD_DIRECT
-	//	| SOIL_FLAG_INVERT_Y
-	//);
 
 	//画像データ
 	unsigned char* data, * data2;
@@ -183,8 +202,8 @@ void CTexture::DrawImage(float left, float right, float bottom, float top, float
 
 	float diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	//色の設定
-	//glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-	glColor4fv(diffuse);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+	//	glColor4fv(diffuse);
 
 	glBegin(GL_TRIANGLES);
 	glTexCoord2f(tleft, ttop);
@@ -275,13 +294,6 @@ void CTexture::DrawImage(float left, float right, float bottom, float top, int i
 		mHeader.height * row / mRow);
 }
 
-//行数列数の設定
-//SetRowCol(行数, 列数)
-void CTexture::SetRowCol(int row, int col) {
-	mRow = row;
-	mCol = col;
-}
-
 int CTexture::Row()
 {
 	return mRow;
@@ -301,4 +313,12 @@ const GLuint& CTexture::Id() const
 {
 	return mId;
 }
+
+//行数列数の設定
+//SetRowCol(行数, 列数)
+void CTexture::SetRowCol(int row, int col) {
+	mRow = row;
+	mCol = col;
+}
+
 

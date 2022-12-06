@@ -3,6 +3,9 @@
 
 #include"CXCharacter.h"
 #include"CColliderCapsule.h"
+#include"CCamera.h"
+
+
 
 class CXEnemy : public CXCharacter{
 public:
@@ -11,6 +14,7 @@ public:
 	void Update();								//敵の更新
 	CXEnemy();									//敵のデフォルトコンストラクタ
 	void Collision(CCollider* m, CCollider* o);	//敵の当たり判定
+	void Render2D();
 
 	//敵の状態
 	enum EEnemyState
@@ -34,11 +38,15 @@ protected:
 	CColliderCapsule mEnemy_ColSphereRightarm;	//右腕
 	CColliderCapsule mEnemy_ColSphereLeftarm;	//左腕
 	CColliderCapsule mEnemy_ColSphereBody;		//身体
+	//カメラ
+	CCamera mEnemy_Camera;						//カメラ
 	//敵のパラメータ
 	float mEnemy_Speed;							//敵のスピード
 	float mEnemy_Turnspeed;						//敵のターン速度
 	float mEnemy_PlayerDis;						//敵がプレイヤの座標参照用
+	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
 	int mEnemy_Hp;								//敵の体力
+	int mEnemy_HpMax;							//敵の体力の最大値
 	//敵の移動
 	CVector mEnemy_Point;						//敵移動時の目標地点
 	CVector mEnemy_PlayerPos;					//敵追跡時の目標地点
