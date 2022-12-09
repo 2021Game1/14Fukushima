@@ -5,7 +5,7 @@
 #include"CXPlayer.h"
 #include "CRes.h"
 
-#define ENEMY_ATTACK_DIS 5.2f		//攻撃可能になる距離
+#define ENEMY_ATTACK_DIS 3.2f		//攻撃可能になる距離
 #define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
 #define ENEMY_SPEED_DASH 0.15f	//走行の移動速度
 #define ENEMY_SPEED_STOP 0.0f		//停止
@@ -15,7 +15,16 @@
 #define ENEMY_WALK_DIS 24.0f		//歩行を開始する距離
 #define ENEMY_GRAVITY 0.9			//重力
 #define ENEMY_CHASE_DIS_MAX 25.0f	//走行可能な最大距離
-#define ENEMY_GAUGE_WID_MAX 480	//ゲージの幅の最大値
+#define ENEMY_HP_MAX 100;	//HPの最大値
+//敵のHPフレーム,HPゲージ座標,幅,高さ
+#define ENEMY_GAUGE_FRAME_TEX_WID 480.0f	//ゲージ枠の画像の幅
+#define ENEMY_GAUGE_FRAME_TEX_HEI 30.0f	//ゲージ枠の画像の高さ
+#define ENEMY_GAUGE_FRAME_TOP 10.0f //ゲージ枠上座標
+#define ENEMY_GAUGE_FRAME_BOTTOM (ENEMY_GAUGE_FRAME_TOP-ENEMY_GAUGE_FRAME_TEX_HEI) //ゲージ枠下座標
+#define ENEMY_GAUGE_WID_MAX 50.0f	//ゲージの幅の最大値
+#define ENEMY_GAUGE_HEIGHT 20.0f //ゲージ描画時の高さ
+#define ENEMY_GAUGE_HP_TOP 10.0f //HPゲージ描画時の上座標
+#define ENEMY_GAUGE_HP_BOTTOM (ENEMY_GAUGE_HP_TOP - ENEMY_GAUGE_HEIGHT) //HPゲージ描画時の下座標
 
 
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
@@ -30,7 +39,6 @@ CXEnemy::CXEnemy()
 	,mEnemy_ColSphereBody(this, nullptr, CVector(0.0f, 90.0f, 0.0f), CVector(0.0f, -130.0f, 30.0f), 1.3)
 	,mEnemy_ColSphereRightarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(0.0f, -90.0f, 0.0f), 1.5)
 	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(-30.0f, -90.0f, 30.0f), 0.8)
-	,mEnemy_HpMax(100)
 
 {
 	mpEnemy_Instance = this;
@@ -139,38 +147,33 @@ void CXEnemy::Update() {
 }
 void CXEnemy::Render2D()
 {
-	//自分が死亡状態の時リターンする
-	if (mEnemy_State == EDEATH)return;
+
 	//2D描画開始
 	CUtil::Start2D(0, 800, 0, 600);
-
-	CVector ret;
 	CVector tpos;
-	tpos = mpCombinedMatrix[30].GetPos();
-
-	mEnemy_Camera.WorldToScreen(&ret, tpos);
-
-	float HpRate = (float)mEnemy_Hp / (float)mEnemy_HpMax; //体力最大値に対する、現在の体力の割合
+	CVector ret;
+	tpos = mpCombinedMatrix[24].GetPos();
+	Camera.WorldToScreen(&ret, tpos);
+	float HpRate = (float)mEnemy_Hp / (float)ENEMY_HP_MAX; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より大きい時
 	if (mEnemy_FollowGaugeWid > HpGaugeWid) {
 		//線形補間で被ダメージ分後追いするゲージの幅を設定する
-		mEnemy_FollowGaugeWid = Camera.mLerp(mEnemy_FollowGaugeWid, HpGaugeWid, 0.025f);
+		mEnemy_FollowGaugeWid = Camera.mLerp(mEnemy_FollowGaugeWid, HpGaugeWid, 0.05f);
 	}
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より小さいとき
 	else if (mEnemy_FollowGaugeWid < HpGaugeWid) {
 		//被ダメージ分後追いするゲージの幅に体力ゲージの幅を設定する
 		mEnemy_FollowGaugeWid = HpGaugeWid;
 	}
-
 	//画面外の時に表示しない
 	if (ret.X() > 0 && ret.X() < 800) {
-		//ゲージ背景
-		CRes::GetInstance()->GetInEnemyUiHpFrame().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + 30.0f, ret.Y() + 45.0f, 210, 290, 63, 0);
 		//被ダメージ分後追いするゲージを表示
-		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + 30.0f, ret.Y() + 45.0f, 443, 443, 36, 36);
+		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
 		//体力ゲージ
-		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + 30.0f, ret.Y() + 45.0f, 0, 0, 0, 0);
+		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+		//ゲージ背景
+		CRes::GetInstance()->GetInEnemyUiHpFrame().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX * 2.0f, ret.Y() + ENEMY_GAUGE_FRAME_BOTTOM, ret.Y() + ENEMY_GAUGE_FRAME_TOP, 0.0f, ENEMY_GAUGE_FRAME_TEX_WID, 0.0f, ENEMY_GAUGE_FRAME_TEX_HEI);
 	}
 	//2Dの描画終了
 	CUtil::End2D();
@@ -457,10 +460,11 @@ void CXEnemy::Attack_3()
 void CXEnemy::KnockBack()
 {
 	ChangeAnimation(6, false, 50);
-	//プレイヤーが追跡可能な距離にいないとき
+	//アニメーション終了時
 	if (IsAnimationFinished()) 
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
+		mEnemy_Hp -= 20;
 	}
 }
 
@@ -489,6 +493,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 					if (o->Tag() == CCollider::ESWORD) 
 					{
 						if (CXPlayer::GetInstance()->GetIsHit() == true) {
+							new CEffect(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
 							mEnemy_State = EKNOCKBACK;
 						}
 					}
@@ -496,7 +501,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 					{
 							if (CXPlayer::GetInstance()->GetIsHit() == true)
 							{
-
 								mEnemy_State = EKNOCKBACK;
 							}
 					}

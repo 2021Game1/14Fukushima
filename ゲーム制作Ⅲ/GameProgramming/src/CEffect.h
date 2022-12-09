@@ -15,6 +15,9 @@ public:
 	void Update();
 	//描画
 	void Render();
+	CMaterial GetIsMaterial();
+	//他のクラスで参照用の関数
+	static CEffect* GetInstance();				//staticで処理を作る
 private:
 	//行数
 	int mRows;
@@ -26,6 +29,7 @@ private:
 	int mFrame;
 	//マテリアル
 	static CMaterial sMaterial;
+	static CEffect* mpEffect_Instance;//別のクラスでエフェクトの変数を呼び出す場合,staticでポインタを作る
 };
 #endif
 

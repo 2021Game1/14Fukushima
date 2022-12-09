@@ -1,9 +1,10 @@
 #ifndef CXENEMY_H
-#define CEENEMY_H
+#define CXENEMY_H
 
 #include"CXCharacter.h"
 #include"CColliderCapsule.h"
 #include"CCamera.h"
+
 
 
 
@@ -46,7 +47,6 @@ protected:
 	float mEnemy_PlayerDis;						//敵がプレイヤの座標参照用
 	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
 	int mEnemy_Hp;								//敵の体力
-	int mEnemy_HpMax;							//敵の体力の最大値
 	//敵の移動
 	CVector mEnemy_Point;						//敵移動時の目標地点
 	CVector mEnemy_PlayerPos;					//敵追跡時の目標地点
@@ -69,6 +69,5 @@ protected:
 
 
 };
-
 #endif
 

@@ -57,8 +57,6 @@ public:
 	//2線間の最短ベクトルを求める
 	//VectorLineMinDist(線1始点, 線1終点, 線2始点, 線2終点)
 	static CVector VectorLineMinDist(const CVector& Start1, const CVector& End1, const CVector& Start2, const CVector& End2);
-
-
 	//優先度の変更
 	virtual void ChangePriority();
 	//コライダ種類の取得
@@ -69,6 +67,7 @@ public:
 	//Tag(タグ)
 	void Tag(ETag tag);
 	void Matrix(CMatrix* m);
+	CMatrix* GetIsMatrix();
 protected:
 	CCharacter* mpParent;//親
 	CMatrix* mpMatrix;//親行列

@@ -1,6 +1,7 @@
 #include "CEffect.h"
 
 CMaterial CEffect::sMaterial; //マテリアル.テクスチャ
+CEffect* CEffect::mpEffect_Instance = nullptr;
 
 CEffect::CEffect(const CVector &pos, float w, float h, char *texture, int row, int col, int fps)
 : CBillBoard(pos, w, h), mRows(row), mCols(col), mFps(fps), mFrame(0)
@@ -14,15 +15,13 @@ CEffect::CEffect(const CVector &pos, float w, float h, char *texture, int row, i
 		sMaterial.Diffuse()[2] = 1.0f;
 		sMaterial.Diffuse()[3] = 1.0f;
 	}
-	else if (!sMaterial.Texture()->Id() == 0) {
-		sMaterial.Texture()->Load(texture);
-		sMaterial.Diffuse()[0] = 1.0f;
-		sMaterial.Diffuse()[1] = 1.0f;
-		sMaterial.Diffuse()[2] = 1.0f;
-		sMaterial.Diffuse()[3] = 1.0f;
-	}
-}
 
+}
+//マテリアルを取得する
+CMaterial CEffect::GetIsMaterial()
+{
+	return sMaterial;	//マテリアルを座標を返す
+}
 void CEffect::Update() {
 	//コマ数の計算
 	int frame = mFrame++ / mFps;
@@ -46,10 +45,14 @@ void CEffect::Update() {
 	//ビルボード更新
 	CBillBoard::Update();
 }
-
 void CEffect::Render()
 {
 	glDisable(GL_DEPTH_TEST); //深度テスト無効
 	CBillBoard::Render(&sMaterial);
 	glEnable(GL_DEPTH_TEST); //深度テスト有効
+}
+//エフェクトのポインタを返すことで、座標などが参照できるようになる
+CEffect* CEffect::GetInstance()
+{
+	return mpEffect_Instance;
 }

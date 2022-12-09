@@ -288,18 +288,6 @@ CVector CCollider::VectorLineMinDist(const CVector& Start1
 	return dP;   // return the closest distance 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 //—Dæ“x‚Ì•ÏX
 void CCollider::ChangePriority()
 {
@@ -327,4 +315,7 @@ void CCollider::Tag(ETag tag)
 void CCollider::Matrix(CMatrix* m)
 {
 	mpMatrix = m;
+}
+CMatrix* CCollider::GetIsMatrix() {
+	return mpMatrix;
 }

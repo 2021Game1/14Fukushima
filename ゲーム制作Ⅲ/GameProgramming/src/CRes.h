@@ -15,6 +15,7 @@
 #include "CMap.h"
 #include "CEffect.h"
 #include "CColliderMesh.h"
+#include "CEffect.h"
 
 
 
@@ -50,7 +51,9 @@
 #define PLAYER_UI_HP_FRAME "res\\ui\\Player_HP_Frame.png"
 #define ENEMY_UI_HP_FRAME "res\\ui\\Enemy_HP_Frame.png"
 
-
+#define PLAYER_EF_ATTACKSP1 "res\\effect\\Player_Attack1.png"
+#define PLAYER_EF_ATTACKSP2 "res\\effect\\Player_Attack2.png"
+#define PLAYER_EF_ATTACKSP3 "res\\effect\\Player_Attack3.png"
 
 
 class CRes {
@@ -95,6 +98,10 @@ private:
 	CTexture gPlayer_Ui_Hp_Frame;
 	//敵のUIインスタンス
 	CTexture gEnemy_Ui_Hp_Frame;
+	//プレイヤのテクスチャインスタンス
+	GLuint gPlayer_Effect_Tex_ID;
+	CTexture* gEffect_Texture;
+	CMaterial gMaterial_Diffuse;
 	static CRes* mpRes_Instance;//別のクラスでリソースの変数を呼び出す場合,staticでポインタを作る
 };
 #endif

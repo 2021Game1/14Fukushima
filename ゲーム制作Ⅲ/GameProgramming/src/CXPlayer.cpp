@@ -17,11 +17,11 @@
 #define PLAYER_GAUGE_FRAME_TEX_WID 480	//ゲージ枠の画像の幅
 #define PLAYER_GAUGE_FRAME_TEX_HEI 80	//ゲージ枠の画像の高さ
 #define PLAYER_GAUGE_FRAME_LEFT 0	//ゲージ枠左座標
-#define PLAYER_GAUGE_FRAME_RIGHT 400 //ゲージ枠右座標
+#define PLAYER_GAUGE_FRAME_RIGHT 380 //ゲージ枠右座標
 #define PLAYER_GAUGE_FRAME_TOP PLAYER_GAUGE_FRAME_TEX_HEI //ゲージ枠上座標
 #define PLAYER_GAUGE_FRAME_BOTTOM (PLAYER_GAUGE_FRAME_TOP-PLAYER_GAUGE_FRAME_TEX_HEI) //ゲージ枠下座標
-#define PLAYER_GAUGE_LEFT -80	//ゲージ描画時の左座標
-#define PLAYER_GAUGE_WID_MAX 480	//ゲージの幅の最大値
+#define PLAYER_GAUGE_LEFT 0	//ゲージ描画時の左座標
+#define PLAYER_GAUGE_WID_MAX 380	//ゲージの幅の最大値
 #define GAUGE_HEIGHT 20 //ゲージ描画時の高さ
 #define PLAYER_GAUGE_HP_TOP 30 //HPゲージ描画時の上座標
 #define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT) //HPゲージ描画時の下座標
@@ -34,9 +34,9 @@ CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタ
 
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
-	:mPlayer_ColSphereBody(this, nullptr, CVector(0.0f, 80.0f, 0.0f), CVector(0.0f, -80.0f, 0.0f), 0.7)
-	, mPlayer_ColSphereShield(this, nullptr, CVector(0.0f, 0.0f, -5.0f), CVector(0.0f, 0.0f, 0.0f), 0.5f)
-	, mPlayer_ColSphereSword(this, nullptr, CVector(-13.0f, 0.0f, 90.0f), CVector(0.0f, 0.0f, 10.0f), 0.3f)
+	:mPlayer_ColCapsuleBody(this, nullptr, CVector(0.0f, 80.0f, 0.0f), CVector(0.0f, -80.0f, 0.0f), 0.7)
+	, mPlayer_ColCapsuleShield(this, nullptr, CVector(0.0f, 0.0f, -5.0f), CVector(0.0f, 0.0f, 0.0f), 0.5f)
+	, mPlayer_ColCapsuleSword(this, nullptr, CVector(-13.0f, 0.0f, 90.0f), CVector(0.0f, 0.0f, 10.0f), 0.3f)
 	, mPlayer_Speed(PLAYER_SPEED_DEFAULT)
 	, mPlayer_Hp(100)
 	, mPlayer_ComboCount(0)
@@ -57,18 +57,18 @@ CXPlayer::CXPlayer()
 	//初期状態を設定
 	mPlayer_State = EIDLE;											//プレイヤの初期状態を待機状態に設定する
 	//コライダのタグを設定
-	mPlayer_ColSphereBody.Tag(CCollider::EBODY);					//体
-	mPlayer_ColSphereShield.Tag(CCollider::ESHIERD);				//盾
-	mPlayer_ColSphereSword.Tag(CCollider::ESWORD);					//剣
+	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
+	mPlayer_ColCapsuleShield.Tag(CCollider::ESHIERD);				//盾
+	mPlayer_ColCapsuleSword.Tag(CCollider::ESWORD);					//剣
 }
 
 void CXPlayer::Init(CModelX* model)
 {
 	CXCharacter::Init(model);
 	//合成行列の設定
-	mPlayer_ColSphereBody.Matrix(&mpCombinedMatrix[14]);
-	mPlayer_ColSphereShield.Matrix(&mpCombinedMatrix[41]);
-	mPlayer_ColSphereSword.Matrix(&mpCombinedMatrix[71]);
+	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[14]);
+	mPlayer_ColCapsuleShield.Matrix(&mpCombinedMatrix[41]);
+	mPlayer_ColCapsuleSword.Matrix(&mpCombinedMatrix[71]);
 	//プレイヤの位置,拡縮,回転の設定
 	mPosition.Set(0.0f, 0.0f, 0.0);									//位置を設定
 	mScale.Set(2.0f,2.0f,2.0f);										//スケール設定
@@ -231,9 +231,7 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-			if (mAnimationFrame > PLAYER_INRECEPTION) {
 				mPlayer_IsHit = true;									//ヒット判定有効
-			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
@@ -380,9 +378,7 @@ void CXPlayer::Guard()
 	else if (mAnimationIndex == 4) {
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
-			if (mAnimationFrame > PLAYER_INRECEPTION) {
 				mPlayer_IsHit = true;
-			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
@@ -490,9 +486,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 			mPosition = mPosition + adjust;
 			//行列の更新
 			CTransform::Update();
-		}		
-
-
+		}
 		break;
 	}
 						   
@@ -557,4 +551,9 @@ bool CXPlayer::GetIsHit()
 CXPlayer::EPlayerState CXPlayer::GetState()
 {
 	return mPlayer_State;
+}
+//剣のコライダの座標を取得する
+CVector CXPlayer::GetSwordColPos()
+{
+	return mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();	//剣のコライダの座標を返す
 }

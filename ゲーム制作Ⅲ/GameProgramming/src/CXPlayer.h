@@ -38,12 +38,12 @@ public:
 	bool GetIsAnimationFrame();
 	bool GetIsHit();//ヒット状態の判別
 	CXPlayer::EPlayerState GetState();	//プレイヤの状態を取得する
-
+	CVector GetSwordColPos();	//剣のコライダの座標を取得する
 private:
 	//コライダの宣言
-	CColliderCapsule mPlayer_ColSphereSword;	//剣
-	CColliderCapsule mPlayer_ColSphereShield;	//盾
-	CColliderCapsule mPlayer_ColSphereBody;	//身体
+	CColliderCapsule mPlayer_ColCapsuleSword;	//剣
+	CColliderCapsule mPlayer_ColCapsuleShield;	//盾
+	CColliderCapsule mPlayer_ColCapsuleBody;	//身体
 	EPlayerState mPlayer_State;			//プレイヤの状態判断用
 	float mPlayer_Speed;				//プレイヤのスピード
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度

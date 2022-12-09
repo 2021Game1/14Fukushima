@@ -1,7 +1,5 @@
 #include "CRes.h"
 
-
-
 CRes* CRes::mpRes_Instance = nullptr;												//リソースのインスタンス変数の初期化
 
 void CRes::Init() {
@@ -51,6 +49,18 @@ void CRes::Init() {
 	mMap.Model(&gMap_Model);
 	//親インスタンスと親行列はなし
 	mColliderMesh.Set(nullptr, &mBackGroundMatrix, &gMap_Model_Collision);
+	//プレイヤのエフェクト
+	gPlayer_Effect_Tex_ID = CEffect::GetInstance()->GetIsMaterial().Texture()->Id();
+	gEffect_Texture = CEffect::GetInstance()->GetIsMaterial().Texture();
+	gMaterial_Diffuse = CEffect::GetInstance()->GetIsMaterial();
+	//エフェクト画像読み込み
+	if (gPlayer_Effect_Tex_ID == 0) {
+		gEffect_Texture->Load2D(PLAYER_EF_ATTACKSP1); //攻撃ヒット時のエフェクト
+		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
+		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
+		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
+		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
+	}
 }
 void CRes::Update() {
 	//キャラクタクラスの更新
@@ -77,13 +87,14 @@ void CRes::Update() {
 	//敵の描画
 	mEnemy.Render();
 	mPlayer.Render2D();
+	mEnemy.Render2D();
+
 }
 //リソースのポインタを返すことで、座標などが参照できるようになる
 CRes* CRes::GetInstance()
 {
 	return mpRes_Instance;
 }
-
 CText& CRes::GetInUiFont()
 {
 	return mFont;
