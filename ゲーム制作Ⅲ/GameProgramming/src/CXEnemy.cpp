@@ -493,7 +493,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 					if (o->Tag() == CCollider::ESWORD) 
 					{
 						if (CXPlayer::GetInstance()->GetIsHit() == true) {
-							new CEffect(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
 							mEnemy_State = EKNOCKBACK;
 						}
 					}

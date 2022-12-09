@@ -34,7 +34,7 @@ CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタ
 
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
-	:mPlayer_ColCapsuleBody(this, nullptr, CVector(0.0f, 80.0f, 0.0f), CVector(0.0f, -80.0f, 0.0f), 0.7)
+	: mPlayer_ColCapsuleBody(this, nullptr, CVector(0.0f, 80.0f, 0.0f), CVector(0.0f, -80.0f, 0.0f), 0.7)
 	, mPlayer_ColCapsuleShield(this, nullptr, CVector(0.0f, 0.0f, -5.0f), CVector(0.0f, 0.0f, 0.0f), 0.5f)
 	, mPlayer_ColCapsuleSword(this, nullptr, CVector(-13.0f, 0.0f, 90.0f), CVector(0.0f, 0.0f, 10.0f), 0.3f)
 	, mPlayer_Speed(PLAYER_SPEED_DEFAULT)
@@ -196,6 +196,8 @@ void CXPlayer::Move()
 //攻撃1処理
 void CXPlayer::Attack_1()
 {
+	//剣コライダの座標を参照
+	CVector tpos = mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();
 	//処理が呼び出されたら1度しか動かさない
 	if (mPlayer_AttackFlag_1 == false) {							
 		mPlayer_AttackFlag_1 = true;								//プレイヤの攻撃1のフラグをtrueにする
@@ -216,6 +218,7 @@ void CXPlayer::Attack_1()
 	else if (mAnimationIndex == 3) {
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;									//プレイヤーのヒット判定をtrueにする
 		}
 		//アニメーション終了時
@@ -231,6 +234,7 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
@@ -262,6 +266,8 @@ void CXPlayer::Attack_1()
 //攻撃2処理
 void CXPlayer::Attack_2()
 {
+	//剣コライダの座標を参照
+	CVector tpos = mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();
 	//処理が呼び出されたら1度しか動かさない
 	if (mPlayer_AttackFlag_2 == false) {
 		mPlayer_AttackFlag_2 = true;								//プレイヤの攻撃2のフラグをtrueにする
@@ -272,6 +278,7 @@ void CXPlayer::Attack_2()
 	{
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
@@ -307,6 +314,8 @@ void CXPlayer::Attack_2()
 //攻撃3処理
 void CXPlayer::Attack_3()
 {
+	//剣コライダの座標を参照
+	CVector tpos = mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();
 	//処理が呼び出されたら1度しか動かさない
 	if (mPlayer_AttackFlag_3 == false) {
 		mPlayer_AttackFlag_3 = true;								//プレイヤの攻撃2のフラグをtrueにする								
@@ -316,6 +325,7 @@ void CXPlayer::Attack_3()
 	{
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;
 		}
 		//アニメーション終了時
