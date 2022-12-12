@@ -56,12 +56,14 @@ CXPlayer::CXPlayer()
 	mTag = EPLAYER;													//タグをプレイヤに設定
 	//初期状態を設定
 	mPlayer_State = EIDLE;											//プレイヤの初期状態を待機状態に設定する
+	//初期エフェクト設定
+	mPlayer_Effect = EEFFECT_NULL;
 	//コライダのタグを設定
 	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
 	mPlayer_ColCapsuleShield.Tag(CCollider::ESHIERD);				//盾
 	mPlayer_ColCapsuleSword.Tag(CCollider::ESWORD);					//剣
 	//優先度を1に変更する
-	mPriority = 100;
+	mPriority = 95;
 	CTaskManager::Get()->Remove(this);//削除して
 	CTaskManager::Get()->Add(this);//追加する
 }
@@ -80,6 +82,9 @@ void CXPlayer::Init(CModelX* model)
 }
 
 void CXPlayer::Update() {
+	//剣コライダの座標を参照
+	CVector tpos = mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();
+	mPlayer_Effect = EEFFECT_NULL;
 	//状態を判別
 	switch (mPlayer_State) {
 	case EIDLE:														//待機状態
@@ -112,6 +117,20 @@ void CXPlayer::Update() {
 
 	case EKNOCKBACK:												//ノックバック状態
 		KnockBack();												//ノックバック処理を呼ぶ
+		break;
+	}
+	//エフェクトを判別
+	switch (mPlayer_Effect) {
+	case EEFFECT_NULL:
+		break;
+	case EEFFECT_PLAYER_ATTACKSP1://プレイヤの攻撃1エフェクト
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 1.0f, 1.0f, "effect\\Player_Attack1.png", 3, 3, 2); //エフェクトを生成する
+		break;
+	case EEFFECT_PLAYER_ATTACKSP2://プレイヤの攻撃2エフェクト
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 1.0f, 1.0f, "effect\\Player_Attack2.png", 10, 1, 2); //エフェクトを生成する
+		break;
+	case EEFFECT_PLAYER_ATTACKSP3://プレイヤの攻撃3エフェクト
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 1.0f, 1.0f, "effect\\Player_Attack3.png", 12, 2, 2); //エフェクトを生成する
 		break;
 	}
 	//座標移動
@@ -200,8 +219,6 @@ void CXPlayer::Move()
 //攻撃1処理
 void CXPlayer::Attack_1()
 {
-	//剣コライダの座標を参照
-	CVector tpos = mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();
 	//処理が呼び出されたら1度しか動かさない
 	if (mPlayer_AttackFlag_1 == false) {							
 		mPlayer_AttackFlag_1 = true;								//プレイヤの攻撃1のフラグをtrueにする
@@ -222,12 +239,13 @@ void CXPlayer::Attack_1()
 	else if (mAnimationIndex == 3) {
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack1.png", 3, 3, 4); //エフェクトを生成する
+			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
 				mPlayer_IsHit = true;									//プレイヤーのヒット判定をtrueにする
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
+			mPlayer_Effect = EEFFECT_NULL;
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(1, false, 30);							//プレイヤの攻撃1モーション
 		}
@@ -236,25 +254,27 @@ void CXPlayer::Attack_1()
 	else if (mAnimationIndex == 1)
 	{
 		//ヒット判定発生
-		if (IsAnimationFinished() == false) 
+		if (IsAnimationFinished() == false)
 		{
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack1.png", 3, 3, 4); //エフェクトを生成する
-				mPlayer_IsHit = true;									//ヒット判定有効
+			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
+			mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
-		{
-			
+		{	
+			mPlayer_Effect = EEFFECT_NULL;
 			mPlayer_IsHit = false;								//ヒット判定終了
 		}
 		//アニメーションのフレームが受付時間より小さい間
 		if (mAnimationFrame < PLAYER_RECEPTION) {
 			//左クリックされた場合
 			if (CKey::Once(VK_LBUTTON)) {
+				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EATTACK_2;							//攻撃2モーションへ移行
 			}
 			//スペースキーを押された場合
 			else if(CKey::Once(VK_SPACE)) {
+				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EGUARD;								//ガードモーションへ移行
 			}
 		}
@@ -263,6 +283,7 @@ void CXPlayer::Attack_1()
 	if (IsAnimationFinished())
 	{
 	mPlayer_State = EIDLE;											//待機状態へ移行
+	mPlayer_Effect = EEFFECT_NULL;
 	mPlayer_AttackFlag_1 = false;									//プレイヤの攻撃1フラグをfalseにする
 	}
 }
@@ -270,8 +291,6 @@ void CXPlayer::Attack_1()
 //攻撃2処理
 void CXPlayer::Attack_2()
 {
-	//剣コライダの座標を参照
-	CVector tpos = mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();
 	//処理が呼び出されたら1度しか動かさない
 	if (mPlayer_AttackFlag_2 == false) {
 		mPlayer_AttackFlag_2 = true;								//プレイヤの攻撃2のフラグをtrueにする
@@ -281,13 +300,15 @@ void CXPlayer::Attack_2()
 	if (mAnimationIndex == 1)
 	{
 		//ヒット判定発生
-		if (IsAnimationFinished() == false) {
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack2.png", 3, 3, 4); //エフェクトを生成する
+		if (IsAnimationFinished() == false) 
+		{
+				mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP2;
 				mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
 		else if (IsAnimationFinished())
 		{
+			mPlayer_Effect = EEFFECT_NULL;
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(2, false, 60);							//プレイヤの攻撃2モーション
 		}
@@ -299,10 +320,12 @@ void CXPlayer::Attack_2()
 		if (mAnimationFrame < PLAYER_RECEPTION) {
 			//左クリックされた場合
 			if (CKey::Once(VK_LBUTTON)) {
+				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EATTACK_3;							//攻撃3モーションへ移行
 			}
 			//スペースキーを押された場合
 			else if (CKey::Once(VK_SPACE)) {
+				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EGUARD;								//ガードモーションへ移行
 			}
 		}
@@ -311,6 +334,7 @@ void CXPlayer::Attack_2()
 	if (IsAnimationFinished())
 	{
 	mPlayer_State = EIDLE;											//待機状態へ移行
+	mPlayer_Effect = EEFFECT_NULL;
 	mPlayer_AttackFlag_2 = false;									//プレイヤの攻撃2フラグをfalseにする
 	}
 }
@@ -318,8 +342,6 @@ void CXPlayer::Attack_2()
 //攻撃3処理
 void CXPlayer::Attack_3()
 {
-	//剣コライダの座標を参照
-	CVector tpos = mPlayer_ColCapsuleSword.GetIsMatrix()->GetPos();
 	//処理が呼び出されたら1度しか動かさない
 	if (mPlayer_AttackFlag_3 == false) {
 		mPlayer_AttackFlag_3 = true;								//プレイヤの攻撃2のフラグをtrueにする								
@@ -328,26 +350,33 @@ void CXPlayer::Attack_3()
 	if (mAnimationIndex == 2)
 	{
 		//ヒット判定発生
-		if (IsAnimationFinished() == false) {
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack3.png", 3, 3, 4); //エフェクトを生成する
+		if (IsAnimationFinished() == false) 
+		{
+				mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP3;
 				mPlayer_IsHit = true;
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
+			mPlayer_Effect = EEFFECT_NULL;
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(3, false, 80);
 		}
 	}
 	else if (mAnimationIndex == 3)
 	{
-		if (mAnimationFrame < PLAYER_RECEPTION) {
+		if (mAnimationFrame < PLAYER_RECEPTION) 
+		{
 			//左クリックされた場合
-			if (CKey::Once(VK_LBUTTON)) {
+			if (CKey::Once(VK_LBUTTON)) 
+			{
+				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EATTACK_1;							//攻撃1モーションへ移行
 			}
 			//スペースキーを押された場合
-			else if(CKey::Once(VK_SPACE)) {
+			else if(CKey::Once(VK_SPACE))
+			{
+				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EGUARD;								//ガードモーションへ移行
 			}
 		}
@@ -356,6 +385,7 @@ void CXPlayer::Attack_3()
 	if (IsAnimationFinished())
 	{
 	mPlayer_State = EIDLE;											//待機状態へ移行
+	mPlayer_Effect = EEFFECT_NULL;
 	mPlayer_AttackFlag_3 = false;									//プレイヤの攻撃3のフラグをfalseに設定
 	}
 }

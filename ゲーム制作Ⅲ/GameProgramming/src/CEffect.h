@@ -2,6 +2,7 @@
 #define CEFFECT_H
 //ビルボードクラスのインクルード
 #include "CBillBoard.h"
+#include "CTaskManager.h"
 /*
 エフェクトクラス
 テクスチャのアニメーション
@@ -15,9 +16,6 @@ public:
 	void Update();
 	//描画
 	void Render();
-	CMaterial* GetIsMaterial();
-	//他のクラスで参照用の関数
-	static CEffect* GetInstance();				//staticで処理を作る
 private:
 	//行数
 	int mRows;

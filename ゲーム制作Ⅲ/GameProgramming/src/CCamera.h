@@ -13,8 +13,6 @@
 #define CAMERA_HEAD_ADJUST 2.0f	//注視点の高さ調整
 class CCamera : public CCharacter{
 public:
-	CVector mRotation;//回転
-	CVector mEye;//視点
 	//視点座標の取得
 	const CVector& Eye() const;
 	CCamera();
@@ -36,15 +34,14 @@ public:
 	float mLerp(float start, float point, float rate);
 	//ターゲットへカメラを向かせる処理
 	void TargetLook();
-	//staticでポインタを作る
-	static CCamera* mpCameraInstance;
 	//インスタンスの取得
 	static CCamera* Instance();
 	//ワールド座標をスクリーン座標へ変換する
 	//WorldToScreen(スクリーン座標, ワールド座標)
 	bool WorldToScreen(CVector* screen, const CVector& world);
 private:
-	
+	CVector mRotation;//回転
+	CVector mEye;//視点
 	CVector mCenter;//注視点
 	CVector mUp;//上方向
 	int mScreenWidth; //幅
@@ -74,7 +71,8 @@ private:
 	//マウスの座標保持用
 	int mOldMouseX, mOldMouseY; //以前の座標
 	int mMouseX, mMouseY;		//現在の座標
-
+		//staticでポインタを作る
+	static CCamera* mpCameraInstance;
 };
 
 //カメラの外部参照

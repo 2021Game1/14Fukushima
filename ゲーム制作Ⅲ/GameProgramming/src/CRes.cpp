@@ -4,7 +4,6 @@ CRes* CRes::mpRes_Instance = nullptr;												//ƒŠƒ\[ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX•Ï”‚Ì
 
 void CRes::Init() {
 	mpRes_Instance = this;
-	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 	//3Dƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚Ì“Ç‚Ýž‚Ý
 	gPlayer_Model_Knight.Load(PLAYER_MODEL_FILE);
 	//ƒvƒŒƒCƒ„‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ì’Ç‰Á
@@ -48,21 +47,12 @@ void CRes::Init() {
 	mFont.LoadTexture("font\\FontG.png", 1, 4096 / 64);
 	mMap.Model(&gMap_Model);
 	mMap_Sky.Model(&gMap_Model_Sky);
+	//ƒ}ƒbƒv‚ÌˆÚ“®s—ñ
+	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 	//eƒCƒ“ƒXƒ^ƒ“ƒX‚Æes—ñ‚Í‚È‚µ
 	mColliderMesh.Set(nullptr, &mBackGroundMatrix, &gMap_Model_Collision);
 }
 void CRes::Update() {
-	CTaskManager::Get()->Update();
-	CTaskManager::Get()->Render();
-	CTaskManager::Get()->Render2D();
-	//s—ñÝ’è
-	glMultMatrixf(gMatrix.M());
-	//’¸“_‚ÉƒAƒjƒ[ƒVƒ‡ƒ““K—p‚·‚é
-	gPlayer_Model_Knight.AnimeteVertex();
-	//ƒRƒ‰ƒCƒ_‚Ì•`‰æ
-	CCollisionManager::Get()->Render();
-	//Õ“Ëˆ—
-	CCollisionManager::Get()->Collision();
 
 }
 //ƒŠƒ\[ƒX‚Ìƒ|ƒCƒ“ƒ^‚ð•Ô‚·‚±‚Æ‚ÅAÀ•W‚È‚Ç‚ªŽQÆ‚Å‚«‚é‚æ‚¤‚É‚È‚é

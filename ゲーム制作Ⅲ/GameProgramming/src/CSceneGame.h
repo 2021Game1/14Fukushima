@@ -16,9 +16,6 @@ public:
 	void Init();
 	//更新処理のオーバーライド
 	void Update();
-	//staticで処理を作る
-	static CSceneGame* GetInstance();
-
 };
 
 #endif

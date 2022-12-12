@@ -99,10 +99,6 @@ private:
 	CTexture gPlayer_Ui_Hp_Frame;
 	//敵のUIインスタンス
 	CTexture gEnemy_Ui_Hp_Frame;
-	//プレイヤのテクスチャインスタンス
-	GLuint gPlayer_Effect_Tex_ID;
-	CTexture* gEffect_Texture;
-	CMaterial* gMaterial_Diffuse;
 	static CRes* mpRes_Instance;//別のクラスでリソースの変数を呼び出す場合,staticでポインタを作る
 };
 #endif

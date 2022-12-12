@@ -17,11 +17,8 @@ CEffect::CEffect(const CVector &pos, float w, float h, char *texture, int row, i
 	}
 	//優先度を1に変更する
 	mPriority = 1;
-}
-//マテリアルを取得する
-CMaterial* CEffect::GetIsMaterial()
-{
-	return &sMaterial;	//マテリアルを座標を返す
+	CTaskManager::Get()->Remove(this);//削除して
+	CTaskManager::Get()->Add(this);//追加する
 }
 void CEffect::Update() {
 	//コマ数の計算
@@ -52,8 +49,4 @@ void CEffect::Render()
 	CBillBoard::Render(&sMaterial);
 	glEnable(GL_DEPTH_TEST); //深度テスト有効
 }
-//エフェクトのポインタを返すことで、座標などが参照できるようになる
-CEffect* CEffect::GetInstance()
-{
-	return mpEffect_Instance;
-}
+

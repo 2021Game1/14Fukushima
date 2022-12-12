@@ -39,8 +39,6 @@ protected:
 	CColliderCapsule mEnemy_ColSphereRightarm;	//右腕
 	CColliderCapsule mEnemy_ColSphereLeftarm;	//左腕
 	CColliderCapsule mEnemy_ColSphereBody;		//身体
-	//カメラ
-	//CCamera mEnemy_Camera;						//カメラ
 	//敵のパラメータ
 	float mEnemy_Speed;							//敵のスピード
 	float mEnemy_Turnspeed;						//敵のターン速度
