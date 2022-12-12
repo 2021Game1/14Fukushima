@@ -3,14 +3,12 @@
 
 #include"CCharacter.h"
 #include"CCollider.h"
+#include"CTaskManager.h"
 
 class CMap : public CCharacter{
 public:
 	void Collision(CCollider* m, CCollider* o);
 	CMap();
-	
-
-
 };
 
 #endif

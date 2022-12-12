@@ -15,12 +15,13 @@ CEffect::CEffect(const CVector &pos, float w, float h, char *texture, int row, i
 		sMaterial.Diffuse()[2] = 1.0f;
 		sMaterial.Diffuse()[3] = 1.0f;
 	}
-
+	//優先度を1に変更する
+	mPriority = 1;
 }
 //マテリアルを取得する
-CMaterial CEffect::GetIsMaterial()
+CMaterial* CEffect::GetIsMaterial()
 {
-	return sMaterial;	//マテリアルを座標を返す
+	return &sMaterial;	//マテリアルを座標を返す
 }
 void CEffect::Update() {
 	//コマ数の計算

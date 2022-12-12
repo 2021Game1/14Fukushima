@@ -30,6 +30,7 @@ public:
 	void Update();
 	void Init(CModelX* model);
 	void Render2D();
+	void TaskCollision();
 	CXPlayer();
 
 

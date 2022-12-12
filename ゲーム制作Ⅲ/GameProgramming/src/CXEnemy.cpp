@@ -48,6 +48,10 @@ CXEnemy::CXEnemy()
 	mEnemy_ColSphereBody.Tag(CCollider::EBODY);		//体
 	mEnemy_ColSphereRightarm.Tag(CCollider::EARM);	//手
 	mEnemy_ColSphereLeftarm.Tag(CCollider::EARM);	//手
+	//優先度を1に変更する
+	mPriority = 80;
+	CTaskManager::Get()->Remove(this);//削除して
+	CTaskManager::Get()->Add(this);//追加する
 }
 
 
@@ -515,6 +519,17 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 			}
 		}
 	}
+}
+void CXEnemy::TaskCollision()
+{
+	//コライダの優先度変更
+	mEnemy_ColSphereBody.ChangePriority();
+	mEnemy_ColSphereRightarm.ChangePriority();
+	mEnemy_ColSphereLeftarm.ChangePriority();
+	//衝突処理を実行
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereBody, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereRightarm, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLeftarm, COLLISIONRANGE);
 }
 //プレイヤーのポインタを返すことで、座標などが参照できるようになる
 CXEnemy* CXEnemy::GetInstance()

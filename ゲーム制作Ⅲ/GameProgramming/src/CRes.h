@@ -85,6 +85,7 @@ private:
 	CXEnemy mEnemy;
 	//マップクラスのインスタンス
 	CMap mMap;
+	CMap mMap_Sky;
 	//キー入力で回転
 	CMatrix gMatrix;
 	//マップ移動用の行列
@@ -101,7 +102,7 @@ private:
 	//プレイヤのテクスチャインスタンス
 	GLuint gPlayer_Effect_Tex_ID;
 	CTexture* gEffect_Texture;
-	CMaterial gMaterial_Diffuse;
+	CMaterial* gMaterial_Diffuse;
 	static CRes* mpRes_Instance;//別のクラスでリソースの変数を呼び出す場合,staticでポインタを作る
 };
 #endif

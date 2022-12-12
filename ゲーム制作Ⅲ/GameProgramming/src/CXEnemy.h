@@ -16,7 +16,7 @@ public:
 	CXEnemy();									//敵のデフォルトコンストラクタ
 	void Collision(CCollider* m, CCollider* o);	//敵の当たり判定
 	void Render2D();
-
+	void TaskCollision();
 	//敵の状態
 	enum EEnemyState
 	{
@@ -40,7 +40,7 @@ protected:
 	CColliderCapsule mEnemy_ColSphereLeftarm;	//左腕
 	CColliderCapsule mEnemy_ColSphereBody;		//身体
 	//カメラ
-	CCamera mEnemy_Camera;						//カメラ
+	//CCamera mEnemy_Camera;						//カメラ
 	//敵のパラメータ
 	float mEnemy_Speed;							//敵のスピード
 	float mEnemy_Turnspeed;						//敵のターン速度

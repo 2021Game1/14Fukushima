@@ -60,6 +60,10 @@ CXPlayer::CXPlayer()
 	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
 	mPlayer_ColCapsuleShield.Tag(CCollider::ESHIERD);				//盾
 	mPlayer_ColCapsuleSword.Tag(CCollider::ESWORD);					//剣
+	//優先度を1に変更する
+	mPriority = 100;
+	CTaskManager::Get()->Remove(this);//削除して
+	CTaskManager::Get()->Add(this);//追加する
 }
 
 void CXPlayer::Init(CModelX* model)
@@ -218,7 +222,7 @@ void CXPlayer::Attack_1()
 	else if (mAnimationIndex == 3) {
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack1.png", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;									//プレイヤーのヒット判定をtrueにする
 		}
 		//アニメーション終了時
@@ -234,7 +238,7 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack1.png", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
@@ -278,7 +282,7 @@ void CXPlayer::Attack_2()
 	{
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack2.png", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
@@ -325,7 +329,7 @@ void CXPlayer::Attack_3()
 	{
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
-			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "", 3, 3, 4); //エフェクトを生成する
+			new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 10.0f, 10.0f, "res\\effect\\Player_Attack3.png", 3, 3, 4); //エフェクトを生成する
 				mPlayer_IsHit = true;
 		}
 		//アニメーション終了時
@@ -540,6 +544,17 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		break;
 	}
 	}		
+}
+void CXPlayer::TaskCollision()
+{
+	//コライダの優先度変更
+	mPlayer_ColCapsuleBody.ChangePriority();
+	mPlayer_ColCapsuleShield.ChangePriority();
+	mPlayer_ColCapsuleSword.ChangePriority();
+	//衝突処理を実行
+	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleBody, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleShield, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleSword, COLLISIONRANGE);
 }
 
 //プレイヤーのポインタを返すことで、座標などが参照できるようになる

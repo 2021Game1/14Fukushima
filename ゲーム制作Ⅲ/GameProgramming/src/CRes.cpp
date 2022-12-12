@@ -47,47 +47,22 @@ void CRes::Init() {
 	mEnemy.Init(&gEnemy_Model_Mutant);
 	mFont.LoadTexture("font\\FontG.png", 1, 4096 / 64);
 	mMap.Model(&gMap_Model);
+	mMap_Sky.Model(&gMap_Model_Sky);
 	//親インスタンスと親行列はなし
 	mColliderMesh.Set(nullptr, &mBackGroundMatrix, &gMap_Model_Collision);
-	//プレイヤのエフェクト
-	gPlayer_Effect_Tex_ID = CEffect::GetInstance()->GetIsMaterial().Texture()->Id();
-	gEffect_Texture = CEffect::GetInstance()->GetIsMaterial().Texture();
-	gMaterial_Diffuse = CEffect::GetInstance()->GetIsMaterial();
-	//エフェクト画像読み込み
-	if (gPlayer_Effect_Tex_ID == 0) {
-		gEffect_Texture->Load2D(PLAYER_EF_ATTACKSP1); //攻撃ヒット時のエフェクト
-		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
-		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
-		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
-		gMaterial_Diffuse.Diffuse()[0] = 1.0f;
-	}
 }
 void CRes::Update() {
-	//キャラクタクラスの更新
-	mPlayer.Update();
-	//カメラクラスの更新
-	Camera.Update();
-	//カメラクラスの描画
-	Camera.Render();
+	CTaskManager::Get()->Update();
+	CTaskManager::Get()->Render();
+	CTaskManager::Get()->Render2D();
 	//行列設定
 	glMultMatrixf(gMatrix.M());
 	//頂点にアニメーション適用する
 	gPlayer_Model_Knight.AnimeteVertex();
-	//モデル描画
-	mPlayer.Render();
-	//マップモデルの描画
-	mMap.Render();
-	gMap_Model_Sky.Render();
 	//コライダの描画
 	CCollisionManager::Get()->Render();
 	//衝突処理
 	CCollisionManager::Get()->Collision();
-	//敵の更新
-	mEnemy.Update();
-	//敵の描画
-	mEnemy.Render();
-	mPlayer.Render2D();
-	mEnemy.Render2D();
 
 }
 //リソースのポインタを返すことで、座標などが参照できるようになる

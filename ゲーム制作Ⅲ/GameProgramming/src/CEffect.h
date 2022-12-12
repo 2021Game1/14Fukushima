@@ -15,7 +15,7 @@ public:
 	void Update();
 	//描画
 	void Render();
-	CMaterial GetIsMaterial();
+	CMaterial* GetIsMaterial();
 	//他のクラスで参照用の関数
 	static CEffect* GetInstance();				//staticで処理を作る
 private:
