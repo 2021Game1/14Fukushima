@@ -69,10 +69,6 @@ void CXEnemy::Init(CModelX* model)
 }
 
 void CXEnemy::Update() {
-	//プレイヤー方向のベクトルを求める
-	mEnemy_PlayerPos = CXPlayer::GetInstance()->Position() - mPosition;
-	//プレイヤーまでの距離を求める
-	mEnemy_PlayerDis = mEnemy_PlayerPos.Length();
 	//状態を判別
 	switch (mEnemy_State) 
 	{
@@ -108,38 +104,7 @@ void CXEnemy::Update() {
 		KnockBack(); //ノックバック処理を呼ぶ
 		break;
 	}
-	
-	//普通に3次元ベクトル計算で算出したほうが正確だが計算量を懸念する場合は擬似計算で軽量化
-	//擬似ベクトル計算
-	CVector ChackVec; //チェック用ベクトル
-	ChackVec = mEnemy_MoveDirKeep.Normalize(); //保存された移動時の方向ベクトルを代入
-	ChackVec = mEnemy_MoveDir.Normalize(); //移動時の方向ベクトルを代入
-	Check tCheck = CUtil::GetCheck2D(ChackVec.X(), ChackVec.Z(), 0, 0, mRotation.Y() * (M_PI / 180.0f));
-
-	//回転速度　degreeに直す
-	mEnemy_Turnspeed = (180.0f / M_PI) * 0.3f;
-
-	//急な振り返りを抑制
-	if (tCheck.turn > 1.5f) tCheck.turn = 1.5f;
-
-	//移動方向へキャラを向かせる
-	if (tCheck.cross > 0.0f) 
-	{
-		mRotation.Y(mRotation.Y() + tCheck.turn * mEnemy_Turnspeed);
-	}
-	if (tCheck.cross < 0.0f) 
-	{
-		mRotation.Y(mRotation.Y() - tCheck.turn * mEnemy_Turnspeed);
-	}
-	//移動する
-	mPosition += mEnemy_MoveDir * mEnemy_Speed;
-	mPosition.Y(mPosition.Y() * ENEMY_GRAVITY);
-
-	//移動方向リセット
-	mEnemy_MoveDir = CVector(0.0f, 0.0f, 0.0f);
-	//移動スピードリセット
-	mEnemy_Speed = 0.0f;
-
+	MovingCalculation();
 	//体力が0になると死亡
 	if (mEnemy_Hp <= 0) 
 	{
@@ -147,7 +112,6 @@ void CXEnemy::Update() {
 		mEnemy_Hp = 0;
 	}
 	CXCharacter::Update();
-
 }
 void CXEnemy::Render2D()
 {
@@ -156,7 +120,7 @@ void CXEnemy::Render2D()
 	CUtil::Start2D(0, 800, 0, 600);
 	CVector tpos;
 	CVector ret;
-	tpos = mpCombinedMatrix[24].GetPos();
+	tpos = mPosition + CVector(0.0f, 6.0f, 0.0f);
 	Camera.WorldToScreen(&ret, tpos);
 	float HpRate = (float)mEnemy_Hp / (float)ENEMY_HP_MAX; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
@@ -209,50 +173,14 @@ void CXEnemy::Idle()
 }
 void CXEnemy::Move(){
 	ChangeAnimation(3, true, 50);
-	//移動スピードを変更
-	//プレイヤーが攻撃可能な距離にいないとき
-	if (mEnemy_PlayerDis > ENEMY_ATTACK_DIS)
-	{
-		mEnemy_Speed = ENEMY_SPEED_MOVE;
-	}
-	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
-	{
-		//移動スピードを停止する
-		mEnemy_Speed = ENEMY_SPEED_STOP;
-	}
-	mPosition = mPosition + CVector(0.0f, 0.0f, mEnemy_Speed) * mMatrixRotate;
-	//プレイヤーに向かって回転する処理
-	//左向き（X軸）のベクトルを求める
-	CVector vx = CVector(1.0f, 0.0f, 0.0f) * mMatrixRotate;
-	//上向き（Y軸）のベクトルを求める
-	CVector vy = CVector(0.0f, 1.0f, 0.0f) * mMatrixRotate;
-	//前方向（Z軸）のベクトルを求める
-	CVector vz = CVector(0.0f, 0.0f, 5.0f) * mMatrixRotate;
-	//目標地点までのベクトルを求める
-	CVector vp = mEnemy_Point - mPosition;
-	//左ベクトルとの内積を求める
-	float dx = vp.Dot(vx);
-	//上ベクトルとの内積を求める
-	float dy = vp.Dot(vy);
-	//前ベクトルとの内積を求める
-	float dz = vp.Dot(vz);
-	float margin = 0.1f;
-	//左右方向へ回転
-	if (dx > margin) 
-	{
-		mRotation.Y(mRotation.Y() + 3.0f);//左へ回転
-	}
-	else if (dx < -margin) 
-	{
-		mRotation.Y(mRotation.Y() - 3.0f);//右へ回転
-	}
-	CTransform::Update();//行列更新
-
-		//およそ1秒毎に目標地点を更新
+	mEnemy_Speed = ENEMY_SPEED_MOVE;
+	//目的地点までのベクトルを求める
+	CVector Point = mEnemy_Point - mPosition;
+	//mMoveDirにプレイヤー方向のベクトルを入れる
+	mEnemy_MoveDir = Point.Normalize();
+	//およそ1秒毎に目標地点を更新
 	int r = rand() % 30; //rand()は整数の乱数を返す
 						 //%10は10で割った余りを求める
-
 	if (r == 0)	
 	{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
@@ -292,47 +220,12 @@ void CXEnemy::Move(){
 void CXEnemy::Dash()
 {
 	ChangeAnimation(4, true, 40);
-	//プレイヤーが攻撃可能な距離にいないとき
-	if (mEnemy_PlayerDis > ENEMY_ATTACK_DIS)
-	{
-		//移動スピードを変更
-		mEnemy_Speed = ENEMY_SPEED_DASH;
-	}
-	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
-	{
-		//移動スピードを停止する
-		mEnemy_Speed = ENEMY_SPEED_STOP;
-	}
-	mPosition = mPosition + CVector(0.0f, 0.0f, mEnemy_Speed) * mMatrixRotate;
-	//プレイヤーに向かって回転する処理
-	//左向き（X軸）のベクトルを求める
-	CVector vx = CVector(1.0f, 0.0f, 0.0f) * mMatrixRotate;
-	//上向き（Y軸）のベクトルを求める
-	CVector vy = CVector(0.0f, 1.0f, 0.0f) * mMatrixRotate;
-	//前方向（Z軸）のベクトルを求める
-	CVector vz = CVector(0.0f, 0.0f, 5.0f) * mMatrixRotate;
-	//目標地点までのベクトルを求める
-	CVector vp = mEnemy_Point - mPosition;
-	//左ベクトルとの内積を求める
-	float dx = vp.Dot(vx);
-	//上ベクトルとの内積を求める
-	float dy = vp.Dot(vy);
-	//前ベクトルとの内積を求める
-	float dz = vp.Dot(vz);
-	float margin = 0.1f;
-
-	//左右方向へ回転
-	if (dx > margin) 
-	{
-		mRotation.Y(mRotation.Y() + 3.0f);//左へ回転
-	}
-	else if (dx < -margin) 
-	{
-		mRotation.Y(mRotation.Y() - 3.0f);//右へ回転
-	}
-	CTransform::Update();//行列更新
-		
+	//移動スピードを変更
+	mEnemy_Speed = ENEMY_SPEED_DASH;
+	//目的地点までのベクトルを求める
+	CVector Point = mEnemy_Point - mPosition;
+	//mMoveDirに目標地点方向のベクトルを入れる
+	mEnemy_MoveDir = Point.Normalize();
 	//およそ1秒毎に目標地点を更新
 	int r = rand() % 25; //rand()は整数の乱数を返す
 						  //%25は25で割った余りを求める
@@ -343,7 +236,6 @@ void CXEnemy::Dash()
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
 	}
-
 	int random = 0;
 	//プレイヤーが攻撃可能な距離にいるとき
 	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
@@ -368,7 +260,6 @@ void CXEnemy::Dash()
 			}
 		}
 	}
-
 	//プレイヤーが追跡可能な距離にいないとき
 	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
 	{
@@ -518,7 +409,54 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 
 			}
 		}
+		else if (o->Type() == CCollider::ETRIANGLE) {
+			CVector adjust;//調整用ベクトル
+			if (CCollider::CollisionTriangleLine(o, m, &adjust))
+			{
+				//位置の更新(mPosition + adjust)
+				mPosition = mPosition + adjust;
+				//行列の更新
+				CTransform::Update();
+			}
+
+		}
 	}
+}
+void CXEnemy::MovingCalculation() {
+	//プレイヤー方向のベクトルを求める
+	mEnemy_PlayerPos = CXPlayer::GetInstance()->Position() - mPosition;
+	//プレイヤーまでの距離を求める
+	mEnemy_PlayerDis = mEnemy_PlayerPos.Length();
+	//普通に3次元ベクトル計算で算出したほうが正確だが計算量を懸念する場合は擬似計算で軽量化
+	//擬似ベクトル計算
+	CVector ChackVec; //チェック用ベクトル
+	ChackVec = mEnemy_MoveDirKeep.Normalize(); //保存された移動時の方向ベクトルを代入
+	ChackVec = mEnemy_MoveDir.Normalize(); //移動時の方向ベクトルを代入
+	Check tCheck = CUtil::GetCheck2D(ChackVec.X(), ChackVec.Z(), 0, 0, mRotation.Y() * (M_PI / 180.0f));
+
+	//回転速度　degreeに直す
+	mEnemy_Turnspeed = (180.0f / M_PI) * 0.3f;
+
+	//急な振り返りを抑制
+	if (tCheck.turn > 1.5f) tCheck.turn = 1.5f;
+
+	//移動方向へキャラを向かせる
+	if (tCheck.cross > 0.0f)
+	{
+		mRotation.Y(mRotation.Y() + tCheck.turn * mEnemy_Turnspeed);
+	}
+	if (tCheck.cross < 0.0f)
+	{
+		mRotation.Y(mRotation.Y() - tCheck.turn * mEnemy_Turnspeed);
+	}
+	//移動する
+	mPosition += mEnemy_MoveDir * mEnemy_Speed;
+	mPosition.Y(mPosition.Y() * ENEMY_GRAVITY);
+
+	//移動方向リセット
+	mEnemy_MoveDir = CVector(0.0f, 0.0f, 0.0f);
+	//移動スピードリセット
+	mEnemy_Speed = 0.0f;
 }
 void CXEnemy::TaskCollision()
 {

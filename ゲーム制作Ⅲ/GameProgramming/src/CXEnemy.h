@@ -64,6 +64,8 @@ protected:
 	void Attack_3();							//攻撃3処理
 	void KnockBack();							//ノックバック処理
 	void Death();								//死亡処理
+	//移動の計算処理
+	void MovingCalculation();
 
 
 };

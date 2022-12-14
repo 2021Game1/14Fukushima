@@ -124,46 +124,16 @@ void CXPlayer::Update() {
 	case EEFFECT_NULL:
 		break;
 	case EEFFECT_PLAYER_ATTACKSP1://プレイヤの攻撃1エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 1.0f, 1.0f, "effect\\Player_Attack1.png", 3, 3, 2); //エフェクトを生成する
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.4f, 0.4f, "effect\\Player_Attack1.png", 3, 3, 2); //エフェクトを生成する
 		break;
 	case EEFFECT_PLAYER_ATTACKSP2://プレイヤの攻撃2エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 1.0f, 1.0f, "effect\\Player_Attack2.png", 10, 1, 2); //エフェクトを生成する
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.4f, 0.4f, "effect\\Player_Attack2.png", 10, 1, 2); //エフェクトを生成する
 		break;
 	case EEFFECT_PLAYER_ATTACKSP3://プレイヤの攻撃3エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 1.0f, 1.0f, "effect\\Player_Attack3.png", 12, 2, 2); //エフェクトを生成する
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.4f, 0.4f, "effect\\Player_Attack3.png", 12, 2, 2); //エフェクトを生成する
 		break;
 	}
-	//座標移動
-	mPosition += mPlayer_Move;										//プレイヤの位置にプレイヤの移動量を足す
-	//減速させる
-	mPlayer_Move = mPlayer_Move * PLAYER_THRUST;							//プレイヤの移動量に推力を掛ける
-	//重力をプレイヤに掛ける
-	mPosition.Y(mPosition.Y() * PLAYER_GRAVITY);							//プレイヤのY軸に重力を掛ける
-
-	//普通に3次元ベクトル計算で算出したほうが正確だが計算量を懸念する場合は擬似計算で軽量化
-	//擬似ベクトル計算
-	CVector ChackVec;												//チェック用ベクトル
-	ChackVec = mPlayer_MoveDirKeep.Normalize();						//保存された移動時の方向ベクトルを代入
-	ChackVec = mPlayer_MoveDir.Normalize();							//移動時の方向ベクトルを代入
-	Check tCheck = CUtil::GetCheck2D(ChackVec.X(), ChackVec.Z(), 0, 0, mRotation.Y() * (M_PI / 180.0f));
-
-	//回転速度　degreeに直す
-	mPlayer_Turnspeed = (180.0f / M_PI) * 0.3f;
-
-	//急な振り返りを抑制
-	if (tCheck.turn > 1.5f) tCheck.turn = 1.5f;
-
-	//移動方向へキャラを向かせる
-	if (tCheck.cross > 0.0f) {
-		mRotation = mRotation + CVector(0.0f,tCheck.turn * mPlayer_Turnspeed,0.0f);
-	}
-	if (tCheck.cross < 0.0f) {
-		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
-	}
-
-	//リセット
-	mPlayer_MoveDir = CVector(0.0f, 0.0f, 0.0f);
-
+	MovingCalculation();
 	//体力が0になると死亡
 	if (mPlayer_Hp <= 0) {
 		mPlayer_State = EDEATH;										//死亡状態へ移行
@@ -173,7 +143,6 @@ void CXPlayer::Update() {
 	Camera.SetTarget(mPosition);									//カメラをプレイヤの位置に設定
 	//キャラクタの更新処理
 	CXCharacter::Update();
-
 }
 
 void CXPlayer::Idle() 
@@ -574,6 +543,38 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		break;
 	}
 	}		
+}
+void CXPlayer::MovingCalculation() {
+	//座標移動
+	mPosition += mPlayer_Move;												//プレイヤの位置にプレイヤの移動量を足す
+	//減速させる
+	mPlayer_Move = mPlayer_Move * PLAYER_THRUST;							//プレイヤの移動量に推力を掛ける
+	//重力をプレイヤに掛ける
+	mPosition.Y(mPosition.Y() * PLAYER_GRAVITY);							//プレイヤのY軸に重力を掛ける
+
+	//普通に3次元ベクトル計算で算出したほうが正確だが計算量を懸念する場合は擬似計算で軽量化
+	//擬似ベクトル計算
+	CVector ChackVec;												//チェック用ベクトル
+	ChackVec = mPlayer_MoveDirKeep.Normalize();						//保存された移動時の方向ベクトルを代入
+	ChackVec = mPlayer_MoveDir.Normalize();							//移動時の方向ベクトルを代入
+	Check tCheck = CUtil::GetCheck2D(ChackVec.X(), ChackVec.Z(), 0, 0, mRotation.Y() * (M_PI / 180.0f));
+
+	//回転速度　degreeに直す
+	mPlayer_Turnspeed = (180.0f / M_PI) * 0.3f;
+
+	//急な振り返りを抑制
+	if (tCheck.turn > 1.5f) tCheck.turn = 1.5f;
+
+	//移動方向へキャラを向かせる
+	if (tCheck.cross > 0.0f) {
+		mRotation = mRotation + CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
+	}
+	if (tCheck.cross < 0.0f) {
+		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
+	}
+
+	//リセット
+	mPlayer_MoveDir = CVector(0.0f, 0.0f, 0.0f);
 }
 void CXPlayer::TaskCollision()
 {

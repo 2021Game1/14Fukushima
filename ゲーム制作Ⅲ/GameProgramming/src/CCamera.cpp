@@ -1,6 +1,7 @@
 #include "CCamera.h"
 #include "CInput.h"
 #include"CXPlayer.h"
+#include"CXEnemy.h"
 #include "CTaskManager.h"
 //カメラの外部変数
 CCamera Camera;
@@ -8,6 +9,7 @@ CCamera* CCamera::mpCameraInstance;
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
+#define DELAY_RATE 0.005f				//カメラアングル移動時の遅延割合
 #define WIN_CENTRAL_X WINDOW_WIDTH/2 //画面の中央（X軸）
 #define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
 #define TARGETLOOK_Y 0.9f			//ターゲット時のカメラ高さ
@@ -47,10 +49,18 @@ void CCamera::SetTarget(const CVector& target)
 {
 	mTarget = target;
 }
-
 const CVector& CCamera::Eye() const
 {
 	return mEye;
+}
+void CCamera::SetCameraMode(ECameraMode cameramode)
+{
+	mCameraMode = cameramode;
+}
+
+CCamera::ECameraMode CCamera::GetCameraMode()
+{
+	return mCameraMode;
 }
 
 void CCamera::Update() {
@@ -59,8 +69,28 @@ void CCamera::Update() {
 	float moveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
+		//カメラのモードを判断
+		switch (mCameraMode) {
+		case NORMAL: //通常モード
 			if (moveX != 0) mAngleX += (moveX * 0.005f);
 			if (moveY != 0) mAngleY += (moveY * 0.005f);
+			mAngleX = mLerp(mAngleX, mAngleDelayX, DELAY_RATE);
+			mAngleY = mLerp(mAngleY, mAngleDelayY, DELAY_RATE);
+
+			//Eキーを押したとき
+			if (CKey::Once('E')) {
+				mCameraMode = TARGET_LOOK;		//ターゲット状態の敵の方へ向くモードへ移行
+			}
+			break;
+
+		case TARGET_LOOK: //ターゲット状態の敵の方へ向くモード
+			TargetLook(); //ターゲットになっている敵の方向へカメラを向かせる処理
+			//Eキーを押したとき
+			if (CKey::Once('E')) {
+				mCameraMode = NORMAL;			//ターゲット状態の敵の方へ向くモードへ移行
+			}
+			break;
+		}
 	}
 	mSkip = false;
 	int X = WIN_CENTRAL_X;
@@ -133,7 +163,6 @@ mPriority = 100;
 CTaskManager::Get()->Remove(this);//
 CTaskManager::Get()->Add(this);//追加する
 mpCameraInstance = this;
-
 }
 
 
@@ -154,9 +183,24 @@ void CCamera::Collision(CCollider* m, CCollider* o) {
 	}
 
 }
+void CCamera::TaskCollision()
+{
+	CCollisionManager::Get()->Collision(&mColliderLine, COLLISIONRANGE);
+}
 //ターゲットになっている敵の方向へカメラを向かせる処理
 void CCamera::TargetLook()
 {
+		//プレイヤーに敵からプレイヤーに伸びるベクトルを求める
+		CVector pos = CXPlayer::GetInstance()->Position() - CXEnemy::GetInstance()->Position();
+		//posのYは0.0にしておく
+		pos.Y(0.0f);
+		//ベクトルを正規化
+		pos = pos.Normalize();
+		//プレイヤーからの距離を設定
+		pos = pos * DEF_CAMERA_DIST;
+		//カメラを移動させたい位置を設定
+		mPos = CXPlayer::GetInstance()->Position() + pos;
+
 		//プレイヤーから現在のカメラの始点までのベクトル
 		CVector vec1 = CXPlayer::GetInstance()->Position() - mEye;
 		//プレイヤーからカメラを移動させたい位置までのベクトル

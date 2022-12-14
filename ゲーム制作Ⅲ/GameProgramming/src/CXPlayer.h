@@ -106,6 +106,8 @@ private:
 	void Guard();						//回避処理
 	void Death();						//死亡処理
 	void KnockBack();					//ノックバック処理
+	//移動の計算処理
+	void MovingCalculation();
 };
 #endif 
 
