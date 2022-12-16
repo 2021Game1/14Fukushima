@@ -1,3 +1,4 @@
+#include "glew.h"
 #include "CMatrix.h"
 #include"CVector.h"
 //標準入出力関数のインクルード
@@ -283,10 +284,7 @@ CMatrix CMatrix::Inverse(void)
 	b.m33 = m00 * m11 * m22 + m01 * m12 * m20 + m02 * m10 * m21 - m00 * m12 * m21 - m01 * m10 * m22 - m02 * m11 * m20;
 
 	CMatrix tmp = b * (1 / det);
-	//CMatrix44 nml;
-	//nml = (*this) * (*this);
-	//CMatrix44 tnml;
-	//tnml = tmp * (*this);
+
 
 	return tmp;
 };
@@ -311,3 +309,5 @@ CVector CMatrix::GetZVec() {
 CVector CMatrix::GetPos() {
 	return CVector(m03, m13, m23);
 }
+
+

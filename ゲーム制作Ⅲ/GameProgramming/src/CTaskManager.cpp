@@ -63,7 +63,7 @@ void CTaskManager::Update() {
 //•`‰æ
 void CTaskManager::Render() {
 	//æ“ª‚©‚çÅŒã‚Ü‚ÅŒJ‚è•Ô‚µ
-	CTask *task = mHead.mpNext;
+	CTask* task = mHead.mpNext;
 	while (task->mpNext) {
 		//•`‰æˆ—‚ğŒÄ‚Ô
 		task->Render();
@@ -71,7 +71,6 @@ void CTaskManager::Render() {
 		task = task->mpNext;
 	}
 }
-
 void CTaskManager::Render2D() {
 	//æ“ª‚©‚çÅŒã‚Ü‚ÅŒJ‚è•Ô‚µ
 	CTask* task = mHead.mpNext;

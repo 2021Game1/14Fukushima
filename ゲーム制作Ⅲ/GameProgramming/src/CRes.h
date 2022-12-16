@@ -16,6 +16,7 @@
 #include "CEffect.h"
 #include "CColliderMesh.h"
 #include "CEffect.h"
+#include "CShadowMap.h"
 
 
 
@@ -54,6 +55,8 @@
 #define PLAYER_EF_ATTACKSP1 "res\\effect\\Player_Attack1.png"
 #define PLAYER_EF_ATTACKSP2 "res\\effect\\Player_Attack2.png"
 #define PLAYER_EF_ATTACKSP3 "res\\effect\\Player_Attack3.png"
+#define TEXWIDTH  8192	//テクスチャ幅
+#define TEXHEIGHT  6144	//テクスチャ高さ
 
 
 class CRes {
@@ -100,6 +103,7 @@ private:
 	//敵のUIインスタンス
 	CTexture gEnemy_Ui_Hp_Frame;
 	static CRes* mpRes_Instance;//別のクラスでリソースの変数を呼び出す場合,staticでポインタを作る
+
 };
 #endif
 

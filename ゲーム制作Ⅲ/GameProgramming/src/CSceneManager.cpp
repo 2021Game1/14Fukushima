@@ -25,3 +25,11 @@ void CSceneManager::Update() {
 	//ポインタのUpdateを呼ぶ
 	mpScene->Update();
 }
+//描画処理
+void CSceneManager::Render()
+{
+	//ポインタの描画処理を呼ぶ
+	if (mpScene) {
+		mpScene->Render();
+	}
+}

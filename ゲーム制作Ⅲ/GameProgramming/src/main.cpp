@@ -28,6 +28,7 @@ void display() {
 	}
 	else {
 		Update();
+		Render();
 	}
 
 }

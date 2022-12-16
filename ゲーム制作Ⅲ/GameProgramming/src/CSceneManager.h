@@ -18,6 +18,8 @@ public:
 	void Init();
 	//XVˆ—
 	void Update();
+	//•`‰æˆ—
+	void Render();
 };
 
 #endif

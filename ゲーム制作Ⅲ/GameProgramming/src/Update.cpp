@@ -15,3 +15,7 @@ void Update() {
 	//シーンマネージャの更新
 	SceneManager.Update();
 }
+void Render() {
+	//シーンマネージャの描画
+	SceneManager.Render();
+}

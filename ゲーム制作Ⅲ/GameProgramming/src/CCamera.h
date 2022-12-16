@@ -14,11 +14,6 @@
 #define CAMERA_HEAD_ADJUST 2.0f	//注視点の高さ調整
 class CCamera : public CCharacter{
 public:
-	//カメラのモード
-	enum ECameraMode {
-		NORMAL = 0,	//通常モード
-		TARGET_LOOK	//ターゲット状態の敵の方へ向くモード
-	};
 	CCamera();
 	//カメラの設定
 	//Set(視点, 注視点, 上方向)
@@ -47,8 +42,6 @@ public:
 	//ワールド座標をスクリーン座標へ変換する
 	//WorldToScreen(スクリーン座標, ワールド座標)
 	bool WorldToScreen(CVector* screen, const CVector& world);
-	//カメラモードを取得する
-	CCamera::ECameraMode GetCameraMode();
 private:
 	CVector mRotation;//回転
 	CVector mEye;//視点
@@ -57,7 +50,6 @@ private:
 	int mScreenWidth; //幅
 	int mScreenHeight; //高さ
 	CMatrix mProjection; //プロジェクション行列
-	CMatrix mModelView; //モデルビュー行列
 
 
 	//コライダ
@@ -83,9 +75,6 @@ private:
 	int mMouseX, mMouseY;		//現在の座標
 		//staticでポインタを作る
 	static CCamera* mpCameraInstance;
-	//カメラモードを設定する
-	void SetCameraMode(ECameraMode cameramode);
-	ECameraMode mCameraMode;	//カメラのモード判定用
 };
 
 //カメラの外部参照

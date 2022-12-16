@@ -3,5 +3,6 @@
 
 extern void Update();
 extern void Init();
+extern void Render();
 
 #endif

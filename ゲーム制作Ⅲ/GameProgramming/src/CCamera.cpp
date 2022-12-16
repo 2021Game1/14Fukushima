@@ -28,6 +28,7 @@ void CCamera::Init()
 	mScreenHeight = viewport[3]; //高さを取得
 	//プロジェクション行列の取得
 	glGetFloatv(GL_PROJECTION_MATRIX, mProjection.M());
+
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める
@@ -53,15 +54,6 @@ const CVector& CCamera::Eye() const
 {
 	return mEye;
 }
-void CCamera::SetCameraMode(ECameraMode cameramode)
-{
-	mCameraMode = cameramode;
-}
-
-CCamera::ECameraMode CCamera::GetCameraMode()
-{
-	return mCameraMode;
-}
 
 void CCamera::Update() {
 	CInput::GetMousePosWin(&mMouseX, &mMouseY);
@@ -69,28 +61,28 @@ void CCamera::Update() {
 	float moveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
-		//カメラのモードを判断
-		switch (mCameraMode) {
-		case NORMAL: //通常モード
+		////カメラのモードを判断
+		//switch (mCameraMode) {
+		//case NORMAL: //通常モード
 			if (moveX != 0) mAngleX += (moveX * 0.005f);
 			if (moveY != 0) mAngleY += (moveY * 0.005f);
 			mAngleX = mLerp(mAngleX, mAngleDelayX, DELAY_RATE);
 			mAngleY = mLerp(mAngleY, mAngleDelayY, DELAY_RATE);
 
-			//Eキーを押したとき
-			if (CKey::Once('E')) {
-				mCameraMode = TARGET_LOOK;		//ターゲット状態の敵の方へ向くモードへ移行
-			}
-			break;
+		//	//Eキーを押したとき
+		//	if (CKey::Once('E')) {
+		//		mCameraMode = TARGET_LOOK;		//ターゲット状態の敵の方へ向くモードへ移行
+		//	}
+		//	break;
 
-		case TARGET_LOOK: //ターゲット状態の敵の方へ向くモード
-			TargetLook(); //ターゲットになっている敵の方向へカメラを向かせる処理
-			//Eキーを押したとき
-			if (CKey::Once('E')) {
-				mCameraMode = NORMAL;			//ターゲット状態の敵の方へ向くモードへ移行
-			}
-			break;
-		}
+		//case TARGET_LOOK: //ターゲット状態の敵の方へ向くモード
+			//TargetLook(); //ターゲットになっている敵の方向へカメラを向かせる処理
+			////Eキーを押したとき
+			//if (CKey::Once('E')) {
+			//	mCameraMode = NORMAL;			//ターゲット状態の敵の方へ向くモードへ移行
+			//}
+		//	break;
+		//}
 	}
 	mSkip = false;
 	int X = WIN_CENTRAL_X;
@@ -115,7 +107,6 @@ void CCamera::Update() {
 	//線コライダセット
 	mColliderLine.Set(this, nullptr, mEye, mCenter);
 	CInput::InputReset();
-	
 }
 CMatrix CCamera::GetMat() {
 	return mMatrix;
@@ -241,7 +232,7 @@ void CCamera::TargetLook()
 bool CCamera::WorldToScreen(CVector* screen, const CVector& world)
 {
 	//座標変換
-	CVector modelview_pos = world * mModelView;
+	CVector modelview_pos = world * mMatrix;
 	CVector screen_pos = modelview_pos * mProjection;
 
 	//画面外なのでリターン
@@ -255,8 +246,11 @@ bool CCamera::WorldToScreen(CVector* screen, const CVector& world)
 	screen->X((1.0f + screen_pos.X()) * mScreenWidth * 0.5f);
 	screen->Y((1.0f + screen_pos.Y()) * mScreenHeight * 0.5f);
 	screen->Z(screen_pos.Z());
+
 	return true;
 }
+
+
 
 
 

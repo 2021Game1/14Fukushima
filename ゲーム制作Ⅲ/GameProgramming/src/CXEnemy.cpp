@@ -115,7 +115,6 @@ void CXEnemy::Update() {
 }
 void CXEnemy::Render2D()
 {
-
 	//2D•`‰æŠJŽn
 	CUtil::Start2D(0, 800, 0, 600);
 	CVector tpos;
