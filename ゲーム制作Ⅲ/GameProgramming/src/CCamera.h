@@ -23,8 +23,11 @@ public:
 	void Init();
 	//カメラ更新
 	void Update();
-	//カメラ適用
+
+	//処理をしないRender
 	void Render();
+	//カメラ描画
+	void Draw();
 	//当たり判定
 	void Collision(CCollider* m, CCollider* o);
 	//線形補間

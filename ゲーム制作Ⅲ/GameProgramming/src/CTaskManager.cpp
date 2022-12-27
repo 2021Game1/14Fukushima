@@ -1,5 +1,6 @@
 #include "CTaskManager.h"
 
+
 //ƒ^ƒXƒNƒ}ƒl[ƒWƒƒ‚ÌŠO•”•Ï”
 //CTaskManager TaskManager;
 
@@ -71,12 +72,24 @@ void CTaskManager::Render() {
 		task = task->mpNext;
 	}
 }
+//2D•`‰æ
 void CTaskManager::Render2D() {
 	//æ“ª‚©‚çÅŒã‚Ü‚ÅŒJ‚è•Ô‚µ
 	CTask* task = mHead.mpNext;
 	while (task->mpNext) {
 		//•`‰æˆ—‚ðŒÄ‚Ô
 		task->Render2D();
+		//ŽŸ‚Ö
+		task = task->mpNext;
+	}
+}
+//ƒJƒƒ‰•`‰æ
+void CTaskManager::Draw() {
+	//æ“ª‚©‚çÅŒã‚Ü‚ÅŒJ‚è•Ô‚µ
+	CTask* task = mHead.mpNext;
+	while (task->mpNext) {
+		//•`‰æˆ—‚ðŒÄ‚Ô
+		task->Draw();
 		//ŽŸ‚Ö
 		task = task->mpNext;
 	}

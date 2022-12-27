@@ -15,10 +15,12 @@ CCamera* CCamera::mpCameraInstance;
 #define TARGETLOOK_Y 0.9f			//ターゲット時のカメラ高さ
 #define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
 
+//カメラのインスタンス
 CCamera* CCamera::Instance()
 {
 	return mpCameraInstance;
 }
+
 void CCamera::Init()
 {
 	int viewport[4];
@@ -50,39 +52,23 @@ void CCamera::SetTarget(const CVector& target)
 {
 	mTarget = target;
 }
+//カメラの視点を返す
 const CVector& CCamera::Eye() const
 {
 	return mEye;
 }
 
+//カメラのアップデート
 void CCamera::Update() {
 	CInput::GetMousePosWin(&mMouseX, &mMouseY);
 	float moveX = (float)(mOldMouseX - mMouseX);
 	float moveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
-		////カメラのモードを判断
-		//switch (mCameraMode) {
-		//case NORMAL: //通常モード
-			if (moveX != 0) mAngleX += (moveX * 0.005f);
-			if (moveY != 0) mAngleY += (moveY * 0.005f);
-			mAngleX = mLerp(mAngleX, mAngleDelayX, DELAY_RATE);
-			mAngleY = mLerp(mAngleY, mAngleDelayY, DELAY_RATE);
-
-		//	//Eキーを押したとき
-		//	if (CKey::Once('E')) {
-		//		mCameraMode = TARGET_LOOK;		//ターゲット状態の敵の方へ向くモードへ移行
-		//	}
-		//	break;
-
-		//case TARGET_LOOK: //ターゲット状態の敵の方へ向くモード
-			//TargetLook(); //ターゲットになっている敵の方向へカメラを向かせる処理
-			////Eキーを押したとき
-			//if (CKey::Once('E')) {
-			//	mCameraMode = NORMAL;			//ターゲット状態の敵の方へ向くモードへ移行
-			//}
-		//	break;
-		//}
+		if (moveX != 0) mAngleX += (moveX * 0.005f);
+		if (moveY != 0) mAngleY += (moveY * 0.005f);
+		mAngleX = mLerp(mAngleX, mAngleDelayX, DELAY_RATE);
+		mAngleY = mLerp(mAngleY, mAngleDelayY, DELAY_RATE);
 	}
 	mSkip = false;
 	int X = WIN_CENTRAL_X;
@@ -111,6 +97,8 @@ void CCamera::Update() {
 CMatrix CCamera::GetMat() {
 	return mMatrix;
 }
+
+//カメラセット
 void CCamera::Set(const CVector& eye, const CVector& center,
 	const CVector& up) {
 	mEye = eye;
@@ -126,7 +114,12 @@ void CCamera::Set(const CVector& eye, const CVector& center,
 	mAngleDelayY = mAngleY;
 }
 
-void CCamera::Render() {
+//処理なし
+void CCamera::Render() {		
+}
+
+//カメラ適用
+void CCamera::Draw() {
 	gluLookAt(mEye.X(), mEye.Y(), mEye.Z(),
 		mCenter.X(), mCenter.Y(), mCenter.Z(),
 		mUp.X(), mUp.Y(), mUp.Z());
@@ -134,6 +127,7 @@ void CCamera::Render() {
 	glGetFloatv(GL_MODELVIEW_MATRIX, mMatrix.M());
 }
 
+//デフォルトコンストラクタ
 CCamera::CCamera()
 	:mSkip(true)
 	, mAngleX(0.0f)
@@ -156,7 +150,7 @@ CTaskManager::Get()->Add(this);//追加する
 mpCameraInstance = this;
 }
 
-
+//当たり判定
 void CCamera::Collision(CCollider* m, CCollider* o) {
 	//自身のコライダタイプの判定
 	switch (m->Type()) {
@@ -174,10 +168,13 @@ void CCamera::Collision(CCollider* m, CCollider* o) {
 	}
 
 }
+
+//タスクコリジョンに追加
 void CCamera::TaskCollision()
 {
 	CCollisionManager::Get()->Collision(&mColliderLine, COLLISIONRANGE);
 }
+
 //ターゲットになっている敵の方向へカメラを向かせる処理
 void CCamera::TargetLook()
 {

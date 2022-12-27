@@ -124,13 +124,13 @@ void CXPlayer::Update() {
 	case EEFFECT_NULL:
 		break;
 	case EEFFECT_PLAYER_ATTACKSP1://プレイヤの攻撃1エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.4f, 0.4f, "effect\\Player_Attack1.png", 3, 3, 2); //エフェクトを生成する
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.6f, 0.6f, "effect\\Player_Attack1.png", 3, 3, 2); //エフェクトを生成する
 		break;
 	case EEFFECT_PLAYER_ATTACKSP2://プレイヤの攻撃2エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.4f, 0.4f, "effect\\Player_Attack2.png", 10, 1, 2); //エフェクトを生成する
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.6f, 0.6f, "effect\\Player_Attack2.png", 10, 1, 2); //エフェクトを生成する
 		break;
 	case EEFFECT_PLAYER_ATTACKSP3://プレイヤの攻撃3エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.4f, 0.4f, "effect\\Player_Attack3.png", 12, 2, 2); //エフェクトを生成する
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.6f, 0.6f, "effect\\Player_Attack3.png", 12, 2, 2); //エフェクトを生成する
 		break;
 	}
 	MovingCalculation();
@@ -170,7 +170,7 @@ void CXPlayer::Move()
 		mPlayer_State = EATTACK_1;
 	}
 	//スペースでガードへ移行
-	else if (CKey::Once(VK_SPACE)) {
+	else if (CKey::Push(VK_SPACE)) {
 		mPlayer_State = EGUARD;
 	}
 	//WASDキーを押すと移動
@@ -372,40 +372,15 @@ void CXPlayer::KnockBack()
 //ガード
 void CXPlayer::Guard()
 {
-	if (mPlayer_Flag == false) {
-		ChangeAnimation(6, false, 1);//待機モーション
-		mPlayer_Flag = true;
+	//スペースでガードへ移行
+	if (CKey::Push(VK_SPACE)) {
+	ChangeAnimation(5, false, 10);	//ガード待機アニメーション
+	mPlayer_IsHit = true;
 	}
-	
-	if (mAnimationIndex == 6){
-		//ヒット判定発生
-		if (IsAnimationFinished() == false) {
-				mPlayer_IsHit = true;
-		}
-		//アニメーション終了時
-		if (IsAnimationFinished())
-		{
-			ChangeAnimation(4, false, 10);	//ガード待機アニメーション
-		}
-	}
-	else if (mAnimationIndex == 4) {
-		//ヒット判定発生
-		if (IsAnimationFinished() == false) {
-				mPlayer_IsHit = true;
-		}
-		//アニメーション終了時
-		if (IsAnimationFinished())
-		{
-			mPlayer_IsHit = false; //ヒット判定終了
-			ChangeAnimation(5, false, 30);//ガードアニメーション
-		}
-
-	}
-	//アニメーション終了時
-	else if (IsAnimationFinished())
+	else
 	{
 		mPlayer_State = EIDLE;
-		mPlayer_Flag = false;
+		mPlayer_IsHit = false;
 	}
 
 }
@@ -451,6 +426,7 @@ void CXPlayer::MoveCamera()
 	mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
 	mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
 }
+//2D描画
 void CXPlayer::Render2D()
 {
 	//2D描画開始
@@ -586,6 +562,11 @@ void CXPlayer::TaskCollision()
 	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleBody, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleShield, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleSword, COLLISIONRANGE);
+}
+
+CPlayerGuard::CPlayerGuard(CModel* model)
+{
+
 }
 
 //プレイヤーのポインタを返すことで、座標などが参照できるようになる

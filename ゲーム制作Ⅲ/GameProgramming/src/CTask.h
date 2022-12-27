@@ -21,7 +21,10 @@ public:
 	virtual void Update() {}
 	//•`‰æ
 	virtual void Render() {}
+	//2D•`‰æ
 	virtual void Render2D() {}
+	//ƒJƒƒ‰•`‰æ
+	virtual void Draw() {}
 	//Õ“Ëˆ—
 	virtual void TaskCollision() {}
 protected:

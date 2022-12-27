@@ -109,5 +109,17 @@ private:
 	//ˆÚ“®‚ÌŒvZˆ—
 	void MovingCalculation();
 };
+
+class CPlayerGuard : public CCharacter
+{
+public:
+	CPlayerGuard(CModel* model);
+	//XV
+	void Update();
+	//•`‰æ
+	void Render();
+private:
+
+};
 #endif 
 

@@ -300,8 +300,5 @@ public:
 	
 
 };
-
-
-
 #endif 
 

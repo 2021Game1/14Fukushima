@@ -3,6 +3,12 @@
 
 
 CXCharacter::CXCharacter() 
+	:mAnimationFrame(0)
+	,mAnimationFramesize(0)
+	,mAnimationIndex(0)
+	,mAnimationLoopFlg(false)
+	,mpCombinedMatrix(false)
+	,mpModel(false)
 {
 	mScale = CVector(1.0f, 1.0f, 1.0f);
 }

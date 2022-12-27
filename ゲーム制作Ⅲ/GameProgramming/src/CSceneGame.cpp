@@ -21,6 +21,7 @@ void CSceneGame::Update() {
 	CTaskManager::Get()->Delete();
 }
 void CSceneGame::Render() {
+	CTaskManager::Get()->Draw();
 	mShadowMap.Render();
 	CTaskManager::Get()->Render2D();
 	//ƒRƒ‰ƒCƒ_‚Ì•`‰æ

@@ -20,7 +20,10 @@ public:
 	void Update();
 	//描画
 	void Render();
+	//2D描画
 	void Render2D();
+	//カメラ描画
+	void Draw();
 	//リストから削除
 	//Remove(タスクのポインタ)
 	void Remove(CTask *task);

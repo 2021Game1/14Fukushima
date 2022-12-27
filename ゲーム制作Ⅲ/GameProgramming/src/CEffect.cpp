@@ -50,3 +50,5 @@ void CEffect::Render()
 	glEnable(GL_DEPTH_TEST); //深度テスト有効
 }
 
+
+

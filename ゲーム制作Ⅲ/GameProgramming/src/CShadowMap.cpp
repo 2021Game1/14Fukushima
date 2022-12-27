@@ -1,7 +1,10 @@
 #include "glew.h"
 #include "CShadowMap.h"
+#include "CCamera.h"
+#include "CTaskManager.h"
 #include "CMatrix.h"
 
+CShadowMap* CShadowMap::mpShadowMap_Instance = nullptr;												//影のインスタンス変数の初期化
 
 void CShadowMap::Init()
 {
@@ -87,6 +90,9 @@ void CShadowMap::Init(int width, int height, void (*funcRender)(), float shadouC
 	mLightPos[0] = lightPos[0];
 	mLightPos[1] = lightPos[1];
 	mLightPos[2] = lightPos[2];
+	mShadow_State = ENORENDER;
+	//影のインスタンスを設定
+	mpShadowMap_Instance = this;										//影のインスタンスを自身に設定する
 	Init();
 }
 
@@ -143,6 +149,7 @@ void CShadowMap::Render()
 	//デプステクスチャへの描画
 	if (mpRender)
 	{
+		mShadow_State = EDEPTHTEX;
 		(*mpRender)();
 	}
 	/* フレームバッファオブジェクトへのレンダリング終了 */
@@ -160,6 +167,7 @@ void CShadowMap::Render()
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	glEnable(GL_LIGHTING);
 	glCullFace(GL_BACK);
+
 	/*
 	** 第２ステップ：全体の描画
 	*/
@@ -222,6 +230,7 @@ void CShadowMap::Render()
 	//日向の描画
 	if (mpRender)
 	{
+		mShadow_State = ESUNNYTEX;
 		(*mpRender)();
 	}
 
@@ -254,9 +263,20 @@ void CShadowMap::Render()
 	//影の描画
 	if (mpRender)
 	{
+		mShadow_State = ESHADOW;
 		(*mpRender)();
 	}
 	/* 光源の明るさを元の明るさに設定 */
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightcol);
 
+}
+//プレイヤーのポインタを返すことで、座標などが参照できるようになる
+CShadowMap* CShadowMap::GetInstance()
+{
+	return mpShadowMap_Instance;
+}
+//影の状態を取得する
+CShadowMap::EShadowMap_State CShadowMap::GetState()
+{
+	return mShadow_State;
 }

@@ -16,7 +16,6 @@ void CCharacter::Render()
 {
 	mpModel->Render(mMatrix);
 }
-
 CCharacter::~CCharacter() {
 	//タスクリストから削除
 	CTaskManager::Get()->Remove(this);
