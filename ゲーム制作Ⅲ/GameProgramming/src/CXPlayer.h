@@ -10,9 +10,11 @@
 #include"CTexture.h"
 #include"CEffect.h"
 
+
 /*
 CXPlayer
 */
+
 class CXPlayer : public CXCharacter{
 public:
 	//プレイヤの状態
@@ -108,18 +110,6 @@ private:
 	void KnockBack();					//ノックバック処理
 	//移動の計算処理
 	void MovingCalculation();
-};
-
-class CPlayerGuard : public CCharacter
-{
-public:
-	CPlayerGuard(CModel* model);
-	//更新
-	void Update();
-	//描画
-	void Render();
-private:
-
 };
 #endif 
 

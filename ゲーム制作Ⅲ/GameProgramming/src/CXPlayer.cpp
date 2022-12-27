@@ -564,11 +564,6 @@ void CXPlayer::TaskCollision()
 	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleSword, COLLISIONRANGE);
 }
 
-CPlayerGuard::CPlayerGuard(CModel* model)
-{
-
-}
-
 //プレイヤーのポインタを返すことで、座標などが参照できるようになる
 CXPlayer* CXPlayer::GetInstance()
 {

@@ -30,6 +30,7 @@
     <ClCompile Include="src\CModel.cpp" />
     <ClCompile Include="src\CModelX.cpp" />
     <ClCompile Include="src\CMyShader.cpp" />
+    <ClCompile Include="src\CPlayerGuard.cpp" />
     <ClCompile Include="src\CRes.cpp" />
     <ClCompile Include="src\CSceneGame.cpp" />
     <ClCompile Include="src\CSceneManager.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="src\CModel.h" />
     <ClInclude Include="src\CModelX.h" />
     <ClInclude Include="src\CMyShader.h" />
+    <ClInclude Include="src\CPlayerGuard.h" />
     <ClInclude Include="src\CRes.h" />
     <ClInclude Include="src\CScene.h" />
     <ClInclude Include="src\CSceneGame.h" />

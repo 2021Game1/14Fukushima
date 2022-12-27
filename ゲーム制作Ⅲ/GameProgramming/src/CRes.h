@@ -11,6 +11,7 @@
 #include "CXCharacter.h"
 #include "CText.h"
 #include "CXPlayer.h"
+#include"CPlayerGuard.h"
 #include "CXEnemy.h"
 #include "CMap.h"
 #include "CEffect.h"
@@ -31,6 +32,7 @@
 #define PLAYER_ANIMATION_KNOCKBACK "res\\paladin\\KnockBack.x"
 #define PLAYER_ANIMATION_DEATH "res\\paladin\\Death.x"
 #define PLAYER_MODEL_ACTION_GUARDSP "res\\paladin\\Shield.obj","res\\paladin\\Shield.mtl"
+
 //エネミーのアニメーションモデル
 #define ENEMY_MODEL_FILE "res\\mutant\\mutant.x"
 #define ENEMY_ANIMATION_ATTACKSP1 "res\\mutant\\Attack1.x"
@@ -77,7 +79,7 @@ private:
 	CModelX gPlayer_Model_Knight;
 	//プレイヤのガードアクションエフェクト
 	CModel gPlayer_GuardSP_Model;
-	CMap mPlayer_GuardSP_Model;
+	CPlayerGuard mPlayer_GuardSP_Model;
 	//敵モデル
 	CModelX gEnemy_Model_Mutant;
 	//マップモデル

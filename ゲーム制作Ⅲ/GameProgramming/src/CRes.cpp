@@ -49,7 +49,7 @@ void CRes::Init() {
 	mFont.LoadTexture("font\\FontG.png", 1, 4096 / 64);
 	mMap.Model(&gMap_Model);
 	mMap_Sky.Model(&gMap_Model_Sky);
-	mPlayer_GuardSP_Model.Model(&gPlayer_GuardSP_Model);
+	mPlayer_GuardSP_Model.Init(&gPlayer_GuardSP_Model);
 	//マップの移動行列
 	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 	//親インスタンスと親行列はなし
