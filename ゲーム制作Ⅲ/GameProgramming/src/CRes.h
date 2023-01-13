@@ -52,7 +52,6 @@
 #define CHARACTER_UI_HP_GREENGAUGE "res\\ui\\HP_Gauge.png"
 #define CHARACTER_UI_HP_REDGAUGE "res\\ui\\HP_RedGauge.png"
 #define PLAYER_UI_HP_FRAME "res\\ui\\Player_HP_Frame.png"
-#define ENEMY_UI_HP_FRAME "res\\ui\\Enemy_HP_Frame.png"
 
 #define PLAYER_EF_ATTACKSP1 "res\\effect\\Player_Attack1.png"
 #define PLAYER_EF_ATTACKSP2 "res\\effect\\Player_Attack2.png"
@@ -70,8 +69,8 @@ public:
 	CTexture& GetInUiHpGreenGauge();
 	CTexture& GetInUiHpRedGauge();
 	CTexture& GetInPlayerUiHpFrame();
-	CTexture& GetInEnemyUiHpFrame();
 	static CRes* GetInstance();//staticで処理を作る
+
 private:
 	//フォント
 	CText mFont;
@@ -106,8 +105,6 @@ private:
 	CTexture gCharacter_Ui_Hp_RedGauge;
 	//プレイヤのUIインスタンス
 	CTexture gPlayer_Ui_Hp_Frame;
-	//敵のUIインスタンス
-	CTexture gEnemy_Ui_Hp_Frame;
 	static CRes* mpRes_Instance;//別のクラスでリソースの変数を呼び出す場合,staticでポインタを作る
 
 };

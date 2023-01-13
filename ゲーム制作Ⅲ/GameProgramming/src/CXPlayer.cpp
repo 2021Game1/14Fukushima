@@ -31,7 +31,6 @@ CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタ
 
 
 
-
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
 	: mPlayer_ColCapsuleBody(this, nullptr, CVector(0.0f, 80.0f, 0.0f), CVector(0.0f, -80.0f, 0.0f), 0.7)
@@ -124,13 +123,13 @@ void CXPlayer::Update() {
 	case EEFFECT_NULL:
 		break;
 	case EEFFECT_PLAYER_ATTACKSP1://プレイヤの攻撃1エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.6f, 0.6f, "effect\\Player_Attack1.png", 3, 3, 2); //エフェクトを生成する
+		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 2.0f, 2.0f, "effect\\Player_Attack1.png", 3, 3, 2); //エフェクトを生成する
 		break;
 	case EEFFECT_PLAYER_ATTACKSP2://プレイヤの攻撃2エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.6f, 0.6f, "effect\\Player_Attack2.png", 10, 1, 2); //エフェクトを生成する
+		new CEffect2(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 2.0f, 2.0f, "effect\\Player_Attack2.png", 3, 3, 2); //エフェクトを生成する
 		break;
 	case EEFFECT_PLAYER_ATTACKSP3://プレイヤの攻撃3エフェクト
-		new CEffect(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 0.6f, 0.6f, "effect\\Player_Attack3.png", 12, 2, 2); //エフェクトを生成する
+		new CEffect3(CVector(tpos.X(), tpos.Y() + 1.0f, tpos.Z()), 2.0f, 2.0f, "effect\\Player_Attack3.png", 3, 3, 2); //エフェクトを生成する
 		break;
 	}
 	MovingCalculation();
@@ -202,21 +201,22 @@ void CXPlayer::Attack_1()
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(1, false, 30);							//プレイヤの攻撃1モーション
+			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
 		}
 	}
 	//アニメーションインデックスが３の時
 	else if (mAnimationIndex == 3) {
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) {
-			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
+			
 				mPlayer_IsHit = true;									//プレイヤーのヒット判定をtrueにする
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
-			mPlayer_Effect = EEFFECT_NULL;
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(1, false, 30);							//プレイヤの攻撃1モーション
+			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
 		}
 	}
 	//アニメーションインデックスが１の時
@@ -225,7 +225,6 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
-			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
 			mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
@@ -238,7 +237,6 @@ void CXPlayer::Attack_1()
 		if (mAnimationFrame < PLAYER_RECEPTION) {
 			//左クリックされた場合
 			if (CKey::Once(VK_LBUTTON)) {
-				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EATTACK_2;							//攻撃2モーションへ移行
 			}
 			//スペースキーを押された場合
@@ -271,15 +269,14 @@ void CXPlayer::Attack_2()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-				mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP2;
-				mPlayer_IsHit = true;									//ヒット判定有効
+			mPlayer_IsHit = true;									//ヒット判定有効
 		}
 		//アニメーション終了時
 		else if (IsAnimationFinished())
 		{
-			mPlayer_Effect = EEFFECT_NULL;
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(2, false, 60);							//プレイヤの攻撃2モーション
+			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP2;
 		}
 	}
 	//アニメーションインデックスが2の時
@@ -321,15 +318,15 @@ void CXPlayer::Attack_3()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-				mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP3;
 				mPlayer_IsHit = true;
+				
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
-			mPlayer_Effect = EEFFECT_NULL;
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(3, false, 80);
+			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP3;
 		}
 	}
 	else if (mAnimationIndex == 3)

@@ -9,7 +9,7 @@
 */
 class CSceneManager {
 public:
-	CScene *mpScene; //シーンへのポインタ
+	CScene* mpScene; //シーンへのポインタ
 	//コンストラクタ
 	CSceneManager();
 	//デストラクタ（削除されるときに実行されます）

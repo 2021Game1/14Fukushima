@@ -5,7 +5,6 @@
 #include "CRes.h"
 
 
-
 /*
 ƒQ[ƒ€‚ÌƒV[ƒ“
 */

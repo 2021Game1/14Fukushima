@@ -1,5 +1,7 @@
 #include"CMap.h"
 
+CMap* CMap::mMap_Instance;
+
 //ƒRƒ‰ƒCƒ_‰Šú‰»
 CMap::CMap()
 {
@@ -18,5 +20,18 @@ void CMap::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 
+	}
+}
+
+void CMap::Generate()
+{
+	mMap_Instance = new CMap;
+}
+
+void CMap::Release()
+{
+	if (mMap_Instance) {
+		delete mMap_Instance;
+		mMap_Instance = nullptr;
 	}
 }

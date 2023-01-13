@@ -22,8 +22,6 @@ void CRes::Init() {
 	gCharacter_Ui_Hp_RedGauge.Load2D(CHARACTER_UI_HP_REDGAUGE);
 	//プレイヤのUIの追加
 	gPlayer_Ui_Hp_Frame.Load2D(PLAYER_UI_HP_FRAME);
-	//敵のUIの追加
-	gEnemy_Ui_Hp_Frame.Load2D(ENEMY_UI_HP_FRAME);
 	//カメラ初期化
 	Camera.Init();
 	//マップモデルファイルの入力
@@ -79,7 +77,4 @@ CTexture& CRes::GetInPlayerUiHpFrame()
 {
 	return gPlayer_Ui_Hp_Frame;
 }
-CTexture& CRes::GetInEnemyUiHpFrame()
-{
-	return gEnemy_Ui_Hp_Frame;
-}
+

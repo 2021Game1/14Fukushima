@@ -27,9 +27,6 @@
     <ClCompile Include="src\CBillBoard.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\CBullet.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\CCamera.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
@@ -132,15 +129,15 @@
     <ClCompile Include="src\CPlayerGuard.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
+    <ClCompile Include="src\CEnemyManager.cpp">
+      <Filter>ソース ファイル\Lib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Update.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\CBillBoard.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CBullet.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
     <ClInclude Include="src\CCamera.h">
@@ -249,6 +246,9 @@
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
     <ClInclude Include="src\CPlayerGuard.h">
+      <Filter>ソース ファイル\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEnemyManager.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
   </ItemGroup>

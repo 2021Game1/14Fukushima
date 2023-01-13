@@ -4,6 +4,7 @@
 #include"CCharacter.h"
 #include"CXPlayer.h"
 
+
 class CPlayerGuard : public CCharacter
 {
 public:

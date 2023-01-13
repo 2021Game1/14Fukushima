@@ -2,8 +2,6 @@
 //OpenGL
 #include "glut.h"
 
-
-
 void CSceneGame::Init() {
 	mRes.Init();
 	//‰e‚Ìİ’è
@@ -31,4 +29,5 @@ void WholeRender() {
 	//ƒ^ƒXƒN•`‰æ
 	CTaskManager::Get()->Render();
 }
+
 

@@ -13,17 +13,13 @@
 #define ENEMY_OUTRECEPTION 60 //当たり判定の受付終了
 #define ENEMY_SEARCH_DIS 20.0f	//走行を開始する距離
 #define ENEMY_WALK_DIS 24.0f		//歩行を開始する距離
-#define ENEMY_GRAVITY 0.9			//重力
+#define ENEMY_GRAVITY 0.1			//重力
 #define ENEMY_CHASE_DIS_MAX 25.0f	//走行可能な最大距離
 #define ENEMY_HP_MAX 100;	//HPの最大値
 //敵のHPフレーム,HPゲージ座標,幅,高さ
-#define ENEMY_GAUGE_FRAME_TEX_WID 480.0f	//ゲージ枠の画像の幅
-#define ENEMY_GAUGE_FRAME_TEX_HEI 30.0f	//ゲージ枠の画像の高さ
-#define ENEMY_GAUGE_FRAME_TOP 10.0f //ゲージ枠上座標
-#define ENEMY_GAUGE_FRAME_BOTTOM (ENEMY_GAUGE_FRAME_TOP-ENEMY_GAUGE_FRAME_TEX_HEI) //ゲージ枠下座標
 #define ENEMY_GAUGE_WID_MAX 50.0f	//ゲージの幅の最大値
 #define ENEMY_GAUGE_HEIGHT 20.0f //ゲージ描画時の高さ
-#define ENEMY_GAUGE_HP_TOP 10.0f //HPゲージ描画時の上座標
+#define ENEMY_GAUGE_HP_TOP -10.0f //HPゲージ描画時の上座標
 #define ENEMY_GAUGE_HP_BOTTOM (ENEMY_GAUGE_HP_TOP - ENEMY_GAUGE_HEIGHT) //HPゲージ描画時の下座標
 
 
@@ -63,7 +59,7 @@ void CXEnemy::Init(CModelX* model)
 	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[24]);
 	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[83]);
 	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
-	mPosition.Set(10.0f, 0.0f, 0.0);	//位置を設定
+	mPosition.Set(10.0f, -4.0f, 0.0);	//位置を設定
 	mScale.Set(4.0f, 4.0f, 4.0f);//スケール設定
 	mRotation.Set(0.0f, 0.0f, 0.0f);	//回転を設定
 }
@@ -103,6 +99,9 @@ void CXEnemy::Update() {
 	case EKNOCKBACK: //ノックバック状態
 		KnockBack(); //ノックバック処理を呼ぶ
 		break;
+	case EREPELLED: //はじかれた時の状態
+		Repelled(); //はじかれた場合の処理を呼ぶ
+		break;
 	}
 	MovingCalculation();
 	//体力が0になると死亡
@@ -119,7 +118,7 @@ void CXEnemy::Render2D()
 	CUtil::Start2D(0, 800, 0, 600);
 	CVector tpos;
 	CVector ret;
-	tpos = mPosition + CVector(0.0f, 6.0f, 0.0f);
+	tpos = mPosition + CVector(-2.0f, 8.0f, -4.0f);
 	Camera.WorldToScreen(&ret, tpos);
 	float HpRate = (float)mEnemy_Hp / (float)ENEMY_HP_MAX; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
@@ -136,11 +135,9 @@ void CXEnemy::Render2D()
 	//画面外の時に表示しない
 	if (ret.X() > 0 && ret.X() < 800) {
 		//被ダメージ分後追いするゲージを表示
-		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() + ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
 		//体力ゲージ
-		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
-		//ゲージ背景
-		CRes::GetInstance()->GetInEnemyUiHpFrame().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX * 2.0f, ret.Y() + ENEMY_GAUGE_FRAME_BOTTOM, ret.Y() + ENEMY_GAUGE_FRAME_TOP, 0.0f, ENEMY_GAUGE_FRAME_TEX_WID, 0.0f, ENEMY_GAUGE_FRAME_TEX_HEI);
+		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() + ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
 	}
 	//2Dの描画終了
 	CUtil::End2D();
@@ -148,6 +145,7 @@ void CXEnemy::Render2D()
 
 void CXEnemy::Idle()
 {
+	int random = 0;
 	//プレイヤーが死亡状態では無いとき
 	if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH) 
 	{
@@ -160,7 +158,7 @@ void CXEnemy::Idle()
 		{
 			mEnemy_State = EAUTOMOVE;
 		}
-		else 
+		else
 		{
 			ChangeAnimation(5, true, 60);
 		}
@@ -188,8 +186,6 @@ void CXEnemy::Move(){
 	//プレイヤーが攻撃可能な距離にいるとき
 	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
 	{
-		//ランダムで攻撃を行うかどうかを判定する
-		random = rand() % 1;
 		if (random == 0) 
 		{
 			//ランダムで攻撃の種類を決める
@@ -239,8 +235,6 @@ void CXEnemy::Dash()
 	//プレイヤーが攻撃可能な距離にいるとき
 	if (mEnemy_PlayerDis <= ENEMY_ATTACK_DIS)
 	{
-		//ランダムで攻撃を行うかどうかを判定する
-		random = rand() % 50;
 		if (random == 0) 
 		{
 			//ランダムで攻撃の種類を決める
@@ -296,7 +290,6 @@ void CXEnemy::Attack_1()
 	{
 		mEnemy_State = EIDLE;
 	}
-
 }
 
 void CXEnemy::Attack_2()
@@ -355,10 +348,21 @@ void CXEnemy::KnockBack()
 {
 	ChangeAnimation(6, false, 50);
 	//アニメーション終了時
-	if (IsAnimationFinished()) 
+	if (IsAnimationFinished())
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
-		mEnemy_Hp -= 20;
+		mEnemy_Hp -= 10;
+	}
+}
+
+
+void CXEnemy::Repelled()
+{
+	ChangeAnimation(6, false, 50);
+	//アニメーション終了時
+	if (IsAnimationFinished())
+	{
+		mEnemy_State = EIDLE; //待機状態へ移行
 	}
 }
 
@@ -372,32 +376,35 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-	if (!mEnemy_Hp <= 0) 
+	if (!mEnemy_Hp <= 0)
 	{
 		if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ECAPSUL)
 		{
 			CVector adjust;//調整用ベクトル
 			//コライダのmとoが衝突しているかの判定
-			if (CCollider::CollisionCapsule(m, o, &adjust)) 
+			if (CCollider::CollisionCapsule(m, o, &adjust))
 			{
 				//相手の親のタグがプレイヤー
 				if (o->Parent()->Tag() == EPLAYER)
 				{
 					//相手のコライダのタグが剣
-					if (o->Tag() == CCollider::ESWORD) 
+					if (o->Tag() == CCollider::ESWORD)
 					{
-						if (CXPlayer::GetInstance()->GetIsHit() == true) {
-							mEnemy_State = EKNOCKBACK;
-						}
-					}
-					else if (o->Tag() == CCollider::ESHIERD)
-					{
-							if (CXPlayer::GetInstance()->GetIsHit() == true)
-							{
+						if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EGUARD)
+						{
+							if (CXPlayer::GetInstance()->GetIsHit() == true) {
 								mEnemy_State = EKNOCKBACK;
 							}
+						}
 					}
-					else 
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
+					{
+						if (CXPlayer::GetInstance()->GetIsHit() == true)
+						{
+							mEnemy_State = EREPELLED;
+						}
+					}
+					else
 					{
 						//位置の更新(mPosition + adjust)
 						mPosition = mPosition + adjust;
@@ -481,6 +488,12 @@ bool CXEnemy::GetIsAnimationFrame() {
 bool CXEnemy::GetIsHit()
 {
 	return mEnemy_IsHit; //攻撃の当たり判定を返す
+}
+
+//死亡状態のときtrueを返す
+bool CXEnemy::mIsDeath()
+{
+	return (mEnemy_State == EDEATH);
 }
 
 //プレイヤーの状態を取得する

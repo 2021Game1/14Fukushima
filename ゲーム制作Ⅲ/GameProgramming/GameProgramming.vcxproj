@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CBillBoard.cpp" />
-    <ClCompile Include="src\CBullet.cpp" />
     <ClCompile Include="src\CCamera.cpp" />
     <ClCompile Include="src\CCharacter.cpp" />
     <ClCompile Include="src\CCollider.cpp" />
@@ -22,6 +21,7 @@
     <ClCompile Include="src\CColliderTriangle.cpp" />
     <ClCompile Include="src\CCollisionManager.cpp" />
     <ClCompile Include="src\CEffect.cpp" />
+    <ClCompile Include="src\CEnemyManager.cpp" />
     <ClCompile Include="src\CInput.cpp" />
     <ClCompile Include="src\CKey.cpp" />
     <ClCompile Include="src\CMap.cpp" />
@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CBillBoard.h" />
-    <ClInclude Include="src\CBullet.h" />
     <ClInclude Include="src\CCamera.h" />
     <ClInclude Include="src\CCharacter.h" />
     <ClInclude Include="src\CCollider.h" />
@@ -62,6 +61,7 @@
     <ClInclude Include="src\CColliderTriangle.h" />
     <ClInclude Include="src\CCollisionManager.h" />
     <ClInclude Include="src\CEffect.h" />
+    <ClInclude Include="src\CEnemyManager.h" />
     <ClInclude Include="src\CInput.h" />
     <ClInclude Include="src\CKey.h" />
     <ClInclude Include="src\CMap.h" />

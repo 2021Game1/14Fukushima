@@ -1,9 +1,9 @@
 #include "CSceneManager.h"
-
+#include "CSceneGame.h"
 
 //コンストラクタ
 CSceneManager::CSceneManager()
-: mpScene(0)
+	: mpScene(0)
 {}
 //デストラクタ（削除されるときに実行されます）
 CSceneManager::~CSceneManager() {

@@ -27,12 +27,14 @@ public:
 		EATTACK_2,								//攻撃2
 		EATTACK_3,								//攻撃3
 		EKNOCKBACK,								//ノックバック
+		EREPELLED,								//はじかれた時のノックバック
 		EDEATH,									//死亡
 	};
 	//他のクラスで参照用の関数
 	static CXEnemy* GetInstance();				//staticで処理を作る
 	bool GetIsAnimationFrame();
-	bool GetIsHit();							//ヒット状態の判別
+	bool GetIsHit();							//ヒット状態の判別;;j
+	bool mIsDeath();							//死亡状態の時にtrueを返す
 	CXEnemy::EEnemyState GetState();			//プレイヤーの状態を取得する
 protected:
 	//コライダの宣言
@@ -45,13 +47,13 @@ protected:
 	float mEnemy_PlayerDis;						//敵がプレイヤの座標参照用
 	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
 	int mEnemy_Hp;								//敵の体力
+	float mScore;			//プレイヤーのターゲット選別用スコア
 	//敵の移動
 	CVector mEnemy_Point;						//敵移動時の目標地点
 	CVector mEnemy_PlayerPos;					//敵追跡時の目標地点
 	CVector mEnemy_Move;						//敵の方向と速度をかけ合わせたベクトル、プレイヤーの移動量
 	CVector mEnemy_MoveDir;						//敵の移動する方向、モデルの回転にも使用している、毎フレームリセットされる
 	CVector mEnemy_MoveDirKeep;					//敵の移動時の方向を保存する
-	//敵の状態・ポインタ等
 	EEnemyState mEnemy_State;					//敵の状態判断用
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	static CXEnemy* mpEnemy_Instance;			//別のクラスで敵の変数を呼び出す場合,staticでポインタを作る
@@ -63,6 +65,7 @@ protected:
 	void Attack_2();							//攻撃2処理
 	void Attack_3();							//攻撃3処理
 	void KnockBack();							//ノックバック処理
+	void Repelled();							//はじかれた時の処理
 	void Death();								//死亡処理
 	//移動の計算処理
 	void MovingCalculation();
