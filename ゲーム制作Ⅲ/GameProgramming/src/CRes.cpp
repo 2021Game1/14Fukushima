@@ -4,6 +4,19 @@ CRes* CRes::mpRes_Instance = nullptr;												//ƒŠƒ\[ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX•Ï”‚Ì
 
 void CRes::Init() {
 	mpRes_Instance = this;
+	//BGM‚Ì“Ç‚İ‚İ
+	Bgm.Load(BGM);
+	//ƒvƒŒƒCƒ„SE
+	Se_Player_AttackSp1.Load(SE_PLAYER_ATTACK1);
+	Se_Player_AttackSp2.Load(SE_PLAYER_ATTACK2);
+	Se_Player_AttackSp3.Load(SE_PLAYER_ATTACK3);
+	Se_Player_Guard.Load(SE_PLAYER_GUARD);
+	Se_Player_Walk.Load(SE_PLAYER_WALK);
+	//“GSE
+	Se_Enemy_AttackSp.Load(SE_ENEMY_ATTACK);
+	//ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ÌŒJ‚è•Ô‚µÄ¶
+	Bgm.Repeat(0.2);
+
 	//3Dƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 	gPlayer_Model_Knight.Load(PLAYER_MODEL_FILE);
 	//ƒvƒŒƒCƒ„‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ì’Ç‰Á
@@ -22,6 +35,8 @@ void CRes::Init() {
 	gCharacter_Ui_Hp_RedGauge.Load2D(CHARACTER_UI_HP_REDGAUGE);
 	//ƒvƒŒƒCƒ„‚ÌUI‚Ì’Ç‰Á
 	gPlayer_Ui_Hp_Frame.Load2D(PLAYER_UI_HP_FRAME);
+	//“G‚ÌUI‚Ì’Ç‰Á
+	gEnemy_Ui_Hp_BackBar.Load2D(ENEMY_UI_HP_BACKBAR);
 	//ƒJƒƒ‰‰Šú‰»
 	Camera.Init();
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚Ì“ü—Í
@@ -44,7 +59,7 @@ void CRes::Init() {
 	mPlayer.Init(&gPlayer_Model_Knight);
 	//“G‚Ì‰Šúİ’è
 	mEnemy.Init(&gEnemy_Model_Mutant);
-	mFont.LoadTexture("font\\FontG.png", 1, 4096 / 64);
+	mFont.LoadTexture("Font\\FontG.png", 1, 4096 / 64);
 	mMap.Model(&gMap_Model);
 	mMap_Sky.Model(&gMap_Model_Sky);
 	mPlayer_GuardSP_Model.Init(&gPlayer_GuardSP_Model);
@@ -76,5 +91,29 @@ CTexture& CRes::GetInUiHpRedGauge()
 CTexture& CRes::GetInPlayerUiHpFrame()
 {
 	return gPlayer_Ui_Hp_Frame;
+}
+CTexture& CRes::GetInEnemyUiHpBackBar()
+{
+	return gEnemy_Ui_Hp_BackBar;
+}
+//ƒvƒŒƒCƒ„SE‚ğæ“¾‚·‚é
+CSound& CRes::GetinPlayerSeAttackSp1() {
+	return Se_Player_AttackSp1;
+}
+CSound& CRes::GetinPlayerSeAttackSp2() {
+	return Se_Player_AttackSp2;
+}
+CSound& CRes::GetinPlayerSeAttackSp3() {
+	return Se_Player_AttackSp3;
+}
+CSound& CRes::GetinPlayerSeGuard() {
+	return Se_Player_Guard;
+}
+CSound& CRes::GetinPlayerSeWalk() {
+	return Se_Player_Walk;
+}
+//“GSE‚ğæ“¾‚·‚é
+CSound& CRes::GetinEnemySeAttackSp() {
+	return Se_Enemy_AttackSp;
 }
 

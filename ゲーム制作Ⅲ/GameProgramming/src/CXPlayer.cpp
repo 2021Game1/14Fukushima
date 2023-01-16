@@ -200,8 +200,9 @@ void CXPlayer::Attack_1()
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(1, false, 30);							//プレイヤの攻撃1モーション
+			ChangeAnimation(1, false, 40);							//プレイヤの攻撃1モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
+			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.3);
 		}
 	}
 	//アニメーションインデックスが３の時
@@ -215,8 +216,9 @@ void CXPlayer::Attack_1()
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(1, false, 30);							//プレイヤの攻撃1モーション
+			ChangeAnimation(1, false, 40);							//プレイヤの攻撃1モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
+			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.3);
 		}
 	}
 	//アニメーションインデックスが１の時
@@ -225,7 +227,13 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
-			mPlayer_IsHit = true;									//ヒット判定有効
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK)
+			{
+				mPlayer_IsHit = false;
+			}
+			else {
+				mPlayer_IsHit = true;
+			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
@@ -269,14 +277,21 @@ void CXPlayer::Attack_2()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-			mPlayer_IsHit = true;									//ヒット判定有効
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK)
+			{
+				mPlayer_IsHit = false;
+			}
+			else {
+				mPlayer_IsHit = true;
+			}
 		}
 		//アニメーション終了時
 		else if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(2, false, 60);							//プレイヤの攻撃2モーション
+			ChangeAnimation(2, false, 40);							//プレイヤの攻撃2モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP2;
+			CRes::GetInstance()->GetinPlayerSeAttackSp2().Play(0.3);
 		}
 	}
 	//アニメーションインデックスが2の時
@@ -318,15 +333,21 @@ void CXPlayer::Attack_3()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK)
+			{
+				mPlayer_IsHit = false;
+			}
+			else {
 				mPlayer_IsHit = true;
-				
+			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(3, false, 80);
+			ChangeAnimation(3, false, 50);
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP3;
+			CRes::GetInstance()->GetinPlayerSeAttackSp3().Play(0.3);
 		}
 	}
 	else if (mAnimationIndex == 3)
@@ -359,11 +380,31 @@ void CXPlayer::Attack_3()
 void CXPlayer::KnockBack()
 {
 	ChangeAnimation(7, false, 30);	//のけ反りアニメーション
+	if (IsAnimationFinished() == true)
+	{
+		mPlayer_IsHit = false;
+	}
 		//アニメーション終了時
 	if (IsAnimationFinished())
 	{
 		mPlayer_State = EIDLE; //待機状態へ移行
-		mPlayer_Hp = mPlayer_Hp - 10;
+
+		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
+		{
+			mPlayer_Hp = mPlayer_Hp - 10;
+		}
+		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
+		{
+			mPlayer_Hp = mPlayer_Hp - 20;
+		}
+		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
+		{
+			mPlayer_Hp = mPlayer_Hp - 15;
+		}
+		else
+		{
+			mPlayer_Hp = mPlayer_Hp - 10;
+		}
 	}
 }
 //ガード
@@ -371,6 +412,7 @@ void CXPlayer::Guard()
 {
 	//スペースでガードへ移行
 	if (CKey::Push(VK_SPACE)) {
+	CRes::GetInstance()->GetinPlayerSeGuard().Play();
 	ChangeAnimation(5, false, 10);	//ガード待機アニメーション
 	mPlayer_IsHit = true;
 	}
@@ -410,7 +452,8 @@ void CXPlayer::MoveCamera()
 	{
 		mPlayer_MoveDir += mPlayer_SideVec;
 	}
-	if (CKey::Push('W')) {
+	if (CKey::Push('W')) 
+	{
 		mPlayer_MoveDir += mPlayer_FrontVec;
 	}
 	else if (CKey::Push('S'))
@@ -475,8 +518,8 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		}
 		break;
 	}
-						   
-	case CCollider::ECAPSUL:{//カプセルコライダ
+
+	case CCollider::ECAPSUL: {//カプセルコライダ
 		//相手のコライダがカプセルコライダの時
 		if (o->Type() == CCollider::ECAPSUL) {
 			CVector adjust;//調整用ベクトル
@@ -485,13 +528,14 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 				{
 					//相手のコライダのタグが手
 					if (o->Tag() == CCollider::EARM) {
-							if (CXEnemy::GetInstance()->GetIsHit() == true)
+						if (CXEnemy::GetInstance()->GetIsHit() == true)
+						{
+							if (CXEnemy::GetInstance()->GetIsAnimationFrame() >= mAnimationFrame)
 							{
-								if (CXEnemy::GetInstance()->GetIsAnimationFrame() >= mAnimationFrame)
-								{
-									mPlayer_State = EKNOCKBACK;
-								}
+								CRes::GetInstance()->GetinEnemySeAttackSp().Play();
+								mPlayer_State = EKNOCKBACK;
 							}
+						}
 					}
 					else {
 						//位置の更新(mPosition + adjust)
@@ -511,11 +555,11 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 				//行列の更新
 				CTransform::Update();
 			}
-			
+
 		}
 		break;
 	}
-	}		
+	}
 }
 void CXPlayer::MovingCalculation() {
 	//座標移動
@@ -545,7 +589,6 @@ void CXPlayer::MovingCalculation() {
 	if (tCheck.cross < 0.0f) {
 		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
 	}
-
 	//リセット
 	mPlayer_MoveDir = CVector(0.0f, 0.0f, 0.0f);
 }

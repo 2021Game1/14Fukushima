@@ -2,6 +2,7 @@
 #include"CUtil.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include<time.h>
 #include"CXPlayer.h"
 #include "CRes.h"
 
@@ -9,15 +10,15 @@
 #define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
 #define ENEMY_SPEED_DASH 0.15f	//走行の移動速度
 #define ENEMY_SPEED_STOP 0.0f		//停止
-#define ENEMY_RECEPTION 10	//入力の当たり判定の受付時間
-#define ENEMY_OUTRECEPTION 60 //当たり判定の受付終了
+#define ENEMY_RECEPTION 20	//入力の当たり判定の受付時間
+#define ENEMY_OUTRECEPTION 35 //当たり判定の受付終了
 #define ENEMY_SEARCH_DIS 20.0f	//走行を開始する距離
 #define ENEMY_WALK_DIS 24.0f		//歩行を開始する距離
 #define ENEMY_GRAVITY 0.1			//重力
 #define ENEMY_CHASE_DIS_MAX 25.0f	//走行可能な最大距離
-#define ENEMY_HP_MAX 100;	//HPの最大値
+#define ENEMY_HP_MAX 200;	//HPの最大値
 //敵のHPフレーム,HPゲージ座標,幅,高さ
-#define ENEMY_GAUGE_WID_MAX 50.0f	//ゲージの幅の最大値
+#define ENEMY_GAUGE_WID_MAX 100.0f	//ゲージの幅の最大値
 #define ENEMY_GAUGE_HEIGHT 20.0f //ゲージ描画時の高さ
 #define ENEMY_GAUGE_HP_TOP -10.0f //HPゲージ描画時の上座標
 #define ENEMY_GAUGE_HP_BOTTOM (ENEMY_GAUGE_HP_TOP - ENEMY_GAUGE_HEIGHT) //HPゲージ描画時の下座標
@@ -27,14 +28,14 @@ CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
 
 //コライダ初期化
 CXEnemy::CXEnemy()
-	:mEnemy_Hp(100)
+	:mEnemy_Hp(200)
 	,mEnemy_Speed(0.0f)
 	,mEnemy_Turnspeed(0.0f)
 	,mEnemy_PlayerDis(0.0f)
 	,mEnemy_IsHit(false)
 	,mEnemy_ColSphereBody(this, nullptr, CVector(0.0f, 90.0f, 0.0f), CVector(0.0f, -130.0f, 30.0f), 1.3)
-	,mEnemy_ColSphereRightarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(0.0f, -90.0f, 0.0f), 1.5)
-	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(-30.0f, -90.0f, 30.0f), 0.8)
+	,mEnemy_ColSphereRightarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(0.0f, -90.0f, 0.0f), 1.2)
+	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(-30.0f, -90.0f, 30.0f), 1.2)
 
 {
 	mpEnemy_Instance = this;
@@ -118,7 +119,7 @@ void CXEnemy::Render2D()
 	CUtil::Start2D(0, 800, 0, 600);
 	CVector tpos;
 	CVector ret;
-	tpos = mPosition + CVector(-2.0f, 8.0f, -4.0f);
+	tpos = mPosition + CVector(ret.X(), 9.0f, 0.0f);
 	Camera.WorldToScreen(&ret, tpos);
 	float HpRate = (float)mEnemy_Hp / (float)ENEMY_HP_MAX; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
@@ -134,10 +135,11 @@ void CXEnemy::Render2D()
 	}
 	//画面外の時に表示しない
 	if (ret.X() > 0 && ret.X() < 800) {
+		CRes::GetInstance()->GetInEnemyUiHpBackBar().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
 		//被ダメージ分後追いするゲージを表示
-		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() + ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
 		//体力ゲージ
-		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() + ENEMY_GAUGE_WID_MAX, (ret.X() + ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
 	}
 	//2Dの描画終了
 	CUtil::End2D();
@@ -152,11 +154,11 @@ void CXEnemy::Idle()
 		//プレイヤーが一定距離まで近づくと追跡状態へ移行
 		if (mEnemy_PlayerDis <= ENEMY_SEARCH_DIS)
 		{
-			mEnemy_State = EDASH;
+			mEnemy_State = EAUTOMOVE;
 		}
 		else if (mEnemy_PlayerDis <= ENEMY_WALK_DIS)
 		{
-			mEnemy_State = EAUTOMOVE;
+			mEnemy_State = EDASH;
 		}
 		else
 		{
@@ -265,7 +267,7 @@ void CXEnemy::Dash()
 
 void CXEnemy::Attack_1()
 {
-	ChangeAnimation(1, false, 60);
+	ChangeAnimation(1, false, 80);
 	mEnemy_IsHit = false; //ヒット判定終了
 	//プレイヤーが追跡可能な距離にいないとき
 	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
@@ -294,7 +296,7 @@ void CXEnemy::Attack_1()
 
 void CXEnemy::Attack_2()
 {
-	ChangeAnimation(2, false, 60);
+	ChangeAnimation(2, false, 80);
 	mEnemy_IsHit = false; //ヒット判定終了
 	//プレイヤーが追跡可能な距離にいないとき
 	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
@@ -306,6 +308,10 @@ void CXEnemy::Attack_2()
 	{
 		if (mAnimationFrame >= ENEMY_RECEPTION) 
 		{
+			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EKNOCKBACK)
+			{
+				mEnemy_IsHit = false;
+			}
 			mEnemy_IsHit = true;
 		}
 		else if (mAnimationFrame == ENEMY_OUTRECEPTION)
@@ -322,13 +328,17 @@ void CXEnemy::Attack_2()
 
 void CXEnemy::Attack_3()
 {
-	ChangeAnimation(0, false, 60);
+	ChangeAnimation(0, false, 85);
 	mEnemy_IsHit = false; //ヒット判定終了
 	//ヒット判定発生
 	if (IsAnimationFinished() == false) 
 	{
 		if (mAnimationFrame >= ENEMY_RECEPTION) 
 		{
+			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EKNOCKBACK)
+			{
+				mEnemy_IsHit = false;
+			}
 			mEnemy_IsHit = true;
 		}
 		else if (mAnimationFrame == ENEMY_OUTRECEPTION)
@@ -348,10 +358,15 @@ void CXEnemy::KnockBack()
 {
 	ChangeAnimation(6, false, 50);
 	//アニメーション終了時
+	if (IsAnimationFinished() == false)
+	{
+		mEnemy_IsHit = false;
+	}
+	//アニメーション終了時
 	if (IsAnimationFinished())
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
-		mEnemy_Hp -= 10;
+		mEnemy_Hp = mEnemy_Hp - 10;
 	}
 }
 
@@ -392,19 +407,24 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 					{
 						if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EGUARD)
 						{
-							if (CXPlayer::GetInstance()->GetIsHit() == true) {
-								mEnemy_State = EKNOCKBACK;
+							//乱数値=rand()%乱数値の要素数+乱数値の最小値
+							srand((unsigned)time(NULL));
+							mEnemy_val = (rand() % 100) + 1;
+							if (mEnemy_val >= 0 && mEnemy_val <= 30) {
+								if (CXPlayer::GetInstance()->GetIsHit() == true) {
+									mEnemy_State = EKNOCKBACK;
+								}
 							}
 						}
 					}
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
+					else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
 					{
 						if (CXPlayer::GetInstance()->GetIsHit() == true)
 						{
 							mEnemy_State = EREPELLED;
 						}
 					}
-					else
+					else if (m->Tag() == CCollider::EBODY && o->Tag() == CCollider::EBODY)
 					{
 						//位置の更新(mPosition + adjust)
 						mPosition = mPosition + adjust;
@@ -412,7 +432,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 						CTransform::Update();
 					}
 				}
-
 			}
 		}
 		else if (o->Type() == CCollider::ETRIANGLE) {

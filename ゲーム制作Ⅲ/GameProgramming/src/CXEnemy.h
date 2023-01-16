@@ -33,7 +33,7 @@ public:
 	//他のクラスで参照用の関数
 	static CXEnemy* GetInstance();				//staticで処理を作る
 	bool GetIsAnimationFrame();
-	bool GetIsHit();							//ヒット状態の判別;;j
+	bool GetIsHit();							//ヒット状態の判別;;
 	bool mIsDeath();							//死亡状態の時にtrueを返す
 	CXEnemy::EEnemyState GetState();			//プレイヤーの状態を取得する
 protected:
@@ -47,6 +47,7 @@ protected:
 	float mEnemy_PlayerDis;						//敵がプレイヤの座標参照用
 	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
 	int mEnemy_Hp;								//敵の体力
+	int mEnemy_val;								//ランダム用の変数
 	float mScore;			//プレイヤーのターゲット選別用スコア
 	//敵の移動
 	CVector mEnemy_Point;						//敵移動時の目標地点
