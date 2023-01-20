@@ -5,17 +5,20 @@ CRes* CRes::mpRes_Instance = nullptr;												//ƒŠƒ\[ƒX‚ÌƒCƒ“ƒXƒ^ƒ“ƒX•Ï”‚Ì
 void CRes::Init() {
 	mpRes_Instance = this;
 	//BGM‚Ì“Ç‚İ‚İ
-	Bgm.Load(BGM);
+	Game_Bgm.Load(BGM_GAME);
+	Title_Bgm.Load(BGM_TITLE);
 	//ƒvƒŒƒCƒ„SE
 	Se_Player_AttackSp1.Load(SE_PLAYER_ATTACK1);
 	Se_Player_AttackSp2.Load(SE_PLAYER_ATTACK2);
 	Se_Player_AttackSp3.Load(SE_PLAYER_ATTACK3);
 	Se_Player_Guard.Load(SE_PLAYER_GUARD);
 	Se_Player_Walk.Load(SE_PLAYER_WALK);
+	Se_Player_Death.Load(SE_PLAYER_DEATH);
 	//“GSE
 	Se_Enemy_AttackSp.Load(SE_ENEMY_ATTACK);
+	Se_Enemy_Death.Load(SE_EMEMY_DEATH);
 	//ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹‚ÌŒJ‚è•Ô‚µÄ¶
-	Bgm.Repeat(0.2);
+	Game_Bgm.Repeat(0.2);
 
 	//3Dƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
 	gPlayer_Model_Knight.Load(PLAYER_MODEL_FILE);
@@ -30,6 +33,12 @@ void CRes::Init() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
 	//ƒvƒŒƒCƒ„ƒK[ƒhƒAƒNƒVƒ‡ƒ“ƒGƒtƒFƒNƒgƒ‚ƒfƒ‹
 	gPlayer_GuardSP_Model.Load(PLAYER_MODEL_ACTION_GUARDSP);
+	//ƒ^ƒCƒgƒ‹‰æ‘œ‚Ì’Ç‰Á
+	gTitle_Image.Load2D(TITLE_IMAGE);
+	//ƒQ[ƒ€ƒNƒŠƒA‰æ‘œ‚Ì’Ç‰Á
+	gGameClear_Image.Load2D(GAMECLEAR_IMAGE);
+	//ƒQ[ƒ€ƒI[ƒo[‰æ‘œ‚Ì’Ç‰Á
+	gGameOver_Image.Load2D(GAMEOVER_IMAGE);
 	//ƒLƒƒƒ‰ƒNƒ^‚ÌUI’Ç‰Á
 	gCharacter_Ui_Hp_GreenGauge.Load2D(CHARACTER_UI_HP_GREENGAUGE);
 	gCharacter_Ui_Hp_RedGauge.Load2D(CHARACTER_UI_HP_REDGAUGE);
@@ -80,6 +89,18 @@ CText& CRes::GetInUiFont()
 {
 	return mFont;
 }
+CTexture& CRes::GetInTitleImage()
+{
+	return gTitle_Image;
+}
+CTexture& CRes::GetinGameClearImage()
+{
+	return gGameClear_Image;
+}
+CTexture& CRes::GetinGameOverImage()
+{
+	return gGameOver_Image;
+}
 CTexture& CRes::GetInUiHpGreenGauge()
 {
 	return gCharacter_Ui_Hp_GreenGauge;
@@ -97,23 +118,45 @@ CTexture& CRes::GetInEnemyUiHpBackBar()
 	return gEnemy_Ui_Hp_BackBar;
 }
 //ƒvƒŒƒCƒ„SE‚ğæ“¾‚·‚é
-CSound& CRes::GetinPlayerSeAttackSp1() {
+CSound& CRes::GetinPlayerSeAttackSp1() 
+{
 	return Se_Player_AttackSp1;
 }
-CSound& CRes::GetinPlayerSeAttackSp2() {
+CSound& CRes::GetinPlayerSeAttackSp2() 
+{
 	return Se_Player_AttackSp2;
 }
-CSound& CRes::GetinPlayerSeAttackSp3() {
+CSound& CRes::GetinPlayerSeAttackSp3() 
+{
 	return Se_Player_AttackSp3;
 }
-CSound& CRes::GetinPlayerSeGuard() {
+CSound& CRes::GetinPlayerSeGuard() 
+{
 	return Se_Player_Guard;
 }
-CSound& CRes::GetinPlayerSeWalk() {
+CSound& CRes::GetinPlayerSeWalk() 
+{
 	return Se_Player_Walk;
 }
+CSound& CRes::GetinPlayerSeDeath()
+{
+	return Se_Player_Death;
+}
 //“GSE‚ğæ“¾‚·‚é
-CSound& CRes::GetinEnemySeAttackSp() {
+CSound& CRes::GetinEnemySeAttackSp() 
+{
 	return Se_Enemy_AttackSp;
 }
-
+CSound& CRes::GetinEnemySeDeath()
+{
+	return Se_Enemy_Death;
+}
+//BGM‚Ìæ“¾
+CSound& CRes::GetinSoundBgmTitle()
+{
+	return Title_Bgm;
+}
+CSound& CRes::GetinSoundBgmGame() 
+{
+	return Game_Bgm;
+}

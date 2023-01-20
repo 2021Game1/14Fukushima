@@ -6,16 +6,20 @@
 #include"CXPlayer.h"
 #include "CRes.h"
 
+#define DAMAGE_BODY 10		//ダメージ(体)
+
 #define ENEMY_ATTACK_DIS 3.2f		//攻撃可能になる距離
 #define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
 #define ENEMY_SPEED_DASH 0.15f	//走行の移動速度
 #define ENEMY_SPEED_STOP 0.0f		//停止
 #define ENEMY_RECEPTION 20	//入力の当たり判定の受付時間
-#define ENEMY_OUTRECEPTION 35 //当たり判定の受付終了
-#define ENEMY_SEARCH_DIS 20.0f	//走行を開始する距離
-#define ENEMY_WALK_DIS 24.0f		//歩行を開始する距離
+#define ENEMY_OUTRECEPTION 45 //当たり判定の受付終了
+#define ENEMY_WALK_DIS 30.0f		//歩行を開始する距離
+#define ENEMY_SEARCH_DIS 60.0f		//走行を開始する距離
+#define ENEMY_WALK_DIS_MAX 50.0f	//歩行可能な最大距離
+#define ENEMY_CHASE_DIS_MAX 80.0f   //走行可能な最大距離
 #define ENEMY_GRAVITY 0.1			//重力
-#define ENEMY_CHASE_DIS_MAX 25.0f	//走行可能な最大距離
+
 #define ENEMY_HP_MAX 200;	//HPの最大値
 //敵のHPフレーム,HPゲージ座標,幅,高さ
 #define ENEMY_GAUGE_WID_MAX 100.0f	//ゲージの幅の最大値
@@ -32,10 +36,13 @@ CXEnemy::CXEnemy()
 	,mEnemy_Speed(0.0f)
 	,mEnemy_Turnspeed(0.0f)
 	,mEnemy_PlayerDis(0.0f)
+	, mEnemy_FollowGaugeWid(0.0f)
+	,mEnemy_val(0)
 	,mEnemy_IsHit(false)
+	,mEnemy_Flag(false)
 	,mEnemy_ColSphereBody(this, nullptr, CVector(0.0f, 90.0f, 0.0f), CVector(0.0f, -130.0f, 30.0f), 1.3)
-	,mEnemy_ColSphereRightarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(0.0f, -90.0f, 0.0f), 1.2)
-	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(-30.0f, -90.0f, 30.0f), 1.2)
+	,mEnemy_ColSphereRightarm(this, nullptr, CVector(0.0f, 10.0f, 0.0f), CVector(0.0f, -90.0f, 0.0f), 1.0)
+	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(0.0f, 0.0f, 0.0f), CVector(-30.0f, -90.0f, 30.0f), 1.0)
 
 {
 	mpEnemy_Instance = this;
@@ -60,7 +67,7 @@ void CXEnemy::Init(CModelX* model)
 	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[24]);
 	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[83]);
 	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
-	mPosition.Set(10.0f, -4.0f, 0.0);	//位置を設定
+	mPosition.Set(20.0f, -4.0f, 0.0);	//位置を設定
 	mScale.Set(4.0f, 4.0f, 4.0f);//スケール設定
 	mRotation.Set(0.0f, 0.0f, 0.0f);	//回転を設定
 }
@@ -151,26 +158,30 @@ void CXEnemy::Idle()
 	//プレイヤーが死亡状態では無いとき
 	if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH) 
 	{
+		mEnemy_Flag = false;
 		//プレイヤーが一定距離まで近づくと追跡状態へ移行
-		if (mEnemy_PlayerDis <= ENEMY_SEARCH_DIS)
+		if (mEnemy_PlayerDis <= ENEMY_WALK_DIS)
 		{
 			mEnemy_State = EAUTOMOVE;
 		}
-		else if (mEnemy_PlayerDis <= ENEMY_WALK_DIS)
+		else if (mEnemy_PlayerDis <= ENEMY_SEARCH_DIS)
 		{
 			mEnemy_State = EDASH;
 		}
 		else
 		{
+			//アニメーションの設定
 			ChangeAnimation(5, true, 60);
 		}
 	}
 	else 
 	{
+		//アニメーションの設定
 		ChangeAnimation(5, true, 60);
 	}
 }
 void CXEnemy::Move(){
+	//アニメーションの設定
 	ChangeAnimation(3, true, 50);
 	mEnemy_Speed = ENEMY_SPEED_MOVE;
 	//目的地点までのベクトルを求める
@@ -180,9 +191,12 @@ void CXEnemy::Move(){
 	//およそ1秒毎に目標地点を更新
 	int r = rand() % 30; //rand()は整数の乱数を返す
 						 //%10は10で割った余りを求める
-	if (r == 0)	
+	if (mEnemy_PlayerDis > ENEMY_ATTACK_DIS)
 	{
+		if (r == 0)
+		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
+		}
 	}
 	int random = 0;
 	//プレイヤーが攻撃可能な距離にいるとき
@@ -207,7 +221,7 @@ void CXEnemy::Move(){
 		}
 	}
 	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
+	if (mEnemy_PlayerDis >= ENEMY_WALK_DIS_MAX)
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}
@@ -216,6 +230,7 @@ void CXEnemy::Move(){
 
 void CXEnemy::Dash()
 {
+	//アニメーションの設定
 	ChangeAnimation(4, true, 40);
 	//移動スピードを変更
 	mEnemy_Speed = ENEMY_SPEED_DASH;
@@ -267,20 +282,21 @@ void CXEnemy::Dash()
 
 void CXEnemy::Attack_1()
 {
-	ChangeAnimation(1, false, 80);
+	//アニメーションの設定
+	ChangeAnimation(1, false, 55);
 	mEnemy_IsHit = false; //ヒット判定終了
-	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
-	{
-		mEnemy_State = EIDLE; //待機状態へ移行
-	}
-
 	//ヒット判定発生
-	if (IsAnimationFinished() == false) 
+	if (IsAnimationFinished() == false)
 	{
-		if (mAnimationFrame >= ENEMY_RECEPTION) 
+		if (mAnimationFrame >= ENEMY_RECEPTION)
 		{
-			mEnemy_IsHit = true;
+			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EKNOCKBACK)
+			{
+				mEnemy_IsHit = false;
+			}
+			else {
+				mEnemy_IsHit = true;
+			}
 		}
 		else if (mAnimationFrame == ENEMY_OUTRECEPTION)
 		{
@@ -291,18 +307,31 @@ void CXEnemy::Attack_1()
 	if (IsAnimationFinished())
 	{
 		mEnemy_State = EIDLE;
+		if (mEnemy_val >= 21 && mEnemy_val <= 100)
+		{
+			if (CXPlayer::GetInstance()->GetIsHit() == true) {
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+				{
+					mEnemy_Hp = mEnemy_Hp - 5;
+				}
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+				{
+					mEnemy_Hp = mEnemy_Hp - 5;
+				}
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+				{
+					mEnemy_Hp = mEnemy_Hp - 5;
+				}
+			}
+		}
 	}
 }
 
 void CXEnemy::Attack_2()
 {
-	ChangeAnimation(2, false, 80);
+	//アニメーションの設定
+	ChangeAnimation(2, false, 55);
 	mEnemy_IsHit = false; //ヒット判定終了
-	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= ENEMY_CHASE_DIS_MAX)
-	{
-		mEnemy_State = EIDLE; //待機状態へ移行
-	}
 	//ヒット判定発生
 	if (IsAnimationFinished() == false) 
 	{
@@ -312,7 +341,9 @@ void CXEnemy::Attack_2()
 			{
 				mEnemy_IsHit = false;
 			}
-			mEnemy_IsHit = true;
+			else {
+				mEnemy_IsHit = true;
+			}
 		}
 		else if (mAnimationFrame == ENEMY_OUTRECEPTION)
 		{
@@ -323,12 +354,30 @@ void CXEnemy::Attack_2()
 	if (IsAnimationFinished())
 	{
 		mEnemy_State = EIDLE;
+		if (mEnemy_val >= 36 && mEnemy_val <= 100)
+		{
+			if (CXPlayer::GetInstance()->GetIsHit() == true) {
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+				{
+					mEnemy_Hp = mEnemy_Hp - 5;
+				}
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+				{
+					mEnemy_Hp = mEnemy_Hp - 5;
+				}
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+				{
+					mEnemy_Hp = mEnemy_Hp - 10;
+				}
+			}
+		}
 	}
 }
 
 void CXEnemy::Attack_3()
 {
-	ChangeAnimation(0, false, 85);
+	//アニメーションの設定
+	ChangeAnimation(0, false, 65);
 	mEnemy_IsHit = false; //ヒット判定終了
 	//ヒット判定発生
 	if (IsAnimationFinished() == false) 
@@ -339,7 +388,9 @@ void CXEnemy::Attack_3()
 			{
 				mEnemy_IsHit = false;
 			}
-			mEnemy_IsHit = true;
+			else {
+				mEnemy_IsHit = true;
+			}
 		}
 		else if (mAnimationFrame == ENEMY_OUTRECEPTION)
 		{
@@ -350,14 +401,47 @@ void CXEnemy::Attack_3()
 	if (IsAnimationFinished())
 	{
 		mEnemy_State = EIDLE;
+		if (mEnemy_val >= 36 && mEnemy_val <= 100)
+		{
+			if (CXPlayer::GetInstance()->GetIsHit() == true) {
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+				{
+					mEnemy_Hp = mEnemy_Hp - 5;
+				}
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+				{
+					mEnemy_Hp = mEnemy_Hp - 5;
+				}
+				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+				{
+					mEnemy_Hp = mEnemy_Hp - 10;
+				}
+			}
+		}
 	}
 }
 
 
 void CXEnemy::KnockBack()
 {
+	//アニメーションの設定
 	ChangeAnimation(6, false, 50);
-	//アニメーション終了時
+	//ダメージ処理
+	//1度しか動かさないためのカウンタ
+	if (mEnemy_Flag == false)
+	{
+		mEnemy_Flag = true;
+		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+		{
+			mEnemy_Hp -= DAMAGE_BODY * 2;
+		}
+		else
+		{
+			mEnemy_Hp -= DAMAGE_BODY;	//ダメージを受ける(体)
+
+		}
+	}
+	//アニメーションが再生中時
 	if (IsAnimationFinished() == false)
 	{
 		mEnemy_IsHit = false;
@@ -366,7 +450,6 @@ void CXEnemy::KnockBack()
 	if (IsAnimationFinished())
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
-		mEnemy_Hp = mEnemy_Hp - 10;
 	}
 }
 
@@ -410,7 +493,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 							//乱数値=rand()%乱数値の要素数+乱数値の最小値
 							srand((unsigned)time(NULL));
 							mEnemy_val = (rand() % 100) + 1;
-							if (mEnemy_val >= 0 && mEnemy_val <= 30) {
+							if (mEnemy_val >= 0 && mEnemy_val <= 35) {
 								if (CXPlayer::GetInstance()->GetIsHit() == true) {
 									mEnemy_State = EKNOCKBACK;
 								}
@@ -447,6 +530,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 }
+
 void CXEnemy::MovingCalculation() {
 	//プレイヤー方向のベクトルを求める
 	mEnemy_PlayerPos = CXPlayer::GetInstance()->Position() - mPosition;
@@ -498,6 +582,10 @@ void CXEnemy::TaskCollision()
 CXEnemy* CXEnemy::GetInstance()
 {
 	return mpEnemy_Instance;
+}
+bool CXEnemy::GetHp()
+{
+	return mEnemy_Hp;
 }
 //アニメーションフレームの取得
 bool CXEnemy::GetIsAnimationFrame() {

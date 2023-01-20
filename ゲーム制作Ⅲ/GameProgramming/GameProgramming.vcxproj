@@ -33,6 +33,7 @@
     <ClCompile Include="src\CRes.cpp" />
     <ClCompile Include="src\CSceneGame.cpp" />
     <ClCompile Include="src\CSceneManager.cpp" />
+    <ClCompile Include="src\CSceneTitle.cpp" />
     <ClCompile Include="src\CShader.cpp" />
     <ClCompile Include="src\CShadowMap.cpp" />
     <ClCompile Include="src\CSound.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="src\CScene.h" />
     <ClInclude Include="src\CSceneGame.h" />
     <ClInclude Include="src\CSceneManager.h" />
+    <ClInclude Include="src\CSceneTitle.h" />
     <ClInclude Include="src\CShader.h" />
     <ClInclude Include="src\CShadowMap.h" />
     <ClInclude Include="src\CSound.h" />

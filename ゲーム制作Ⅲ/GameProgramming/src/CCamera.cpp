@@ -125,6 +125,16 @@ void CCamera::Draw() {
 		mUp.X(), mUp.Y(), mUp.Z());
 	//モデルビュー行列の取得
 	glGetFloatv(GL_MODELVIEW_MATRIX, mMatrix.M());
+	//逆行列作成
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			inverse.M(i, j, mMatrix.M(j, i));
+		}
+	}
+	//ビルボードの逆行列設定
+	CBillBoard::ModelViewInverse(&inverse);
 }
 
 //デフォルトコンストラクタ

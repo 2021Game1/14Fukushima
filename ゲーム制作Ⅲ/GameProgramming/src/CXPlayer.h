@@ -47,6 +47,8 @@ public:
 	void TaskCollision();
 	//デフォルトコンストラクタ
 	CXPlayer();
+	//プレイヤのHP取得関数
+	bool GetHp();
 	//プレイヤの衝突判定関数
 	void Collision(CCollider* m, CCollider* o);	//衝突処理
 	//プレイヤのインスタンス取得関数
@@ -90,6 +92,7 @@ private:
 	bool mPlayer_AttackFlag_1;			//プレイヤの攻撃1状態の時trueを返す
 	bool mPlayer_AttackFlag_2;			//プレイヤの攻撃2状態の時trueを返す
 	bool mPlayer_AttackFlag_3;			//プレイヤの攻撃3状態の時trueを返す
+	bool mPlayer_SeFlag;
 	bool mPlayer_IsHit;					//プレイヤの攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	bool mPlayer_AttackFlag_Once;		//プレイヤの攻撃した瞬間だけtrueを返す、敵の回避判定に使用
 	int mPlayer_ComboCount;				//プレイヤのコンボルート判別用変数

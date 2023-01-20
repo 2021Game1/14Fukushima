@@ -33,6 +33,7 @@ public:
 	//他のクラスで参照用の関数
 	static CXEnemy* GetInstance();				//staticで処理を作る
 	bool GetIsAnimationFrame();
+	bool GetHp();								//敵のHP取得関数
 	bool GetIsHit();							//ヒット状態の判別;;
 	bool mIsDeath();							//死亡状態の時にtrueを返す
 	CXEnemy::EEnemyState GetState();			//プレイヤーの状態を取得する
@@ -48,7 +49,6 @@ protected:
 	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
 	int mEnemy_Hp;								//敵の体力
 	int mEnemy_val;								//ランダム用の変数
-	float mScore;			//プレイヤーのターゲット選別用スコア
 	//敵の移動
 	CVector mEnemy_Point;						//敵移動時の目標地点
 	CVector mEnemy_PlayerPos;					//敵追跡時の目標地点
@@ -56,6 +56,7 @@ protected:
 	CVector mEnemy_MoveDir;						//敵の移動する方向、モデルの回転にも使用している、毎フレームリセットされる
 	CVector mEnemy_MoveDirKeep;					//敵の移動時の方向を保存する
 	EEnemyState mEnemy_State;					//敵の状態判断用
+	bool mEnemy_Flag;							//敵のフラグ
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	static CXEnemy* mpEnemy_Instance;			//別のクラスで敵の変数を呼び出す場合,staticでポインタを作る
 	//敵の行動メソッド関数

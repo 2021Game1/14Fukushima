@@ -44,6 +44,7 @@ CXPlayer::CXPlayer()
 	, mPlayer_AttackFlag_1(false)
 	, mPlayer_AttackFlag_2(false)
 	, mPlayer_AttackFlag_3(false)
+	, mPlayer_SeFlag(false)
 	, mPlayer_AttackFlag_Once(false)
 	, mPlayer_Flag(false)
 	, mPlayer_FollowGaugeWid(PLAYER_GAUGE_WID_MAX)
@@ -75,7 +76,7 @@ void CXPlayer::Init(CModelX* model)
 	mPlayer_ColCapsuleShield.Matrix(&mpCombinedMatrix[41]);
 	mPlayer_ColCapsuleSword.Matrix(&mpCombinedMatrix[71]);
 	//プレイヤの位置,拡縮,回転の設定
-	mPosition.Set(0.0f, 0.0f, 0.0);									//位置を設定
+	mPosition.Set(-25.0f, 0.0f, 0.0);									//位置を設定
 	mScale.Set(2.0f,2.0f,2.0f);										//スケール設定
 	mRotation.Set(0.0f, 180.0f, 0.0f);								//回転を設定
 }
@@ -155,6 +156,7 @@ void CXPlayer::Idle()
 	//WASDキーを押すと移動へ移行
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		mPlayer_State = EMOVE;
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
 	}
 	else if (CKey::Once(VK_SPACE)) {
 		mPlayer_State = EGUARD;
@@ -175,11 +177,14 @@ void CXPlayer::Move()
 	//WASDキーを押すと移動
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		ChangeAnimation(0, true, 20);
+		ChangeAnimation(0, true, 30);
 	}
 	//待機状態へ移行
 	else {
 		mPlayer_State = EIDLE;
+	}
+	if (mPlayer_State != EMOVE){
+		CRes::GetInstance()->GetinPlayerSeWalk().Stop();
 	}
 }
 
@@ -208,9 +213,15 @@ void CXPlayer::Attack_1()
 	//アニメーションインデックスが３の時
 	else if (mAnimationIndex == 3) {
 		//ヒット判定発生
-		if (IsAnimationFinished() == false) {
-			
-				mPlayer_IsHit = true;									//プレイヤーのヒット判定をtrueにする
+		if (IsAnimationFinished() == false)
+		{
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
+			{
+				mPlayer_IsHit = false;
+			}
+			else {
+				mPlayer_IsHit = true;
+			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
@@ -227,7 +238,7 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK)
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
 			{
 				mPlayer_IsHit = false;
 			}
@@ -277,7 +288,7 @@ void CXPlayer::Attack_2()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK)
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
 			{
 				mPlayer_IsHit = false;
 			}
@@ -333,7 +344,7 @@ void CXPlayer::Attack_3()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK)
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
 			{
 				mPlayer_IsHit = false;
 			}
@@ -388,18 +399,17 @@ void CXPlayer::KnockBack()
 	if (IsAnimationFinished())
 	{
 		mPlayer_State = EIDLE; //待機状態へ移行
-
 		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
 		{
-			mPlayer_Hp = mPlayer_Hp - 10;
+			mPlayer_Hp = mPlayer_Hp - 15;
 		}
 		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
 		{
-			mPlayer_Hp = mPlayer_Hp - 20;
+			mPlayer_Hp = mPlayer_Hp - 10;
 		}
 		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
 		{
-			mPlayer_Hp = mPlayer_Hp - 15;
+			mPlayer_Hp = mPlayer_Hp - 20;
 		}
 		else
 		{
@@ -493,9 +503,12 @@ void CXPlayer::Render2D()
 		//被ダメージ分後追いするゲージの幅に体力ゲージの幅を設定する
 		mPlayer_FollowGaugeWid = HpGaugeWid;
 	}
-	CRes::GetInstance()->GetInUiHpRedGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + mPlayer_FollowGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, 0, 480, 0, 10);
-	CRes::GetInstance()->GetInUiHpGreenGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + HpGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, 0, 480, 0, 10);
-	CRes::GetInstance()->GetInPlayerUiHpFrame().Draw(PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_RIGHT, PLAYER_GAUGE_FRAME_BOTTOM, PLAYER_GAUGE_FRAME_TOP, 0, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_HEI, 0);
+	if(mPlayer_Hp >= PLAYER_INITIALIZATION)
+	{
+		CRes::GetInstance()->GetInUiHpRedGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + mPlayer_FollowGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, 0, 480, 0, 10);
+		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + HpGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, 0, 480, 0, 10);
+		CRes::GetInstance()->GetInPlayerUiHpFrame().Draw(PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_RIGHT, PLAYER_GAUGE_FRAME_BOTTOM, PLAYER_GAUGE_FRAME_TOP, 0, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_HEI, 0);
+	}
 	//2Dの描画終了
 	CUtil::End2D();
 }
@@ -608,6 +621,11 @@ void CXPlayer::TaskCollision()
 CXPlayer* CXPlayer::GetInstance()
 {
 	return mpPlayer_Instance;
+}
+//プレイヤのHPの取得
+bool CXPlayer::GetHp()
+{
+	return mPlayer_Hp;
 }
 //アニメーションフレームの取得
 bool CXPlayer::GetIsAnimationFrame() {

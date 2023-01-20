@@ -12,13 +12,16 @@ class CSceneGame : public CScene {
 	CRes mRes;
 	//シャドウマップのインスタンス
 	CShadowMap mShadowMap;
-public:
+private:
+	~CSceneGame();
 	//初期化処理のオーバーライド
 	void Init();
 	//更新処理のオーバーライド
 	void Update();
 	//描画処理のオーバーライド
 	void Render();
+	//シーン変移関数
+	EScene GetNextScene();
 };
 void WholeRender();
 #endif

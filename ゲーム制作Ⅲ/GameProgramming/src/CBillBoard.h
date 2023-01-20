@@ -7,6 +7,8 @@
 */
 class CBillBoard : public CCharacter {
 public:
+	//逆行列の設定
+	static void ModelViewInverse(CMatrix* matrix);
 	//コンストラクタ
 	CBillBoard();
 	//CBillBoard(位置, 幅, 高さ)
@@ -24,5 +26,8 @@ protected:
 	CTriangle mT[2];
 	//マテリアル
 	CMaterial mMaterial;
+private:
+	//モデルビュー行列の逆行列へのポインタ
+	static CMatrix* spModelViewInverse;
 };
 #endif

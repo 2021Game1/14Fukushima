@@ -53,7 +53,12 @@
 #define MAP_COLLISION_MAP "res\\Map\\collision.obj","res\\Map\\collision.mtl"
 
 /*画像, UI*/
-
+//タイトル画像
+#define TITLE_IMAGE "res\\Image\\Title_Image.png"
+//ゲームクリア画像
+#define GAMECLEAR_IMAGE "res\\Image\\GameClear_Image.png"
+//ゲームオーバー画像
+#define GAMEOVER_IMAGE "res\\Image\\GameOver_Image.png"
 //HPゲージ
 #define CHARACTER_UI_HP_GREENGAUGE "res\\Ui\\HP_Gauge.png"
 #define CHARACTER_UI_HP_REDGAUGE "res\\Ui\\HP_RedGauge.png"
@@ -69,26 +74,40 @@
 #define TEXWIDTH  8192	//テクスチャ幅
 #define TEXHEIGHT  6144	//テクスチャ高さ
 
-/*サウンド・SE*/
+/*BGM・SE*/
 
-#define BGM "res\\Bgm\\BGM.wav"
+//BGM
+#define BGM_GAME "res\\Bgm\\Bgm_Game.wav"
+#define BGM_TITLE "res\\Bgm\\Bgm_Title.wav"
+
 //SE・プレイヤ
 #define SE_PLAYER_ATTACK1 "res\\Se\\SE_Player_AttackSp1.wav"
 #define SE_PLAYER_ATTACK2 "res\\Se\\SE_Player_AttackSp2.wav"
 #define SE_PLAYER_ATTACK3 "res\\Se\\SE_Player_AttackSp3.wav"
 #define SE_PLAYER_GUARD "res\\Se\\SE_Player_Guard.wav"
 #define SE_PLAYER_WALK "res\\Se\\SE_Player_Walk.wav"
+#define SE_PLAYER_DEATH "res\\Se\\SE_Player_Death.wav"
+
 //SE・敵
 #define SE_ENEMY_ATTACK "res\\Se\\SE_Enemy_AttackSp.wav" 
+#define SE_EMEMY_DEATH "res\\Se\\SE_Enemy_Death.wav"
 
 
 class CRes {
 public:
+
+	//更新処理
 	void Update();
 	void Init();
-	
+	//タイトル画像を取得する
+	CTexture& GetInTitleImage();
+	//ゲームクリア画像を取得する
+	CTexture& GetinGameClearImage();
+	//ゲームオーバー画像を取得する
+	CTexture& GetinGameOverImage();
+	//UIフォントの取得
 	CText& GetInUiFont();
-	//HPゲージを取得す津
+	//HPゲージを取得する
 	CTexture& GetInUiHpGreenGauge();
 	CTexture& GetInUiHpRedGauge();
 	CTexture& GetInPlayerUiHpFrame();
@@ -99,23 +118,32 @@ public:
 	CSound& GetinPlayerSeAttackSp3();
 	CSound& GetinPlayerSeGuard();
 	CSound& GetinPlayerSeWalk();
+	CSound& GetinPlayerSeDeath();
 	//敵SEを取得する
 	CSound& GetinEnemySeAttackSp();
+	CSound& GetinEnemySeDeath();
+	CSound& GetinSoundBgmGame();
+	//BGMの取得
+	CSound& GetinSoundBgmTitle();
+	//インスタンスの取得
 	static CRes* GetInstance();//staticで処理を作る
 
 private:
 	//フォント
 	CText mFont;
 	//CSoundクラスのインスタンス作成
-	CSound Bgm;
+	CSound Game_Bgm;
+	CSound Title_Bgm;
 	//プレイヤSE
 	CSound Se_Player_AttackSp1;
 	CSound Se_Player_AttackSp2;
 	CSound Se_Player_AttackSp3;
 	CSound Se_Player_Guard;
 	CSound Se_Player_Walk;
+	CSound Se_Player_Death;
 	//敵SE
 	CSound Se_Enemy_AttackSp;
+	CSound Se_Enemy_Death;
 	//プレイヤモデル
 	CModelX gPlayer_Model_Knight;
 	//プレイヤのガードアクションエフェクト
@@ -142,6 +170,12 @@ private:
 	CMatrix mBackGroundMatrix;
 	//モデルからコライダを生成
 	CColliderMesh mColliderMesh;
+	//タイトル画像
+	CTexture gTitle_Image;
+	//ゲームクリア画像
+	CTexture gGameClear_Image;
+	//ゲームオーバー画像
+	CTexture gGameOver_Image;
 	//キャラクタのUIインスタンス
 	CTexture gCharacter_Ui_Hp_GreenGauge;
 	CTexture gCharacter_Ui_Hp_RedGauge;

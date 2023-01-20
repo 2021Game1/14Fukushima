@@ -53,6 +53,7 @@ private:
 	int mScreenWidth; //幅
 	int mScreenHeight; //高さ
 	CMatrix mProjection; //プロジェクション行列
+	CMatrix inverse; //モデルビュー行列の逆行列
 
 
 	//コライダ
