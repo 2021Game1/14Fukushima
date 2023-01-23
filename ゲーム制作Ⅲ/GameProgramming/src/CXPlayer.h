@@ -22,7 +22,7 @@ public:
 	{
 		EIDLE = 0,	//待機
 		EMOVE,		//移動
-		EGUARD,		//ガード
+		//EGUARD,		//ガード
 		EATTACK_1,	//攻撃1
 		EATTACK_2,	//攻撃2
 		EATTACK_3,	//攻撃3
@@ -64,10 +64,12 @@ public:
 private:
 	//コライダの宣言
 	CColliderCapsule mPlayer_ColCapsuleSword;	//剣
-	CColliderCapsule mPlayer_ColCapsuleShield;	//盾
-	CColliderCapsule mPlayer_ColCapsuleBody;	//身体
+	CCollider mPlayer_ColSphereShield;	//盾
+	CCollider mPlayer_ColSphereBody;					//球の身体
+	CColliderCapsule mPlayer_ColCapsuleBody;	//カプセルの身体
 	//プレイヤの状態推移
 	EPlayerState mPlayer_State;			//プレイヤの状態判断用
+	bool mPlayer_InvincibleFlag;				//無敵状態の時trueを返す
 	//プレイヤのエフェクト推移
 	EPlayerEffect mPlayer_Effect;		//プレイヤのエフェクト判断用
 
@@ -92,7 +94,7 @@ private:
 	bool mPlayer_AttackFlag_1;			//プレイヤの攻撃1状態の時trueを返す
 	bool mPlayer_AttackFlag_2;			//プレイヤの攻撃2状態の時trueを返す
 	bool mPlayer_AttackFlag_3;			//プレイヤの攻撃3状態の時trueを返す
-	bool mPlayer_SeFlag;
+	bool mPlayer_SeFlag;				//プレイヤのSEフラグ
 	bool mPlayer_IsHit;					//プレイヤの攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	bool mPlayer_AttackFlag_Once;		//プレイヤの攻撃した瞬間だけtrueを返す、敵の回避判定に使用
 	int mPlayer_ComboCount;				//プレイヤのコンボルート判別用変数
@@ -108,7 +110,7 @@ private:
 	void Attack_1();					//攻撃1処理
 	void Attack_2();					//攻撃2処理
 	void Attack_3();					//攻撃3処理
-	void Guard();						//回避処理
+	//void Guard();						//防御処理
 	void Death();						//死亡処理
 	void KnockBack();					//ノックバック処理
 	//移動の計算処理

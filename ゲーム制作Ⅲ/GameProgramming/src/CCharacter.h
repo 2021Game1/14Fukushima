@@ -20,6 +20,7 @@ public:
 		EZERO,		//初期値
 		EPLAYER,	//プレイヤー
 		EENEMY,		//敵
+		EMAP,		//マップ
 	};
 	//モデルの設定
 	//Model(モデルクラスのポインタ)

@@ -23,11 +23,11 @@ public:
 	CCharacter* Parent();
 	enum ETag
 	{
-		EBODY,		//本体
-		ESEARCH,	//サーチ用
+		EBODY,			//本体
 		ESHIERD,		//盾
-		ESWORD,		//剣
-		EARM		//腕
+		ESWORD,			//剣
+		ERIGHTARM,		//右腕
+		ELEFTARM,		//左腕
 	};
 
 	//デフォルトコンストラクタ

@@ -19,6 +19,7 @@ private:
 	CScene::EScene CSceneTitle::mNextScene;
 public:
 	CSceneTitle();
+	~CSceneTitle();
 
 };
 #endif

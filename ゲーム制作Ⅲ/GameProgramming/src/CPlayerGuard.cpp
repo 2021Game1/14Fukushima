@@ -19,17 +19,17 @@ void CPlayerGuard::Update()
 
 void CPlayerGuard::Render()
 {
-	if (!CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
-	{
-		mEnabled = false;
-		return;
-	}
-	else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
-	{
-		CCharacter::Render();
-		mEnabled = true;
-		return;
-	}
+//	if (!CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
+//	{
+//		mEnabled = false;
+//		return;
+//	}
+//	else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
+//	{
+//		CCharacter::Render();
+//		mEnabled = true;
+//		return;
+//	}
 }
 
 //プレイヤーのポインタを返すことで、座標などが参照できるようになる

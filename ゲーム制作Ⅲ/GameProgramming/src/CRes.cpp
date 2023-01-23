@@ -17,8 +17,6 @@ void CRes::Init() {
 	//敵SE
 	Se_Enemy_AttackSp.Load(SE_ENEMY_ATTACK);
 	Se_Enemy_Death.Load(SE_EMEMY_DEATH);
-	//サウンドファイルの繰り返し再生
-	Game_Bgm.Repeat(0.2);
 
 	//3Dモデルファイルの読み込み
 	gPlayer_Model_Knight.Load(PLAYER_MODEL_FILE);

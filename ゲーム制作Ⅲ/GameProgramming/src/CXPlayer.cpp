@@ -34,12 +34,14 @@ CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタ
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
 	: mPlayer_ColCapsuleBody(this, nullptr, CVector(0.0f, 80.0f, 0.0f), CVector(0.0f, -80.0f, 0.0f), 0.7)
-	, mPlayer_ColCapsuleShield(this, nullptr, CVector(0.0f, 0.0f, -5.0f), CVector(0.0f, 0.0f, 0.0f), 0.5f)
+	, mPlayer_ColSphereBody(this, nullptr, CVector(), 0.7)
+	, mPlayer_ColSphereShield(this, nullptr, CVector(0.0f, 0.0f, -5.0f), 0.5f)
 	, mPlayer_ColCapsuleSword(this, nullptr, CVector(-13.0f, 0.0f, 90.0f), CVector(0.0f, 0.0f, 10.0f), 0.3f)
 	, mPlayer_Speed(PLAYER_SPEED_DEFAULT)
 	, mPlayer_Hp(100)
 	, mPlayer_ComboCount(0)
 	, mPlayer_Turnspeed(0.0f)
+	, mPlayer_InvincibleFlag(false)
 	, mPlayer_IsHit(false)
 	, mPlayer_AttackFlag_1(false)
 	, mPlayer_AttackFlag_2(false)
@@ -60,7 +62,8 @@ CXPlayer::CXPlayer()
 	mPlayer_Effect = EEFFECT_NULL;
 	//コライダのタグを設定
 	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
-	mPlayer_ColCapsuleShield.Tag(CCollider::ESHIERD);				//盾
+	mPlayer_ColSphereBody.Tag(CCollider::EBODY);					//体
+	mPlayer_ColSphereShield.Tag(CCollider::ESHIERD);				//盾
 	mPlayer_ColCapsuleSword.Tag(CCollider::ESWORD);					//剣
 	//優先度を1に変更する
 	mPriority = 95;
@@ -73,10 +76,11 @@ void CXPlayer::Init(CModelX* model)
 	CXCharacter::Init(model);
 	//合成行列の設定
 	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[14]);
-	mPlayer_ColCapsuleShield.Matrix(&mpCombinedMatrix[41]);
+	mPlayer_ColSphereBody.Matrix(&mpCombinedMatrix[16]);
+	mPlayer_ColSphereShield.Matrix(&mpCombinedMatrix[41]);
 	mPlayer_ColCapsuleSword.Matrix(&mpCombinedMatrix[71]);
 	//プレイヤの位置,拡縮,回転の設定
-	mPosition.Set(-25.0f, 0.0f, 0.0);									//位置を設定
+	mPosition.Set(0.0f, 0.0f, 20.0);									//位置を設定
 	mScale.Set(2.0f,2.0f,2.0f);										//スケール設定
 	mRotation.Set(0.0f, 180.0f, 0.0f);								//回転を設定
 }
@@ -107,9 +111,9 @@ void CXPlayer::Update() {
 		Move();														//移動状態の処理を呼ぶ
 		break;
 
-	case EGUARD:													//回避状態
-		Guard();													//回避処理を呼ぶ
-		break;
+	//case EGUARD:													//防御状態
+	//	Guard();													//防御処理を呼ぶ
+	//	break;
 
 	case EDEATH:													//死亡状態
 		Death();													//死亡処理を呼ぶ
@@ -158,9 +162,9 @@ void CXPlayer::Idle()
 		mPlayer_State = EMOVE;
 		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
 	}
-	else if (CKey::Once(VK_SPACE)) {
-		mPlayer_State = EGUARD;
-	}
+	//else if (CKey::Once(VK_SPACE)) {
+	//	mPlayer_State = EGUARD;
+	//}
 }
 
 //移動処理
@@ -170,14 +174,14 @@ void CXPlayer::Move()
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = EATTACK_1;
 	}
-	//スペースでガードへ移行
-	else if (CKey::Push(VK_SPACE)) {
-		mPlayer_State = EGUARD;
-	}
+	////スペースでガードへ移行
+	//else if (CKey::Push(VK_SPACE)) {
+	//	mPlayer_State = EGUARD;
+	//}
 	//WASDキーを押すと移動
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		ChangeAnimation(0, true, 30);
+		ChangeAnimation(0, true, 60);
 	}
 	//待機状態へ移行
 	else {
@@ -258,11 +262,11 @@ void CXPlayer::Attack_1()
 			if (CKey::Once(VK_LBUTTON)) {
 				mPlayer_State = EATTACK_2;							//攻撃2モーションへ移行
 			}
-			//スペースキーを押された場合
-			else if(CKey::Once(VK_SPACE)) {
-				mPlayer_Effect = EEFFECT_NULL;
-				mPlayer_State = EGUARD;								//ガードモーションへ移行
-			}
+			////スペースキーを押された場合
+			//else if(CKey::Once(VK_SPACE)) {
+			//	mPlayer_Effect = EEFFECT_NULL;
+			//	mPlayer_State = EGUARD;								//ガードモーションへ移行
+			//}
 		}
 	}
 	//アニメーション終了時
@@ -315,11 +319,11 @@ void CXPlayer::Attack_2()
 				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EATTACK_3;							//攻撃3モーションへ移行
 			}
-			//スペースキーを押された場合
-			else if (CKey::Once(VK_SPACE)) {
-				mPlayer_Effect = EEFFECT_NULL;
-				mPlayer_State = EGUARD;								//ガードモーションへ移行
-			}
+			////スペースキーを押された場合
+			//else if (CKey::Once(VK_SPACE)) {
+			//	mPlayer_Effect = EEFFECT_NULL;
+			//	mPlayer_State = EGUARD;								//ガードモーションへ移行
+			//}
 		}
 	}
 	//アニメーション終了時
@@ -371,12 +375,12 @@ void CXPlayer::Attack_3()
 				mPlayer_Effect = EEFFECT_NULL;
 				mPlayer_State = EATTACK_1;							//攻撃1モーションへ移行
 			}
-			//スペースキーを押された場合
-			else if(CKey::Once(VK_SPACE))
-			{
-				mPlayer_Effect = EEFFECT_NULL;
-				mPlayer_State = EGUARD;								//ガードモーションへ移行
-			}
+			////スペースキーを押された場合
+			//else if(CKey::Once(VK_SPACE))
+			//{
+			//	mPlayer_Effect = EEFFECT_NULL;
+			//	mPlayer_State = EGUARD;								//ガードモーションへ移行
+			//}
 		}
 	}
 
@@ -390,49 +394,57 @@ void CXPlayer::Attack_3()
 //ノックバック処理
 void CXPlayer::KnockBack()
 {
-	ChangeAnimation(7, false, 30);	//のけ反りアニメーション
+	ChangeAnimation(7, false, 70);	//のけ反りアニメーション
+
 	if (IsAnimationFinished() == true)
 	{
 		mPlayer_IsHit = false;
 	}
-		//アニメーション終了時
-	if (IsAnimationFinished())
+
+	if (CXEnemy::GetInstance()->GetIsHit() == true)
 	{
-		mPlayer_State = EIDLE; //待機状態へ移行
-		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
+		if (mPlayer_Flag == false)
 		{
-			mPlayer_Hp = mPlayer_Hp - 15;
+			mPlayer_Flag = true;
+			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
+			{
+				mPlayer_Hp = mPlayer_Hp - 15;
+			}
+			else if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
+			{
+				mPlayer_Hp = mPlayer_Hp - 10;
+			}
+			else if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
+			{
+				mPlayer_Hp = mPlayer_Hp - 20;
+			}
 		}
-		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
-		{
-			mPlayer_Hp = mPlayer_Hp - 10;
-		}
-		if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
-		{
-			mPlayer_Hp = mPlayer_Hp - 20;
-		}
-		else
-		{
-			mPlayer_Hp = mPlayer_Hp - 10;
-		}
-	}
-}
-//ガード
-void CXPlayer::Guard()
-{
-	//スペースでガードへ移行
-	if (CKey::Push(VK_SPACE)) {
-	CRes::GetInstance()->GetinPlayerSeGuard().Play();
-	ChangeAnimation(5, false, 10);	//ガード待機アニメーション
-	mPlayer_IsHit = true;
-	}
-	else
-	{
-		mPlayer_State = EIDLE;
-		mPlayer_IsHit = false;
 	}
 
+	//アニメーション終了時
+	if (IsAnimationFinished())
+	{
+		mPlayer_Flag = false;
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
+		mPlayer_State = EIDLE; //待機状態へ移行
+	}
 }
+////ガード
+//void CXPlayer::Guard()
+//{
+//	//スペースでガードへ移行
+//	if (CKey::Push(VK_SPACE)) {
+//	CRes::GetInstance()->GetinPlayerSeGuard().Play();
+//	ChangeAnimation(5, false, 10);	//ガード待機アニメーション
+//	mPlayer_IsHit = true;
+//	}
+//	else
+//	{
+//		mPlayer_State = EIDLE;
+//		mPlayer_IsHit = false;
+//	}
+//
+//}
 
 //死亡処理
 void CXPlayer::Death()
@@ -516,18 +528,55 @@ void CXPlayer::Render2D()
 
 
 void CXPlayer::Collision(CCollider* m, CCollider* o) {
+	//相手の親が自分の時はリターン
+	if (o->Parent() == this)return;
 	//自身のコライダタイプの判定
 	switch (m->Type()) {
 	case CCollider::ESPHERE: {//球コライダ
-		//相手のコライダが三角コライダの時
-		if (o->Type() == CCollider::ETRIANGLE) {
-			CVector adjust;//調整用ベクトル
-			//三角形と球の衝突判定
-			CCollider::CollisionTriangleSphere(o, m, &adjust);
-			//位置の更新(mPosition + adjust)
-			mPosition = mPosition + adjust;
-			//行列の更新
-			CTransform::Update();
+		//相手のコライダが球コライダの時
+		if (o->Type() == CCollider::ESPHERE) {
+			//球の衝突判定
+			if (CCollider::Collision(m, o)) {
+				//相手の親のタグがプレイヤー
+				if (o->Parent()->Tag() == EENEMY)
+				{
+					//相手のコライダのタグが剣
+					if (o->Tag() == CCollider::ERIGHTARM)
+					{
+						//プレイヤーが無敵状態ではないとき
+						if (mPlayer_InvincibleFlag == false)
+						{
+							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1 || CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
+							{
+								if (CXEnemy::GetInstance()->GetIsHit() == true)
+								{
+									CXEnemy::GetInstance()->SetIsHit(false);
+									mPlayer_InvincibleFlag = true;
+									mPlayer_State = EKNOCKBACK;
+									CRes::GetInstance()->GetinEnemySeAttackSp().Play();
+								}
+							}
+						}
+					}
+					else if (o->Tag() == CCollider::ELEFTARM)
+					{
+						//プレイヤーが無敵状態ではないとき
+						if (mPlayer_InvincibleFlag == false)
+						{
+							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
+							{
+								if (CXEnemy::GetInstance()->GetIsHit() == true)
+								{
+									CXEnemy::GetInstance()->SetIsHit(false);
+									mPlayer_InvincibleFlag = true;
+									mPlayer_State = EKNOCKBACK;
+									CRes::GetInstance()->GetinEnemySeAttackSp().Play();
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		break;
 	}
@@ -539,23 +588,10 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 			if (!mPlayer_Hp <= 0) {
 				if (CCollider::CollisionCapsule(m, o, &adjust))
 				{
-					//相手のコライダのタグが手
-					if (o->Tag() == CCollider::EARM) {
-						if (CXEnemy::GetInstance()->GetIsHit() == true)
-						{
-							if (CXEnemy::GetInstance()->GetIsAnimationFrame() >= mAnimationFrame)
-							{
-								CRes::GetInstance()->GetinEnemySeAttackSp().Play();
-								mPlayer_State = EKNOCKBACK;
-							}
-						}
-					}
-					else {
-						//位置の更新(mPosition + adjust)
-						mPosition = mPosition + adjust;
-						//行列の更新
-						CTransform::Update();
-					}
+					//位置の更新(mPosition + adjust)
+					mPosition = mPosition + adjust;
+					//行列の更新
+					CTransform::Update();
 				}
 			}
 		}
@@ -609,11 +645,13 @@ void CXPlayer::TaskCollision()
 {
 	//コライダの優先度変更
 	mPlayer_ColCapsuleBody.ChangePriority();
-	mPlayer_ColCapsuleShield.ChangePriority();
+	mPlayer_ColSphereBody.ChangePriority();
+	mPlayer_ColSphereShield.ChangePriority();
 	mPlayer_ColCapsuleSword.ChangePriority();
 	//衝突処理を実行
 	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleBody, COLLISIONRANGE);
-	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleShield, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mPlayer_ColSphereBody, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mPlayer_ColSphereShield, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleSword, COLLISIONRANGE);
 }
 

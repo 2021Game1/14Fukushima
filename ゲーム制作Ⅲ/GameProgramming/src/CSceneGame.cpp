@@ -11,6 +11,7 @@ void CSceneGame::Init() {
 	//シーンの設定
 	mScene = EGAME;
 	mRes.Init();
+	CRes::GetInstance()->GetinSoundBgmGame().Repeat(0.2);
 	//影の設定
 	float shadowColor[] = { 0.4f, 0.4f, 0.4f, 0.2f };	//影の色
 	float lightPos[] = { 50.0f, 160.0f, 50.0f };		//光源の位置
@@ -45,8 +46,12 @@ void CSceneGame::Render() {
 	CTaskManager::Get()->Draw();
 	mShadowMap.Render();
 	CTaskManager::Get()->Render2D();
-	////コライダの描画
-	//CCollisionManager::Get()->Render();
+
+	//デバッグバージョンのみ有効
+#ifdef _DEBUG
+	//コライダの描画
+	CCollisionManager::Get()->Render();
+#endif
 
 	//2Dの描画開始
 	CUtil::Start2D(0, 800, 0, 600);

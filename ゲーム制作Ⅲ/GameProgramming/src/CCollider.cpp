@@ -2,6 +2,7 @@
 #include "CCollisionManager.h"
 #include "CColliderLine.h"
 
+
 CCharacter* CCollider::Parent()
 {
 	return mpParent;
@@ -33,6 +34,7 @@ CCollider::CCollider(CCharacter *parent, CMatrix *matrix,
 	//”¼Œaİ’è
 	mRadius = radius;
 }
+
 
 //•`‰æ
 void CCollider::Render() {

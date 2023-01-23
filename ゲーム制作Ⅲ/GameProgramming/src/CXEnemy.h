@@ -27,21 +27,22 @@ public:
 		EATTACK_2,								//攻撃2
 		EATTACK_3,								//攻撃3
 		EKNOCKBACK,								//ノックバック
-		EREPELLED,								//はじかれた時のノックバック
+		//EREPELLED,								//はじかれた時のノックバック
 		EDEATH,									//死亡
 	};
 	//他のクラスで参照用の関数
 	static CXEnemy* GetInstance();				//staticで処理を作る
 	bool GetIsAnimationFrame();
 	bool GetHp();								//敵のHP取得関数
-	bool GetIsHit();							//ヒット状態の判別;;
+	bool GetIsHit();							//ヒット状態の判別
+	void SetIsHit(bool hitflag);	//攻撃の当たり判定フラグを設定
 	bool mIsDeath();							//死亡状態の時にtrueを返す
 	CXEnemy::EEnemyState GetState();			//プレイヤーの状態を取得する
 protected:
 	//コライダの宣言
-	CColliderCapsule mEnemy_ColSphereRightarm;	//右腕
-	CColliderCapsule mEnemy_ColSphereLeftarm;	//左腕
-	CColliderCapsule mEnemy_ColSphereBody;		//身体
+	CCollider mEnemy_ColSphereRightarm;	//右腕
+	CCollider mEnemy_ColSphereLeftarm;	//左腕
+	CColliderCapsule mEnemy_ColCapsuleBody;		//カプセルの身体
 	//敵のパラメータ
 	float mEnemy_Speed;							//敵のスピード
 	float mEnemy_Turnspeed;						//敵のターン速度
@@ -67,7 +68,7 @@ protected:
 	void Attack_2();							//攻撃2処理
 	void Attack_3();							//攻撃3処理
 	void KnockBack();							//ノックバック処理
-	void Repelled();							//はじかれた時の処理
+	//void Repelled();							//はじかれた時の処理
 	void Death();								//死亡処理
 	//移動の計算処理
 	void MovingCalculation();

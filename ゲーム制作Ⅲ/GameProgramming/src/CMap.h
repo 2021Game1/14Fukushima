@@ -2,8 +2,8 @@
 #define CMAP_H
 
 #include"CCharacter.h"
-#include"CCollider.h"
 #include"CTaskManager.h"
+#include"CCollider.h"
 
 class CMap : public CCharacter{
 	static CMap* mMap_Instance; //マップのインスタンス

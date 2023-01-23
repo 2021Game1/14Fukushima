@@ -94,6 +94,7 @@ void CCamera::Update() {
 	mColliderLine.Set(this, nullptr, mEye, mCenter);
 	CInput::InputReset();
 }
+
 CMatrix CCamera::GetMat() {
 	return mMatrix;
 }
@@ -170,7 +171,7 @@ void CCamera::Collision(CCollider* m, CCollider* o) {
 			CVector adjust;//調整用ベクトル
 			if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
 				//マップ等に衝突すると、視点をプレイヤーに近づく
-				mEye += (adjust + adjust.Normalize() * 0.5f);
+				mEye += (adjust.Normalize() + adjust.Normalize() * 0.5f);
 				mColliderLine.Set(this, nullptr, mEye, mCenter);
 			}
 		}
@@ -185,54 +186,7 @@ void CCamera::TaskCollision()
 	CCollisionManager::Get()->Collision(&mColliderLine, COLLISIONRANGE);
 }
 
-//ターゲットになっている敵の方向へカメラを向かせる処理
-void CCamera::TargetLook()
-{
-		//プレイヤーに敵からプレイヤーに伸びるベクトルを求める
-		CVector pos = CXPlayer::GetInstance()->Position() - CXEnemy::GetInstance()->Position();
-		//posのYは0.0にしておく
-		pos.Y(0.0f);
-		//ベクトルを正規化
-		pos = pos.Normalize();
-		//プレイヤーからの距離を設定
-		pos = pos * DEF_CAMERA_DIST;
-		//カメラを移動させたい位置を設定
-		mPos = CXPlayer::GetInstance()->Position() + pos;
 
-		//プレイヤーから現在のカメラの始点までのベクトル
-		CVector vec1 = CXPlayer::GetInstance()->Position() - mEye;
-		//プレイヤーからカメラを移動させたい位置までのベクトル
-		CVector vec2 = CXPlayer::GetInstance()->Position() - mPos;
-		//高さは0にする
-		vec1.Y(0.0f);
-		vec2.Y(0.0f);
-		//ベクトルの長さをもとめる
-		float len1 = vec1.Length();
-		float len2 = vec2.Length();
-		float dot = (vec1.X() * vec2.X()) + (vec1.Y() * vec2.Y()) + (vec1.Z() * vec2.Z());	//内積
-		float cross = (vec1.Y() * vec2.Z() - vec1.Z() * vec2.Y(),vec1.Z() * vec2.X() - vec1.X()* vec2.Z(),vec1.X() * vec2.Y() - vec1.Y() *vec2.X());//外積
-		float cos_sita = dot / (len1 * len2);	//コサインシータを求める
-		mRotRad = acosf(cos_sita);	//回転させたい角度を設定
-		//NaN判定
-		if (isnan(mRotRad)) {
-			mRotRad = 0.0f;
-		}
-		//外積で回転させる方向を判断
-		if (cross > 0.0f) {
-			//アングルXを減算、左方向へ回転
-			mAngleX -= mLerp(0.0f, mRotRad, ROTATION_RATE);
-		}
-		else if (cross < 0.0f) {
-			//アングルXを加算、右方向へ回転
-			mAngleX += mLerp(0.0f, mRotRad, ROTATION_RATE);
-		}
-		//アングルYを変更
-		mAngleY = mLerp(mAngleY, TARGETLOOK_Y, 0.1f);
-
-	//アングル遅延の値を合わせておく
-	mAngleDelayX = mAngleX;
-	mAngleDelayY = mAngleY;
-}
 
 //ワールド座標をスクリーン座標へ変換する
 //WorldToScreen(スクリーン座標, ワールド座標)

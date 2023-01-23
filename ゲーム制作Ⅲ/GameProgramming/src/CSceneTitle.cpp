@@ -11,6 +11,11 @@ CSceneTitle::CSceneTitle()
 {
 }
 
+CSceneTitle::~CSceneTitle()
+{
+	CTaskManager::Get()->Delete();
+}
+
 void CSceneTitle::Init() {
 	//シーンの設定
 	mScene = ETITLE;
@@ -22,7 +27,7 @@ void CSceneTitle::Init() {
 //更新処理のオーバーライド
 void CSceneTitle::Update() {
 	if (CKey::Once(VK_RETURN)) {
-		//次のシーンはゲーム説明
+		//次のシーンはゲーム
 		mNextScene = EGAME;
 		mSceneChange = true;
 		CRes::GetInstance()->GetinSoundBgmTitle().Stop();

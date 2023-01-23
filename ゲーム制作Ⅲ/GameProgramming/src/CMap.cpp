@@ -1,10 +1,11 @@
 #include"CMap.h"
 
-CMap* CMap::mMap_Instance;
 
+CMap* CMap::mMap_Instance;
 //コライダ初期化
 CMap::CMap()
 {
+	
 	//優先度を設定
 	mPriority = 90;
 	CTaskManager::Get()->Remove(this);//

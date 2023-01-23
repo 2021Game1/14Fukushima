@@ -32,8 +32,6 @@ public:
 	void Collision(CCollider* m, CCollider* o);
 	//線形補間
 	float mLerp(float start, float point, float rate);
-	//ターゲットへカメラを向かせる処理
-	void TargetLook();
 	//コリジョンマネージャ追加処理
 	void TaskCollision();
 	//インスタンスの取得
