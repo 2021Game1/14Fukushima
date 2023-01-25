@@ -56,7 +56,7 @@
 //タイトル画像
 #define TITLE_IMAGE "res\\Image\\Title_Image.png"
 //ゲームクリア画像
-#define GAMECLEAR_IMAGE "res\\Image\\GameClear_Image.png"
+#define GAMECLEAR_IMAGE "res\\Image\\GameClear.png"
 //ゲームオーバー画像
 #define GAMEOVER_IMAGE "res\\Image\\GameOver_Image.png"
 //HPゲージ

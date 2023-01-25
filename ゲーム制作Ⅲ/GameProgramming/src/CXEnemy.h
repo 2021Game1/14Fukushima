@@ -50,12 +50,14 @@ protected:
 	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
 	int mEnemy_Hp;								//敵の体力
 	int mEnemy_val;								//ランダム用の変数
+
 	//敵の移動
 	CVector mEnemy_Point;						//敵移動時の目標地点
 	CVector mEnemy_PlayerPos;					//敵追跡時の目標地点
 	CVector mEnemy_Move;						//敵の方向と速度をかけ合わせたベクトル、プレイヤーの移動量
 	CVector mEnemy_MoveDir;						//敵の移動する方向、モデルの回転にも使用している、毎フレームリセットされる
 	CVector mEnemy_MoveDirKeep;					//敵の移動時の方向を保存する
+	CVector mEnemy_Player_Point;				//プレイヤの方向ベクトル保存用
 	EEnemyState mEnemy_State;					//敵の状態判断用
 	bool mEnemy_Flag;							//敵のフラグ
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す

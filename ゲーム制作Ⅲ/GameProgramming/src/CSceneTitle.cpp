@@ -35,7 +35,6 @@ void CSceneTitle::Update() {
 	if (mSceneChange) {
 		mScene = mNextScene;
 	}
-	Render();
 }
 
 void CSceneTitle::Render() {

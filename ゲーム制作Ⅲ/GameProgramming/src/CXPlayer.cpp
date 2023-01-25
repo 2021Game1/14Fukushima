@@ -10,21 +10,23 @@
 #define PLAYER_GRAVITY 0.9f																		//重力
 #define PLAYER_THRUST 0.01																		//推力
 #define PLAYER_RECEPTION 120																	//入力の受付時間
-#define PLAYER_INRECEPTION 30																	//入力の当たり判定の受付時間
+#define PLAYER_INRECEPTION 	23.0f																//当たり判定の受付時間															
+#define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
 #define PLAYER_HP_MAX 100;																		//HPの最大値
 #define PLAYER_INITIALIZATION 0																	//初期化
+
 //プレイヤのHPフレーム,HPゲージ座標,幅,高さ
-#define PLAYER_GAUGE_FRAME_TEX_WID 480	//ゲージ枠の画像の幅
-#define PLAYER_GAUGE_FRAME_TEX_HEI 80	//ゲージ枠の画像の高さ
-#define PLAYER_GAUGE_FRAME_LEFT 0	//ゲージ枠左座標
-#define PLAYER_GAUGE_FRAME_RIGHT 380 //ゲージ枠右座標
-#define PLAYER_GAUGE_FRAME_TOP PLAYER_GAUGE_FRAME_TEX_HEI //ゲージ枠上座標
-#define PLAYER_GAUGE_FRAME_BOTTOM (PLAYER_GAUGE_FRAME_TOP-PLAYER_GAUGE_FRAME_TEX_HEI) //ゲージ枠下座標
-#define PLAYER_GAUGE_LEFT 0	//ゲージ描画時の左座標
-#define PLAYER_GAUGE_WID_MAX 380	//ゲージの幅の最大値
-#define GAUGE_HEIGHT 20 //ゲージ描画時の高さ
-#define PLAYER_GAUGE_HP_TOP 30 //HPゲージ描画時の上座標
-#define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT) //HPゲージ描画時の下座標
+#define PLAYER_GAUGE_FRAME_TEX_WID 480															//ゲージ枠の画像の幅
+#define PLAYER_GAUGE_FRAME_TEX_HEI 80															//ゲージ枠の画像の高さ
+#define PLAYER_GAUGE_FRAME_LEFT 0																//ゲージ枠左座標
+#define PLAYER_GAUGE_FRAME_RIGHT 380															//ゲージ枠右座標
+#define PLAYER_GAUGE_FRAME_TOP PLAYER_GAUGE_FRAME_TEX_HEI										//ゲージ枠上座標
+#define PLAYER_GAUGE_FRAME_BOTTOM (PLAYER_GAUGE_FRAME_TOP-PLAYER_GAUGE_FRAME_TEX_HEI)			//ゲージ枠下座標
+#define PLAYER_GAUGE_LEFT 0																		//ゲージ描画時の左座標
+#define PLAYER_GAUGE_WID_MAX 380																//ゲージの幅の最大値
+#define GAUGE_HEIGHT 20																			//ゲージ描画時の高さ
+#define PLAYER_GAUGE_HP_TOP 30																	//HPゲージ描画時の上座標
+#define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT)								//HPゲージ描画時の下座標
 
 
 CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタンス変数の初期化
@@ -181,7 +183,7 @@ void CXPlayer::Move()
 	//WASDキーを押すと移動
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		ChangeAnimation(0, true, 60);
+		ChangeAnimation(0, true, 50);
 	}
 	//待機状態へ移行
 	else {
@@ -209,7 +211,7 @@ void CXPlayer::Attack_1()
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(1, false, 40);							//プレイヤの攻撃1モーション
+			ChangeAnimation(1, false, 50);							//プレイヤの攻撃1モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
 			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.3);
 		}
@@ -219,19 +221,26 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
+			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
+			if (mAnimationFrame <= PLAYER_INRECEPTION)
 			{
-				mPlayer_IsHit = false;
+				mPlayer_IsHit = false; //ヒット判定終了
 			}
+			//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
 			else {
 				mPlayer_IsHit = true;
+			}
+			//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
+			if (mAnimationFrame > PLAYER_OUTRECEPTION)
+			{
+				mPlayer_IsHit = false; //ヒット判定終了
 			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(1, false, 40);							//プレイヤの攻撃1モーション
+			ChangeAnimation(1, false, 60);							//プレイヤの攻撃1モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
 			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.3);
 		}
@@ -292,19 +301,26 @@ void CXPlayer::Attack_2()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
+			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
+			if (mAnimationFrame <= PLAYER_INRECEPTION)
 			{
-				mPlayer_IsHit = false;
+				mPlayer_IsHit = false; //ヒット判定終了
 			}
+			//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
 			else {
 				mPlayer_IsHit = true;
+			}
+			//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
+			if (mAnimationFrame > PLAYER_OUTRECEPTION)
+			{
+				mPlayer_IsHit = false; //ヒット判定終了
 			}
 		}
 		//アニメーション終了時
 		else if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(2, false, 40);							//プレイヤの攻撃2モーション
+			ChangeAnimation(2, false, 70);							//プレイヤの攻撃2モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP2;
 			CRes::GetInstance()->GetinPlayerSeAttackSp2().Play(0.3);
 		}
@@ -348,19 +364,26 @@ void CXPlayer::Attack_3()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
+			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
+			if (mAnimationFrame <= PLAYER_INRECEPTION)
 			{
-				mPlayer_IsHit = false;
+				mPlayer_IsHit = false; //ヒット判定終了
 			}
+			//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
 			else {
 				mPlayer_IsHit = true;
+			}
+			//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
+			if (mAnimationFrame > PLAYER_OUTRECEPTION)
+			{
+				mPlayer_IsHit = false; //ヒット判定終了
 			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(3, false, 50);
+			ChangeAnimation(3, false, 80);
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP3;
 			CRes::GetInstance()->GetinPlayerSeAttackSp3().Play(0.3);
 		}
@@ -394,7 +417,7 @@ void CXPlayer::Attack_3()
 //ノックバック処理
 void CXPlayer::KnockBack()
 {
-	ChangeAnimation(7, false, 70);	//のけ反りアニメーション
+	ChangeAnimation(7, false, 60);	//のけ反りアニメーション
 
 	if (IsAnimationFinished() == true)
 	{

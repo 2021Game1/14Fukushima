@@ -65,8 +65,8 @@ void CCamera::Update() {
 	float moveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
-		if (moveX != 0) mAngleX += (moveX * 0.005f);
-		if (moveY != 0) mAngleY += (moveY * 0.005f);
+		if (moveX != 0) mAngleX += (moveX * 0.0009f);
+		if (moveY != 0) mAngleY += (moveY * 0.0009f);
 		mAngleX = mLerp(mAngleX, mAngleDelayX, DELAY_RATE);
 		mAngleY = mLerp(mAngleY, mAngleDelayY, DELAY_RATE);
 	}
@@ -168,10 +168,10 @@ void CCamera::Collision(CCollider* m, CCollider* o) {
 	case CCollider::ELINE: {//線コライダ
 		//相手のコライダが三角コライダの時
 		if (o->Type() == CCollider::ETRIANGLE) {
-			CVector adjust;//調整用ベクトル
+				CVector adjust;//調整用ベクトル
 			if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
 				//マップ等に衝突すると、視点をプレイヤーに近づく
-				mEye += (adjust.Normalize() + adjust.Normalize() * 0.5f);
+				mEye += (adjust.Normalize() + adjust.Normalize() * 0.05f);
 				mColliderLine.Set(this, nullptr, mEye, mCenter);
 			}
 		}
