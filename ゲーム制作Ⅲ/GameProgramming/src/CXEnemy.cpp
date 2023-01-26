@@ -313,7 +313,7 @@ void CXEnemy::Attack_1()
 		mEnemy_State = EIDLE; //待機状態に移行
 
 		//スーパーアーマが発動時のダメージ参照
-		if (mEnemy_val >= 71 && mEnemy_val <= 100)
+		if (mEnemy_val >= 61 && mEnemy_val <= 100)
 		{
 			if (CXPlayer::GetInstance()->GetIsHit() == true) {
 				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
@@ -362,7 +362,7 @@ void CXEnemy::Attack_2()
 		mEnemy_State = EIDLE; //待機状態に移行
 
 		//スーパーアーマが発動時のダメージ参照
-		if (mEnemy_val >= 71 && mEnemy_val <= 100)
+		if (mEnemy_val >= 61 && mEnemy_val <= 100)
 		{
 			if (CXPlayer::GetInstance()->GetIsHit() == true) {
 				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
@@ -411,7 +411,7 @@ void CXEnemy::Attack_3()
 		mEnemy_State = EIDLE; //待機状態に移行
 
 		//スーパーアーマが発動時のダメージ参照
-		if (mEnemy_val >= 71 && mEnemy_val <= 100)
+		if (mEnemy_val >= 61 && mEnemy_val <= 100)
 		{
 			if (CXPlayer::GetInstance()->GetIsHit() == true) {
 				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
@@ -503,7 +503,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 							//乱数値=rand()%乱数値の要素数+乱数値の最小値
 							srand((unsigned)time(NULL));
 							mEnemy_val = (rand() % 100) + 1;
-							if (mEnemy_val >= 0 && mEnemy_val <= 70) {
+							if (mEnemy_val >= 0 && mEnemy_val <= 60) {
 								if (CXPlayer::GetInstance()->GetIsHit() == true) {
 									mEnemy_State = EKNOCKBACK;
 								}

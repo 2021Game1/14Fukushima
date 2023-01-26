@@ -83,78 +83,94 @@ CRes* CRes::GetInstance()
 {
 	return mpRes_Instance;
 }
+//フォントの取得
 CText& CRes::GetInUiFont()
 {
 	return mFont;
 }
+//タイトル画像の取得
 CTexture& CRes::GetInTitleImage()
 {
 	return gTitle_Image;
 }
+//クリア画面の取得
 CTexture& CRes::GetinGameClearImage()
 {
 	return gGameClear_Image;
 }
+//ゲームオーバー画面の取得
 CTexture& CRes::GetinGameOverImage()
 {
 	return gGameOver_Image;
 }
+//緑HPバーの取得
 CTexture& CRes::GetInUiHpGreenGauge()
 {
 	return gCharacter_Ui_Hp_GreenGauge;
 }
+//赤HPバーの取得
 CTexture& CRes::GetInUiHpRedGauge()
 {
 	return gCharacter_Ui_Hp_RedGauge;
 }
+//プレイヤのHP外枠の取得
 CTexture& CRes::GetInPlayerUiHpFrame()
 {
 	return gPlayer_Ui_Hp_Frame;
 }
+//敵のHPバーの背景取得
 CTexture& CRes::GetInEnemyUiHpBackBar()
 {
 	return gEnemy_Ui_Hp_BackBar;
 }
-//プレイヤSEを取得する
+//プレイヤの斬撃SE1を取得する
 CSound& CRes::GetinPlayerSeAttackSp1() 
 {
 	return Se_Player_AttackSp1;
 }
+//プレイヤの斬撃SE2を取得する
 CSound& CRes::GetinPlayerSeAttackSp2() 
 {
 	return Se_Player_AttackSp2;
 }
+//プレイヤの斬撃SE3を取得する
 CSound& CRes::GetinPlayerSeAttackSp3() 
 {
 	return Se_Player_AttackSp3;
 }
-CSound& CRes::GetinPlayerSeGuard() 
-{
-	return Se_Player_Guard;
-}
+//プレイヤの歩行SEを取得
 CSound& CRes::GetinPlayerSeWalk() 
 {
 	return Se_Player_Walk;
 }
+//プレイヤの死亡SEを取得
 CSound& CRes::GetinPlayerSeDeath()
 {
 	return Se_Player_Death;
 }
-//敵SEを取得する
+//敵の攻撃SEを取得する
 CSound& CRes::GetinEnemySeAttackSp() 
 {
 	return Se_Enemy_AttackSp;
 }
+//敵の死亡SEを取得する
 CSound& CRes::GetinEnemySeDeath()
 {
 	return Se_Enemy_Death;
 }
 //BGMの取得
+//タイトルBGMの取得
 CSound& CRes::GetinSoundBgmTitle()
 {
 	return Title_Bgm;
 }
+//ゲームBGMの取得
 CSound& CRes::GetinSoundBgmGame() 
 {
 	return Game_Bgm;
+}
+//プレイヤのガードアクションモデルの取得
+CSound& CRes::GetinPlayerSeGuard()
+{
+	return Se_Player_Guard;
 }

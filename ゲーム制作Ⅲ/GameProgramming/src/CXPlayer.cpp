@@ -10,7 +10,7 @@
 #define PLAYER_GRAVITY 0.9f																		//重力
 #define PLAYER_THRUST 0.01																		//推力
 #define PLAYER_RECEPTION 120																	//入力の受付時間
-#define PLAYER_INRECEPTION 	23.0f																//当たり判定の受付時間															
+#define PLAYER_INRECEPTION 	21.0f																//当たり判定の受付時間															
 #define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
 #define PLAYER_HP_MAX 100;																		//HPの最大値
 #define PLAYER_INITIALIZATION 0																	//初期化
@@ -183,7 +183,7 @@ void CXPlayer::Move()
 	//WASDキーを押すと移動
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		ChangeAnimation(0, true, 50);
+		ChangeAnimation(0, true, 45);
 	}
 	//待機状態へ移行
 	else {
@@ -213,7 +213,7 @@ void CXPlayer::Attack_1()
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(1, false, 50);							//プレイヤの攻撃1モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
-			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.3);
+			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.1);
 		}
 	}
 	//アニメーションインデックスが３の時
@@ -242,7 +242,7 @@ void CXPlayer::Attack_1()
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(1, false, 60);							//プレイヤの攻撃1モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP1;
-			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.3);
+			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.1);
 		}
 	}
 	//アニメーションインデックスが１の時
@@ -322,7 +322,7 @@ void CXPlayer::Attack_2()
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(2, false, 70);							//プレイヤの攻撃2モーション
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP2;
-			CRes::GetInstance()->GetinPlayerSeAttackSp2().Play(0.3);
+			CRes::GetInstance()->GetinPlayerSeAttackSp2().Play(0.1);
 		}
 	}
 	//アニメーションインデックスが2の時
@@ -385,7 +385,7 @@ void CXPlayer::Attack_3()
 			mPlayer_IsHit = false;									//ヒット判定終了
 			ChangeAnimation(3, false, 80);
 			mPlayer_Effect = EEFFECT_PLAYER_ATTACKSP3;
-			CRes::GetInstance()->GetinPlayerSeAttackSp3().Play(0.3);
+			CRes::GetInstance()->GetinPlayerSeAttackSp3().Play(0.1);
 		}
 	}
 	else if (mAnimationIndex == 3)
@@ -576,7 +576,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 									CXEnemy::GetInstance()->SetIsHit(false);
 									mPlayer_InvincibleFlag = true;
 									mPlayer_State = EKNOCKBACK;
-									CRes::GetInstance()->GetinEnemySeAttackSp().Play();
+									CRes::GetInstance()->GetinEnemySeAttackSp().Play(0.3);
 								}
 							}
 						}
@@ -593,7 +593,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 									CXEnemy::GetInstance()->SetIsHit(false);
 									mPlayer_InvincibleFlag = true;
 									mPlayer_State = EKNOCKBACK;
-									CRes::GetInstance()->GetinEnemySeAttackSp().Play();
+									CRes::GetInstance()->GetinEnemySeAttackSp().Play(0.3);
 								}
 							}
 						}

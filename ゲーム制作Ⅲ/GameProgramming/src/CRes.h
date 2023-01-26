@@ -95,7 +95,6 @@
 
 class CRes {
 public:
-
 	//更新処理
 	void Update();
 	void Init();
@@ -122,8 +121,9 @@ public:
 	//敵SEを取得する
 	CSound& GetinEnemySeAttackSp();
 	CSound& GetinEnemySeDeath();
+	//ゲームBGMの取得
 	CSound& GetinSoundBgmGame();
-	//BGMの取得
+	//タイトルBGMの取得
 	CSound& GetinSoundBgmTitle();
 	//インスタンスの取得
 	static CRes* GetInstance();//staticで処理を作る
@@ -132,6 +132,7 @@ private:
 	//フォント
 	CText mFont;
 	//CSoundクラスのインスタンス作成
+	//BGM
 	CSound Game_Bgm;
 	CSound Title_Bgm;
 	//プレイヤSE
