@@ -5,33 +5,7 @@
 #include "CCamera.h"
 #include"CRes.h"
 
-//プレイヤのパラメータマクロ
-#define PLAYER_SPEED_DEFAULT 0.5f																//スピード(通常時)
-#define PLAYER_GRAVITY 0.9f																		//重力
-#define PLAYER_THRUST 0.01																		//推力
-#define PLAYER_RECEPTION 120																	//入力の受付時間
-#define PLAYER_INRECEPTION 	21.0f																//当たり判定の受付時間															
-#define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
-#define PLAYER_HP_MAX 100;																		//HPの最大値
-#define PLAYER_INITIALIZATION 0																	//初期化
-
-//プレイヤのHPフレーム,HPゲージ座標,幅,高さ
-#define PLAYER_GAUGE_FRAME_TEX_WID 480															//ゲージ枠の画像の幅
-#define PLAYER_GAUGE_FRAME_TEX_HEI 80															//ゲージ枠の画像の高さ
-#define PLAYER_GAUGE_FRAME_LEFT 0																//ゲージ枠左座標
-#define PLAYER_GAUGE_FRAME_RIGHT 380															//ゲージ枠右座標
-#define PLAYER_GAUGE_FRAME_TOP PLAYER_GAUGE_FRAME_TEX_HEI										//ゲージ枠上座標
-#define PLAYER_GAUGE_FRAME_BOTTOM (PLAYER_GAUGE_FRAME_TOP-PLAYER_GAUGE_FRAME_TEX_HEI)			//ゲージ枠下座標
-#define PLAYER_GAUGE_LEFT 0																		//ゲージ描画時の左座標
-#define PLAYER_GAUGE_WID_MAX 380																//ゲージの幅の最大値
-#define GAUGE_HEIGHT 20																			//ゲージ描画時の高さ
-#define PLAYER_GAUGE_HP_TOP 30																	//HPゲージ描画時の上座標
-#define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT)								//HPゲージ描画時の下座標
-
-
 CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタンス変数の初期化
-
-
 
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
@@ -113,9 +87,9 @@ void CXPlayer::Update() {
 		Move();														//移動状態の処理を呼ぶ
 		break;
 
-	//case EGUARD:													//防御状態
-	//	Guard();													//防御処理を呼ぶ
-	//	break;
+	case EAVOIDANCE:												//回避状態
+		Avoidance();												//回避処理を呼ぶ
+		break;
 
 	case EDEATH:													//死亡状態
 		Death();													//死亡処理を呼ぶ
@@ -154,7 +128,7 @@ void CXPlayer::Update() {
 void CXPlayer::Idle() 
 {
 	mPlayer_ComboCount = 0;
-	ChangeAnimation(6, true, 20);
+	ChangeAnimation(4, true, 20);
 	//左クリックで攻撃
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = EATTACK_1;
@@ -164,9 +138,6 @@ void CXPlayer::Idle()
 		mPlayer_State = EMOVE;
 		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
 	}
-	//else if (CKey::Once(VK_SPACE)) {
-	//	mPlayer_State = EGUARD;
-	//}
 }
 
 //移動処理
@@ -194,6 +165,11 @@ void CXPlayer::Move()
 	}
 }
 
+void CXPlayer::Avoidance()
+{
+
+}
+
 
 //攻撃1処理
 void CXPlayer::Attack_1()
@@ -202,10 +178,10 @@ void CXPlayer::Attack_1()
 	if (mPlayer_AttackFlag_1 == false) {							
 		mPlayer_AttackFlag_1 = true;								//プレイヤの攻撃1のフラグをtrueにする
 		mPlayer_AttackFlag_Once = true;								//プレイヤの攻撃フラグをtrueに設定
-		ChangeAnimation(5, false, 1);								//待機モーション
+		ChangeAnimation(4, false, 1);								//待機モーション
 	}
 	//アニメーションインデックスが５の時
-	if (mAnimationIndex == 5)
+	if (mAnimationIndex == 4)
 	{
 		//アニメーション終了時
 		if (IsAnimationFinished())
@@ -234,6 +210,11 @@ void CXPlayer::Attack_1()
 			if (mAnimationFrame > PLAYER_OUTRECEPTION)
 			{
 				mPlayer_IsHit = false; //ヒット判定終了
+			}
+			//WASDキーを押すと移動へ移行
+			else if (CKey::Double('W') || CKey::Double('A') || CKey::Double('S') || CKey::Double('D')) {
+				mPlayer_State = EMOVE;
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
 			}
 		}
 		//アニメーション終了時
@@ -315,6 +296,11 @@ void CXPlayer::Attack_2()
 			{
 				mPlayer_IsHit = false; //ヒット判定終了
 			}
+			//WASDキーを押すと移動へ移行
+			else if (CKey::Double('W') || CKey::Double('A') || CKey::Double('S') || CKey::Double('D')) {
+				mPlayer_State = EMOVE;
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+			}
 		}
 		//アニメーション終了時
 		else if (IsAnimationFinished())
@@ -378,6 +364,11 @@ void CXPlayer::Attack_3()
 			{
 				mPlayer_IsHit = false; //ヒット判定終了
 			}
+			//WASDキーを押すと移動へ移行
+			else if (CKey::Double('W') || CKey::Double('A') || CKey::Double('S') || CKey::Double('D')) {
+				mPlayer_State = EMOVE;
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
@@ -417,7 +408,7 @@ void CXPlayer::Attack_3()
 //ノックバック処理
 void CXPlayer::KnockBack()
 {
-	ChangeAnimation(7, false, 60);	//のけ反りアニメーション
+	ChangeAnimation(5, false, 60);	//のけ反りアニメーション
 
 	if (IsAnimationFinished() == true)
 	{
@@ -472,7 +463,7 @@ void CXPlayer::KnockBack()
 //死亡処理
 void CXPlayer::Death()
 {
-	ChangeAnimation(8, false, 60);	//死亡アニメーション
+	ChangeAnimation(6, false, 60);	//死亡アニメーション
 }
 
 //カメラを基準にした移動処理
@@ -488,6 +479,7 @@ void CXPlayer::MoveCamera()
 	//正規化する
 	mPlayer_SideVec.Normalize();
 	mPlayer_FrontVec.Normalize();
+	mPlayer_MoveDir.Normalize();
 
 	if (CKey::Push('A'))
 	{
@@ -531,7 +523,7 @@ void CXPlayer::Render2D()
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より大きい時
 	if (mPlayer_FollowGaugeWid > HpGaugeWid) {
 		//線形補間で被ダメージ分後追いするゲージの幅を設定する
-		mPlayer_FollowGaugeWid = Camera.mLerp(mPlayer_FollowGaugeWid, HpGaugeWid, 0.05f);
+		mPlayer_FollowGaugeWid = Camera.mHpLerp(mPlayer_FollowGaugeWid, HpGaugeWid, 0.05f);
 	}
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より小さいとき
 	else if (mPlayer_FollowGaugeWid < HpGaugeWid) {

@@ -11,7 +11,6 @@
 #include "CXCharacter.h"
 #include "CText.h"
 #include "CXPlayer.h"
-#include"CPlayerGuard.h"
 #include "CXEnemy.h"
 #include "CMap.h"
 #include "CEffect.h"
@@ -28,8 +27,6 @@
 #define PLAYER_ANIMATION_ATTACKSP1 "res\\Player\\Paladin\\Attack1.x"
 #define PLAYER_ANIMATION_ATTACKSP2 "res\\Player\\Paladin\\Attack2.x"
 #define PLAYER_ANIMATION_ATTACKSP3 "res\\Player\\Paladin\\Attack3.x"
-#define PLAYER_ANIMATION_GUARD "res\\Player\\Paladin\\Guard.x"
-#define PLAYER_ANIMATION_GUARDIDLE "res\\Player\\Paladin\\GuardIdle.x"
 #define PLAYER_ANIMATION_IDLE "res\\Player\\Paladin\\Idle.x"
 #define PLAYER_ANIMATION_KNOCKBACK "res\\Player\\Paladin\\KnockBack.x"
 #define PLAYER_ANIMATION_DEATH "res\\Player\\Paladin\\Death.x"
@@ -70,6 +67,7 @@
 #define PLAYER_EF_ATTACKSP1 "res\\Effect\\Player_Attack1.png"
 #define PLAYER_EF_ATTACKSP2 "res\\Effect\\Player_Attack2.png"
 #define PLAYER_EF_ATTACKSP3 "res\\Effect\\Player_Attack3.png"
+
 //シャドウマッピング用
 #define TEXWIDTH  8192	//テクスチャ幅
 #define TEXHEIGHT  6144	//テクスチャ高さ
@@ -84,7 +82,6 @@
 #define SE_PLAYER_ATTACK1 "res\\Se\\SE_Player_AttackSp1.wav"
 #define SE_PLAYER_ATTACK2 "res\\Se\\SE_Player_AttackSp2.wav"
 #define SE_PLAYER_ATTACK3 "res\\Se\\SE_Player_AttackSp3.wav"
-#define SE_PLAYER_GUARD "res\\Se\\SE_Player_Guard.wav"
 #define SE_PLAYER_WALK "res\\Se\\SE_Player_Walk.wav"
 #define SE_PLAYER_DEATH "res\\Se\\SE_Player_Death.wav"
 
@@ -115,7 +112,6 @@ public:
 	CSound& GetinPlayerSeAttackSp1();
 	CSound& GetinPlayerSeAttackSp2();
 	CSound& GetinPlayerSeAttackSp3();
-	CSound& GetinPlayerSeGuard();
 	CSound& GetinPlayerSeWalk();
 	CSound& GetinPlayerSeDeath();
 	//敵SEを取得する
@@ -139,7 +135,6 @@ private:
 	CSound Se_Player_AttackSp1;
 	CSound Se_Player_AttackSp2;
 	CSound Se_Player_AttackSp3;
-	CSound Se_Player_Guard;
 	CSound Se_Player_Walk;
 	CSound Se_Player_Death;
 	//敵SE
@@ -149,7 +144,6 @@ private:
 	CModelX gPlayer_Model_Knight;
 	//プレイヤのガードアクションエフェクト
 	CModel gPlayer_GuardSP_Model;
-	CPlayerGuard mPlayer_GuardSP_Model;
 	//敵モデル
 	CModelX gEnemy_Model_Mutant;
 	//マップモデル

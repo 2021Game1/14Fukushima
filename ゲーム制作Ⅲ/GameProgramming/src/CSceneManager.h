@@ -1,7 +1,6 @@
 #ifndef CSCENEMANAGER_H
 #define CSCENEMANAGER_H
 #include "CScene.h"
-#include "CSceneTest.h"
 #include "CSceneGame.h"
 
 /*

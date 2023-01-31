@@ -7,14 +7,6 @@
 CCamera Camera;
 CCamera* CCamera::mpCameraInstance;
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define DELAY_RATE 0.005f				//カメラアングル移動時の遅延割合
-#define WIN_CENTRAL_X WINDOW_WIDTH/2 //画面の中央（X軸）
-#define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
-#define TARGETLOOK_Y 0.9f			//ターゲット時のカメラ高さ
-#define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
-
 //カメラのインスタンス
 CCamera* CCamera::Instance()
 {
@@ -23,30 +15,33 @@ CCamera* CCamera::Instance()
 
 void CCamera::Init()
 {
-	int viewport[4];
+	int viewport[CAMERA_VIEWPORT];
 	/* 現在のビューポートを保存しておく */
 	glGetIntegerv(GL_VIEWPORT, viewport);
-	mScreenWidth = viewport[2]; //幅を取得
-	mScreenHeight = viewport[3]; //高さを取得
+	mScreenWidth = viewport[CAMERA_VIEWPORT_WIDTH]; //幅を取得
+	mScreenHeight = viewport[CAMERA_VIEWPORT_HEIGHT]; //高さを取得
 	//プロジェクション行列の取得
 	glGetFloatv(GL_PROJECTION_MATRIX, mProjection.M());
 
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める
-	e = CVector(1.0f, 6.0f, 10.0f);
+	e = CVector(CAMERA_POINT_VIEW_X, CAMERA_POINT_VIEW_Y, CAMERA_POINT_VIEW_Z);
 	//注視点を求める
 	c = CVector();
 	//上方向を求める
-	u = CVector(0.0f, 1.0f, 0.0f);
+	u = CVector(CAMERA_POINT_INSTALLATION_X, CAMERA_POINT_INSTALLATION_Y, CAMERA_POINT_INSTALLATION_Z);
 
 	//カメラクラスの設定
 	Set(e, c, u);
 }
 float CCamera::mLerp(float start, float point, float rate)
 {
+	return start + point * (point * rate);
+}
+float CCamera::mHpLerp(float start, float point, float rate)
+{
 	return start + rate * (point - start);
-
 }
 void CCamera::SetTarget(const CVector& target)
 {
@@ -65,21 +60,15 @@ void CCamera::Update() {
 	float moveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
-		if (moveX != 0) mAngleX += (moveX * 0.0009f);
-		if (moveY != 0) mAngleY += (moveY * 0.0009f);
-		mAngleX = mLerp(mAngleX, mAngleDelayX, DELAY_RATE);
-		mAngleY = mLerp(mAngleY, mAngleDelayY, DELAY_RATE);
+		if (moveX != CAMERA_SENSITIVITY)mAngleX += (moveX * CAMERA_SENSITIVITY);
+		mAngleX = mLerp(mAngleX, mAngleDelayX, CAMERA_DELAY_RATE);
 	}
 	mSkip = false;
 	int X = WIN_CENTRAL_X;
 	int Y = WIN_CENTRAL_Y;
 	CInput::SetMousePosW(X, Y);
 	mOldMouseX = X;
-	mOldMouseY = Y;
 
-	//Y軸制限 0～3.14が180度範囲
-	if (mAngleY < 0.05f) mAngleY = 0.05f;
-	if (mAngleY > 1.51f) mAngleY = 1.51f;
 
 
 	mPos.X(mTarget.X() + (sinf(mAngleX)) * (mDist * sinf(mAngleY)));
@@ -110,7 +99,7 @@ void CCamera::Set(const CVector& eye, const CVector& center,
 	mTarget = center;
 	mAngleX = 0.0f;
 	mAngleY = 1.0f;
-	mDist = DEF_CAMERA_DIST;
+	mDist = CAMERA_DEF_DIST;
 	mAngleDelayX = mAngleX;
 	mAngleDelayY = mAngleY;
 }
@@ -171,7 +160,7 @@ void CCamera::Collision(CCollider* m, CCollider* o) {
 				CVector adjust;//調整用ベクトル
 			if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
 				//マップ等に衝突すると、視点をプレイヤーに近づく
-				mEye += (adjust.Normalize() + adjust.Normalize() * 0.05f);
+				mEye += (adjust.Normalize() + adjust.Normalize() * CAMERA_COLLIDE_DIST);
 				mColliderLine.Set(this, nullptr, mEye, mCenter);
 			}
 		}
@@ -204,8 +193,8 @@ bool CCamera::WorldToScreen(CVector* screen, const CVector& world)
 	screen_pos = screen_pos * (1.0f / -modelview_pos.Z());
 
 	//スクリーン変換
-	screen->X((1.0f + screen_pos.X()) * mScreenWidth * 0.5f);
-	screen->Y((1.0f + screen_pos.Y()) * mScreenHeight * 0.5f);
+	screen->X((CAMERA_SCREEN_POS_X + screen_pos.X()) * mScreenWidth * CAMERA_SCREEN_WIDTH);
+	screen->Y((CAMERA_SCREEN_POS_Y + screen_pos.Y()) * mScreenHeight * CAMERA_SCREEN_HEIGHT);
 	screen->Z(screen_pos.Z());
 
 	return true;

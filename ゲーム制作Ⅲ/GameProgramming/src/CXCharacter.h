@@ -7,7 +7,7 @@
 
 
 class CXCharacter : public CCharacter {
-public:
+protected:
 	//デフォルトコンストラクタ
 	CXCharacter();
 	//初期化
@@ -17,7 +17,7 @@ public:
 	//更新処理
 	void Update();
 	//マトリックスの更新処理
-	void Update(CMatrix &m);
+	void Update(CMatrix& m);
 	//描画処理
 	void Render();
 	//アニメーションの再生終了判定
@@ -28,7 +28,7 @@ public:
 	virtual ~CXCharacter() {
 		SAFE_DELETE_ARRAY(mpCombinedMatrix);
 	}
-protected:
+
 	CModelX* mpModel;			//モデルデータ
 	CMatrix* mpCombinedMatrix;	//合成行列退避
 	int mAnimationIndex;		//アニメーション番号

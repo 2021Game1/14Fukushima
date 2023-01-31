@@ -6,12 +6,49 @@
 #include "CColliderLine.h"
 #include "CCollisionManager.h"
 
+//カメラの描画範囲
+#define WINDOW_WIDTH 800				//ゲーム画面の描画範囲幅設定
+#define WINDOW_HEIGHT 600				//ゲーム画面の描画範囲高さ設定
+
+//カメラ
+#define CAMERA_SENSITIVITY 0.0005f		//カメラの感度設定
+#define CAMERA_COLLIDE_DIST 0.05f			//カメラの衝突判定時の描写体に近づく距離
+#define CAMERA_DELAY_RATE 0.003f		//カメラアングル移動時の遅延割合
+
+//カメラの視点描画設定
+#define CAMERA_VIEWPORT 4				//現在のカメラ全体のビューポート初期設定
+#define CAMERA_VIEWPORT_WIDTH 2			//現在のカメラのビューポートの幅設定
+#define CAMERA_VIEWPORT_HEIGHT 3		//現在のカメラのビューポートの高さ設定
+
+//カメラの視点座標設定
+#define CAMERA_POINT_VIEW_X 1.0f			//カメラ視点のX座標設定
+#define CAMERA_POINT_VIEW_Y 6.0f			//カメラ視点のY座標設定
+#define CAMERA_POINT_VIEW_Z 10.0f			//カメラ視点のZ座標設定
+
+//カメラの視点設置座標
+#define CAMERA_POINT_INSTALLATION_X 0.0f		//カメラ設置のX座標設定
+#define CAMERA_POINT_INSTALLATION_Y 1.0f		//カメラ設置のY座標設定
+#define CAMERA_POINT_INSTALLATION_Z 0.0f		//カメラ設置のZ座標設定
+
+//カメラのスクリーン変換設定
+#define CAMERA_SCREEN_POS_X 1.0f
+#define CAMERA_SCREEN_POS_Y 1.0f
+#define CAMERA_SCREEN_WIDTH 0.5f
+#define CAMERA_SCREEN_HEIGHT 0.5f
+
+//カメラの距離設定
+#define CAMERA_DEF_DIST 8.0f	//カメラの距離設定
+//カメラの注目視点の設定
+#define CAMERA_HEAD_ADJUST 2.0f	//注視点の高さ調整
+
+//カメラ操作時のマウス設定
+#define WIN_CENTRAL_X WINDOW_WIDTH/2 //画面の中央（X軸）
+#define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
+#define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
 
 /*
 カメラクラス
 */
-#define DEF_CAMERA_DIST 8.0f
-#define CAMERA_HEAD_ADJUST 2.0f	//注視点の高さ調整
 class CCamera : public CCharacter{
 public:
 	CCamera();
@@ -32,6 +69,8 @@ public:
 	void Collision(CCollider* m, CCollider* o);
 	//線形補間
 	float mLerp(float start, float point, float rate);
+	//HPの線形補間
+	float mHpLerp(float start, float point, float rate);
 	//コリジョンマネージャ追加処理
 	void TaskCollision();
 	//インスタンスの取得

@@ -11,7 +11,6 @@ void CRes::Init() {
 	Se_Player_AttackSp1.Load(SE_PLAYER_ATTACK1);
 	Se_Player_AttackSp2.Load(SE_PLAYER_ATTACK2);
 	Se_Player_AttackSp3.Load(SE_PLAYER_ATTACK3);
-	Se_Player_Guard.Load(SE_PLAYER_GUARD);
 	Se_Player_Walk.Load(SE_PLAYER_WALK);
 	Se_Player_Death.Load(SE_PLAYER_DEATH);
 	//敵SE
@@ -24,8 +23,6 @@ void CRes::Init() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_ATTACKSP1);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_ATTACKSP2);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_ATTACKSP3);
-	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_GUARD);
-	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_GUARDIDLE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_IDLE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_KNOCKBACK);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
@@ -69,7 +66,6 @@ void CRes::Init() {
 	mFont.LoadTexture("Font\\FontG.png", 1, 4096 / 64);
 	mMap.Model(&gMap_Model);
 	mMap_Sky.Model(&gMap_Model_Sky);
-	mPlayer_GuardSP_Model.Init(&gPlayer_GuardSP_Model);
 	//マップの移動行列
 	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 	//親インスタンスと親行列はなし
@@ -168,9 +164,4 @@ CSound& CRes::GetinSoundBgmTitle()
 CSound& CRes::GetinSoundBgmGame() 
 {
 	return Game_Bgm;
-}
-//プレイヤのガードアクションモデルの取得
-CSound& CRes::GetinPlayerSeGuard()
-{
-	return Se_Player_Guard;
 }

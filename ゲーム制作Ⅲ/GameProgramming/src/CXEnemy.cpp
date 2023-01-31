@@ -135,7 +135,7 @@ void CXEnemy::Render2D()
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より大きい時
 	if (mEnemy_FollowGaugeWid > HpGaugeWid) {
 		//線形補間で被ダメージ分後追いするゲージの幅を設定する
-		mEnemy_FollowGaugeWid = Camera.mLerp(mEnemy_FollowGaugeWid, HpGaugeWid, 0.05f);
+		mEnemy_FollowGaugeWid = Camera.mHpLerp(mEnemy_FollowGaugeWid, HpGaugeWid, 0.05f);
 	}
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より小さいとき
 	else if (mEnemy_FollowGaugeWid < HpGaugeWid) {

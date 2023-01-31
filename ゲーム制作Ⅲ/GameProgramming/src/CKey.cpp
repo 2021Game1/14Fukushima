@@ -12,7 +12,13 @@ bool CKey::Push(char key) {
 	return (GetAsyncKeyState(key) & 0x8000) == 0x8000;
 }
 
+/*初期化*/
 bool CKey::Flg[256];
+int CKey::Process = false;
+float CKey::Key_NowTime = KEY_NOWTIME; //最初に移動ボタンが押されてからの経過時間
+float CKey::Key_OldTime = KEY_OLDTIME;         //以前の経過時間
+float CKey::Key_NextButtonDownTime = KEY_NEXTBUTTONDOWNTIME;    //　次に移動ボタンが押されるまでの時間
+
 
 bool CKey::Once(char key) {
 	//キーが押されているか
@@ -32,4 +38,35 @@ bool CKey::Once(char key) {
 	}
 	//押されていないか、押し中
 	return false;
+}
+
+bool CKey::Double(char key) {
+	if (!Process) {
+		//キーが押されているか
+		if ((GetAsyncKeyState(key) & 0x8000)) {
+			//!演算子：否定
+			//押し中か判定
+			if (!Flg[key]) {
+				//押し中にする
+				Flg[key] = true;
+				Key_NowTime = (Key_NowTime + Key_OldTime);
+				if (Key_NowTime <= Key_NextButtonDownTime) {
+					Process = true;
+					return true;
+				}
+			}
+		}
+	}
+	else {
+		//押されていないのでfalseにする
+		Flg[key] = false;
+		Process = false;
+	}
+	//押し中か判定
+	if (Flg[key]) {
+		Key_NowTime = (Key_NowTime + Key_OldTime);
+		if (Key_NowTime > Key_NextButtonDownTime) {
+			return false;
+		}
+	}
 }

@@ -10,6 +10,28 @@
 #include"CTexture.h"
 #include"CEffect.h"
 
+//プレイヤのパラメータマクロ
+#define PLAYER_SPEED_DEFAULT 0.5f																//スピード(通常時)
+#define PLAYER_GRAVITY 0.9f																		//重力
+#define PLAYER_THRUST 0.01																		//推力
+#define PLAYER_RECEPTION 120																	//入力の受付時間
+#define PLAYER_INRECEPTION 	21.0f																//当たり判定の受付時間															
+#define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
+#define PLAYER_HP_MAX 100;																		//HPの最大値
+#define PLAYER_INITIALIZATION 0																	//初期化
+
+//プレイヤのHPフレーム,HPゲージ座標,幅,高さ
+#define PLAYER_GAUGE_FRAME_TEX_WID 480															//ゲージ枠の画像の幅
+#define PLAYER_GAUGE_FRAME_TEX_HEI 80															//ゲージ枠の画像の高さ
+#define PLAYER_GAUGE_FRAME_LEFT 0																//ゲージ枠左座標
+#define PLAYER_GAUGE_FRAME_RIGHT 380															//ゲージ枠右座標
+#define PLAYER_GAUGE_FRAME_TOP PLAYER_GAUGE_FRAME_TEX_HEI										//ゲージ枠上座標
+#define PLAYER_GAUGE_FRAME_BOTTOM (PLAYER_GAUGE_FRAME_TOP-PLAYER_GAUGE_FRAME_TEX_HEI)			//ゲージ枠下座標
+#define PLAYER_GAUGE_LEFT 0																		//ゲージ描画時の左座標
+#define PLAYER_GAUGE_WID_MAX 380																//ゲージの幅の最大値
+#define GAUGE_HEIGHT 20																			//ゲージ描画時の高さ
+#define PLAYER_GAUGE_HP_TOP 30																	//HPゲージ描画時の上座標
+#define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT)								//HPゲージ描画時の下座標
 
 /*
 CXPlayer
@@ -22,7 +44,7 @@ public:
 	{
 		EIDLE = 0,	//待機
 		EMOVE,		//移動
-		//EGUARD,		//ガード
+		EAVOIDANCE,	//回避
 		EATTACK_1,	//攻撃1
 		EATTACK_2,	//攻撃2
 		EATTACK_3,	//攻撃3
@@ -110,7 +132,7 @@ private:
 	void Attack_1();					//攻撃1処理
 	void Attack_2();					//攻撃2処理
 	void Attack_3();					//攻撃3処理
-	//void Guard();						//防御処理
+	void Avoidance();					//回避処理
 	void Death();						//死亡処理
 	void KnockBack();					//ノックバック処理
 	//移動の計算処理

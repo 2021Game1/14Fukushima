@@ -25,7 +25,7 @@ void CSceneGame::Update() {
 		CRes::GetInstance()->GetinSoundBgmGame().Stop();
 		if (CKey::Once(VK_RETURN))
 		{
-			CRes::GetInstance()->GetinSoundBgmGameOver().Stop();
+	
 			mScene = ETITLE;
 		}
 	}
@@ -34,7 +34,7 @@ void CSceneGame::Update() {
 		
 		if (CKey::Once(VK_RETURN))
 		{
-			CRes::GetInstance()->GetinSoundBgmGameClear().Stop();
+	
 			mScene = ETITLE;
 		}
 	}

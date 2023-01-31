@@ -1,7 +1,6 @@
 #include"CXCharacter.h"
 
 
-
 CXCharacter::CXCharacter() 
 	:mAnimationFrame(0)
 	,mAnimationFramesize(0)
