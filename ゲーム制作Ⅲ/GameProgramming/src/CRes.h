@@ -19,6 +19,46 @@
 #include "CShadowMap.h"
 #include "CSound.h"
 
+//プレイヤのパラメータマクロ
+#define PLAYER_SPEED_DEFAULT 0.2f																//スピード(通常時)
+#define PLAYER_GRAVITY 0.0007f																	//重力
+#define PLAYER_THRUST 0.9																		//推力
+#define PLAYER_RECEPTION 120																	//キー入力の受付時間
+#define PLAYER_INRECEPTION 	21.0f																//当たり判定の受付時間															
+#define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
+#define PLAYER_HP_MAX 100																		//HPの最大値
+#define PLAYER_HP 100																			//HPの設定
+
+//プレイヤのアニメーション番号の設定
+
+#define PLAYER_ANIMATION_No_MOVE 0			//移動アニメーション番号
+#define PLAYER_ANIMATION_No_ATTACK_1 1		//攻撃アニメーション1番号
+#define PLAYER_ANIMATION_No_ATTACK_2 2		//攻撃アニメーション2番号
+#define PLAYER_ANIMATION_No_ATTACK_3 3		//攻撃アニメーション3番号
+#define PLAYER_ANIMATION_No_AVOIDANCE 4	//回避アニメーション番号
+#define PLAYER_ANIMATION_No_IDLE 5			//待機アニメーション番号
+#define PLAYER_ANIMATION_No_KNOCKBACK 6	//ノックバックアニメーション番号
+#define PLAYER_ANIMATION_No_DEATH 7		//死亡アニメーション番号
+
+//敵パラメータマクロ
+#define ENEMY_HP_MAX 150	//HPの最大値
+#define ENEMY_HP 150			//HP設定
+#define ENEMY_DAMAGE_BODY 15		//ダメージ(体)
+#define ENEMY_ATTACK_DIS 3.2f		//攻撃可能になる距離
+#define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
+#define ENEMY_SPEED_DASH 0.15f		//走行の移動速度
+#define ENEMY_SPEED_STOP 0.0f		//停止
+#define ENEMY_WALK_DIS 30.0f		//歩行を開始する距離
+#define ENEMY_SEARCH_DIS 60.0f		//走行を開始する距離
+#define ENEMY_WALK_DIS_MAX 50.0f	//歩行可能な最大距離
+#define ENEMY_CHASE_DIS_MAX 80.0f   //走行可能な最大距離
+#define ENEMY_GRAVITY 0.0007f		//重力
+#define ENEMY_RECEPTION 26.0f		//当たり判定の受付時間
+#define ENEMY_OUTRECEPTION 60.0f	//当たり判定の受付終了
+
+//シャドウマッピング用マクロ
+#define TEXWIDTH  8192	//テクスチャ幅
+#define TEXHEIGHT  6144	//テクスチャ高さ
 
 
 /*プレイヤのアニメーションモデル*/
@@ -27,6 +67,7 @@
 #define PLAYER_ANIMATION_ATTACKSP1 "res\\Player\\Paladin\\Attack1.x"
 #define PLAYER_ANIMATION_ATTACKSP2 "res\\Player\\Paladin\\Attack2.x"
 #define PLAYER_ANIMATION_ATTACKSP3 "res\\Player\\Paladin\\Attack3.x"
+#define PLAYER_ANIMATION_AVOIDANCE "res\\Player\\Paladin\\Avoidance.x" 
 #define PLAYER_ANIMATION_IDLE "res\\Player\\Paladin\\Idle.x"
 #define PLAYER_ANIMATION_KNOCKBACK "res\\Player\\Paladin\\KnockBack.x"
 #define PLAYER_ANIMATION_DEATH "res\\Player\\Paladin\\Death.x"
@@ -63,14 +104,10 @@
 #define PLAYER_UI_HP_FRAME "res\\Ui\\Player_HP_Frame.png"
 //敵UI
 #define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
-//プレイヤ専用攻撃エフェクト
-#define PLAYER_EF_ATTACKSP1 "res\\Effect\\Player_Attack1.png"
-#define PLAYER_EF_ATTACKSP2 "res\\Effect\\Player_Attack2.png"
-#define PLAYER_EF_ATTACKSP3 "res\\Effect\\Player_Attack3.png"
-
-//シャドウマッピング用
-#define TEXWIDTH  8192	//テクスチャ幅
-#define TEXHEIGHT  6144	//テクスチャ高さ
+//敵ダメージエフェクト
+#define ENEMY_EF_DAMAGESP1 "Effect\\Enemy_DamageSp1.png"
+#define ENEMY_EF_DAMAGESP2 "Effect\\Enemy_DamageSp2.png"
+#define ENEMY_EF_DAMAGESP3 "Effect\\Enemy_DamageSp3.png"
 
 /*BGM・SE*/
 
@@ -88,7 +125,6 @@
 //SE・敵
 #define SE_ENEMY_ATTACK "res\\Se\\SE_Enemy_AttackSp.wav" 
 #define SE_EMEMY_DEATH "res\\Se\\SE_Enemy_Death.wav"
-
 
 class CRes {
 public:
@@ -179,7 +215,6 @@ private:
 	//敵のUIインスタンス
 	CTexture gEnemy_Ui_Hp_BackBar;
 	static CRes* mpRes_Instance;//別のクラスでリソースの変数を呼び出す場合,staticでポインタを作る
-
 };
 #endif
 

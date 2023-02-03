@@ -5,7 +5,11 @@
 #include"CColliderCapsule.h"
 #include"CCamera.h"
 
-
+//敵のHPフレーム,HPゲージ座標,幅,高さ
+#define ENEMY_GAUGE_WID_MAX 100.0f	//ゲージの幅の最大値
+#define ENEMY_GAUGE_HEIGHT 20.0f //ゲージ描画時の高さ
+#define ENEMY_GAUGE_HP_TOP -10.0f //HPゲージ描画時の上座標
+#define ENEMY_GAUGE_HP_BOTTOM (ENEMY_GAUGE_HP_TOP - ENEMY_GAUGE_HEIGHT) //HPゲージ描画時の下座標
 
 
 class CXEnemy : public CXCharacter{
@@ -42,6 +46,7 @@ protected:
 	//コライダの宣言
 	CCollider mEnemy_ColSphereRightarm;	//右腕
 	CCollider mEnemy_ColSphereLeftarm;	//左腕
+	CCollider mEnemy_ColSphereBody;				//球の身体
 	CColliderCapsule mEnemy_ColCapsuleBody;		//カプセルの身体
 	//敵のパラメータ
 	float mEnemy_Speed;							//敵のスピード

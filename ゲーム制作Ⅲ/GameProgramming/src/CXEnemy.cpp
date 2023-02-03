@@ -6,26 +6,8 @@
 #include"CXPlayer.h"
 #include "CRes.h"
 
-#define DAMAGE_BODY 15		//ダメージ(体)
 
-#define ENEMY_ATTACK_DIS 3.2f		//攻撃可能になる距離
-#define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
-#define ENEMY_SPEED_DASH 0.15f		//走行の移動速度
-#define ENEMY_SPEED_STOP 0.0f		//停止
-#define ENEMY_WALK_DIS 30.0f		//歩行を開始する距離
-#define ENEMY_SEARCH_DIS 60.0f		//走行を開始する距離
-#define ENEMY_WALK_DIS_MAX 50.0f	//歩行可能な最大距離
-#define ENEMY_CHASE_DIS_MAX 80.0f   //走行可能な最大距離
-#define ENEMY_GRAVITY 0.1			//重力
-#define ENEMY_RECEPTION 26.0f																	//当たり判定の受付時間
-#define ENEMY_OUTRECEPTION 60.0f																//当たり判定の受付終了
 
-#define ENEMY_HP_MAX 150;	//HPの最大値
-//敵のHPフレーム,HPゲージ座標,幅,高さ
-#define ENEMY_GAUGE_WID_MAX 100.0f	//ゲージの幅の最大値
-#define ENEMY_GAUGE_HEIGHT 20.0f //ゲージ描画時の高さ
-#define ENEMY_GAUGE_HP_TOP -10.0f //HPゲージ描画時の上座標
-#define ENEMY_GAUGE_HP_BOTTOM (ENEMY_GAUGE_HP_TOP - ENEMY_GAUGE_HEIGHT) //HPゲージ描画時の下座標
 
 
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
@@ -40,7 +22,8 @@ CXEnemy::CXEnemy()
 	,mEnemy_val(0)
 	,mEnemy_IsHit(false)
 	,mEnemy_Flag(false)
-	, mEnemy_ColCapsuleBody(this, nullptr, CVector(0.0f, 90.0f, 0.0f), CVector(0.0f, -130.0f, 30.0f), 1.3)
+	, mEnemy_ColCapsuleBody(this, nullptr, CVector(0.0f, 90.0f, 0.0f), CVector(0.0f, -140.0f, 0.0f), 1.3)
+	, mEnemy_ColSphereBody(this, nullptr, CVector(0.5, -1.0f, 1.0f), 1.2f)
 	,mEnemy_ColSphereRightarm(this, nullptr, CVector(), 1.0)
 	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), 1.0)
 
@@ -50,6 +33,7 @@ CXEnemy::CXEnemy()
 	mEnemy_State = EIDLE;	//待機状態
 		//コライダのタグを設定
 	mEnemy_ColCapsuleBody.Tag(CCollider::EBODY);		//体
+	mEnemy_ColSphereBody.Tag(CCollider::EBODY);		//体
 	mEnemy_ColSphereRightarm.Tag(CCollider::ERIGHTARM);	//右手
 	mEnemy_ColSphereLeftarm.Tag(CCollider::ELEFTARM);	//左手
 	//タグの設定
@@ -67,9 +51,10 @@ void CXEnemy::Init(CModelX* model)
 	CXCharacter::Init(model);
 	//合成行列の設定
 	mEnemy_ColCapsuleBody.Matrix(&mpCombinedMatrix[24]);
+	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[24]);
 	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[68]);
 	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
-	mPosition.Set(0.0f, -4.0f, -20.0);	//位置を設定
+	mPosition.Set(0.0f, 2.0f, -20.0);	//位置を設定
 	mScale.Set(3.0f, 3.0f, 2.0f);//スケール設定
 	mRotation.Set(0.0f, 0.0f, 0.0f);	//回転を設定
 }
@@ -109,9 +94,6 @@ void CXEnemy::Update() {
 	case EKNOCKBACK: //ノックバック状態
 		KnockBack(); //ノックバック処理を呼ぶ
 		break;
-	//case EREPELLED: //はじかれた時の状態
-	//	Repelled(); //はじかれた場合の処理を呼ぶ
-	//	break;
 	}
 	MovingCalculation();
 	//体力が0になると死亡
@@ -305,6 +287,10 @@ void CXEnemy::Attack_1()
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
+		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
+		{
+			mEnemy_IsHit = false; //ヒット判定終了
+		}
 	}
 	//アニメーション終了時
 	if (IsAnimationFinished())
@@ -351,6 +337,10 @@ void CXEnemy::Attack_2()
 		}
 		//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
 		if (mAnimationFrame > ENEMY_OUTRECEPTION)
+		{
+			mEnemy_IsHit = false; //ヒット判定終了
+		}
+		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
@@ -403,6 +393,10 @@ void CXEnemy::Attack_3()
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
+		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
+		{
+			mEnemy_IsHit = false; //ヒット判定終了
+		}
 	}
 	//アニメーション終了時
 	if (IsAnimationFinished())
@@ -443,11 +437,11 @@ void CXEnemy::KnockBack()
 		mEnemy_Flag = true;
 		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 		{
-			mEnemy_Hp -= DAMAGE_BODY * 2;
+			mEnemy_Hp -= ENEMY_DAMAGE_BODY * 2;
 		}
 		else
 		{
-			mEnemy_Hp -= DAMAGE_BODY;	//ダメージを受ける(体)
+			mEnemy_Hp -= ENEMY_DAMAGE_BODY;	//ダメージを受ける(体)
 
 		}
 	}
@@ -462,17 +456,6 @@ void CXEnemy::KnockBack()
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}
 }
-
-
-//void CXEnemy::Repelled()
-//{
-//	ChangeAnimation(6, false, 50);
-//	//アニメーション終了時
-//	if (IsAnimationFinished())
-//	{
-//		mEnemy_State = EIDLE; //待機状態へ移行
-//	}
-//}
 
 void CXEnemy::Death()
 {
@@ -492,51 +475,120 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 			//コライダのmとoが衝突しているかの判定
 			if (CCollider::CollisionCapsule(m, o, &adjust))
 			{
-				//相手の親のタグがプレイヤー
-				if (o->Parent()->Tag() == EPLAYER)
-				{
-					//相手のコライダのタグが剣
-					if (o->Tag() == CCollider::ESWORD)
-					{
-						if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
-						{
-							//乱数値=rand()%乱数値の要素数+乱数値の最小値
-							srand((unsigned)time(NULL));
-							mEnemy_val = (rand() % 100) + 1;
-							if (mEnemy_val >= 0 && mEnemy_val <= 60) {
-								if (CXPlayer::GetInstance()->GetIsHit() == true) {
-									mEnemy_State = EKNOCKBACK;
-								}
-							}
-						}
-					}
-					//else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EGUARD)
-					//{
-					//	if (CXPlayer::GetInstance()->GetIsHit() == true)
-					//	{
-					//		mEnemy_State = EREPELLED;
-					//	}
-					//}
-					else if (m->Tag() == CCollider::EBODY && o->Tag() == CCollider::EBODY)
-					{
-						//位置の更新(mPosition + adjust)
-						mPosition = mPosition + adjust;
-						//行列の更新
-						CTransform::Update();
-					}
-				}
-			}
-		}
-		else if (o->Type() == CCollider::ETRIANGLE) {
-			CVector adjust;//調整用ベクトル
-			if (CCollider::CollisionTriangleLine(o, m, &adjust))
+			if (m->Tag() == CCollider::EBODY && o->Tag() == CCollider::EBODY)
 			{
 				//位置の更新(mPosition + adjust)
 				mPosition = mPosition + adjust;
 				//行列の更新
 				CTransform::Update();
 			}
+			}
+		}
+	}
 
+	if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ETRIANGLE) {
+		CVector adjust;//調整用ベクトル
+		if (CCollider::CollisionTriangleLine(o, m, &adjust))
+		{
+			//位置の更新(mPosition + adjust)
+			mPosition = mPosition + adjust;
+			//行列の更新
+			CTransform::Update();
+		}
+
+	}
+
+
+
+	if (!mEnemy_Hp <= 0)
+	{
+		//自身のコライダタイプの判定
+		switch (m->Type()) {
+		case CCollider::ESPHERE: {//球コライダ
+			//相手のコライダが球コライダの時
+			if (o->Type() == CCollider::ESPHERE) {
+				//球の衝突判定
+				if (CCollider::Collision(m, o)) {
+					//相手の親のタグがプレイヤー
+					if (o->Parent()->Tag() == EPLAYER)
+					{
+						//相手のコライダのタグが右手
+						if (o->Tag() == CCollider::ESWORD)
+						{
+							//相手の親のタグがプレイヤー
+							if (o->Parent()->Tag() == EPLAYER)
+							{
+								//相手のコライダのタグが剣
+								if (o->Tag() == CCollider::ESWORD)
+								{
+									if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
+									{
+										//乱数値=rand()%乱数値の要素数+乱数値の最小値
+										srand((unsigned)time(NULL));
+										mEnemy_val = (rand() % 100) + 1;
+										if (mEnemy_val >= 0 && mEnemy_val <= 60) {
+											if (CXPlayer::GetInstance()->GetIsHit() == true) {
+												//攻撃を受けた箇所
+												switch (m->Tag()) {
+												case CCollider::EBODY: {	//体
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+													{
+														new CEffectEnemyDamageSp1(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
+													}
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+													{
+														new CEffectEnemyDamageSp2(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2); //エフェクトを生成する
+													}
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+													{
+														new CEffectEnemyDamageSp3(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
+													}
+													mEnemy_State = EKNOCKBACK;
+												}
+
+												case CCollider::ELEFTARM: {	//左手	
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+													{
+														new CEffectEnemyDamageSp1(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
+													}
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+													{
+														new CEffectEnemyDamageSp2(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2); //エフェクトを生成する
+													}
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+													{
+														new CEffectEnemyDamageSp3(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
+													}
+													mEnemy_State = EKNOCKBACK;
+												}
+												case CCollider::ERIGHTARM: {	//右手	
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+													{
+														new CEffectEnemyDamageSp1(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
+													}
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+													{
+														new CEffectEnemyDamageSp2(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2); //エフェクトを生成する
+													}
+													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+													{
+														new CEffectEnemyDamageSp3(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
+													}
+													mEnemy_State = EKNOCKBACK;
+												}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+
+				}
+			}
+		}
 		}
 	}
 }
@@ -570,7 +622,7 @@ void CXEnemy::MovingCalculation() {
 	}
 	//移動する
 	mPosition += mEnemy_MoveDir * mEnemy_Speed;
-	mPosition.Y(mPosition.Y() * ENEMY_GRAVITY);
+	mPosition.Y(mPosition.Y() - ENEMY_GRAVITY);
 
 	//移動方向リセット
 	mEnemy_MoveDir = CVector(0.0f, 0.0f, 0.0f);
@@ -581,10 +633,12 @@ void CXEnemy::TaskCollision()
 {
 	//コライダの優先度変更
 	mEnemy_ColCapsuleBody.ChangePriority();
+	mEnemy_ColSphereBody.ChangePriority();
 	mEnemy_ColSphereRightarm.ChangePriority();
 	mEnemy_ColSphereLeftarm.ChangePriority();
 	//衝突処理を実行
 	CCollisionManager::Get()->Collision(&mEnemy_ColCapsuleBody, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereBody, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereRightarm, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLeftarm, COLLISIONRANGE);
 }

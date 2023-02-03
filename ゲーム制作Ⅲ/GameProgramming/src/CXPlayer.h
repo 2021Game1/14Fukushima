@@ -9,16 +9,11 @@
 #include"CInput.h"
 #include"CTexture.h"
 #include"CEffect.h"
-
-//プレイヤのパラメータマクロ
-#define PLAYER_SPEED_DEFAULT 0.5f																//スピード(通常時)
-#define PLAYER_GRAVITY 0.9f																		//重力
-#define PLAYER_THRUST 0.01																		//推力
-#define PLAYER_RECEPTION 120																	//入力の受付時間
-#define PLAYER_INRECEPTION 	21.0f																//当たり判定の受付時間															
-#define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
-#define PLAYER_HP_MAX 100;																		//HPの最大値
-#define PLAYER_INITIALIZATION 0																	//初期化
+//初期化設定
+#define PLAYER_INT_INITIALIZATION 0																//初期化
+#define PLAYER_FLOAT_INITIALIZATION 0.0f														//浮動小数点の初期化
+//描画優先度設定
+#define PLAYER_PRIORITY 95																		//描画優先度の設定
 
 //プレイヤのHPフレーム,HPゲージ座標,幅,高さ
 #define PLAYER_GAUGE_FRAME_TEX_WID 480															//ゲージ枠の画像の幅
@@ -32,6 +27,30 @@
 #define GAUGE_HEIGHT 20																			//ゲージ描画時の高さ
 #define PLAYER_GAUGE_HP_TOP 30																	//HPゲージ描画時の上座標
 #define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT)								//HPゲージ描画時の下座標
+
+/*プレイヤのコライダ設定*/
+
+//プレイヤーの身体
+#define PLAYER_COLCAPSULE_BODY_X 0.0f		//カプセルコライダのX座標設定
+#define PLAYER_COLCAPSULE_BODY_Y 141.5f		//カプセルコライダのY座標設定
+#define PLAYER_COLCAPSULE_BODY_Z 0.0f		//カプセルコライダのZ座標設定
+#define PLAYER_COLCAPSULE_BODY_SIZE 0.7		//カプセルコライダのサイズ設定
+
+//プレイヤの当たり判定
+#define PLAYER_COLSPHERE_BODY_SIZE 0.7		//球コライダのサイズ設定
+
+//プレイヤの盾
+#define PLAYER_COLSPHERE_SHIELD_X 0.0f		//球コライダのX座標
+#define PLAYER_COLSPHERE_SHIELD_Y 0.0f		//球コライダのY座標
+#define PLAYER_COLSPHERE_SHIELD_Z -5.0f		//球コライダのZ座標
+#define PLAYER_COLSPHERE_SHIELD_SIZE 0.5	//球コライダのサイズ
+
+//プレイヤの剣
+#define PLAYER_COLSPHERE_SWORD_HEAD_X -10.0f	//球コライダのX座標設定
+#define PLAYER_COLSPHERE_SWORD_HEAD_Y 0.0f		//球コライダのY座標設定
+#define PLAYER_COLSPHERE_SWORD_HEAD_Z 50.0f		//球コライダのZ座標設定
+#define PLAYER_COLSPHERE_SWORD_SIZE 0.3		//球コライダのサイズ設定
+
 
 /*
 CXPlayer
@@ -50,14 +69,6 @@ public:
 		EATTACK_3,	//攻撃3
 		EDEATH,		//死亡
 		EKNOCKBACK,	//ノックバック
-	};
-	//プレイヤのエフェクト
-	enum EPlayerEffect
-	{
-		EEFFECT_NULL = 0,				//エフェクトなし
-		EEFFECT_PLAYER_ATTACKSP1,		//プレイヤの攻撃1エフェクト
-		EEFFECT_PLAYER_ATTACKSP2,		//プレイヤの攻撃2エフェクト
-		EEFFECT_PLAYER_ATTACKSP3,		//プレイヤの攻撃3エフェクト
 	};
 	//更新処理
 	void Update();
@@ -85,15 +96,14 @@ public:
 	CVector GetSwordColPos();			//剣のコライダの座標を取得する
 private:
 	//コライダの宣言
-	CColliderCapsule mPlayer_ColCapsuleSword;	//剣
-	CCollider mPlayer_ColSphereShield;	//盾
-	CCollider mPlayer_ColSphereBody;					//球の身体
-	CColliderCapsule mPlayer_ColCapsuleBody;	//カプセルの身体
+	CCollider mPlayer_ColSphereSword;						//剣
+	CCollider mPlayer_ColSphereShield;				//盾
+	CCollider mPlayer_ColSphereBody;				//球の身体
+	CColliderCapsule mPlayer_ColCapsuleBody;		//カプセルの身体
 	//プレイヤの状態推移
 	EPlayerState mPlayer_State;			//プレイヤの状態判断用
 	bool mPlayer_InvincibleFlag;				//無敵状態の時trueを返す
-	//プレイヤのエフェクト推移
-	EPlayerEffect mPlayer_Effect;		//プレイヤのエフェクト判断用
+
 
 	//プレイヤのHPゲージ用の変数
 	float mPlayer_FollowGaugeWid;		//被ダメージ分後追いするゲージの幅

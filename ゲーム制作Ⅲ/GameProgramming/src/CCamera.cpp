@@ -68,11 +68,12 @@ void CCamera::Update() {
 	int Y = WIN_CENTRAL_Y;
 	CInput::SetMousePosW(X, Y);
 	mOldMouseX = X;
+	mOldMousePosY = Y;
 
 
 
 	mPos.X(mTarget.X() + (sinf(mAngleX)) * (mDist * sinf(mAngleY)));
-	mPos.Y(mTarget.Y() + cosf(mAngleY) * mDist);
+	mPos.Y(mTarget.Y() + cosf(mAngleY) * mDist * sinf(mAngleY));
 	mPos.Z(mTarget.Z() + (cosf(mAngleX)) * (mDist * sinf(mAngleY)));
 
 	mCenter = mTarget;
@@ -152,21 +153,18 @@ mpCameraInstance = this;
 
 //当たり判定
 void CCamera::Collision(CCollider* m, CCollider* o) {
-	//自身のコライダタイプの判定
-	switch (m->Type()) {
-	case CCollider::ELINE: {//線コライダ
 		//相手のコライダが三角コライダの時
 		if (o->Type() == CCollider::ETRIANGLE) {
+			if (!o->Parent()->EENEMY)
+			{
 				CVector adjust;//調整用ベクトル
-			if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
-				//マップ等に衝突すると、視点をプレイヤーに近づく
-				mEye += (adjust.Normalize() + adjust.Normalize() * CAMERA_COLLIDE_DIST);
-				mColliderLine.Set(this, nullptr, mEye, mCenter);
+				if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
+					//マップ等に衝突すると、視点をプレイヤーに近づく
+					mEye = mEye + adjust;
+					mColliderLine.Set(this, nullptr, mEye, mCenter);
+				}
 			}
 		}
-	}
-	}
-
 }
 
 //タスクコリジョンに追加

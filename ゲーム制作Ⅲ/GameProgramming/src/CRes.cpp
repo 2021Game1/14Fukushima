@@ -23,6 +23,7 @@ void CRes::Init() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_ATTACKSP1);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_ATTACKSP2);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_ATTACKSP3);
+	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_AVOIDANCE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_IDLE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_KNOCKBACK);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
