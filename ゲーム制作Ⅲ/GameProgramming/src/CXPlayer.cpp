@@ -9,7 +9,7 @@ CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタ
 
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
-	: mPlayer_ColCapsuleBody(this, nullptr, CVector(PLAYER_COLCAPSULE_BODY_X, PLAYER_COLCAPSULE_BODY_Y, PLAYER_COLCAPSULE_BODY_Z), CVector(PLAYER_COLCAPSULE_BODY_X, -PLAYER_COLCAPSULE_BODY_Y, PLAYER_COLCAPSULE_BODY_Z), PLAYER_COLCAPSULE_BODY_SIZE)
+	: mPlayer_ColCapsuleBody(this, nullptr, CVector(PLAYER_COLCAPSULE_BODY_X, PLAYER_COLCAPSULE_BODY_TOP_Y, PLAYER_COLCAPSULE_BODY_Z), CVector(PLAYER_COLCAPSULE_BODY_X, PLAYER_COLCAPSULE_BODY_BOTTOM_Y, PLAYER_COLCAPSULE_BODY_Z), PLAYER_COLCAPSULE_BODY_SIZE)
 	, mPlayer_ColSphereBody(this, nullptr, CVector(), PLAYER_COLSPHERE_BODY_SIZE)
 	, mPlayer_ColSphereShield(this, nullptr, CVector(PLAYER_COLSPHERE_SHIELD_X, PLAYER_COLSPHERE_SHIELD_Y, PLAYER_COLSPHERE_SHIELD_Z), PLAYER_COLSPHERE_SHIELD_SIZE)
 	, mPlayer_ColSphereSword(this, nullptr, CVector(PLAYER_COLSPHERE_SWORD_HEAD_X, PLAYER_COLSPHERE_SWORD_HEAD_Y, PLAYER_COLSPHERE_SWORD_HEAD_Z), PLAYER_COLSPHERE_SWORD_SIZE)
@@ -49,7 +49,7 @@ void CXPlayer::Init(CModelX* model)
 {
 	CXCharacter::Init(model);
 	//合成行列の設定
-	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[14]);
+	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[2]);
 	mPlayer_ColSphereBody.Matrix(&mpCombinedMatrix[16]);
 	mPlayer_ColSphereShield.Matrix(&mpCombinedMatrix[41]);
 	mPlayer_ColSphereSword.Matrix(&mpCombinedMatrix[71]);
@@ -98,9 +98,9 @@ void CXPlayer::Update() {
 	}
 	MovingCalculation();
 	//体力が0になると死亡
-	if (mPlayer_Hp <= 0) {
+	if (mPlayer_Hp <= PLAYER_GAMEOVER_HP) {
 		mPlayer_State = EDEATH;										//死亡状態へ移行
-		mPlayer_Hp = 0;
+		mPlayer_Hp = PLAYER_GAMEOVER_HP;
 	}
 	//カメラの設定
 	Camera.SetTarget(mPosition);									//カメラをプレイヤの位置に設定
@@ -111,7 +111,7 @@ void CXPlayer::Update() {
 void CXPlayer::Idle() 
 {
 	mPlayer_ComboCount = PLAYER_INT_INITIALIZATION;
-	ChangeAnimation(PLAYER_ANIMATION_No_IDLE, true, 20);
+	ChangeAnimation(PLAYER_ANIMATION_No_IDLE, true, PLAYER_IDLE_ANIMATION_FRAME);
 	//左クリックで攻撃
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = EATTACK_1;
@@ -119,7 +119,7 @@ void CXPlayer::Idle()
 	//WASDキーを押すと移動へ移行
 	if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		mPlayer_State = EMOVE;
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 }
 
@@ -134,31 +134,31 @@ void CXPlayer::Move()
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_IsHit = false;
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_IsHit = false;
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_IsHit = false;
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_IsHit = false;
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	//WASDキーを押すと移動へ移行
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
-		ChangeAnimation(PLAYER_ANIMATION_No_MOVE, true, 45);
+		ChangeAnimation(PLAYER_ANIMATION_No_MOVE, true, PLAYER_MOVE_ANIMATION_FRAME);
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	//待機状態へ移行
 	else {
@@ -176,11 +176,7 @@ void CXPlayer::Move()
 
 void CXPlayer::Avoidance()
 {
-	ChangeAnimation(PLAYER_ANIMATION_No_AVOIDANCE, true, 50);
-	//座標移動
-	mPosition += mPlayer_Move;												//プレイヤの位置にプレイヤの移動量を足す
-	//減速させる
-	mPlayer_Move = mPlayer_MoveDirKeep * PLAYER_THRUST;							//プレイヤの移動量に推力を掛ける
+	ChangeAnimation(PLAYER_ANIMATION_No_AVOIDANCE, true, PLAYER_AVOIDANCE_ANIMATION_FRAME);
 
 	//ヒット判定発生
 	if (IsAnimationFinished() == false)
@@ -203,20 +199,11 @@ void CXPlayer::Attack_1()
 {
 	//処理が呼び出されたら1度しか動かさない
 	if (mPlayer_AttackFlag_1 == false) {							
-		mPlayer_AttackFlag_1 = true;								//プレイヤの攻撃1のフラグをtrueにする
-		mPlayer_AttackFlag_Once = true;								//プレイヤの攻撃フラグをtrueに設定
-		ChangeAnimation(PLAYER_ANIMATION_No_IDLE, false, 1);								//待機モーション
-	}
-	//アニメーションインデックスが５の時
-	if (mAnimationIndex == PLAYER_ANIMATION_No_IDLE)
-	{
-		//アニメーション終了時
-		if (IsAnimationFinished())
-		{
-			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_1, false, 50);							//プレイヤの攻撃1モーション
-			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.1);
-		}
+		mPlayer_AttackFlag_1 = true;															//プレイヤの攻撃1のフラグをtrueにする
+		mPlayer_AttackFlag_Once = true;															//プレイヤの攻撃フラグをtrueに設定
+		mPlayer_IsHit = false;																	//ヒット判定終了
+		ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_1, false, PLAYER_ATTACK1_ANIMATION_FRAME);	//プレイヤの攻撃1モーション
+		CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(PLAYER_SE);
 	}
 	//アニメーションインデックスが３の時
 	else if (mAnimationIndex == PLAYER_ANIMATION_No_ATTACK_3) {
@@ -242,33 +229,33 @@ void CXPlayer::Attack_1()
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_1, false, 60);							//プレイヤの攻撃1モーション
-			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(0.1);
+			ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_1, false, PLAYER_ATTACK1_ANIMATION_FRAME);							//プレイヤの攻撃1モーション
+			CRes::GetInstance()->GetinPlayerSeAttackSp1().Play(PLAYER_SE);
 		}
 	}
 	//アニメーションインデックスが１の時
@@ -288,25 +275,25 @@ void CXPlayer::Attack_1()
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 		}
 		//アニメーション終了時
@@ -362,33 +349,33 @@ void CXPlayer::Attack_2()
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 		}
 		//アニメーション終了時
 		else if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_2, false, 70);							//プレイヤの攻撃2モーション
-			CRes::GetInstance()->GetinPlayerSeAttackSp2().Play(0.1);
+			ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_2, false, PLAYER_ATTACK2_ANIMATION_FRAME);							//プレイヤの攻撃2モーション
+			CRes::GetInstance()->GetinPlayerSeAttackSp2().Play(PLAYER_SE);
 		}
 	}
 	//アニメーションインデックスが2の時
@@ -441,33 +428,33 @@ void CXPlayer::Attack_3()
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 			else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
-				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+				CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 			}
 		}
 		//アニメーション終了時
 		if (IsAnimationFinished())
 		{
 			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_3, false, 80);
-			CRes::GetInstance()->GetinPlayerSeAttackSp3().Play(0.1);
+			ChangeAnimation(PLAYER_ANIMATION_No_ATTACK_3, false, PLAYER_ATTACK3_ANIMATION_FRAME);
+			CRes::GetInstance()->GetinPlayerSeAttackSp3().Play(PLAYER_SE);
 		}
 	}
 	else if (mAnimationIndex == PLAYER_ANIMATION_No_ATTACK_3)
@@ -491,7 +478,7 @@ void CXPlayer::Attack_3()
 //ノックバック処理
 void CXPlayer::KnockBack()
 {
-	ChangeAnimation(PLAYER_ANIMATION_No_KNOCKBACK, false, 60);	//のけ反りアニメーション
+	ChangeAnimation(PLAYER_ANIMATION_No_KNOCKBACK, false, PLAYER_KNOCKBACK_ANIMATION_FRAME);	//のけ反りアニメーション
 
 	if (IsAnimationFinished() == true)
 	{
@@ -504,15 +491,15 @@ void CXPlayer::KnockBack()
 			mPlayer_Flag = true;
 			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
 			{
-				mPlayer_Hp = mPlayer_Hp - 15;
+				mPlayer_Hp = mPlayer_Hp - PLAYER_DAMAGE_ENEMYSP1;
 			}
 			else if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
 			{
-				mPlayer_Hp = mPlayer_Hp - 10;
+				mPlayer_Hp = mPlayer_Hp - PLAYER_DAMAGE_ENEMYSP2;
 			}
 			else if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
 			{
-				mPlayer_Hp = mPlayer_Hp - 20;
+				mPlayer_Hp = mPlayer_Hp - PLAYER_DAMAGE_ENEMYSP3;
 			}
 		}
 	}
@@ -522,28 +509,28 @@ void CXPlayer::KnockBack()
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_Flag = false;
 		mPlayer_InvincibleFlag = false; //無敵状態を終了する
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_Flag = false;
 		mPlayer_InvincibleFlag = false; //無敵状態を終了する
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_Flag = false;
 		mPlayer_InvincibleFlag = false; //無敵状態を終了する
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_Flag = false;
 		mPlayer_InvincibleFlag = false; //無敵状態を終了する
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(0.1);
+		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	//アニメーション終了時
 	if (IsAnimationFinished())
@@ -558,7 +545,7 @@ void CXPlayer::KnockBack()
 void CXPlayer::Death()
 {
 	MovingCalculation();
-	ChangeAnimation(PLAYER_ANIMATION_No_DEATH, false, 60);	//死亡アニメーション
+	ChangeAnimation(PLAYER_ANIMATION_No_DEATH, false, PLAYER_DEATH_ANIMATION_FRAME);	//死亡アニメーション
 }
 
 //カメラを基準にした移動処理
@@ -569,8 +556,8 @@ void CXPlayer::MoveCamera()
 	mPlayer_SideVec = Camera.GetMat().GetXVec();
 	mPlayer_FrontVec = Camera.GetMat().GetZVec();
 	//高さ移動はカットする
-	mPlayer_SideVec.Y(0.0f);
-	mPlayer_FrontVec.Y(0.0f);
+	mPlayer_SideVec.Y(PLAYER_FLOAT_INITIALIZATION);
+	mPlayer_FrontVec.Y(PLAYER_FLOAT_INITIALIZATION);
 	//正規化する
 	mPlayer_SideVec.Normalize();
 	mPlayer_FrontVec.Normalize();
@@ -591,25 +578,6 @@ void CXPlayer::MoveCamera()
 	{
 		mPlayer_MoveDir -= mPlayer_FrontVec;
 	}
-
-	if (CKey::Push('D') && CKey::Once(VK_SHIFT))
-	{
-		mPlayer_MoveDir += mPlayer_SideVec;
-	}
-	else if (CKey::Push('A') && CKey::Once(VK_SHIFT))
-	{
-		mPlayer_MoveDir -= mPlayer_SideVec;
-	}
-	if (CKey::Push('S') && CKey::Once(VK_SHIFT))
-	{
-		mPlayer_MoveDir -= mPlayer_FrontVec;
-	}
-	else if (CKey::Push('W') && CKey::Once(VK_SHIFT))
-	{
-		mPlayer_MoveDir += mPlayer_FrontVec;
-	}
-
-
 	//ジャンプ時などはY軸を正規化しないよう注意
 	mPlayer_MoveDir = mPlayer_MoveDir;
 	mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
@@ -619,15 +587,15 @@ void CXPlayer::MoveCamera()
 void CXPlayer::Render2D()
 {
 	//2D描画開始
-	CUtil::Start2D(0, 800, 0, 600);
+	CUtil::Start2D(WINDOW_FIRST_WIDTH, WINDOW_WIDTH, WINDOW_FIRST_HEIGHT, WINDOW_HEIGHT);
 	//ゲージを揺らす用
-	int shakeX = 0;
-	int shakeY = 0;
+	int shakeX = PLAYER_INT_INITIALIZATION;
+	int shakeY = PLAYER_INT_INITIALIZATION;
 	//ノックバック状態のとき
 	if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EKNOCKBACK) {
 		//ゲージを揺らす値を設定
-		shakeX = -5 + rand() % 12;
-		shakeY = -2 + rand() % 2;
+		shakeX = PLAYER_GAUGE_HP_SHAKE_X + rand() % PLAYER_GAUGE_HP_SHAKE_RANGE_X;
+		shakeY = PLAYER_GAUGE_HP_SHAKE_Y + rand() % PLAYER_GAUGE_HP_SHAKE_RANGE_Y;
 	}
 	//体力ゲージ
 	float HpRate = (float)mPlayer_Hp / (float)PLAYER_HP_MAX;	//体力最大値に対する、現在の体力の割合
@@ -635,7 +603,7 @@ void CXPlayer::Render2D()
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より大きい時
 	if (mPlayer_FollowGaugeWid > HpGaugeWid) {
 		//線形補間で被ダメージ分後追いするゲージの幅を設定する
-		mPlayer_FollowGaugeWid = Camera.mHpLerp(mPlayer_FollowGaugeWid, HpGaugeWid, 0.05f);
+		mPlayer_FollowGaugeWid = Camera.mHpLerp(mPlayer_FollowGaugeWid, HpGaugeWid, PLAYER_GAUGE_HP_RATE);
 	}
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より小さいとき
 	else if (mPlayer_FollowGaugeWid < HpGaugeWid) {
@@ -644,9 +612,9 @@ void CXPlayer::Render2D()
 	}
 	if(mPlayer_Hp >= PLAYER_INT_INITIALIZATION)
 	{
-		CRes::GetInstance()->GetInUiHpRedGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + mPlayer_FollowGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, 0, 480, 0, 10);
-		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + HpGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, 0, 480, 0, 10);
-		CRes::GetInstance()->GetInPlayerUiHpFrame().Draw(PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_RIGHT, PLAYER_GAUGE_FRAME_BOTTOM, PLAYER_GAUGE_FRAME_TOP, 0, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_HEI, 0);
+		CRes::GetInstance()->GetInUiHpRedGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + mPlayer_FollowGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
+		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + HpGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
+		CRes::GetInstance()->GetInPlayerUiHpFrame().Draw(PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_RIGHT, PLAYER_GAUGE_FRAME_BOTTOM, PLAYER_GAUGE_FRAME_TOP, PLAYER_GAUGE_FRAME_TEX_FIRST_WID, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_HEI, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
 	}
 	//2Dの描画終了
 	CUtil::End2D();
@@ -680,7 +648,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 									CXEnemy::GetInstance()->SetIsHit(false);
 									mPlayer_InvincibleFlag = true;
 									mPlayer_State = EKNOCKBACK;
-									CRes::GetInstance()->GetinEnemySeAttackSp().Play(0.3);
+									CRes::GetInstance()->GetinEnemySeAttackSp().Play(PLAYER_DAMAGE_SE);
 								}
 							}
 						}
@@ -697,7 +665,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 									CXEnemy::GetInstance()->SetIsHit(false);
 									mPlayer_InvincibleFlag = true;
 									mPlayer_State = EKNOCKBACK;
-									CRes::GetInstance()->GetinEnemySeAttackSp().Play(0.3);
+									CRes::GetInstance()->GetinEnemySeAttackSp().Play(PLAYER_DAMAGE_SE);
 								}
 							}
 						}
@@ -712,7 +680,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		//相手のコライダがカプセルコライダの時
 		if (o->Type() == CCollider::ECAPSUL) {
 			CVector adjust;//調整用ベクトル
-			if (!mPlayer_Hp <= 0) {
+			if (!mPlayer_Hp <= PLAYER_GAMEOVER_HP) {
 				if (CCollider::CollisionCapsule(m, o, &adjust))
 				{
 					//位置の更新(mPosition + adjust)
@@ -734,7 +702,6 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 			//行列の更新
 			CTransform::Update();
 		}
-
 	}
 }
 void CXPlayer::MovingCalculation() {
@@ -743,7 +710,7 @@ void CXPlayer::MovingCalculation() {
 	//減速させる
 	mPlayer_Move = mPlayer_Move * PLAYER_THRUST;							//プレイヤの移動量に推力を掛ける
 	//重力をプレイヤに掛ける
-	mPosition.Y(mPosition.Y() - PLAYER_GRAVITY);							//プレイヤのY軸に重力を掛ける
+	mPosition.Y(mPosition.Y() * PLAYER_GRAVITY);							//プレイヤのY軸に重力を掛ける
 
 	//普通に3次元ベクトル計算で算出したほうが正確だが計算量を懸念する場合は擬似計算で軽量化
 	//擬似ベクトル計算

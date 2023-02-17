@@ -14,16 +14,16 @@ CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
 
 //コライダ初期化
 CXEnemy::CXEnemy()
-	:mEnemy_Hp(150)
-	,mEnemy_Speed(0.0f)
-	,mEnemy_Turnspeed(0.0f)
+	:mEnemy_Hp(ENEMY_HP)
+	,mEnemy_Speed(ENEMY_SPEED)
+	,mEnemy_Turnspeed(ENEMY_TURNSPEED)
 	,mEnemy_PlayerDis(0.0f)
 	, mEnemy_FollowGaugeWid(0.0f)
 	,mEnemy_val(0)
 	,mEnemy_IsHit(false)
 	,mEnemy_Flag(false)
-	, mEnemy_ColCapsuleBody(this, nullptr, CVector(0.0f, 90.0f, 0.0f), CVector(0.0f, -140.0f, 0.0f), 1.3)
-	, mEnemy_ColSphereBody(this, nullptr, CVector(0.5, -1.0f, 1.0f), 1.2f)
+	, mEnemy_ColCapsuleBody(this, nullptr, CVector(0.0f, 190.0f, 0.0f), CVector(0.0f, -30.0f, 0.0f), 1.2)
+	, mEnemy_ColSphereBody(this, nullptr, CVector(0.5, 95.0f, 1.0f), 1.2f)
 	,mEnemy_ColSphereRightarm(this, nullptr, CVector(), 1.0)
 	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), 1.0)
 
@@ -50,11 +50,11 @@ void CXEnemy::Init(CModelX* model)
 {
 	CXCharacter::Init(model);
 	//合成行列の設定
-	mEnemy_ColCapsuleBody.Matrix(&mpCombinedMatrix[24]);
-	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[24]);
+	mEnemy_ColCapsuleBody.Matrix(&mpCombinedMatrix[2]);
+	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[2]);
 	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[68]);
 	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
-	mPosition.Set(0.0f, 2.0f, -20.0);	//位置を設定
+	mPosition.Set(0.0f, 1.5f, -20.0);	//位置を設定
 	mScale.Set(3.0f, 3.0f, 2.0f);//スケール設定
 	mRotation.Set(0.0f, 0.0f, 0.0f);	//回転を設定
 }
@@ -171,6 +171,7 @@ void CXEnemy::Move(){
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirにプレイヤー方向のベクトルを入れる
+	mEnemy_MoveDir.Y(0.0f);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//およそ1秒毎に目標地点を更新
 	int r = rand() % 30; //rand()は整数の乱数を返す
@@ -222,6 +223,7 @@ void CXEnemy::Dash()
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirに目標地点方向のベクトルを入れる
+	mEnemy_MoveDir.Y(0.0f);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//およそ1秒毎に目標地点を更新
 	int r = rand() % 25; //rand()は整数の乱数を返す
@@ -298,21 +300,29 @@ void CXEnemy::Attack_1()
 		mEnemy_IsHit = false; //ヒット判定終了
 		mEnemy_State = EIDLE; //待機状態に移行
 
-		//スーパーアーマが発動時のダメージ参照
-		if (mEnemy_val >= 61 && mEnemy_val <= 100)
+		//1度しか動かさないためのカウンタ
+		if (mEnemy_Flag == false)
 		{
-			if (CXPlayer::GetInstance()->GetIsHit() == true) {
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-				{
-					mEnemy_Hp = mEnemy_Hp - 10;
-				}
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-				{
-					mEnemy_Hp = mEnemy_Hp - 10;
-				}
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-				{
-					mEnemy_Hp = mEnemy_Hp - 15;
+			mEnemy_Flag = true;
+			//スーパーアーマが発動時のダメージ参照
+			if (mEnemy_val >= 61 && mEnemy_val <= 100)
+			{
+				if (CXPlayer::GetInstance()->GetIsHit() == true) {
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+					{
+						mEnemy_Hp = mEnemy_Hp - 10;
+						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
+					}
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+					{
+						mEnemy_Hp = mEnemy_Hp - 10;
+						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
+					}
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+					{
+						mEnemy_Hp = mEnemy_Hp - 15;
+						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
+					}
 				}
 			}
 		}
@@ -351,21 +361,29 @@ void CXEnemy::Attack_2()
 		mEnemy_IsHit = false; //ヒット判定終了
 		mEnemy_State = EIDLE; //待機状態に移行
 
-		//スーパーアーマが発動時のダメージ参照
-		if (mEnemy_val >= 61 && mEnemy_val <= 100)
+		//1度しか動かさないためのカウンタ
+		if (mEnemy_Flag == false)
 		{
-			if (CXPlayer::GetInstance()->GetIsHit() == true) {
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-				{
-					mEnemy_Hp = mEnemy_Hp - 10;
-				}
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-				{
-					mEnemy_Hp = mEnemy_Hp - 10;
-				}
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-				{
-					mEnemy_Hp = mEnemy_Hp - 15;
+			mEnemy_Flag = true;
+			//スーパーアーマが発動時のダメージ参照
+			if (mEnemy_val >= 61 && mEnemy_val <= 100)
+			{
+				if (CXPlayer::GetInstance()->GetIsHit() == true) {
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+					{
+						mEnemy_Hp = mEnemy_Hp - 10;
+						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
+					}
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+					{
+						mEnemy_Hp = mEnemy_Hp - 10;
+						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
+					}
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+					{
+						mEnemy_Hp = mEnemy_Hp - 15;
+						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
+					}
 				}
 			}
 		}
@@ -403,22 +421,29 @@ void CXEnemy::Attack_3()
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
 		mEnemy_State = EIDLE; //待機状態に移行
-
-		//スーパーアーマが発動時のダメージ参照
-		if (mEnemy_val >= 61 && mEnemy_val <= 100)
+		//1度しか動かさないためのカウンタ
+		if (mEnemy_Flag == false)
 		{
-			if (CXPlayer::GetInstance()->GetIsHit() == true) {
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-				{
-					mEnemy_Hp = mEnemy_Hp - 10;
-				}
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-				{
-					mEnemy_Hp = mEnemy_Hp - 10;
-				}
-				if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-				{
-					mEnemy_Hp = mEnemy_Hp - 15;
+			mEnemy_Flag = true;
+			//スーパーアーマが発動時のダメージ参照
+			if (mEnemy_val >= 61 && mEnemy_val <= 100)
+			{
+				if (CXPlayer::GetInstance()->GetIsHit() == true) {
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+					{
+						mEnemy_Hp = mEnemy_Hp - 10;
+						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
+					}
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+					{
+						mEnemy_Hp = mEnemy_Hp - 10;
+						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
+					}
+					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+					{
+						mEnemy_Hp = mEnemy_Hp - 15;
+						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
+					}
 				}
 			}
 		}
@@ -434,6 +459,20 @@ void CXEnemy::KnockBack()
 	//1度しか動かさないためのカウンタ
 	if (mEnemy_Flag == false)
 	{
+		if (mEnemy_val >= 0 && mEnemy_val <= 60) {
+			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+			{
+				new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
+			}
+			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+			{
+				new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
+			}
+			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+			{
+				new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
+			}
+		}
 		mEnemy_Flag = true;
 		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 		{
@@ -503,8 +542,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	if (!mEnemy_Hp <= 0)
 	{
 		//自身のコライダタイプの判定
-		switch (m->Type()) {
-		case CCollider::ESPHERE: {//球コライダ
+		if (m->Type() == CCollider::ESPHERE) {
 			//相手のコライダが球コライダの時
 			if (o->Type() == CCollider::ESPHERE) {
 				//球の衝突判定
@@ -515,81 +553,22 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 						//相手のコライダのタグが右手
 						if (o->Tag() == CCollider::ESWORD)
 						{
-							//相手の親のタグがプレイヤー
-							if (o->Parent()->Tag() == EPLAYER)
+							if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
 							{
-								//相手のコライダのタグが剣
-								if (o->Tag() == CCollider::ESWORD)
-								{
-									if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
-									{
-										//乱数値=rand()%乱数値の要素数+乱数値の最小値
-										srand((unsigned)time(NULL));
-										mEnemy_val = (rand() % 100) + 1;
-										if (mEnemy_val >= 0 && mEnemy_val <= 60) {
-											if (CXPlayer::GetInstance()->GetIsHit() == true) {
-												//攻撃を受けた箇所
-												switch (m->Tag()) {
-												case CCollider::EBODY: {	//体
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-													{
-														new CEffectEnemyDamageSp1(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
-													}
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-													{
-														new CEffectEnemyDamageSp2(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2); //エフェクトを生成する
-													}
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-													{
-														new CEffectEnemyDamageSp3(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
-													}
-													mEnemy_State = EKNOCKBACK;
-												}
-
-												case CCollider::ELEFTARM: {	//左手	
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-													{
-														new CEffectEnemyDamageSp1(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
-													}
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-													{
-														new CEffectEnemyDamageSp2(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2); //エフェクトを生成する
-													}
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-													{
-														new CEffectEnemyDamageSp3(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
-													}
-													mEnemy_State = EKNOCKBACK;
-												}
-												case CCollider::ERIGHTARM: {	//右手	
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-													{
-														new CEffectEnemyDamageSp1(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
-													}
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-													{
-														new CEffectEnemyDamageSp2(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2); //エフェクトを生成する
-													}
-													if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-													{
-														new CEffectEnemyDamageSp3(((CXPlayer*)(o->Parent()))->GetSwordColPos(), 3.0f, 3.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
-													}
-													mEnemy_State = EKNOCKBACK;
-												}
-												}
-											}
-										}
+								//乱数値=rand()%乱数値の要素数+乱数値の最小値
+								srand((unsigned)time(NULL));
+								mEnemy_val = (rand() % 100) + 1;
+								if (mEnemy_val >= 0 && mEnemy_val <= 60) {
+									if (CXPlayer::GetInstance()->GetIsHit() == true) {
+											mEnemy_State = EKNOCKBACK;
 									}
 								}
 							}
 						}
 					}
-
-
 				}
 			}
-		}
-		}
+		}	
 	}
 }
 
@@ -622,7 +601,7 @@ void CXEnemy::MovingCalculation() {
 	}
 	//移動する
 	mPosition += mEnemy_MoveDir * mEnemy_Speed;
-	mPosition.Y(mPosition.Y() - ENEMY_GRAVITY);
+	mPosition.Y(mPosition.Y() * ENEMY_GRAVITY);
 
 	//移動方向リセット
 	mEnemy_MoveDir = CVector(0.0f, 0.0f, 0.0f);

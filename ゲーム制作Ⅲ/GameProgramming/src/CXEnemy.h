@@ -10,6 +10,9 @@
 #define ENEMY_GAUGE_HEIGHT 20.0f //ゲージ描画時の高さ
 #define ENEMY_GAUGE_HP_TOP -10.0f //HPゲージ描画時の上座標
 #define ENEMY_GAUGE_HP_BOTTOM (ENEMY_GAUGE_HP_TOP - ENEMY_GAUGE_HEIGHT) //HPゲージ描画時の下座標
+//敵のステータス
+#define ENEMY_SPEED 0.0f //敵の速度初期化
+#define ENEMY_TURNSPEED 0.0f //ターン速度初期化
 
 
 class CXEnemy : public CXCharacter{
@@ -39,8 +42,7 @@ public:
 	bool GetIsAnimationFrame();
 	bool GetHp();								//敵のHP取得関数
 	bool GetIsHit();							//ヒット状態の判別
-	void SetIsHit(bool hitflag);	//攻撃の当たり判定フラグを設定
-	bool mIsDeath();							//死亡状態の時にtrueを返す
+	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
 	CXEnemy::EEnemyState GetState();			//プレイヤーの状態を取得する
 protected:
 	//コライダの宣言

@@ -19,30 +19,48 @@
 #include "CShadowMap.h"
 #include "CSound.h"
 
+//プレイヤのゲームオーバ体力設定
+#define PLAYER_GAMEOVER_HP 0																	//ゲームオーバ設定
 //プレイヤのパラメータマクロ
 #define PLAYER_SPEED_DEFAULT 0.2f																//スピード(通常時)
-#define PLAYER_GRAVITY 0.0007f																	//重力
+#define PLAYER_GRAVITY 0.9f																		//重力
 #define PLAYER_THRUST 0.9																		//推力
-#define PLAYER_RECEPTION 120																	//キー入力の受付時間
+#define PLAYER_SE 0.1																			//プレイヤSE設定
+#define PLAYER_DAMAGE_SE 0.3																	//プレイヤダメージSE設定
+#define PLAYER_RECEPTION 8																		//キー入力の受付時間
 #define PLAYER_INRECEPTION 	21.0f																//当たり判定の受付時間															
 #define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
 #define PLAYER_HP_MAX 100																		//HPの最大値
 #define PLAYER_HP 100																			//HPの設定
 
-//プレイヤのアニメーション番号の設定
+//プレイヤのアニメーションのフレーム設定
+#define PLAYER_IDLE_ANIMATION_FRAME 20
+#define PLAYER_MOVE_ANIMATION_FRAME 45															//移動のアニメーションフレーム設定
+#define PLAYER_AVOIDANCE_ANIMATION_FRAME 50														//回避のアニメーションフレーム設定
+#define PLAYER_ATTACK1_ANIMATION_FRAME 60														//攻撃1のアニメーションフレーム設定
+#define PLAYER_ATTACK2_ANIMATION_FRAME 70														//攻撃2のアニメーションフレーム設定
+#define PLAYER_ATTACK3_ANIMATION_FRAME 80														//攻撃3のアニメーションフレーム設定
+#define PLAYER_KNOCKBACK_ANIMATION_FRAME 60														//ノックバックのアニメーションフレーム設定
+#define PLAYER_DEATH_ANIMATION_FRAME 60															//死亡のアニメーションフレーム設定
 
+//プレイヤのダメージ設定
+#define PLAYER_DAMAGE_ENEMYSP1 15						//敵の攻撃1のダメージ	
+#define PLAYER_DAMAGE_ENEMYSP2 10						//敵の攻撃2のダメージ
+#define PLAYER_DAMAGE_ENEMYSP3 20						//敵の攻撃3のダメージ
+
+//プレイヤのアニメーション番号の設定
 #define PLAYER_ANIMATION_No_MOVE 0			//移動アニメーション番号
 #define PLAYER_ANIMATION_No_ATTACK_1 1		//攻撃アニメーション1番号
 #define PLAYER_ANIMATION_No_ATTACK_2 2		//攻撃アニメーション2番号
 #define PLAYER_ANIMATION_No_ATTACK_3 3		//攻撃アニメーション3番号
-#define PLAYER_ANIMATION_No_AVOIDANCE 4	//回避アニメーション番号
+#define PLAYER_ANIMATION_No_AVOIDANCE 4		//回避アニメーション番号
 #define PLAYER_ANIMATION_No_IDLE 5			//待機アニメーション番号
-#define PLAYER_ANIMATION_No_KNOCKBACK 6	//ノックバックアニメーション番号
+#define PLAYER_ANIMATION_No_KNOCKBACK 6		//ノックバックアニメーション番号
 #define PLAYER_ANIMATION_No_DEATH 7		//死亡アニメーション番号
 
 //敵パラメータマクロ
-#define ENEMY_HP_MAX 150	//HPの最大値
-#define ENEMY_HP 150			//HP設定
+#define ENEMY_HP_MAX 150			//HPの最大値
+#define ENEMY_HP 150				//HP設定
 #define ENEMY_DAMAGE_BODY 15		//ダメージ(体)
 #define ENEMY_ATTACK_DIS 3.2f		//攻撃可能になる距離
 #define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
@@ -52,7 +70,7 @@
 #define ENEMY_SEARCH_DIS 60.0f		//走行を開始する距離
 #define ENEMY_WALK_DIS_MAX 50.0f	//歩行可能な最大距離
 #define ENEMY_CHASE_DIS_MAX 80.0f   //走行可能な最大距離
-#define ENEMY_GRAVITY 0.0007f		//重力
+#define ENEMY_GRAVITY 1.0f			//重力
 #define ENEMY_RECEPTION 26.0f		//当たり判定の受付時間
 #define ENEMY_OUTRECEPTION 60.0f	//当たり判定の受付終了
 

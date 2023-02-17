@@ -8,7 +8,10 @@
 
 //カメラの描画範囲
 #define WINDOW_WIDTH 800				//ゲーム画面の描画範囲幅設定
+#define WINDOW_FIRST_WIDTH 0			//ゲーム画面の描画し始める範囲幅設定
 #define WINDOW_HEIGHT 600				//ゲーム画面の描画範囲高さ設定
+#define WINDOW_FIRST_HEIGHT 0				//ゲーム画面の描画し始める範囲高さ設定
+
 
 //カメラ
 #define CAMERA_SENSITIVITY 0.0005f		//カメラの感度設定
