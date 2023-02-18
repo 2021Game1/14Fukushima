@@ -23,9 +23,9 @@ CXEnemy::CXEnemy()
 	,mEnemy_IsHit(false)
 	,mEnemy_Flag(false)
 	, mEnemy_ColCapsuleBody(this, nullptr, CVector(0.0f, 190.0f, 0.0f), CVector(0.0f, -30.0f, 0.0f), 1.2)
-	, mEnemy_ColSphereBody(this, nullptr, CVector(0.5, 95.0f, 1.0f), 1.2f)
-	,mEnemy_ColSphereRightarm(this, nullptr, CVector(), 1.0)
-	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), 1.0)
+	, mEnemy_ColSphereBody(this, nullptr, CVector(0.0, 94.0f, 5.0f), 1.3f)
+	,mEnemy_ColSphereRightarm(this, nullptr, CVector(), 0.7)
+	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), 0.7)
 
 {
 	mpEnemy_Instance = this;
@@ -55,7 +55,7 @@ void CXEnemy::Init(CModelX* model)
 	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[68]);
 	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
 	mPosition.Set(0.0f, 1.5f, -20.0);	//位置を設定
-	mScale.Set(3.0f, 3.0f, 2.0f);//スケール設定
+	mScale.Set(3.0f, 2.63f, 2.0f);		//スケール設定
 	mRotation.Set(0.0f, 0.0f, 0.0f);	//回転を設定
 }
 
@@ -96,6 +96,9 @@ void CXEnemy::Update() {
 		break;
 	}
 	MovingCalculation();
+	if (mEnemy_PlayerDis >= ENEMY_ATTACK_DIS) {
+		mEnemy_AttackDir = mEnemy_Player_Point; //攻撃時の向きを求める
+	}
 	//体力が0になると死亡
 	if (mEnemy_Hp <= 0)
 	{
@@ -126,11 +129,14 @@ void CXEnemy::Render2D()
 	}
 	//画面外の時に表示しない
 	if (ret.X() > 0 && ret.X() < 800) {
-		CRes::GetInstance()->GetInEnemyUiHpBackBar().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
-		//被ダメージ分後追いするゲージを表示
-		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
-		//体力ゲージ
-		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+		if (!mEnemy_Hp <= 0)
+		{
+			CRes::GetInstance()->GetInEnemyUiHpBackBar().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
+			//被ダメージ分後追いするゲージを表示
+			CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+			//体力ゲージ
+			CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+		}
 	}
 	//2Dの描画終了
 	CUtil::End2D();
@@ -275,6 +281,8 @@ void CXEnemy::Attack_1()
 	//ヒット判定発生
 	if (IsAnimationFinished() == false)
 	{
+		mEnemy_MoveDirKeep = mEnemy_AttackDir;
+		mEnemy_MoveDir = mEnemy_AttackDir;
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 		if (mAnimationFrame <= ENEMY_RECEPTION)
 		{
@@ -336,6 +344,8 @@ void CXEnemy::Attack_2()
 	//ヒット判定発生
 	if (IsAnimationFinished() == false) 
 	{
+		mEnemy_MoveDirKeep = mEnemy_AttackDir;
+		mEnemy_MoveDir = mEnemy_AttackDir;
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 		if (mAnimationFrame <= ENEMY_RECEPTION)
 		{
@@ -397,6 +407,8 @@ void CXEnemy::Attack_3()
 	//ヒット判定発生
 	if (IsAnimationFinished() == false) 
 	{
+		mEnemy_MoveDirKeep = mEnemy_AttackDir;
+		mEnemy_MoveDir = mEnemy_AttackDir;
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 		if (mAnimationFrame <= ENEMY_RECEPTION)
 		{

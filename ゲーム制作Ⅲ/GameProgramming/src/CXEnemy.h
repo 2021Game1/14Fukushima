@@ -65,6 +65,7 @@ protected:
 	CVector mEnemy_MoveDir;						//敵の移動する方向、モデルの回転にも使用している、毎フレームリセットされる
 	CVector mEnemy_MoveDirKeep;					//敵の移動時の方向を保存する
 	CVector mEnemy_Player_Point;				//プレイヤの方向ベクトル保存用
+	CVector mEnemy_AttackDir;					//敵の攻撃時の方向を保持する
 	EEnemyState mEnemy_State;					//敵の状態判断用
 	bool mEnemy_Flag;							//敵のフラグ
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す

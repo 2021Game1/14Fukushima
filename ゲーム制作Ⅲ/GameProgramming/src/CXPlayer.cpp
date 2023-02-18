@@ -102,6 +102,9 @@ void CXPlayer::Update() {
 		mPlayer_State = EDEATH;										//死亡状態へ移行
 		mPlayer_Hp = PLAYER_GAMEOVER_HP;
 	}
+	if (mPlayer_EnemyDis >= PLAYER_ATTACK_DIS) {
+		mPlayer_AttackDir = mPlayer_Point; //攻撃時の向きを求める
+	}
 	//カメラの設定
 	Camera.SetTarget(mPosition);									//カメラをプレイヤの位置に設定
 	//キャラクタの更新処理
@@ -110,17 +113,20 @@ void CXPlayer::Update() {
 
 void CXPlayer::Idle() 
 {
-	mPlayer_ComboCount = PLAYER_INT_INITIALIZATION;
-	ChangeAnimation(PLAYER_ANIMATION_No_IDLE, true, PLAYER_IDLE_ANIMATION_FRAME);
 	//左クリックで攻撃
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = EATTACK_1;
 	}
 	//WASDキーを押すと移動へ移行
-	if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
+	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		mPlayer_State = EMOVE;
 		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
+	else{
+		mPlayer_ComboCount = PLAYER_INT_INITIALIZATION;
+		ChangeAnimation(PLAYER_ANIMATION_No_IDLE, true, PLAYER_IDLE_ANIMATION_FRAME);
+	}
+
 }
 
 //移動処理
@@ -158,7 +164,6 @@ void CXPlayer::Move()
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		ChangeAnimation(PLAYER_ANIMATION_No_MOVE, true, PLAYER_MOVE_ANIMATION_FRAME);
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
 	}
 	//待機状態へ移行
 	else {
@@ -168,15 +173,11 @@ void CXPlayer::Move()
 	if (mPlayer_State != EMOVE) {
 		CRes::GetInstance()->GetinPlayerSeWalk().Stop();
 	}
-
-
-
-
 }
 
 void CXPlayer::Avoidance()
 {
-	ChangeAnimation(PLAYER_ANIMATION_No_AVOIDANCE, true, PLAYER_AVOIDANCE_ANIMATION_FRAME);
+	ChangeAnimation(PLAYER_ANIMATION_No_AVOIDANCE, false, PLAYER_AVOIDANCE_ANIMATION_FRAME);
 
 	//ヒット判定発生
 	if (IsAnimationFinished() == false)
@@ -186,7 +187,42 @@ void CXPlayer::Avoidance()
 	//アニメーション終了時
 	else if (IsAnimationFinished())
 	{
-		mPlayer_State = EIDLE;
+		//左クリックで攻撃1へ移行
+		if (CKey::Once(VK_LBUTTON)) {
+			mPlayer_State = EATTACK_1;
+		}
+		else if (CKey::Push('W') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		//WASDキーを押すと移動へ移行
+		else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
+			mPlayer_State = EMOVE;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);											//カメラを基準にした移動処理を呼ぶ
+		}
+		else {
+			mPlayer_State = EIDLE;
+		}
 	}
 	if (mPlayer_State != EAVOIDANCE) {
 		CRes::GetInstance()->GetinPlayerSeWalk().Stop();
@@ -210,6 +246,8 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
+			mPlayer_MoveDirKeep = mPlayer_AttackDir;
+			mPlayer_MoveDir = mPlayer_AttackDir;
 			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 			if (mAnimationFrame <= PLAYER_INRECEPTION)
 			{
@@ -264,6 +302,8 @@ void CXPlayer::Attack_1()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
+			mPlayer_MoveDirKeep = mPlayer_AttackDir;
+			mPlayer_MoveDir = mPlayer_AttackDir;
 			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
 			{
 				mPlayer_IsHit = false;
@@ -331,6 +371,8 @@ void CXPlayer::Attack_2()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
+			mPlayer_MoveDirKeep = mPlayer_AttackDir;
+			mPlayer_MoveDir = mPlayer_AttackDir;
 			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 			if (mAnimationFrame <= PLAYER_INRECEPTION)
 			{
@@ -410,6 +452,8 @@ void CXPlayer::Attack_3()
 		//ヒット判定発生
 		if (IsAnimationFinished() == false) 
 		{
+			mPlayer_MoveDirKeep = mPlayer_AttackDir;
+			mPlayer_MoveDir = mPlayer_AttackDir;
 			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 			if (mAnimationFrame <= PLAYER_INRECEPTION)
 			{
@@ -471,8 +515,8 @@ void CXPlayer::Attack_3()
 
 	if (IsAnimationFinished())
 	{
-	mPlayer_State = EIDLE;											//待機状態へ移行
-	mPlayer_AttackFlag_3 = false;									//プレイヤの攻撃3のフラグをfalseに設定
+		mPlayer_State = EIDLE;											//待機状態へ移行
+		mPlayer_AttackFlag_3 = false;									//プレイヤの攻撃3のフラグをfalseに設定
 	}
 }
 //ノックバック処理
@@ -535,9 +579,44 @@ void CXPlayer::KnockBack()
 	//アニメーション終了時
 	if (IsAnimationFinished())
 	{
+		//左クリックで攻撃1へ移行
+		if (CKey::Once(VK_LBUTTON)) {
+			mPlayer_State = EATTACK_1;
+		}
+		else if (CKey::Push('W') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		else if (CKey::Push('A') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		else if (CKey::Push('S') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		else if (CKey::Push('D') && CKey::Once(VK_SHIFT)) {
+			MoveCamera();
+			mPlayer_State = EAVOIDANCE;
+			mPlayer_IsHit = false;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);
+		}
+		//WASDキーを押すと移動へ移行
+		else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
+			mPlayer_State = EMOVE;
+			CRes::GetInstance()->GetinPlayerSeWalk().Repeat(PLAYER_SE);											//カメラを基準にした移動処理を呼ぶ
+		}
+		else {
+			mPlayer_State = EIDLE;
+		}
 		mPlayer_Flag = false;
 		mPlayer_InvincibleFlag = false; //無敵状態を終了する
-		mPlayer_State = EIDLE; //待機状態へ移行
 	}
 }
 
@@ -705,6 +784,9 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	}
 }
 void CXPlayer::MovingCalculation() {
+	mPlayer_Point = CXEnemy::GetInstance()->Position() - mPosition;
+	//プレイヤーまでの距離を求める
+	mPlayer_EnemyDis = mPlayer_Point.Length();
 	//座標移動
 	mPosition += mPlayer_Move;												//プレイヤの位置にプレイヤの移動量を足す
 	//減速させる

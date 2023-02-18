@@ -22,16 +22,17 @@
 //プレイヤのゲームオーバ体力設定
 #define PLAYER_GAMEOVER_HP 0																	//ゲームオーバ設定
 //プレイヤのパラメータマクロ
+#define PLAYER_HP_MAX 100																		//HPの最大値
+#define PLAYER_HP 100																			//HPの設定
 #define PLAYER_SPEED_DEFAULT 0.2f																//スピード(通常時)
 #define PLAYER_GRAVITY 0.9f																		//重力
 #define PLAYER_THRUST 0.9																		//推力
 #define PLAYER_SE 0.1																			//プレイヤSE設定
 #define PLAYER_DAMAGE_SE 0.3																	//プレイヤダメージSE設定
-#define PLAYER_RECEPTION 8																		//キー入力の受付時間
+#define PLAYER_RECEPTION 10																		//キー入力の受付時間
 #define PLAYER_INRECEPTION 	21.0f																//当たり判定の受付時間															
 #define PLAYER_OUTRECEPTION 60.0f																//当たり判定の終了時間
-#define PLAYER_HP_MAX 100																		//HPの最大値
-#define PLAYER_HP 100																			//HPの設定
+#define PLAYER_ATTACK_DIS 2.2f																	//敵に攻撃が追従可能になる距離
 
 //プレイヤのアニメーションのフレーム設定
 #define PLAYER_IDLE_ANIMATION_FRAME 20
@@ -56,7 +57,7 @@
 #define PLAYER_ANIMATION_No_AVOIDANCE 4		//回避アニメーション番号
 #define PLAYER_ANIMATION_No_IDLE 5			//待機アニメーション番号
 #define PLAYER_ANIMATION_No_KNOCKBACK 6		//ノックバックアニメーション番号
-#define PLAYER_ANIMATION_No_DEATH 7		//死亡アニメーション番号
+#define PLAYER_ANIMATION_No_DEATH 7			//死亡アニメーション番号
 
 //敵パラメータマクロ
 #define ENEMY_HP_MAX 150			//HPの最大値

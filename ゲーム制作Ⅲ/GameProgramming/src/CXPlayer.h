@@ -46,7 +46,7 @@
 #define PLAYER_COLCAPSULE_BODY_SIZE 0.6					//カプセルコライダのサイズ設定
 
 //プレイヤの当たり判定
-#define PLAYER_COLSPHERE_BODY_SIZE 0.7					//球コライダのサイズ設定
+#define PLAYER_COLSPHERE_BODY_SIZE 0.9					//球コライダのサイズ設定
 
 //プレイヤの盾
 #define PLAYER_COLSPHERE_SHIELD_X 0.0f					//球コライダのX座標
@@ -55,9 +55,9 @@
 #define PLAYER_COLSPHERE_SHIELD_SIZE 0.5				//球コライダのサイズ
 
 //プレイヤの剣
-#define PLAYER_COLSPHERE_SWORD_HEAD_X -10.0f			//球コライダのX座標設定
+#define PLAYER_COLSPHERE_SWORD_HEAD_X -13.0f			//球コライダのX座標設定
 #define PLAYER_COLSPHERE_SWORD_HEAD_Y 0.0f				//球コライダのY座標設定
-#define PLAYER_COLSPHERE_SWORD_HEAD_Z 50.0f				//球コライダのZ座標設定
+#define PLAYER_COLSPHERE_SWORD_HEAD_Z 70.0f				//球コライダのZ座標設定
 #define PLAYER_COLSPHERE_SWORD_SIZE 0.3					//球コライダのサイズ設定
 
 /*
@@ -117,13 +117,17 @@ private:
 	float mPlayer_FollowGaugeWid;		//被ダメージ分後追いするゲージの幅
 
 	//プレイヤの移動用変数
+	CVector mPlayer_Point;				//プレイヤ移動時の目標地点
 	CVector mPlayer_Move;				//プレイヤの方向と速度をかけ合わせたベクトル、プレイヤの移動量
 	CVector mPlayer_MoveDir;			//プレイヤの移動する方向、モデルの回転にも使用している、毎フレームリセットされる
 	CVector mPlayer_MoveDirKeep;		//プレイヤの移動時の方向を保存する
+	CVector mPlayer_Player_Point;		//敵の方向ベクトル保存用
 	CVector mPlayer_KnockBackDir;		//プレイヤのノックバックする方向を保持する
 	CVector mPlayer_AttackDir;			//プレイヤの攻撃時の方向を保持する
 	float mPlayer_Speed;				//プレイヤのスピード
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
+	float mPlayer_EnemyDis;				//プレイヤが敵の座標参照用
+
 
 	//カメラのパラメータを作成する
 	CVector mPlayer_SideVec;			//プレイヤの横ベクトル
