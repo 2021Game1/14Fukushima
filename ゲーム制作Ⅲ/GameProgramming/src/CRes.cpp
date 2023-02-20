@@ -27,8 +27,6 @@ void CRes::Init() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_IDLE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_KNOCKBACK);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
-	//プレイヤガードアクションエフェクトモデル
-	gPlayer_GuardSP_Model.Load(PLAYER_MODEL_ACTION_GUARDSP);
 	//タイトル画像の追加
 	gTitle_Image.Load2D(TITLE_IMAGE);
 	//ゲームクリア画像の追加

@@ -40,10 +40,10 @@
 
 //プレイヤーの身体
 #define PLAYER_COLCAPSULE_BODY_X 0.0f					//カプセルコライダのX座標設定
-#define PLAYER_COLCAPSULE_BODY_TOP_Y 175.0f				//カプセルコライダのY座標設定
-#define PLAYER_COLCAPSULE_BODY_BOTTOM_Y -50.0f			//カプセルコライダのY座標設定
+#define PLAYER_COLCAPSULE_BODY_TOP_Y 95.0f				//カプセルコライダのY座標設定
+#define PLAYER_COLCAPSULE_BODY_BOTTOM_Y -134.8f			//カプセルコライダのY座標設定
 #define PLAYER_COLCAPSULE_BODY_Z 0.0f					//カプセルコライダのZ座標設定
-#define PLAYER_COLCAPSULE_BODY_SIZE 0.6					//カプセルコライダのサイズ設定
+#define PLAYER_COLCAPSULE_BODY_SIZE 0.7f				//カプセルコライダのサイズ設定
 
 //プレイヤの当たり判定
 #define PLAYER_COLSPHERE_BODY_SIZE 0.9					//球コライダのサイズ設定

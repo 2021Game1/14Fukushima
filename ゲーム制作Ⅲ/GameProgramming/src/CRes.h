@@ -71,7 +71,7 @@
 #define ENEMY_SEARCH_DIS 60.0f		//走行を開始する距離
 #define ENEMY_WALK_DIS_MAX 50.0f	//歩行可能な最大距離
 #define ENEMY_CHASE_DIS_MAX 80.0f   //走行可能な最大距離
-#define ENEMY_GRAVITY 1.0f			//重力
+#define ENEMY_GRAVITY 0.9f			//重力
 #define ENEMY_RECEPTION 26.0f		//当たり判定の受付時間
 #define ENEMY_OUTRECEPTION 60.0f	//当たり判定の受付終了
 
@@ -90,7 +90,6 @@
 #define PLAYER_ANIMATION_IDLE "res\\Player\\Paladin\\Idle.x"
 #define PLAYER_ANIMATION_KNOCKBACK "res\\Player\\Paladin\\KnockBack.x"
 #define PLAYER_ANIMATION_DEATH "res\\Player\\Paladin\\Death.x"
-#define PLAYER_MODEL_ACTION_GUARDSP "res\\Player\\Paladin\\Shield.obj","res\\Player\\Paladin\\Shield.mtl"
 
 /*エネミーのアニメーションモデル*/
 

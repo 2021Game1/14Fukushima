@@ -3,6 +3,10 @@
 
 //GetKeyState関数のヘッダファイル
 #include <Windows.h>
+#define VK_W 0x57
+#define VK_A 0x41
+#define VK_S 0x53
+#define VK_D 0x44
 /*
 CKeyクラス
 キーボード入力を取得する
