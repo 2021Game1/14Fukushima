@@ -1,9 +1,5 @@
 #include"CXPlayer.h"
-#include"CUtil.h"
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include "CCamera.h"
-#include"CRes.h"
+#include "CRes.h"
 
 CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタンス変数の初期化
 
@@ -689,7 +685,7 @@ void CXPlayer::Render2D()
 		//被ダメージ分後追いするゲージの幅に体力ゲージの幅を設定する
 		mPlayer_FollowGaugeWid = HpGaugeWid;
 	}
-	if(mPlayer_Hp >= PLAYER_INT_INITIALIZATION)
+	if(mPlayer_Hp >= PLAYER_GAMEOVER_HP)
 	{
 		CRes::GetInstance()->GetInUiHpRedGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + mPlayer_FollowGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_HEI, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
 		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + HpGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_HEI, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
@@ -804,19 +800,19 @@ void CXPlayer::MovingCalculation() {
 	else {
 		ChackVec = mPlayer_MoveDir.Normalize(); //移動時の方向ベクトルを代入
 	}
-	Check tCheck = CUtil::GetCheck2D(ChackVec.X(), ChackVec.Z(), 0, 0, mRotation.Y() * (M_PI / 180.0f));
+	Check tCheck = CUtil::GetCheck2D(ChackVec.X(), ChackVec.Z(), 0, 0, mRotation.Y() * (M_PI / PLAYER_TURN_SET));
 
 	//回転速度　degreeに直す
-	mPlayer_Turnspeed = (180.0f / M_PI) * 0.3f;
+	mPlayer_Turnspeed = (PLAYER_TURN_SET / M_PI) * PLAYER_TURN_SPEEDS_SET;
 
 	//急な振り返りを抑制
-	if (tCheck.turn > 1.5f) tCheck.turn = 1.5f;
+	if (tCheck.turn > PLAYER_TRUN_CHECK_SPEEDS_SET) tCheck.turn = PLAYER_TRUN_CHECK_SPEEDS_SET;
 
 	//移動方向へキャラを向かせる
-	if (tCheck.cross > 0.0f) {
+	if (tCheck.cross > PLAYER_TRUN_CHECK_SET) {
 		mRotation = mRotation + CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
 	}
-	if (tCheck.cross < 0.0f) {
+	if (tCheck.cross < PLAYER_TRUN_CHECK_SET){
 		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
 	}
 	//リセット

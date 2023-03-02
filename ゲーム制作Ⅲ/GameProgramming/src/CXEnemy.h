@@ -4,15 +4,8 @@
 #include"CXCharacter.h"
 #include"CColliderCapsule.h"
 #include"CCamera.h"
+#include"CEnemyData.h"
 
-//敵のHPフレーム,HPゲージ座標,幅,高さ
-#define ENEMY_GAUGE_WID_MAX 100.0f	//ゲージの幅の最大値
-#define ENEMY_GAUGE_HEIGHT 20.0f //ゲージ描画時の高さ
-#define ENEMY_GAUGE_HP_TOP -10.0f //HPゲージ描画時の上座標
-#define ENEMY_GAUGE_HP_BOTTOM (ENEMY_GAUGE_HP_TOP - ENEMY_GAUGE_HEIGHT) //HPゲージ描画時の下座標
-//敵のステータス
-#define ENEMY_SPEED 0.0f //敵の速度初期化
-#define ENEMY_TURNSPEED 0.0f //ターン速度初期化
 
 
 class CXEnemy : public CXCharacter{
@@ -78,12 +71,45 @@ protected:
 	void Attack_2();							//攻撃2処理
 	void Attack_3();							//攻撃3処理
 	void KnockBack();							//ノックバック処理
-	//void Repelled();							//はじかれた時の処理
 	void Death();								//死亡処理
 	//移動の計算処理
 	void MovingCalculation();
+	void Load();
 
-
+private:
+	int Enemy_Type;//敵種類
+	int Enemy_Priority;//描画優先度
+	float Enemy_Speed_WalkPattern;//移動スピードパターン
+	float Enemy_Speed_DashPattern;//走行スピードパターン
+	float Enemy_Walk_Dis; //歩行開始の距離
+	float Enemy_Dash_Dis; //走行開始の距離
+	float Enemy_Walk_Dis_Max; //歩行終了の距離
+	float Enemy_Dash_Dis_Max; //走行終了の距離
+	float Enemy_Attack_Dis;//攻撃可能な距離
+	float Enemy_Attack_Reception;//当たり判定の開始
+	float Enemy_Attack_Outreception;//当たり判定の終了
+	int Enemy_Attack_Walk_Rand;
+	int Enemy_Attack_Dash_Rand;
+	int Enemy_Damage_PlayerSp1;
+	int Enemy_Damage_PlayerSp2;
+	int Enemy_Damage_PlayerSp3;
+	float Position_X;//位置のX座標
+	float Position_Y;//位置のY座標
+	float Position_Z;//位置のZ座標
+	float Scale_X;   //スケールのX座標
+	float Scale_Y;   //スケールのY座標
+	float Scale_Z;   //スケールのZ座標
+	float Rotation_X;//モデルの回転X座標
+	float Rotation_Y;//モデルの回転Y座標
+	float Rotation_Z;//モデルの回転Z座標
+	int Hp;          //HP
+	int Hp_Max;      //HP最大値
+	int Death_Hp;    //死亡条件
+	CXEnemy(int Enemy_Type, int Enemy_Priority, float Enemy_Speed_WalkPattern, float Enemy_Speed_DashPattern, float Enemy_Walk_Dis,
+		float Enemy_Dash_Dis, float Enemy_Walk_Dis_Max, float Enemy_Dash_Dis_Max, float Enemy_Attack_Dis, float Enemy_Attack_Reception,
+		float Enemy_Attack_Outreception, int Enemy_Attack_Walk_Rand, int Enemy_Attack_Dash_Rand, int Enemy_Damage_PlayerSp1, int Enemy_Damage_PlayerSp2,
+		int Enemy_Damage_PlayerSp3, float Position_X, float Position_Y, float Position_Z, float Scale_X, float Scale_Y, float Scale_Z, float Rotation_X,
+		float Rotation_Y, float Rotation_Z, int Hp, int Hp_Max, int Death_Hp);
 };
 #endif
 

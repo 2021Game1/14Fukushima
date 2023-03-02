@@ -60,6 +60,7 @@
     <ClInclude Include="src\CColliderTriangle.h" />
     <ClInclude Include="src\CCollisionManager.h" />
     <ClInclude Include="src\CEffect.h" />
+    <ClInclude Include="src\CEnemyData.h" />
     <ClInclude Include="src\CInput.h" />
     <ClInclude Include="src\CKey.h" />
     <ClInclude Include="src\CMap.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="src\CModel.h" />
     <ClInclude Include="src\CModelX.h" />
     <ClInclude Include="src\CMyShader.h" />
+    <ClInclude Include="src\CPlayerData.h" />
     <ClInclude Include="src\CRes.h" />
     <ClInclude Include="src\CScene.h" />
     <ClInclude Include="src\CSceneGame.h" />

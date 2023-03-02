@@ -245,5 +245,11 @@
     <ClInclude Include="src\CSceneTitle.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
+    <ClInclude Include="src\CEnemyData.h">
+      <Filter>ソース ファイル\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CPlayerData.h">
+      <Filter>ソース ファイル\Lib</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
