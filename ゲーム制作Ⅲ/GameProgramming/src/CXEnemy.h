@@ -16,6 +16,7 @@ public:
 	CXEnemy();									//敵のデフォルトコンストラクタ
 	void Collision(CCollider* m, CCollider* o);	//敵の当たり判定
 	void Render2D();
+	void Load(int argc, char* argv[]);
 	void TaskCollision();
 	//敵の状態
 	enum EEnemyState
@@ -30,8 +31,6 @@ public:
 		//EREPELLED,								//はじかれた時のノックバック
 		EDEATH,									//死亡
 	};
-	//他のクラスで参照用の関数
-	static CXEnemy* GetInstance();				//staticで処理を作る
 	bool GetIsAnimationFrame();
 	bool GetHp();								//敵のHP取得関数
 	bool GetIsHit();							//ヒット状態の判別
@@ -62,7 +61,6 @@ protected:
 	EEnemyState mEnemy_State;					//敵の状態判断用
 	bool mEnemy_Flag;							//敵のフラグ
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
-	static CXEnemy* mpEnemy_Instance;			//別のクラスで敵の変数を呼び出す場合,staticでポインタを作る
 	//敵の行動メソッド関数
 	void Idle();								//待機処理
 	void Move();								//移動処理
@@ -74,9 +72,7 @@ protected:
 	void Death();								//死亡処理
 	//移動の計算処理
 	void MovingCalculation();
-	void Load();
 
-private:
 	int Enemy_Type;//敵種類
 	int Enemy_Priority;//描画優先度
 	float Enemy_Speed_WalkPattern;//移動スピードパターン
@@ -105,11 +101,6 @@ private:
 	int Hp;          //HP
 	int Hp_Max;      //HP最大値
 	int Death_Hp;    //死亡条件
-	CXEnemy(int Enemy_Type, int Enemy_Priority, float Enemy_Speed_WalkPattern, float Enemy_Speed_DashPattern, float Enemy_Walk_Dis,
-		float Enemy_Dash_Dis, float Enemy_Walk_Dis_Max, float Enemy_Dash_Dis_Max, float Enemy_Attack_Dis, float Enemy_Attack_Reception,
-		float Enemy_Attack_Outreception, int Enemy_Attack_Walk_Rand, int Enemy_Attack_Dash_Rand, int Enemy_Damage_PlayerSp1, int Enemy_Damage_PlayerSp2,
-		int Enemy_Damage_PlayerSp3, float Position_X, float Position_Y, float Position_Z, float Scale_X, float Scale_Y, float Scale_Z, float Rotation_X,
-		float Rotation_Y, float Rotation_Z, int Hp, int Hp_Max, int Death_Hp);
 };
 #endif
 

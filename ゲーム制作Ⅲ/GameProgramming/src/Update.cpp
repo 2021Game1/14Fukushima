@@ -1,4 +1,5 @@
 #include "CSceneManager.h"
+#include "CTable.h"
 
 //シーンマネージャのインスタンス
 CSceneManager SceneManager;
@@ -19,3 +20,5 @@ void Render() {
 	//シーンマネージャの描画
 	SceneManager.Render();
 }
+
+

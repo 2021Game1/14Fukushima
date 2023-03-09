@@ -8,9 +8,28 @@
 #define ENEMY_FLOAT_INITIALIZATION 0.0f															//浮動小数点の初期化
 
 //描画優先度設定
-#define ENEMY_SPEED_STOP 0.0f		//停止
-#define ENEMY_GRAVITY 0.9f			//重力
+#define ENEMY_PRIORITY 80
 
+//敵パラメータマクロ		
+#define ENEMY_HP_MAX 150			//HPの最大値
+#define ENEMY_HP 150				//HP設定
+#define ENEMY_DAMAGE_BODY 15		//ダメージ(体)
+#define ENEMY_ATTACK_DIS 3.2f		//攻撃可能になる距離
+#define ENEMY_SPEED_MOVE 0.1f		//通常移動のスピード
+#define ENEMY_SPEED_DASH 0.15f		//走行の移動速度
+#define ENEMY_SPEED_STOP 0.0f		//停止
+#define ENEMY_WALK_DIS 30.0f		//歩行を開始する距離
+#define ENEMY_SEARCH_DIS 60.0f		//走行を開始する距離
+#define ENEMY_WALK_DIS_MAX 50.0f	//歩行可能な最大距離
+#define ENEMY_CHASE_DIS_MAX 80.0f   //走行可能な最大距離
+#define ENEMY_GRAVITY 0.9f			//重力
+#define ENEMY_RECEPTION 26.0f		//当たり判定の受付時間
+#define ENEMY_OUTRECEPTION 60.0f	//当たり判定の受付終了
+
+//プレイヤのダメージ設定
+#define ENEMY_DAMAGE_ENEMYSP1 15						//プレイヤの攻撃1のダメージ	
+#define ENEMY_DAMAGE_ENEMYSP2 10						//プレイヤの攻撃2のダメージ
+#define ENEMY_DAMAGE_ENEMYSP3 20						//プレイヤの攻撃3のダメージ
 
 //敵のアニメーションのフレーム設定
 #define ENEMY_IDLE_ANIMATION_FRAME 60															//待機のアニメーションフレーム設定
@@ -31,6 +50,7 @@
 #define ENEMY_ANIMATION_No_IDLE 5			//待機アニメーション番号
 #define ENEMY_ANIMATION_No_KNOCKBACK 6		//ノックバックアニメーション番号
 #define ENEMY_ANIMATION_No_DEATH 7			//死亡アニメーション番号
+
 
 
 /*敵のコライダ設定*/
@@ -71,37 +91,5 @@
 #define ENEMY_PROBABILITY_MAX_SET1 60
 #define ENEMY_PROBABILITY_LOW_SET2 61
 #define ENEMY_PROBABILITY_MAX_SET2 100
-
-struct ENEMYDATA {
-        int Enemy_Type;//敵種類
-        int Enemy_Priority;//描画優先度
-        float Enemy_Speed_WalkPattern;//移動スピードパターン
-        float Enemy_Speed_DashPattern;//走行スピードパターン
-        float Enemy_Walk_Dis; //歩行開始の距離
-        float Enemy_Dash_Dis; //走行開始の距離
-        float Enemy_Walk_Dis_Max; //歩行終了の距離
-        float Enemy_Dash_Dis_Max; //走行終了の距離
-        float Enemy_Attack_Dis;//攻撃可能な距離
-        float Enemy_Attack_Reception;//当たり判定の開始
-        float Enemy_Attack_Outreception;//当たり判定の終了
-        int Enemy_Attack_Walk_Rand;
-        int Enemy_Attack_Dash_Rand;
-        int Enemy_Damage_PlayerSp1;
-        int Enemy_Damage_PlayerSp2;
-        int Enemy_Damage_PlayerSp3;
-        float Position_X;//位置のX座標
-        float Position_Y;//位置のY座標
-        float Position_Z;//位置のZ座標
-        float Scale_X;   //スケールのX座標
-        float Scale_Y;   //スケールのY座標
-        float Scale_Z;   //スケールのZ座標
-        float Rotation_X;//モデルの回転X座標
-        float Rotation_Y;//モデルの回転Y座標
-        float Rotation_Z;//モデルの回転Z座標
-        int Hp;          //HP
-        int Hp_Max;      //HP最大値
-        int Death_Hp;    //死亡条件
-};
-#define ENEMY_NUM 1
 
 #endif // !

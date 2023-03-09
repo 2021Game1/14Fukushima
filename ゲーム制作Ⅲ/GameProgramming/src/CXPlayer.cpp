@@ -300,7 +300,7 @@ void CXPlayer::Attack_1()
 		{
 			mPlayer_MoveDirKeep = mPlayer_AttackDir;
 			mPlayer_MoveDir = mPlayer_AttackDir;
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
+			if (CXEnemy::EEnemyState::EKNOCKBACK && CXEnemy::EEnemyState::EIDLE)
 			{
 				mPlayer_IsHit = false;
 			}
@@ -524,25 +524,23 @@ void CXPlayer::KnockBack()
 	{
 		mPlayer_IsHit = false;
 	}
-	if (CXEnemy::GetInstance()->GetIsHit() == true)
-	{
 		if (mPlayer_Flag == false)
 		{
 			mPlayer_Flag = true;
-			if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
+			if (CXEnemy::EEnemyState::EATTACK_1)
 			{
 				mPlayer_Hp = mPlayer_Hp - PLAYER_DAMAGE_ENEMYSP1;
 			}
-			else if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
+			else if (CXEnemy::EEnemyState::EATTACK_2)
 			{
 				mPlayer_Hp = mPlayer_Hp - PLAYER_DAMAGE_ENEMYSP2;
 			}
-			else if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
+			else if (CXEnemy::EEnemyState::EATTACK_3)
 			{
 				mPlayer_Hp = mPlayer_Hp - PLAYER_DAMAGE_ENEMYSP3;
 			}
 		}
-	}
+
 
 	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
@@ -716,11 +714,11 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 						//プレイヤーが無敵状態ではないとき
 						if (mPlayer_InvincibleFlag == false)
 						{
-							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1 || CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
+							if (CXEnemy::EEnemyState::EATTACK_1 || CXEnemy::EEnemyState::EATTACK_3)
 							{
-								if (CXEnemy::GetInstance()->GetIsHit() == true)
+								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
 								{
-									CXEnemy::GetInstance()->SetIsHit(false);
+									((CXEnemy*)(o->Parent()))->SetIsHit(false);
 									mPlayer_InvincibleFlag = true;
 									mPlayer_State = EKNOCKBACK;
 									CRes::GetInstance()->GetinEnemySeAttackSp().Play(PLAYER_DAMAGE_SE);
@@ -733,11 +731,11 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 						//プレイヤーが無敵状態ではないとき
 						if (mPlayer_InvincibleFlag == false)
 						{
-							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
+							if (CXEnemy::EEnemyState::EATTACK_2)
 							{
-								if (CXEnemy::GetInstance()->GetIsHit() == true)
+								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
 								{
-									CXEnemy::GetInstance()->SetIsHit(false);
+									((CXEnemy*)(o->Parent()))->SetIsHit(false);
 									mPlayer_InvincibleFlag = true;
 									mPlayer_State = EKNOCKBACK;
 									CRes::GetInstance()->GetinEnemySeAttackSp().Play(PLAYER_DAMAGE_SE);
@@ -780,7 +778,6 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	}
 }
 void CXPlayer::MovingCalculation() {
-	mPlayer_Point = CXEnemy::GetInstance()->Position() - mPosition;
 	//プレイヤーまでの距離を求める
 	mPlayer_EnemyDis = mPlayer_Point.Length();
 	//座標移動

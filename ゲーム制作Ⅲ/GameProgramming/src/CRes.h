@@ -46,6 +46,8 @@
 #define ENEMY_ANIMATION_KNOCKBACK "res\\Enemy\\Mutant\\KnockBack.x"
 #define ENEMY_ANIMATION_DEATH "res\\Enemy\\Mutant\\Death.x"
 
+#define ENEMYDATA_FILE "res\\Enemy\\EnemyData.csv"
+
 /*マップのモデル*/
 
 #define MAP_MODEL_MAP "res\\Map\\map.obj","res\\Map\\map.mtl"

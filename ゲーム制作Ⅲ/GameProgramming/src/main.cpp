@@ -4,7 +4,6 @@
 #include "GLFW/glfw3.h"
 #include "Update.h"
 #include "CInput.h"
-
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 //#define FULL_SCREEN
@@ -155,3 +154,5 @@ int main(void)
 	glfwTerminate();
 	return 0;
 }
+
+

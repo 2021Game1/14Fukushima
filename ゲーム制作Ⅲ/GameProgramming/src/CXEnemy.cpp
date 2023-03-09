@@ -7,90 +7,8 @@
 #include "CRes.h"
 
 
-CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
-
-void CXEnemy::Load() {
-	FILE* fp;
-	ENEMYDATA data[ENEMY_NUM];
-	char buf[256];
-	int c;
-	int col = 1;
-	int row = 0;
-	memset(buf, 0, sizeof(buf));
-	fp = fopen("res\\Enemy\\EnemyData.csv", "r");
-	//ヘッダ読み飛ばし
-	while (fgetc(fp) != '\0');
-	while (1) {
-		while (1) {
-			c = fgetc(fp);
-			//末尾ならループを抜ける。
-			if (c == EOF) {
-				break;
-			}
-			//カンマか改行でなければ、文字としてつなげる
-			if (c != ',' && c != '\0') {
-				strcat(buf, (const char*)&c);
-			}
-			//カンマか改行ならループ抜ける。
-			else
-				break;
-		}
-		//ここに来たということは、1セル分の文字列が出来上がったということ
-		switch (col) {
-		//1列目は敵種類を表す。atoi関数で数値として代入
-		case 1: data[row].Enemy_Type = atoi(buf); break;
-		case 2: data[row].Enemy_Priority = atoi(buf); break;
-		case 3: data[row].Enemy_Speed_WalkPattern = atoi(buf); break;
-		case 4: data[row].Enemy_Speed_DashPattern = atoi(buf); break;
-		case 5: data[row].Enemy_Walk_Dis = atoi(buf); break;
-		case 6: data[row].Enemy_Dash_Dis = atoi(buf); break;
-		case 7: data[row].Enemy_Walk_Dis_Max = atoi(buf); break;
-		case 8: data[row].Enemy_Dash_Dis_Max = atoi(buf); break;
-		case 9: data[row].Enemy_Attack_Dis = atoi(buf); break;
-		case 10: data[row].Enemy_Attack_Reception = atoi(buf); break;
-		case 11: data[row].Enemy_Attack_Outreception = atoi(buf); break;
-		case 12: data[row].Enemy_Attack_Walk_Rand = atoi(buf); break;
-		case 13: data[row].Enemy_Attack_Dash_Rand = atoi(buf); break;
-		case 14: data[row].Enemy_Damage_PlayerSp1 = atoi(buf); break;
-		case 15: data[row].Enemy_Damage_PlayerSp2 = atoi(buf); break;
-		case 16: data[row].Enemy_Damage_PlayerSp3 = atoi(buf); break;
-		case 17: data[row].Position_X = atoi(buf); break;
-		case 18: data[row].Position_Y = atoi(buf); break;
-		case 19: data[row].Position_Z = atoi(buf); break;
-		case 20: data[row].Scale_X = atoi(buf); break;
-		case 21: data[row].Scale_Y = atoi(buf); break;
-		case 22: data[row].Scale_Z = atoi(buf); break;
-		case 23: data[row].Rotation_X = atoi(buf); break;
-		case 24: data[row].Rotation_Y = atoi(buf); break;
-		case 25: data[row].Rotation_Z = atoi(buf); break;
-		case 26: data[row].Hp = atoi(buf); break;
-		case 27: data[row].Hp_Max = atoi(buf); break;
-		case 28: data[row].Death_Hp = atoi(buf); break;
-		}
-		//バッファを初期化
-		memset(buf, 0, sizeof(buf));
-		//列数を足す
-		++col;
-		//もし読み込んだ文字が改行だったら列数を初期化して行数を増やす
-		if (c == '\n') {
-			col = 1;
-			++row;
-		}
-		
-	}
-	for (int i = 0; i < ENEMY_NUM; ++i) {
-		new CXEnemy(data[i].Enemy_Type, data[i].Enemy_Priority, data[i].Enemy_Speed_WalkPattern, data[i].Enemy_Speed_DashPattern, data[i].Enemy_Walk_Dis,
-			data[i].Enemy_Dash_Dis, data[i].Enemy_Walk_Dis_Max, data[i].Enemy_Dash_Dis_Max, data[i].Enemy_Attack_Dis, data[i].Enemy_Attack_Reception,
-			data[i].Enemy_Attack_Outreception, data[i].Enemy_Attack_Walk_Rand, data[i].Enemy_Attack_Dash_Rand, data[i].Enemy_Damage_PlayerSp1, data[i].Enemy_Damage_PlayerSp2,
-			data[i].Enemy_Damage_PlayerSp3, data[i].Position_X, data[i].Position_Y, data[i].Position_Z, data[i].Scale_X, data[i].Scale_Y, data[i].Scale_Z, data[i].Rotation_X,
-			data[i].Rotation_Y, data[i].Rotation_Z, data[i].Hp, data[i].Hp_Max, data[i].Death_Hp);
-	}
-}
-CXEnemy::CXEnemy(int Enemy_Type, int Enemy_Priority, float Enemy_Speed_WalkPattern, float Enemy_Speed_DashPattern, float Enemy_Walk_Dis,
-	float Enemy_Dash_Dis, float Enemy_Walk_Dis_Max, float Enemy_Dash_Dis_Max, float Enemy_Attack_Dis, float Enemy_Attack_Reception,
-	float Enemy_Attack_Outreception, int Enemy_Attack_Walk_Rand, int Enemy_Attack_Dash_Rand, int Enemy_Damage_PlayerSp1, int Enemy_Damage_PlayerSp2,
-	int Enemy_Damage_PlayerSp3, float Position_X, float Position_Y, float Position_Z, float Scale_X, float Scale_Y, float Scale_Z, float Rotation_X,
-	float Rotation_Y, float Rotation_Z, int Hp, int Hp_Max, int Death_Hp) 
+//コライダ初期化
+CXEnemy::CXEnemy()
 	:mEnemy_Hp(Hp)
 	, mEnemy_Speed(ENEMY_SPEED)
 	, mEnemy_Turnspeed(ENEMY_TURNSPEED)
@@ -104,36 +22,6 @@ CXEnemy::CXEnemy(int Enemy_Type, int Enemy_Priority, float Enemy_Speed_WalkPatte
 	, mEnemy_ColSphereRightarm(this, nullptr, CVector(), ENEMY_COLSPHERE_RIGHTARM_SIZE)
 	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), ENEMY_COLSPHERE_LEFTARM_SIZE)
 {
-	this->Enemy_Type = Enemy_Type;
-	this->Enemy_Priority = Enemy_Priority;
-	this->Enemy_Speed_WalkPattern = Enemy_Speed_WalkPattern;
-	this->Enemy_Speed_DashPattern = Enemy_Speed_DashPattern;
-	this->Enemy_Walk_Dis = Enemy_Walk_Dis;
-	this->Enemy_Dash_Dis = Enemy_Dash_Dis;
-	this->Enemy_Walk_Dis_Max = Enemy_Walk_Dis_Max;
-	this->Enemy_Dash_Dis_Max = Enemy_Dash_Dis_Max;
-	this->Enemy_Attack_Dis = Enemy_Attack_Dis;
-	this->Enemy_Attack_Reception = Enemy_Attack_Reception;
-	this->Enemy_Attack_Outreception = Enemy_Attack_Outreception;
-	this->Enemy_Attack_Walk_Rand = Enemy_Attack_Walk_Rand;
-	this->Enemy_Attack_Dash_Rand = Enemy_Attack_Dash_Rand;
-	this->Enemy_Damage_PlayerSp1 = Enemy_Damage_PlayerSp1;
-	this->Enemy_Damage_PlayerSp2 = Enemy_Damage_PlayerSp2;
-	this->Enemy_Damage_PlayerSp3 = Enemy_Damage_PlayerSp3;
-	this->Position_X = Position_X;
-	this->Position_Y = Position_Y;
-	this->Position_Z = Position_Z;
-	this->Scale_X = Scale_X;
-	this->Scale_Y = Scale_Y;
-	this->Scale_Z = Scale_Z;
-	this->Rotation_X = Rotation_X;
-	this->Rotation_Y = Rotation_Y;
-	this->Rotation_Z = Rotation_Z;
-	this->Hp = Hp;
-	this->Hp_Max = Hp_Max;
-	this->Death_Hp = Death_Hp;
-
-	mpEnemy_Instance = this;
 	//初期状態を設定
 	mEnemy_State = EIDLE;	//待機状態
 		//コライダのタグを設定
@@ -147,14 +35,6 @@ CXEnemy::CXEnemy(int Enemy_Type, int Enemy_Priority, float Enemy_Speed_WalkPatte
 	mPriority = Enemy_Priority;
 	CTaskManager::Get()->Remove(this);//削除して
 	CTaskManager::Get()->Add(this);//追加する
-}
-//コライダ初期化
-CXEnemy::CXEnemy()
-
-
-{
-
-
 }
 
 void CXEnemy::Init(CModelX* model)
@@ -743,11 +623,6 @@ void CXEnemy::TaskCollision()
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereBody, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereRightarm, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLeftarm, COLLISIONRANGE);
-}
-//プレイヤーのポインタを返すことで、座標などが参照できるようになる
-CXEnemy* CXEnemy::GetInstance()
-{
-	return mpEnemy_Instance;
 }
 bool CXEnemy::GetHp()
 {
