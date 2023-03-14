@@ -18,10 +18,10 @@ CXEnemy::CXEnemy()
 	, mEnemy_val(ENEMY_INT_INITIALIZATION)
 	, mEnemy_IsHit(false)
 	, mEnemy_Flag(false)
-	, mEnemy_ColCapsuleBody(this, nullptr, CVector(mEnemy_ColCapsule_Body_X, mEnemy_ColCapsule_Body_Top_Y, mEnemy_ColCapsule_Body_Z), CVector(mEnemy_ColCapsule_Body_X, mEnemy_ColCapsule_Body_Bottom_Y, mEnemy_ColCapsule_Body_Z), mEnemy_ColCapsule_Body_Size)
-	, mEnemy_ColSphereBody(this, nullptr, CVector(mEnemy_ColSphere_Body_X, mEnemy_ColSphere_Body_Y, mEnemy_ColSphere_Body_Z), mEnemy_ColSphere_Body_Size)
-	, mEnemy_ColSphereRightarm(this, nullptr, CVector(), mEnemy_ColSphere_Rightarm_Size)
-	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), mEnemy_ColSphere_Leftarm_Size)
+	, mEnemy_ColCapsuleBody(this, nullptr, CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_TOP_Y, ENEMY_COLCAPSULE_BODY_Z), CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_BOTTOM_Y, ENEMY_COLCAPSULE_BODY_Z), ENEMY_COLCAPSULE_BODY_SIZE)
+	, mEnemy_ColSphereBody(this, nullptr, CVector(ENEMY_COLSPHERE_BODY_X, ENEMY_COLSPHERE_BODY_Y, ENEMY_COLSPHERE_BODY_Z), ENEMY_COLSPHERE_BODY_SIZE)
+	, mEnemy_ColSphereRightarm(this, nullptr, CVector(), ENEMY_COLSPHERE_RIGHTARM_SIZE)
+	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), ENEMY_COLSPHERE_LEFTARM_SIZE)
 {
 	//初期状態を設定
 	mEnemy_State = EIDLE;	//待機状態
@@ -32,6 +32,7 @@ CXEnemy::CXEnemy()
 	mEnemy_ColSphereLeftarm.Tag(CCollider::ELEFTARM);	//左手
 	mpEnemy_Instance = this;
 	EnemyTable();
+	mHp = mEnemy_Hp;
 	//タグの設定
 	mTag = EENEMY;
 	//優先度を1に変更する
@@ -42,7 +43,6 @@ CXEnemy::CXEnemy()
 
 void CXEnemy::Init(CModelX* model)
 {
-	EnemyTable();
 	CXCharacter::Init(model);
 	//合成行列の設定
 	mEnemy_ColCapsuleBody.Matrix(&mpCombinedMatrix[2]);
@@ -95,10 +95,10 @@ void CXEnemy::Update() {
 		mEnemy_AttackDir = mEnemy_Player_Point; //攻撃時の向きを求める
 	}
 	//体力が0になると死亡
-	if (mEnemy_Hp <= mEnemy_Death_Hp)
+	if (mHp <= mEnemy_Death_Hp)
 	{
 		mEnemy_State = EDEATH;	//死亡状態へ移行
-		mEnemy_Hp = mEnemy_Death_Hp;
+		mHp = mEnemy_Death_Hp;
 	}
 	CXCharacter::Update();
 	EnemyTable();
@@ -111,7 +111,7 @@ void CXEnemy::Render2D()
 	CVector ret;
 	tpos = mPosition + CVector(ret.X(), ret.Y()+ 7.0f, 0.0f);
 	Camera.WorldToScreen(&ret, tpos);
-	float HpRate = (float)mEnemy_Hp / (float)mEnemy_Hp_Max; //体力最大値に対する、現在の体力の割合
+	float HpRate = (float)mHp / (float)mEnemy_Hp_Max; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より大きい時
 	if (mEnemy_FollowGaugeWid > HpGaugeWid) {
@@ -125,7 +125,7 @@ void CXEnemy::Render2D()
 	}
 	//画面外の時に表示しない
 	if (ret.X() > WINDOW_FIRST_WIDTH && ret.X() < WINDOW_WIDTH) {
-		if (!mEnemy_Hp <= mEnemy_Death_Hp)
+		if (!mHp <= mEnemy_Death_Hp)
 		{
 			CRes::GetInstance()->GetInEnemyUiHpBackBar().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
 			//被ダメージ分後追いするゲージを表示
@@ -314,17 +314,17 @@ void CXEnemy::Attack_1()
 				if (CXPlayer::GetInstance()->GetIsHit() == true) {
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp1;
+						mHp = mHp - mEnemy_Damage_PlayerSp1;
 						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
 					}
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp2;
+						mHp = mHp - mEnemy_Damage_PlayerSp2;
 						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
 					}
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp3;
+						mHp = mHp - mEnemy_Damage_PlayerSp3;
 						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
 					}
 				}
@@ -336,7 +336,7 @@ void CXEnemy::Attack_1()
 void CXEnemy::Attack_2()
 {
 	//アニメーションの設定
-	ChangeAnimation(mEnemy_Attack2_Animation_Frame, false, mEnemy_Attack2_Animation_Frame);
+	ChangeAnimation(mEnemy_Animation_No_Attack_2, false, mEnemy_Attack2_Animation_Frame);
 	//ヒット判定発生
 	if (IsAnimationFinished() == false) 
 	{
@@ -377,17 +377,17 @@ void CXEnemy::Attack_2()
 				if (CXPlayer::GetInstance()->GetIsHit() == true) {
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp1;
+						mHp = mHp - mEnemy_Damage_PlayerSp1;
 						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
 					}
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp2;
+						mHp = mHp - mEnemy_Damage_PlayerSp2;
 						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
 					}
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp3;
+						mHp = mHp - mEnemy_Damage_PlayerSp3;
 						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
 					}
 				}
@@ -399,7 +399,7 @@ void CXEnemy::Attack_2()
 void CXEnemy::Attack_3()
 {
 	//アニメーションの設定
-	ChangeAnimation(mEnemy_Attack3_Animation_Frame, false, mEnemy_Attack3_Animation_Frame);
+	ChangeAnimation(mEnemy_Animation_No_Attack_3, false, mEnemy_Attack3_Animation_Frame);
 	//ヒット判定発生
 	if (IsAnimationFinished() == false) 
 	{
@@ -439,17 +439,17 @@ void CXEnemy::Attack_3()
 				if (CXPlayer::GetInstance()->GetIsHit() == true) {
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp1;
+						mHp = mHp - mEnemy_Damage_PlayerSp1;
 						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
 					}
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp2;
+						mHp = mHp - mEnemy_Damage_PlayerSp2;
 						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
 					}
 					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 					{
-						mEnemy_Hp = mEnemy_Hp - mEnemy_Damage_PlayerSp3;
+						mHp = mHp - mEnemy_Damage_PlayerSp3;
 						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
 					}
 				}
@@ -484,11 +484,11 @@ void CXEnemy::KnockBack()
 		mEnemy_Flag = true;
 		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 		{
-			mEnemy_Hp -= mEnemy_Damage_PlayerSp3 * 2;
+			mHp -= mHp - mEnemy_Damage_PlayerSp3 * 2;
 		}
 		else
 		{
-			mEnemy_Hp -= mEnemy_Damage_PlayerSp3;	//ダメージを受ける(体)
+			mHp -= mEnemy_Damage_PlayerSp3;	//ダメージを受ける(体)
 
 		}
 	}
@@ -514,7 +514,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-	if (!mEnemy_Hp <= mEnemy_Death_Hp)
+	if (!mHp <= mEnemy_Death_Hp)
 	{
 		if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ECAPSUL)
 		{
@@ -547,7 +547,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 
 
 
-	if (!mEnemy_Hp <= mEnemy_Death_Hp)
+	if (!mHp <= mEnemy_Death_Hp)
 	{
 		//自身のコライダタイプの判定
 		if (m->Type() == CCollider::ESPHERE) {
@@ -672,17 +672,6 @@ void CXEnemy::EnemyTable()
 	mEnemy_Rotation_X = table["Enemy_Rotation_X"]["Value"].fVal;
 	mEnemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 	mEnemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
-	mEnemy_ColCapsule_Body_X = table["Enemy_ColCapsule_Body_X"]["Value"].fVal;
-	mEnemy_ColCapsule_Body_Top_Y = table["Enemy_ColCapsule_Body_Top_Y"]["Value"].fVal;
-	mEnemy_ColCapsule_Body_Bottom_Y = table["Enemy_ColCapsule_Body_Bottom_Y"]["Value"].fVal;
-	mEnemy_ColCapsule_Body_Z = table["Enemy_ColCapsule_Body_Z"]["Value"].fVal;
-	mEnemy_ColCapsule_Body_Size = table["Enemy_ColCapsule_Body_Size"]["Value"].fVal;
-	mEnemy_ColSphere_Body_X = table["Enemy_ColSphere_Body_X"]["Value"].fVal;
-	mEnemy_ColSphere_Body_Y = table["Enemy_ColSphere_Body_Y"]["Value"].fVal;
-	mEnemy_ColSphere_Body_Z = table["Enemy_ColSphere_Body_Z"]["Value"].fVal;
-	mEnemy_ColSphere_Body_Size = table["Enemy_ColSphere_Body_Size"]["Value"].fVal;
-	mEnemy_ColSphere_Rightarm_Size = table["Enemy_ColSphere_Rightarm_Size"]["Value"].fVal;
-	mEnemy_ColSphere_Leftarm_Size = table["Enemy_ColSphere_Leftarm_Size"]["Value"].fVal;
 	mEnemy_Probability_Low_Set1 = table["Enemy_Probability_Low_Set1"]["Value"].iVal;
 	mEnemy_Probability_Max_Set1 = table["Enemy_Probability_Max_Set1"]["Value"].iVal;
 	mEnemy_Probability_Low_Set2 = table["Enemy_Probability_Low_Set2"]["Value"].iVal;
@@ -699,7 +688,7 @@ CXEnemy* CXEnemy::GetInstance()
 }
 bool CXEnemy::GetHp()
 {
-	return mEnemy_Hp;
+	return mHp;
 }
 //アニメーションフレームの取得
 bool CXEnemy::GetIsAnimationFrame() {

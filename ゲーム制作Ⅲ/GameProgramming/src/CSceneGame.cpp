@@ -64,7 +64,7 @@ void CSceneGame::Render() {
 	if (CXPlayer::GetInstance()->GetHp() == 0) {
 		CRes::GetInstance()->GetinGameOverImage().DrawImage(0, 800, 0, 600, 0, 800, 600, 0);
 	}
-	if (CXEnemy::EEnemyState::EDEATH) {
+	if (CXEnemy::GetInstance()->GetHp() == 0) {
 		CRes::GetInstance()->GetinGameClearImage().DrawImage(0, 800, 0, 600, 0, 800, 600, 0);
 	}
 	//2D‚Ì•`‰æI—¹

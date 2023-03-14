@@ -49,6 +49,7 @@ protected:
 	float mEnemy_PlayerDis;						//敵がプレイヤの座標参照用
 	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
 	int mEnemy_val;								//ランダム用の変数
+	int mHp;
 	//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	static CXEnemy* mpEnemy_Instance;
 
@@ -76,6 +77,7 @@ protected:
 	void MovingCalculation();
 
 private:
+
 	int mEnemy_Priority;//描画優先度
 	float mEnemy_Speed_WalkPattern;//移動スピードパターン
 	float mEnemy_Speed_DashPattern;//走行スピードパターン
@@ -116,17 +118,6 @@ private:
 	float mEnemy_Rotation_X;//モデルの回転X座標
 	float mEnemy_Rotation_Y;//モデルの回転Y座標
 	float mEnemy_Rotation_Z;//モデルの回転Z座標
-	float mEnemy_ColCapsule_Body_X;
-	float mEnemy_ColCapsule_Body_Top_Y;
-	float mEnemy_ColCapsule_Body_Bottom_Y;
-	float mEnemy_ColCapsule_Body_Z;
-	float mEnemy_ColCapsule_Body_Size;
-	float mEnemy_ColSphere_Body_X;
-	float mEnemy_ColSphere_Body_Y;
-	float mEnemy_ColSphere_Body_Z;
-	float mEnemy_ColSphere_Body_Size;
-	float mEnemy_ColSphere_Rightarm_Size;
-	float mEnemy_ColSphere_Leftarm_Size;
 	int mEnemy_Probability_Low_Set1;
 	int mEnemy_Probability_Max_Set1;
 	int mEnemy_Probability_Low_Set2;
