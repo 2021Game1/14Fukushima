@@ -7,7 +7,6 @@
 #include"CEnemyData.h"
 
 
-
 class CXEnemy : public CXCharacter{
 public:
 	//敵の基本的関数
@@ -16,8 +15,8 @@ public:
 	CXEnemy();									//敵のデフォルトコンストラクタ
 	void Collision(CCollider* m, CCollider* o);	//敵の当たり判定
 	void Render2D();
-	void Load(int argc, char* argv[]);
 	void TaskCollision();
+	void EnemyTable();
 	//敵の状態
 	enum EEnemyState
 	{
@@ -36,6 +35,8 @@ public:
 	bool GetIsHit();							//ヒット状態の判別
 	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
 	CXEnemy::EEnemyState GetState();			//プレイヤーの状態を取得する
+	//他のクラスで参照用の関数
+	static CXEnemy* GetInstance();
 protected:
 	//コライダの宣言
 	CCollider mEnemy_ColSphereRightarm;	//右腕
@@ -47,8 +48,9 @@ protected:
 	float mEnemy_Turnspeed;						//敵のターン速度
 	float mEnemy_PlayerDis;						//敵がプレイヤの座標参照用
 	float mEnemy_FollowGaugeWid;				//被ダメージ分後追いするゲージの幅
-	int mEnemy_Hp;								//敵の体力
 	int mEnemy_val;								//ランダム用の変数
+	//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
+	static CXEnemy* mpEnemy_Instance;
 
 	//敵の移動
 	CVector mEnemy_Point;						//敵移動時の目標地点
@@ -73,34 +75,66 @@ protected:
 	//移動の計算処理
 	void MovingCalculation();
 
-	int Enemy_Type;//敵種類
-	int Enemy_Priority;//描画優先度
-	float Enemy_Speed_WalkPattern;//移動スピードパターン
-	float Enemy_Speed_DashPattern;//走行スピードパターン
-	float Enemy_Walk_Dis; //歩行開始の距離
-	float Enemy_Dash_Dis; //走行開始の距離
-	float Enemy_Walk_Dis_Max; //歩行終了の距離
-	float Enemy_Dash_Dis_Max; //走行終了の距離
-	float Enemy_Attack_Dis;//攻撃可能な距離
-	float Enemy_Attack_Reception;//当たり判定の開始
-	float Enemy_Attack_Outreception;//当たり判定の終了
-	int Enemy_Attack_Walk_Rand;
-	int Enemy_Attack_Dash_Rand;
-	int Enemy_Damage_PlayerSp1;
-	int Enemy_Damage_PlayerSp2;
-	int Enemy_Damage_PlayerSp3;
-	float Position_X;//位置のX座標
-	float Position_Y;//位置のY座標
-	float Position_Z;//位置のZ座標
-	float Scale_X;   //スケールのX座標
-	float Scale_Y;   //スケールのY座標
-	float Scale_Z;   //スケールのZ座標
-	float Rotation_X;//モデルの回転X座標
-	float Rotation_Y;//モデルの回転Y座標
-	float Rotation_Z;//モデルの回転Z座標
-	int Hp;          //HP
-	int Hp_Max;      //HP最大値
-	int Death_Hp;    //死亡条件
+private:
+	int mEnemy_Priority;//描画優先度
+	float mEnemy_Speed_WalkPattern;//移動スピードパターン
+	float mEnemy_Speed_DashPattern;//走行スピードパターン
+	float mEnemy_Walk_Dis; //歩行開始の距離
+	float mEnemy_Dash_Dis; //走行開始の距離
+	float mEnemy_Walk_Dis_Max; //歩行終了の距離
+	float mEnemy_Dash_Dis_Max; //走行終了の距離
+	float mEnemy_Attack_Dis;//攻撃可能な距離
+	float mEnemy_Attack_Reception;//当たり判定の開始
+	float mEnemy_Attack_Outreception;//当たり判定の終了
+	int mEnemy_Attack_Walk_Rand;
+	int mEnemy_Attack_Dash_Rand;
+	int mEnemy_Damage_PlayerSp1;
+	int mEnemy_Damage_PlayerSp2;
+	int mEnemy_Damage_PlayerSp3;
+	float mEnemy_Idle_Animation_Frame;
+	float mEnemy_Move_Animation_Frame;
+	float mEnemy_Dash_Animation_Frame;
+	float mEnemy_Attack1_Animation_Frame;
+	float mEnemy_Attack2_Animation_Frame;
+	float mEnemy_Attack3_Animation_Frame;
+	float mEnemy_Knockback_Animation_Frame;
+	float mEnemy_Death_Animation_Frame;
+	int mEnemy_Animation_No_Attack_1;
+	int mEnemy_Animation_No_Attack_2;
+	int mEnemy_Animation_No_Attack_3;
+	int mEnemy_Animation_No_Walk;
+	int mEnemy_Animation_No_Dash;
+	int mEnemy_Animation_No_Idle;
+	int mEnemy_Animation_No_Knockback;
+	int mEnemy_Animation_No_Death;
+	float mEnemy_Position_X;//位置のX座標
+	float mEnemy_Position_Y;//位置のY座標
+	float mEnemy_Position_Z;//位置のZ座標
+	float mEnemy_Scale_X;   //スケールのX座標
+	float mEnemy_Scale_Y;   //スケールのY座標
+	float mEnemy_Scale_Z;   //スケールのZ座標
+	float mEnemy_Rotation_X;//モデルの回転X座標
+	float mEnemy_Rotation_Y;//モデルの回転Y座標
+	float mEnemy_Rotation_Z;//モデルの回転Z座標
+	float mEnemy_ColCapsule_Body_X;
+	float mEnemy_ColCapsule_Body_Top_Y;
+	float mEnemy_ColCapsule_Body_Bottom_Y;
+	float mEnemy_ColCapsule_Body_Z;
+	float mEnemy_ColCapsule_Body_Size;
+	float mEnemy_ColSphere_Body_X;
+	float mEnemy_ColSphere_Body_Y;
+	float mEnemy_ColSphere_Body_Z;
+	float mEnemy_ColSphere_Body_Size;
+	float mEnemy_ColSphere_Rightarm_Size;
+	float mEnemy_ColSphere_Leftarm_Size;
+	int mEnemy_Probability_Low_Set1;
+	int mEnemy_Probability_Max_Set1;
+	int mEnemy_Probability_Low_Set2;
+	int mEnemy_Probability_Max_Set2;
+	float mEnemy_Gravity;
+	int mEnemy_Hp;          //HP
+	int mEnemy_Hp_Max;      //HP最大値
+	int mEnemy_Death_Hp;    //死亡条件
 };
 #endif
 

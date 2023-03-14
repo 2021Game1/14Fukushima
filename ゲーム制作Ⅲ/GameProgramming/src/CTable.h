@@ -4,8 +4,9 @@
 #include <string>
 #include <map>
 
+
 namespace OX {
-	class Table {
+	class Table{
 	public:
 		///////////////////////////
 		// Variant
@@ -61,4 +62,5 @@ namespace OX {
 		Record& operator[](const char* key);
 	};
 }
+
 #endif // !CTABLE_H

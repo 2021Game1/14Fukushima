@@ -66,7 +66,10 @@ namespace OX {
 	// Table
 	/////
 	Table::Record Table::nullRecord;
-	Table& Table::operator=(const Table& src){}
+	Table& Table::operator=(const Table& src){
+		return (*this);
+	}
+
 
 	Table::Table(const char* filePath) {
 		std::ifstream ifs(filePath);
