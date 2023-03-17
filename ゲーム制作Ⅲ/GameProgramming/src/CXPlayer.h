@@ -12,6 +12,7 @@
 #include"CUtil.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include"CTable.h"
 #include"CPlayerData.h"
 #include "CCamera.h"
 
@@ -83,12 +84,34 @@ private:
 	float mPlayer_Speed;				//プレイヤのスピード
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
 	float mPlayer_EnemyDis;				//プレイヤが敵の座標参照用
+	float mPlayer_Gauge_Hp_Rate;
+
+	float mPlayer_Gauge_Frame_Tex_Wid;
+	float mPlayer_Gauge_Frame_Tex_First_Wid;
+	float mPlayer_Gauge_Frame_Tex_Hei;
+	float mPlayer_Gauge_Frame_Tex_First_Hei;
+	float mPlayer_Gauge_Frame_Left;
+	float mPlayer_Gauge_Frame_Right;
+	float mPlayer_Gauge_Frame_Top;
+	float mPlayer_Gauge_Frame_Bottom;
+	float mPlayer_Gauge_Wid;
+	float mPlayer_Gauge_Wid_First;
+	float mPlayer_Gauge_Height;
+	float mPlayer_Gauge_Height_first;
+	float mPlayer_Gauge_Hp_Top;
+	float mPlayer_Gauge_Hp_Bottom;
+	int	mPlayer_Gauge_Hp_Shake_X;
+	int	mPlayer_Gauge_Hp_Shake_Y;
+	int	mPlayer_Gauge_Hp_Shake_Range_X;
+	int	mPlayer_Gauge_Hp_Shake_Range_Y;
+
 
 
 	//カメラのパラメータを作成する
 	CVector mPlayer_SideVec;			//プレイヤの横ベクトル
 	CVector mPlayer_FrontVec;			//プレイヤのカメラの正面ベクトル
 	int mPlayer_Hp;						//プレイヤの体力
+	int mPlayer_Hp_Max;
 
 	//プレイヤの攻撃フラグ変数
 	bool mPlayer_AttackFlag_1;			//プレイヤの攻撃1状態の時trueを返す
@@ -115,6 +138,73 @@ private:
 	void KnockBack();					//ノックバック処理
 	//移動の計算処理
 	void MovingCalculation();
+private:
+	void PlayerTable();
+
+	int Player_Priority;
+	int Player_Hp;
+	int	Player_Hp_Max;
+	int Player_GameOver_Hp;
+	float Player_Speed_Default;
+	float Player_Gravity;
+	float Player_Thrust;
+	float Player_Se;
+	float Player_Damage_Se;
+	float Player_Push_Reception;
+	float Player_Attack_InReception;
+	float Player_Attack_OutReception;
+	float Player_Attack_Dis;
+	int Player_Damage_EnemySp1;
+	int Player_Damage_EnemySp2;
+	int Player_Damage_EnemySp3;
+	float Player_Position_X;
+	float Player_Position_Y;
+	float Player_Position_Z;
+	float Player_Scale_X;
+	float Player_Scale_Y;
+	float Player_Scale_Z;
+	float Player_Rotation_X;
+	float Player_Rotation_Y;
+	float Player_Rotation_Z;
+	float Player_Idle_Animation_Frame;
+	float Player_Move_Animation_Frame;
+	float Player_Avoidance_Animation_Frame;
+	float Player_Attack1_Animation_Frame;
+	float Player_Attack2_Animation_Frame;
+	float Player_Attack3_Animation_Frame;
+	float Player_KnockBack_Animation_Frame;
+	float Player_Death_Animation_Frame;
+	int Player_Animation_No_Move;
+	int Player_Animation_No_Attack1;
+	int Player_Animation_No_Attack2;
+	int Player_Animation_No_Attack3;
+	int Player_Animation_No_AvoidDance;
+	int Player_Animation_No_Idle;
+	int Player_Animation_No_Knockback;
+	int Player_Animation_No_Death;
+	float Player_Gauge_Frame_Tex_Wid;
+	float Player_Gauge_Frame_Tex_First_Wid;
+	float Player_Gauge_Frame_Tex_Hei;
+	float Player_Gauge_Frame_Tex_First_Hei;
+	float Player_Gauge_Frame_Left;
+	float Player_Gauge_Frame_Right;
+	float Player_Gauge_Frame_Top;
+	float Player_Gauge_Frame_Bottom;
+	float Player_Gauge_Wid;
+	float Player_Gauge_Wid_First;
+	float Player_Gauge_Height;
+	float Player_Gauge_Height_first;
+	float Player_Gauge_Hp_Top;
+	float Player_Gauge_Hp_Bottom;
+	int Player_Gauge_Hp_Shake_X;
+	int Player_Gauge_Hp_Shake_Y;
+	int Player_Gauge_Hp_Shake_Range_X;
+	int Player_Gauge_Hp_Shake_Range_Y;
+	float Player_Gauge_Hp_Rate;
+	float Player_Trun_Set;
+	float Player_Trun_Speeds_Set;
+	float Player_Trun_Check_Speeds_Set;
+	float Player_Trun_Check_Set;
 };
 #endif 
 

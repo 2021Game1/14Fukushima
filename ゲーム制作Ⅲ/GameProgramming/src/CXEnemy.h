@@ -16,7 +16,6 @@ public:
 	void Collision(CCollider* m, CCollider* o);	//敵の当たり判定
 	void Render2D();
 	void TaskCollision();
-	void EnemyTable();
 	//敵の状態
 	enum EEnemyState
 	{
@@ -77,7 +76,7 @@ protected:
 	void MovingCalculation();
 
 private:
-
+	void EnemyTable();
 	int mEnemy_Priority;//描画優先度
 	float mEnemy_Speed_WalkPattern;//移動スピードパターン
 	float mEnemy_Speed_DashPattern;//走行スピードパターン
