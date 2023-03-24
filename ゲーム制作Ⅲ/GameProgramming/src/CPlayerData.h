@@ -29,5 +29,22 @@
 #define PLAYER_COLSPHERE_SWORD_HEAD_Z 70.0f				//球コライダのZ座標設定
 #define PLAYER_COLSPHERE_SWORD_SIZE 0.3					//球コライダのサイズ設定
 
+//プレイヤのHPフレーム,HPゲージ座標,幅,高さ
+#define PLAYER_GAUGE_FRAME_TEX_WID 480															//ゲージ枠の画像の幅
+#define PLAYER_GAUGE_FRAME_TEX_HEI 80															//ゲージ枠の画像の高さ
+#define PLAYER_GAUGE_FRAME_TEX_FIRST_WID 0														//ゲージ枠の画像描画の幅
+#define PLAYER_GAUGE_FRAME_TEX_FIRST_HEI 10														//ゲージ枠の画像描画の高さ
+#define PLAYER_GAUGE_FRAME_LEFT 0																//ゲージ枠左座標
+#define PLAYER_GAUGE_FRAME_RIGHT 380															//ゲージ枠右座標
+#define PLAYER_GAUGE_FRAME_TOP PLAYER_GAUGE_FRAME_TEX_HEI										//ゲージ枠上座標
+#define PLAYER_GAUGE_FRAME_BOTTOM (PLAYER_GAUGE_FRAME_TOP-PLAYER_GAUGE_FRAME_TEX_HEI)			//ゲージ枠下座標
+#define PLAYER_GAUGE_LEFT 0																		//ゲージ描画時の左座標
+#define PLAYER_GAUGE_WID_MAX 380																//ゲージの幅の最大値
+#define GAUGE_HEIGHT 20																			//ゲージ描画時の高さ
+#define PLAYER_GAUGE_HP_TOP 30																	//HPゲージ描画時の上座標
+#define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT)
+
+#define PLAYER_FRAME 180
+
 #endif // !PLAYERDATA_H
 

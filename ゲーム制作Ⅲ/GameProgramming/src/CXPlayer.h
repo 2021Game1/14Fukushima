@@ -47,8 +47,7 @@ public:
 	CXPlayer();
 	//プレイヤのHP取得関数
 	bool GetHp();
-	//プレイヤの衝突判定関数
-	void Collision(CCollider* m, CCollider* o);	//衝突処理
+
 	//プレイヤのインスタンス取得関数
 	static CXPlayer* GetInstance();		//staticで処理を作る
 	//プレイヤのアニメーションフレーム取得関数
@@ -78,32 +77,15 @@ private:
 	CVector mPlayer_Move;				//プレイヤの方向と速度をかけ合わせたベクトル、プレイヤの移動量
 	CVector mPlayer_MoveDir;			//プレイヤの移動する方向、モデルの回転にも使用している、毎フレームリセットされる
 	CVector mPlayer_MoveDirKeep;		//プレイヤの移動時の方向を保存する
-	CVector mPlayer_Player_Point;		//敵の方向ベクトル保存用
 	CVector mPlayer_KnockBackDir;		//プレイヤのノックバックする方向を保持する
 	CVector mPlayer_AttackDir;			//プレイヤの攻撃時の方向を保持する
 	float mPlayer_Speed;				//プレイヤのスピード
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
 	float mPlayer_EnemyDis;				//プレイヤが敵の座標参照用
 	float mPlayer_Gauge_Hp_Rate;
+	float mPlayer_Attack_Dis;
 
-	float mPlayer_Gauge_Frame_Tex_Wid;
-	float mPlayer_Gauge_Frame_Tex_First_Wid;
-	float mPlayer_Gauge_Frame_Tex_Hei;
-	float mPlayer_Gauge_Frame_Tex_First_Hei;
-	float mPlayer_Gauge_Frame_Left;
-	float mPlayer_Gauge_Frame_Right;
-	float mPlayer_Gauge_Frame_Top;
-	float mPlayer_Gauge_Frame_Bottom;
-	float mPlayer_Gauge_Wid;
-	float mPlayer_Gauge_Wid_First;
-	float mPlayer_Gauge_Height;
-	float mPlayer_Gauge_Height_first;
-	float mPlayer_Gauge_Hp_Top;
-	float mPlayer_Gauge_Hp_Bottom;
-	int	mPlayer_Gauge_Hp_Shake_X;
-	int	mPlayer_Gauge_Hp_Shake_Y;
-	int	mPlayer_Gauge_Hp_Shake_Range_X;
-	int	mPlayer_Gauge_Hp_Shake_Range_Y;
+
 
 
 
@@ -112,6 +94,14 @@ private:
 	CVector mPlayer_FrontVec;			//プレイヤのカメラの正面ベクトル
 	int mPlayer_Hp;						//プレイヤの体力
 	int mPlayer_Hp_Max;
+	int mPlayer_Damage_EnemySp1;
+	int mPlayer_Damage_EnemySp2;
+	int mPlayer_Damage_EnemySp3;
+
+	int	mPlayer_Gauge_Hp_Shake_X;
+	int	mPlayer_Gauge_Hp_Shake_Y;
+	int	mPlayer_Gauge_Hp_Shake_Range_X;
+	int	mPlayer_Gauge_Hp_Shake_Range_Y;
 
 	//プレイヤの攻撃フラグ変数
 	bool mPlayer_AttackFlag_1;			//プレイヤの攻撃1状態の時trueを返す
@@ -138,6 +128,8 @@ private:
 	void KnockBack();					//ノックバック処理
 	//移動の計算処理
 	void MovingCalculation();
+	//プレイヤの衝突判定関数
+	void Collision(CCollider* m, CCollider* o);	//衝突処理
 private:
 	void PlayerTable();
 

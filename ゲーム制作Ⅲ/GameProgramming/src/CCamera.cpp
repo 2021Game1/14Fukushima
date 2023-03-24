@@ -43,6 +43,7 @@ float CCamera::mHpLerp(float start, float point, float rate)
 {
 	return start + rate * (point - start);
 }
+
 void CCamera::SetTarget(const CVector& target)
 {
 	mTarget = target;
@@ -52,7 +53,6 @@ const CVector& CCamera::Eye() const
 {
 	return mEye;
 }
-
 //カメラのアップデート
 void CCamera::Update() {
 	CInput::GetMousePosWin(&mMouseX, &mMouseY);
@@ -173,7 +173,10 @@ void CCamera::TaskCollision()
 	CCollisionManager::Get()->Collision(&mColliderLine, COLLISIONRANGE);
 }
 
-
+void CCamera::CameraEyeZoom() {
+	mEye = mEye + CVector(CAMERA_CENTER_ZOOM_X, CAMERA_CENTER_ZOOM_Y, CAMERA_CENTER_ZOOM_Z);
+	mColliderLine.Set(this, nullptr, mEye, mCenter);
+}
 
 //ワールド座標をスクリーン座標へ変換する
 //WorldToScreen(スクリーン座標, ワールド座標)

@@ -71,7 +71,6 @@
 //敵ダメージエフェクト
 #define ENEMY_EF_DAMAGESP1 "Effect\\Enemy_DamageSp1.png"
 #define ENEMY_EF_DAMAGESP2 "Effect\\Enemy_DamageSp2.png"
-#define ENEMY_EF_DAMAGESP3 "Effect\\Enemy_DamageSp3.png"
 
 /*BGM・SE*/
 

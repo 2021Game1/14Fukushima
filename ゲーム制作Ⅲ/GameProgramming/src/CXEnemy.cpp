@@ -303,33 +303,6 @@ void CXEnemy::Attack_1()
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
 		mEnemy_State = EIDLE; //待機状態に移行
-
-		//1度しか動かさないためのカウンタ
-		if (mEnemy_Flag == false)
-		{
-			mEnemy_Flag = true;
-			//スーパーアーマが発動時のダメージ参照
-			if (mEnemy_val >= 61 && mEnemy_val <= 100)
-			{
-				if (CXPlayer::GetInstance()->GetIsHit() == true) {
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp1;
-						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
-					}
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp2;
-						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
-					}
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp3;
-						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -366,33 +339,6 @@ void CXEnemy::Attack_2()
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
 		mEnemy_State = EIDLE; //待機状態に移行
-
-		//1度しか動かさないためのカウンタ
-		if (mEnemy_Flag == false)
-		{
-			mEnemy_Flag = true;
-			//スーパーアーマが発動時のダメージ参照
-			if (mEnemy_val >= 61 && mEnemy_val <= 100)
-			{
-				if (CXPlayer::GetInstance()->GetIsHit() == true) {
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp1;
-						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
-					}
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp2;
-						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
-					}
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp3;
-						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -429,32 +375,6 @@ void CXEnemy::Attack_3()
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
 		mEnemy_State = EIDLE; //待機状態に移行
-		//1度しか動かさないためのカウンタ
-		if (mEnemy_Flag == false)
-		{
-			mEnemy_Flag = true;
-			//スーパーアーマが発動時のダメージ参照
-			if (mEnemy_val >= mEnemy_Probability_Low_Set2 && mEnemy_val <= mEnemy_Probability_Max_Set2)
-			{
-				if (CXPlayer::GetInstance()->GetIsHit() == true) {
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp1;
-						new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
-					}
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp2;
-						new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
-					}
-					if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-					{
-						mHp = mHp - mEnemy_Damage_PlayerSp3;
-						new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -467,30 +387,25 @@ void CXEnemy::KnockBack()
 	//1度しか動かさないためのカウンタ
 	if (mEnemy_Flag == false)
 	{
-		if (mEnemy_val >= mEnemy_Probability_Low_Set1 && mEnemy_val <= mEnemy_Probability_Max_Set1) {
-			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-			{
-				new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 3, 5, 2); //エフェクトを生成する
-			}
-			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-			{
-				new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 3, 5, 2); //エフェクトを生成する
-			}
-			if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-			{
-				new CEffectEnemyDamageSp3(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP3, 4, 5, 2); //エフェクトを生成する
-			}
+		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+		{
+			mHp = mHp - mEnemy_Damage_PlayerSp1;
+			new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
 		}
-		mEnemy_Flag = true;
-		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+		else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+		{
+			mHp = mHp - mEnemy_Damage_PlayerSp2;
+			new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2);
+		}
+		else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 		{
 			mHp -= mHp - mEnemy_Damage_PlayerSp3 * 2;
 		}
 		else
 		{
 			mHp -= mEnemy_Damage_PlayerSp3;	//ダメージを受ける(体)
-
 		}
+		mEnemy_Flag = true;
 	}
 	//アニメーションが再生中時
 	if (IsAnimationFinished() == false)
@@ -569,6 +484,26 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 								if (mEnemy_val >= mEnemy_Probability_Low_Set1 && mEnemy_val <= mEnemy_Probability_Max_Set1) {
 									if (CXPlayer::GetInstance()->GetIsHit() == true) {
 											mEnemy_State = EKNOCKBACK;
+									}
+								}
+								//スーパーアーマが発動時のダメージ参照
+								else if (mEnemy_val >= mEnemy_Probability_Low_Set2 && mEnemy_val <= mEnemy_Probability_Max_Set2)
+								{
+									if (CXPlayer::GetInstance()->GetIsHit() == true) {
+										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+										{
+											mHp = mHp - mEnemy_Damage_PlayerSp1;
+											new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
+										}
+										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+										{
+											mHp = mHp - mEnemy_Damage_PlayerSp2;
+											new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2);
+										}
+										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
+										{
+											mHp = mHp - mEnemy_Damage_PlayerSp3;
+										}
 									}
 								}
 							}

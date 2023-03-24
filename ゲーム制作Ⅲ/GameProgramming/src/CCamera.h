@@ -14,7 +14,7 @@
 
 
 //カメラ
-#define CAMERA_SENSITIVITY 0.0005f		//カメラの感度設定
+#define CAMERA_SENSITIVITY 0.0003f		//カメラの感度設定
 #define CAMERA_COLLIDE_DIST 0.05f			//カメラの衝突判定時の描写体に近づく距離
 #define CAMERA_DELAY_RATE 0.003f		//カメラアングル移動時の遅延割合
 
@@ -49,6 +49,11 @@
 #define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
 #define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
 
+//カメラの視点ズーム設定
+#define CAMERA_CENTER_ZOOM_X 0.0f
+#define CAMERA_CENTER_ZOOM_Y 0.0f
+#define CAMERA_CENTER_ZOOM_Z -3.0f
+
 /*
 カメラクラス
 */
@@ -74,6 +79,8 @@ public:
 	float mLerp(float start, float point, float rate);
 	//HPの線形補間
 	float mHpLerp(float start, float point, float rate);
+	//カメラの視点ズーム
+	void CameraEyeZoom();
 	//コリジョンマネージャ追加処理
 	void TaskCollision();
 	//インスタンスの取得
@@ -85,6 +92,7 @@ public:
 	//ワールド座標をスクリーン座標へ変換する
 	//WorldToScreen(スクリーン座標, ワールド座標)
 	bool WorldToScreen(CVector* screen, const CVector& world);
+
 private:
 	CVector mRotation;//回転
 	CVector mEye;//視点
@@ -101,6 +109,7 @@ private:
 	//重複するがカメラ制御用
 	CVector mPos;		//位置
 	CVector mTarget;	//ターゲット
+	CVector mZoom;		//ズーム用
 	float	mDist;	//距離
 	float mRotRad;		//回転させたい角度
 	float mOldMousePosX, mOldMousePosY;
