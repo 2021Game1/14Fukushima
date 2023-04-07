@@ -257,5 +257,8 @@
     <ClInclude Include="src\CTable.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
+    <ClInclude Include="src\TitleData.h">
+      <Filter>ソース ファイル\Lib</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

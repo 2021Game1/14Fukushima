@@ -41,10 +41,6 @@ Enemy_Scale_Z,モデルのスケール設定Z座標,2.0
 Enemy_Rotation_X,モデルの回転設定X座標,0.0
 Enemy_Rotation_Y,モデルの回転設定Y座標,0.0
 Enemy_Rotation_Z,モデルの回転設定Z座標,0.0
-Enemy_Probability_Low_Set1,敵のスーパーアーマーの発生しない確率の初期設定,0
-Enemy_Probability_Max_Set1,敵のスーパーアーマーの発生確率しないの上限設定,60
-Enemy_Probability_Low_Set2,敵のスーパーアーマーの発生確率の初期設定,61
-Enemy_Probability_Max_Set2,敵のスーパーアーマーの発生確率の上限設定,100
 Enemy_Gravity,敵の重力,0.9
 Enemy_Hp,敵のHP,150
 Enemy_Hp_Max,敵のHP最大値,150

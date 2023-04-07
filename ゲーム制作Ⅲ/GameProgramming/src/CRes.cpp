@@ -6,7 +6,6 @@ void CRes::Init() {
 	mpRes_Instance = this;
 	//BGMの読み込み
 	Game_Bgm.Load(BGM_GAME);
-	Title_Bgm.Load(BGM_TITLE);
 	//プレイヤSE
 	Se_Player_AttackSp1.Load(SE_PLAYER_ATTACK1);
 	Se_Player_AttackSp2.Load(SE_PLAYER_ATTACK2);
@@ -27,8 +26,6 @@ void CRes::Init() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_IDLE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_KNOCKBACK);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
-	//タイトル画像の追加
-	gTitle_Image.Load2D(TITLE_IMAGE);
 	//ゲームクリア画像の追加
 	gGameClear_Image.Load2D(GAMECLEAR_IMAGE);
 	//ゲームオーバー画像の追加
@@ -82,11 +79,6 @@ CRes* CRes::GetInstance()
 CText& CRes::GetInUiFont()
 {
 	return mFont;
-}
-//タイトル画像の取得
-CTexture& CRes::GetInTitleImage()
-{
-	return gTitle_Image;
 }
 //クリア画面の取得
 CTexture& CRes::GetinGameClearImage()
@@ -152,12 +144,6 @@ CSound& CRes::GetinEnemySeAttackSp()
 CSound& CRes::GetinEnemySeDeath()
 {
 	return Se_Enemy_Death;
-}
-//BGMの取得
-//タイトルBGMの取得
-CSound& CRes::GetinSoundBgmTitle()
-{
-	return Title_Bgm;
 }
 //ゲームBGMの取得
 CSound& CRes::GetinSoundBgmGame() 

@@ -52,7 +52,7 @@
 //カメラの視点ズーム設定
 #define CAMERA_CENTER_ZOOM_X 0.0f
 #define CAMERA_CENTER_ZOOM_Y 0.0f
-#define CAMERA_CENTER_ZOOM_Z -3.0f
+#define CAMERA_CENTER_ZOOM_Z -2.0f
 
 /*
 カメラクラス

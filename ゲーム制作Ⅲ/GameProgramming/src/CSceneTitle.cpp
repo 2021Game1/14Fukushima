@@ -1,9 +1,4 @@
 #include "CSceneTitle.h"
-#include "CKey.h"
-#include "CUtil.h"
-
-
-
 
 CSceneTitle::CSceneTitle()
 	: mNextScene(ETITLE)
@@ -19,8 +14,9 @@ CSceneTitle::~CSceneTitle()
 void CSceneTitle::Init() {
 	//シーンの設定
 	mScene = ETITLE;
-	mRes.Init();
-	CRes::GetInstance()->GetinSoundBgmTitle().Repeat(0.2);
+	//タイトル画像の追加
+	gTitle_Image.Load2D(TITLE_IMAGE);
+	Title_Bgm.Load(BGM_TITLE);
 
 }
 
@@ -30,7 +26,7 @@ void CSceneTitle::Update() {
 		//次のシーンはゲーム
 		mNextScene = EGAME;
 		mSceneChange = true;
-		CRes::GetInstance()->GetinSoundBgmTitle().Stop();
+		Title_Bgm.Stop();
 	}
 	if (mSceneChange) {
 		mScene = mNextScene;
@@ -40,7 +36,7 @@ void CSceneTitle::Update() {
 void CSceneTitle::Render() {
 	//2Dの描画開始
 	CUtil::Start2D(0, 800, 0, 600);
-	CRes::GetInstance()->GetInTitleImage().Draw(0, 800, 0, 600, 0, 800, 600, 0);
+	gTitle_Image.Draw(0, 800, 0, 600, 0, 800, 600, 0);
 	//2Dの描画終了
 	CUtil::End2D();
 }

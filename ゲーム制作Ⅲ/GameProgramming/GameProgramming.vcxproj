@@ -90,6 +90,7 @@
     <ClInclude Include="src\CVector.h" />
     <ClInclude Include="src\CXCharacter.h" />
     <ClInclude Include="src\CXEnemy.h" />
+    <ClInclude Include="src\TitleData.h" />
     <ClInclude Include="src\Update.h" />
     <ClInclude Include="src\CXPlayer.h" />
   </ItemGroup>

@@ -26,7 +26,7 @@ CXEnemy::CXEnemy()
 	//初期状態を設定
 	mEnemy_State = EIDLE;	//待機状態
 		//コライダのタグを設定
-	mEnemy_ColCapsuleBody.Tag(CCollider::EBODY);		//体
+	mEnemy_ColCapsuleBody.Tag(CCollider::EBODY);	//体
 	mEnemy_ColSphereBody.Tag(CCollider::EBODY);		//体
 	mEnemy_ColSphereRightarm.Tag(CCollider::ERIGHTARM);	//右手
 	mEnemy_ColSphereLeftarm.Tag(CCollider::ELEFTARM);	//左手
@@ -399,11 +399,7 @@ void CXEnemy::KnockBack()
 		}
 		else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 		{
-			mHp -= mHp - mEnemy_Damage_PlayerSp3 * 2;
-		}
-		else
-		{
-			mHp -= mEnemy_Damage_PlayerSp3;	//ダメージを受ける(体)
+			mHp = mHp - mEnemy_Damage_PlayerSp3;
 		}
 		mEnemy_Flag = true;
 	}
@@ -478,33 +474,9 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 						{
 							if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
 							{
-								//乱数値=rand()%乱数値の要素数+乱数値の最小値
-								srand((unsigned)time(NULL));
-								mEnemy_val = (rand() % mEnemy_Probability_Max_Set2) + 1;
-								if (mEnemy_val >= mEnemy_Probability_Low_Set1 && mEnemy_val <= mEnemy_Probability_Max_Set1) {
-									if (CXPlayer::GetInstance()->GetIsHit() == true) {
-											mEnemy_State = EKNOCKBACK;
-									}
-								}
-								//スーパーアーマが発動時のダメージ参照
-								else if (mEnemy_val >= mEnemy_Probability_Low_Set2 && mEnemy_val <= mEnemy_Probability_Max_Set2)
-								{
-									if (CXPlayer::GetInstance()->GetIsHit() == true) {
-										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-										{
-											mHp = mHp - mEnemy_Damage_PlayerSp1;
-											new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
-										}
-										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-										{
-											mHp = mHp - mEnemy_Damage_PlayerSp2;
-											new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2);
-										}
-										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-										{
-											mHp = mHp - mEnemy_Damage_PlayerSp3;
-										}
-									}
+
+								if (CXPlayer::GetInstance()->GetIsHit() == true) {
+									mEnemy_State = EKNOCKBACK;
 								}
 							}
 						}
@@ -607,10 +579,6 @@ void CXEnemy::EnemyTable()
 	mEnemy_Rotation_X = table["Enemy_Rotation_X"]["Value"].fVal;
 	mEnemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 	mEnemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
-	mEnemy_Probability_Low_Set1 = table["Enemy_Probability_Low_Set1"]["Value"].iVal;
-	mEnemy_Probability_Max_Set1 = table["Enemy_Probability_Max_Set1"]["Value"].iVal;
-	mEnemy_Probability_Low_Set2 = table["Enemy_Probability_Low_Set2"]["Value"].iVal;
-	mEnemy_Probability_Max_Set2 = table["Enemy_Probability_Max_Set2"]["Value"].iVal;
 	mEnemy_Gravity = table["Enemy_Gravity"]["Value"].fVal;
 	mEnemy_Hp = table["Enemy_Hp"]["Value"].iVal;
 	mEnemy_Hp_Max = table["Enemy_Hp_Max"]["Value"].iVal;

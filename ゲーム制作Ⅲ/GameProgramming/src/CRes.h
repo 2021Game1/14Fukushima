@@ -55,8 +55,6 @@
 #define MAP_COLLISION_MAP "res\\Map\\collision.obj","res\\Map\\collision.mtl"
 
 /*画像, UI*/
-//タイトル画像
-#define TITLE_IMAGE "res\\Image\\Title_Image.png"
 //ゲームクリア画像
 #define GAMECLEAR_IMAGE "res\\Image\\GameClear.png"
 //ゲームオーバー画像
@@ -76,7 +74,7 @@
 
 //BGM
 #define BGM_GAME "res\\Bgm\\Bgm_Game.wav"
-#define BGM_TITLE "res\\Bgm\\Bgm_Title.wav"
+
 
 //SE・プレイヤ
 #define SE_PLAYER_ATTACK1 "res\\Se\\SE_Player_AttackSp1.wav"
@@ -94,8 +92,6 @@ public:
 	//更新処理
 	void Update();
 	void Init();
-	//タイトル画像を取得する
-	CTexture& GetInTitleImage();
 	//ゲームクリア画像を取得する
 	CTexture& GetinGameClearImage();
 	//ゲームオーバー画像を取得する
@@ -118,8 +114,6 @@ public:
 	CSound& GetinEnemySeDeath();
 	//ゲームBGMの取得
 	CSound& GetinSoundBgmGame();
-	//タイトルBGMの取得
-	CSound& GetinSoundBgmTitle();
 	//インスタンスの取得
 	static CRes* GetInstance();//staticで処理を作る
 
@@ -129,7 +123,6 @@ private:
 	//CSoundクラスのインスタンス作成
 	//BGM
 	CSound Game_Bgm;
-	CSound Title_Bgm;
 	//プレイヤSE
 	CSound Se_Player_AttackSp1;
 	CSound Se_Player_AttackSp2;
@@ -164,8 +157,6 @@ private:
 	CMatrix mBackGroundMatrix;
 	//モデルからコライダを生成
 	CColliderMesh mColliderMesh;
-	//タイトル画像
-	CTexture gTitle_Image;
 	//ゲームクリア画像
 	CTexture gGameClear_Image;
 	//ゲームオーバー画像

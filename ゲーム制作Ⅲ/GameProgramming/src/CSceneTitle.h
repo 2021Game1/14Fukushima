@@ -2,7 +2,7 @@
 #define CSCENETITLE_H
 
 #include "CScene.h"
-#include "CRes.h"
+#include "TitleData.h"
 
 class CSceneTitle : public CScene {
 private:
@@ -12,11 +12,13 @@ private:
 	//次のシーンの取得
 	EScene GetNextScene();
 
-	CRes mRes;
 
 	bool CSceneTitle::mSceneChange;
 
 	CScene::EScene CSceneTitle::mNextScene;
+	//タイトル画像
+	CTexture gTitle_Image;
+	CSound Title_Bgm;
 public:
 	CSceneTitle();
 	~CSceneTitle();

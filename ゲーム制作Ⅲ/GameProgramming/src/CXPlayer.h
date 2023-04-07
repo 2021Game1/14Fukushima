@@ -105,8 +105,6 @@ private:
 
 	//プレイヤの攻撃フラグ変数
 	bool mPlayer_AttackFlag_1;			//プレイヤの攻撃1状態の時trueを返す
-	bool mPlayer_AttackFlag_2;			//プレイヤの攻撃2状態の時trueを返す
-	bool mPlayer_AttackFlag_3;			//プレイヤの攻撃3状態の時trueを返す
 	bool mPlayer_SeFlag;				//プレイヤのSEフラグ
 	bool mPlayer_IsHit;					//プレイヤの攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	bool mPlayer_AttackFlag_Once;		//プレイヤの攻撃した瞬間だけtrueを返す、敵の回避判定に使用
