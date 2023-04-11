@@ -46,8 +46,6 @@
 #define ENEMY_ANIMATION_KNOCKBACK "res\\Enemy\\Mutant\\KnockBack.x"
 #define ENEMY_ANIMATION_DEATH "res\\Enemy\\Mutant\\Death.x"
 
-#define ENEMYDATA_FILE "res\\Enemy\\EnemyData.csv"
-
 /*マップのモデル*/
 
 #define MAP_MODEL_MAP "res\\Map\\map.obj","res\\Map\\map.mtl"
@@ -64,28 +62,12 @@
 #define CHARACTER_UI_HP_REDGAUGE "res\\Ui\\HP_RedGauge.png"
 //プレイヤUI
 #define PLAYER_UI_HP_FRAME "res\\Ui\\Player_HP_Frame.png"
-//敵UI
-#define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
-//敵ダメージエフェクト
-#define ENEMY_EF_DAMAGESP1 "Effect\\Enemy_DamageSp1.png"
-#define ENEMY_EF_DAMAGESP2 "Effect\\Enemy_DamageSp2.png"
 
 /*BGM・SE*/
 
 //BGM
 #define BGM_GAME "res\\Bgm\\Bgm_Game.wav"
 
-
-//SE・プレイヤ
-#define SE_PLAYER_ATTACK1 "res\\Se\\SE_Player_AttackSp1.wav"
-#define SE_PLAYER_ATTACK2 "res\\Se\\SE_Player_AttackSp2.wav"
-#define SE_PLAYER_ATTACK3 "res\\Se\\SE_Player_AttackSp3.wav"
-#define SE_PLAYER_WALK "res\\Se\\SE_Player_Walk.wav"
-#define SE_PLAYER_DEATH "res\\Se\\SE_Player_Death.wav"
-
-//SE・敵
-#define SE_ENEMY_ATTACK "res\\Se\\SE_Enemy_AttackSp.wav" 
-#define SE_EMEMY_DEATH "res\\Se\\SE_Enemy_Death.wav"
 
 class CRes {
 public:
@@ -103,15 +85,6 @@ public:
 	CTexture& GetInUiHpRedGauge();
 	CTexture& GetInPlayerUiHpFrame();
 	CTexture& GetInEnemyUiHpBackBar();
-	//プレイヤSEを取得する
-	CSound& GetinPlayerSeAttackSp1();
-	CSound& GetinPlayerSeAttackSp2();
-	CSound& GetinPlayerSeAttackSp3();
-	CSound& GetinPlayerSeWalk();
-	CSound& GetinPlayerSeDeath();
-	//敵SEを取得する
-	CSound& GetinEnemySeAttackSp();
-	CSound& GetinEnemySeDeath();
 	//ゲームBGMの取得
 	CSound& GetinSoundBgmGame();
 	//インスタンスの取得
@@ -123,15 +96,7 @@ private:
 	//CSoundクラスのインスタンス作成
 	//BGM
 	CSound Game_Bgm;
-	//プレイヤSE
-	CSound Se_Player_AttackSp1;
-	CSound Se_Player_AttackSp2;
-	CSound Se_Player_AttackSp3;
-	CSound Se_Player_Walk;
-	CSound Se_Player_Death;
-	//敵SE
-	CSound Se_Enemy_AttackSp;
-	CSound Se_Enemy_Death;
+
 	//プレイヤモデル
 	CModelX gPlayer_Model_Knight;
 	//プレイヤのガードアクションエフェクト

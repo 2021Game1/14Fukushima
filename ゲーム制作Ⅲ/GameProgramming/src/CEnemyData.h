@@ -39,5 +39,13 @@
 #define ENEMY_TRUN_CHECK_SPEEDS_SET 1.5f														//急な回転速度を調整
 #define ENEMY_TRUN_CHECK_SET 0.0f																//回転速度を検出し可動域を設定
 
+//SE・敵
+#define SE_EMEMY_DEATH "res\\Se\\SE_Enemy_Death.wav"
+
+//敵UI
+#define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
+//敵ダメージエフェクト
+#define ENEMY_EF_DAMAGESP1 "Effect\\Enemy_DamageSp1.png"
+#define ENEMY_EF_DAMAGESP2 "Effect\\Enemy_DamageSp2.png"
 
 #endif // !

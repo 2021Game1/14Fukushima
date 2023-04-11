@@ -5,6 +5,13 @@
 #include"CColliderCapsule.h"
 #include"CCamera.h"
 #include"CEnemyData.h"
+#include"CUtil.h"
+#include"CXPlayer.h"
+#include "CTable.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include<time.h>
+
 
 
 class CXEnemy : public CXCharacter{

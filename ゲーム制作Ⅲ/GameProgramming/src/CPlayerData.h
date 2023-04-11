@@ -5,6 +5,16 @@
 #define PLAYER_INT_INITIALIZATION 0																//初期化
 #define PLAYER_FLOAT_INITIALIZATION 0.0f														//浮動小数点の初期化
 
+//SE・プレイヤ
+#define SE_PLAYER_ATTACK1 "res\\Se\\SE_Player_AttackSp1.wav"
+#define SE_PLAYER_ATTACK2 "res\\Se\\SE_Player_AttackSp2.wav"
+#define SE_PLAYER_ATTACK3 "res\\Se\\SE_Player_AttackSp3.wav"
+#define SE_PLAYER_WALK "res\\Se\\SE_Player_Walk.wav"
+#define SE_PLAYER_DEATH "res\\Se\\SE_Player_Death.wav"
+//SE・敵
+#define SE_ENEMY_ATTACK "res\\Se\\SE_Enemy_AttackSp.wav" 
+
+
 /*プレイヤのコライダ設定*/
 
 //プレイヤーの身体
@@ -43,8 +53,6 @@
 #define GAUGE_HEIGHT 20																			//ゲージ描画時の高さ
 #define PLAYER_GAUGE_HP_TOP 30																	//HPゲージ描画時の上座標
 #define PLAYER_GAUGE_HP_BOTTOM (PLAYER_GAUGE_HP_TOP-GAUGE_HEIGHT)
-
-#define PLAYER_FRAME 180
 
 #endif // !PLAYERDATA_H
 

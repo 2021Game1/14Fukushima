@@ -6,15 +6,6 @@ void CRes::Init() {
 	mpRes_Instance = this;
 	//BGMの読み込み
 	Game_Bgm.Load(BGM_GAME);
-	//プレイヤSE
-	Se_Player_AttackSp1.Load(SE_PLAYER_ATTACK1);
-	Se_Player_AttackSp2.Load(SE_PLAYER_ATTACK2);
-	Se_Player_AttackSp3.Load(SE_PLAYER_ATTACK3);
-	Se_Player_Walk.Load(SE_PLAYER_WALK);
-	Se_Player_Death.Load(SE_PLAYER_DEATH);
-	//敵SE
-	Se_Enemy_AttackSp.Load(SE_ENEMY_ATTACK);
-	Se_Enemy_Death.Load(SE_EMEMY_DEATH);
 
 	//3Dモデルファイルの読み込み
 	gPlayer_Model_Knight.Load(PLAYER_MODEL_FILE);
@@ -109,41 +100,6 @@ CTexture& CRes::GetInPlayerUiHpFrame()
 CTexture& CRes::GetInEnemyUiHpBackBar()
 {
 	return gEnemy_Ui_Hp_BackBar;
-}
-//プレイヤの斬撃SE1を取得する
-CSound& CRes::GetinPlayerSeAttackSp1() 
-{
-	return Se_Player_AttackSp1;
-}
-//プレイヤの斬撃SE2を取得する
-CSound& CRes::GetinPlayerSeAttackSp2() 
-{
-	return Se_Player_AttackSp2;
-}
-//プレイヤの斬撃SE3を取得する
-CSound& CRes::GetinPlayerSeAttackSp3() 
-{
-	return Se_Player_AttackSp3;
-}
-//プレイヤの歩行SEを取得
-CSound& CRes::GetinPlayerSeWalk() 
-{
-	return Se_Player_Walk;
-}
-//プレイヤの死亡SEを取得
-CSound& CRes::GetinPlayerSeDeath()
-{
-	return Se_Player_Death;
-}
-//敵の攻撃SEを取得する
-CSound& CRes::GetinEnemySeAttackSp() 
-{
-	return Se_Enemy_AttackSp;
-}
-//敵の死亡SEを取得する
-CSound& CRes::GetinEnemySeDeath()
-{
-	return Se_Enemy_Death;
 }
 //ゲームBGMの取得
 CSound& CRes::GetinSoundBgmGame() 

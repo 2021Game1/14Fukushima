@@ -1,11 +1,6 @@
 #include"CXEnemy.h"
-#include"CUtil.h"
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include<time.h>
-#include"CXPlayer.h"
 #include "CRes.h"
-#include "CTable.h"
+
 
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
 
@@ -391,15 +386,19 @@ void CXEnemy::KnockBack()
 		{
 			mHp = mHp - mEnemy_Damage_PlayerSp1;
 			new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
+			new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
 		}
 		else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
 		{
 			mHp = mHp - mEnemy_Damage_PlayerSp2;
-			new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 2, 5, 2);
+			new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
+			new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
 		}
 		else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
 		{
 			mHp = mHp - mEnemy_Damage_PlayerSp3;
+			new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
+			new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
 		}
 		mEnemy_Flag = true;
 	}

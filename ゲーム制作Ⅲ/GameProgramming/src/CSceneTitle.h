@@ -12,7 +12,6 @@ private:
 	//Ÿ‚ÌƒV[ƒ“‚Ìæ“¾
 	EScene GetNextScene();
 
-
 	bool CSceneTitle::mSceneChange;
 
 	CScene::EScene CSceneTitle::mNextScene;

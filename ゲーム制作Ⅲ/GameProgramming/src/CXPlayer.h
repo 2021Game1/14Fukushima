@@ -10,11 +10,13 @@
 #include"CTexture.h"
 #include"CEffect.h"
 #include"CUtil.h"
-#define _USE_MATH_DEFINES
-#include <math.h>
+#include"CSound.h"
 #include"CTable.h"
 #include"CPlayerData.h"
 #include "CCamera.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 
 
 /*
@@ -46,8 +48,7 @@ public:
 	//デフォルトコンストラクタ
 	CXPlayer();
 	//プレイヤのHP取得関数
-	bool GetHp();
-
+	bool GetHp();	
 	//プレイヤのインスタンス取得関数
 	static CXPlayer* GetInstance();		//staticで処理を作る
 	//プレイヤのアニメーションフレーム取得関数
@@ -195,6 +196,15 @@ private:
 	float Player_Trun_Speeds_Set;
 	float Player_Trun_Check_Speeds_Set;
 	float Player_Trun_Check_Set;
+
+	//プレイヤSE
+	CSound Se_Player_AttackSp1;
+	CSound Se_Player_AttackSp2;
+	CSound Se_Player_AttackSp3;
+	CSound Se_Player_Walk;
+	CSound Se_Player_Death;
+	//敵SE
+	CSound Se_Enemy_AttackSp;
 };
 #endif 
 
