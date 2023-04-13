@@ -19,9 +19,9 @@ Enemy_Damage_PlayerSp3,敵の攻撃3与ダメージ,15
 Enemy_Idle_Animation_Frame,待機アニメーションフレーム,60.0
 Enemy_Move_Animation_Frame,歩行アニメーションフレーム,60.0
 Enemy_Dash_Animation_Frame,走行アニメーションフレーム,50.0
-Enemy_Attack1_Animation_Frame,攻撃1アニメーションフレーム,130.0
-Enemy_Attack2_Animation_Frame,攻撃2アニメーションフレーム,110.0
-Enemy_Attack3_Animation_Frame,攻撃3アニメーションフレーム,120.0
+Enemy_Attack1_Animation_Frame,攻撃1アニメーションフレーム,150.0
+Enemy_Attack2_Animation_Frame,攻撃2アニメーションフレーム,130.0
+Enemy_Attack3_Animation_Frame,攻撃3アニメーションフレーム,140.0
 Enemy_Knockback_Animation_Frame,ノックバックアニメーションフレーム,60.0
 Enemy_Death_Animation_Frame,死亡アニメーションフレーム,60
 Enemy_Animation_No_Attack_1,攻撃アニメーション1番号,0
