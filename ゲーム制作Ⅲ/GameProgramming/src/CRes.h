@@ -28,8 +28,9 @@
 
 #define PLAYER_MODEL_FILE "res\\Player\\Paladin\\paladin.x"
 #define PLAYER_ANIMATION_ATTACKSP1 "res\\Player\\Paladin\\Attack1.x"
+#define PLAYER_ANIMATION_ATTACKSP1_IDLE "res\\Player\\Paladin\\Attack1_Idle.x"
 #define PLAYER_ANIMATION_ATTACKSP2 "res\\Player\\Paladin\\Attack2.x"
-#define PLAYER_ANIMATION_ATTACKSP3 "res\\Player\\Paladin\\Attack3.x"
+#define PLAYER_ANIMATION_ATTACKSP2_IDLE "res\\Player\\Paladin\\Attack2_Idle.x"
 #define PLAYER_ANIMATION_AVOIDANCE "res\\Player\\Paladin\\Avoidance.x" 
 #define PLAYER_ANIMATION_IDLE "res\\Player\\Paladin\\Idle.x"
 #define PLAYER_ANIMATION_KNOCKBACK "res\\Player\\Paladin\\KnockBack.x"

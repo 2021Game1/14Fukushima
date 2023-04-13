@@ -33,7 +33,6 @@ public:
 		EAVOIDANCE,	//âÒî
 		EATTACK_1,	//çUåÇ1
 		EATTACK_2,	//çUåÇ2
-		EATTACK_3,	//çUåÇ3
 		EDEATH,		//éÄñS
 		EKNOCKBACK,	//ÉmÉbÉNÉoÉbÉN
 	};
@@ -147,7 +146,6 @@ private:
 	float Player_Attack_Dis;
 	int Player_Damage_EnemySp1;
 	int Player_Damage_EnemySp2;
-	int Player_Damage_EnemySp3;
 	float Player_Position_X;
 	float Player_Position_Y;
 	float Player_Position_Z;
@@ -161,14 +159,16 @@ private:
 	float Player_Move_Animation_Frame;
 	float Player_Avoidance_Animation_Frame;
 	float Player_Attack1_Animation_Frame;
+	float Player_Attack1_Idle_Animation_Frame;
 	float Player_Attack2_Animation_Frame;
-	float Player_Attack3_Animation_Frame;
+	float Player_Attack2_Idle_Animation_Frame;
 	float Player_KnockBack_Animation_Frame;
 	float Player_Death_Animation_Frame;
 	int Player_Animation_No_Move;
 	int Player_Animation_No_Attack1;
+	int Player_Animation_No_Attack1_Idle;
 	int Player_Animation_No_Attack2;
-	int Player_Animation_No_Attack3;
+	int Player_Animation_No_Attack2_Idle;
 	int Player_Animation_No_AvoidDance;
 	int Player_Animation_No_Idle;
 	int Player_Animation_No_Knockback;

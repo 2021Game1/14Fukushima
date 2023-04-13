@@ -96,7 +96,6 @@ void CXEnemy::Update() {
 		mHp = mEnemy_Death_Hp;
 	}
 	CXCharacter::Update();
-	EnemyTable();
 }
 void CXEnemy::Render2D()
 {
@@ -391,12 +390,6 @@ void CXEnemy::KnockBack()
 		else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
 		{
 			mHp = mHp - mEnemy_Damage_PlayerSp2;
-			new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
-			new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
-		}
-		else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_3)
-		{
-			mHp = mHp - mEnemy_Damage_PlayerSp3;
 			new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
 			new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
 		}

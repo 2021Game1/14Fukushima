@@ -22,7 +22,6 @@ void CXPlayer::PlayerTable() {
 	Player_Attack_Dis = table["Player_Attack_Dis"]["Value"].fVal;
 	Player_Damage_EnemySp1 = table["Player_Damage_EnemySp1"]["Value"].fVal;
 	Player_Damage_EnemySp2 = table["Player_Damage_EnemySp2"]["Value"].fVal;
-	Player_Damage_EnemySp3 = table["Player_Damage_EnemySp3"]["Value"].fVal;
 	Player_Position_X = table["Player_Position_X"]["Value"].fVal;
 	Player_Position_Y = table["Player_Position_Y"]["Value"].fVal;
 	Player_Position_Z = table["Player_Position_Z"]["Value"].fVal;
@@ -36,14 +35,16 @@ void CXPlayer::PlayerTable() {
 	Player_Move_Animation_Frame = table["Player_Move_Animation_Frame"]["Value"].fVal;
 	Player_Avoidance_Animation_Frame = table["Player_Avoidance_Animation_Frame"]["Value"].fVal;
 	Player_Attack1_Animation_Frame = table["Player_Attack1_Animation_Frame"]["Value"].fVal;
+	Player_Attack1_Idle_Animation_Frame = table["Player_Attack1_Idle_Animation_Frame"]["Value"].fVal;
 	Player_Attack2_Animation_Frame = table["Player_Attack2_Animation_Frame"]["Value"].fVal;
-	Player_Attack3_Animation_Frame = table["Player_Attack3_Animation_Frame"]["Value"].fVal;
+	Player_Attack2_Idle_Animation_Frame = table["Player_Attack2_Idle_Animation_Frame"]["Value"].fVal;
 	Player_KnockBack_Animation_Frame = table["Player_KnockBack_Animation_Frame"]["Value"].fVal;
 	Player_Death_Animation_Frame = table["Player_Death_Animation_Frame"]["Value"].fVal;
 	Player_Animation_No_Move = table["Player_Animation_No_Move"]["Value"].iVal;
 	Player_Animation_No_Attack1 = table["Player_Animation_No_Attack1"]["Value"].iVal;
+	Player_Animation_No_Attack1_Idle = table["Player_Animation_No_Attack1_Idle"]["Value"].iVal;
 	Player_Animation_No_Attack2 = table["Player_Animation_No_Attack2"]["Value"].iVal;
-	Player_Animation_No_Attack3 = table["Player_Animation_No_Attack3"]["Value"].iVal;
+	Player_Animation_No_Attack2_Idle = table["Player_Animation_No_Attack2_Idle"]["Value"].iVal;
 	Player_Animation_No_AvoidDance = table["Player_Animation_No_AvoidDance"]["Value"].iVal;
 	Player_Animation_No_Idle = table["Player_Animation_No_Idle"]["Value"].iVal;
 	Player_Animation_No_Knockback = table["Player_Animation_No_Knockback"]["Value"].iVal;
@@ -99,7 +100,6 @@ CXPlayer::CXPlayer()
 	mPlayer_Hp_Max = Player_Hp_Max;
 	mPlayer_Damage_EnemySp1 = Player_Damage_EnemySp1;
 	mPlayer_Damage_EnemySp2 = Player_Damage_EnemySp2;
-	mPlayer_Damage_EnemySp3 = Player_Damage_EnemySp3;
 	mPlayer_Gauge_Hp_Rate = Player_Gauge_Hp_Rate;
 	mPlayer_Attack_Dis = Player_Attack_Dis;
 	CTaskManager::Get()->Remove(this);//削除して
@@ -145,10 +145,6 @@ void CXPlayer::Update() {
 		Attack_2();													//攻撃2の処理を呼ぶ
 		break;
 
-	case EATTACK_3:													//攻撃3状態の時
-		Attack_3();													//攻撃3の処理を呼ぶ
-		break;
-
 	case EMOVE:														//移動状態
 		Move();														//移動状態の処理を呼ぶ
 		break;
@@ -187,6 +183,7 @@ void CXPlayer::Idle()
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = EATTACK_1;
 	}
+
 	//WASDキーを押すと移動へ移行
 	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
 		mPlayer_State = EMOVE;
@@ -196,6 +193,8 @@ void CXPlayer::Idle()
 		mPlayer_ComboCount = PLAYER_INT_INITIALIZATION;
 		ChangeAnimation(Player_Animation_No_Idle, true, Player_Idle_Animation_Frame);
 	}
+
+
 
 }
 
@@ -307,7 +306,7 @@ void CXPlayer::Attack_1()
 		ChangeAnimation(Player_Animation_No_Attack1, false, Player_Attack1_Animation_Frame);	//プレイヤの攻撃1モーション
 		Se_Player_AttackSp1.Play(Player_Se);
 	}
-	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack3) {
+	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2) {
 		mPlayer_AttackFlag_Once = true;															//プレイヤの攻撃フラグをtrueに設定
 		mPlayer_IsHit = false;																	//ヒット判定終了
 		ChangeAnimation(Player_Animation_No_Attack1, false, Player_Attack1_Animation_Frame);	//プレイヤの攻撃1モーション
@@ -362,16 +361,18 @@ void CXPlayer::Attack_1()
 			if (CKey::Once(VK_LBUTTON)) {
 				if (mAnimationIndex == Player_Animation_No_Attack1) {
 					if (mAnimationFrame < Player_Push_Reception) {
-						mPlayer_Flag = false;								//回復フラグ
 						mPlayer_State = EATTACK_2;							//攻撃2モーションへ移行
+						mPlayer_AttackFlag_1 = false;						//プレイヤの攻撃1フラグをfalseにする
 					}
 				}
 			}
 
 
 		if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1) {
+			ChangeAnimation(Player_Animation_No_Attack1_Idle, false, Player_Attack1_Idle_Animation_Frame);
+		}
+		if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1_Idle) {
 			mPlayer_IsHit = false;								//ヒット判定終了
-			mPlayer_Flag = false;								//回復フラグ
 			mPlayer_State = EIDLE;								//待機状態へ移行
 			mPlayer_AttackFlag_1 = false;						//プレイヤの攻撃1フラグをfalseにする
 		}
@@ -432,84 +433,20 @@ void CXPlayer::Attack_2()
 	if (CKey::Once(VK_LBUTTON)) {
 		if (mAnimationIndex == Player_Animation_No_Attack2) {
 			if (mAnimationFrame < Player_Push_Reception) {
-				mPlayer_State = EATTACK_3;						//攻撃3モーションへ移行
+				mPlayer_State = EATTACK_1;						//攻撃1モーションへ移行
 			}
 		}
 	}
 
 	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2) {
+		ChangeAnimation(Player_Animation_No_Attack2_Idle, false, Player_Attack2_Idle_Animation_Frame);
+	}	
+	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2_Idle) {
 		mPlayer_IsHit = false;								//ヒット判定終了
 		mPlayer_State = EIDLE;								//待機状態へ移行
-	}	
-}
-
-//攻撃3処理
-void CXPlayer::Attack_3()
-{
-	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2) {							
-			mPlayer_AttackFlag_Once = true;								//プレイヤの攻撃フラグをtrueに設定
-			mPlayer_IsHit = false;									//ヒット判定終了
-			ChangeAnimation(Player_Animation_No_Attack3, false, Player_Attack3_Animation_Frame);
-			Se_Player_AttackSp3.Play(Player_Se);
 	}
-		//ヒット判定発生
-		if (IsAnimationFinished() == false && mAnimationIndex == Player_Animation_No_Attack3)
-		{
-			if (mPlayer_EnemyDis >= mPlayer_Attack_Dis) {
-				mPlayer_MoveDirKeep = mPlayer_AttackDir;
-				mPlayer_MoveDir = mPlayer_AttackDir;
-			}
-			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
-			if (mAnimationFrame <= Player_Attack_InReception)
-			{
-				mPlayer_IsHit = false; //ヒット判定終了
-			}
-			//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
-			else {
-				mPlayer_IsHit = true;
-			}
-			//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
-			if (mAnimationFrame > Player_Attack_OutReception)
-			{
-				mPlayer_IsHit = false; //ヒット判定終了
-			}
-			if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-				MoveCamera();
-				mPlayer_State = EAVOIDANCE;
-				mPlayer_IsHit = false;
-			}
-			else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-				MoveCamera();
-				mPlayer_State = EAVOIDANCE;
-				mPlayer_IsHit = false;
-			}
-			else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-				MoveCamera();
-				mPlayer_State = EAVOIDANCE;
-				mPlayer_IsHit = false;
-			}
-			else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-				MoveCamera();
-				mPlayer_State = EAVOIDANCE;
-				mPlayer_IsHit = false;
-			}
-		}
-
-		//左クリックされた場合
-		if (CKey::Once(VK_LBUTTON)) {
-			if (mAnimationIndex == Player_Animation_No_Attack3) {
-				if (mAnimationFrame < Player_Push_Reception) {
-					mPlayer_State = EATTACK_1;							//攻撃1モーションへ移行
-					mPlayer_AttackFlag_1 = false;						//プレイヤの攻撃1フラグをfalseにする
-				}
-			}
-		}
-
-		if(IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack3){
-			mPlayer_IsHit = false;								//ヒット判定終了
-			mPlayer_State = EIDLE;								//待機状態へ移行
-		}
 }
+
 //ノックバック処理
 void CXPlayer::KnockBack()
 {
@@ -529,10 +466,6 @@ void CXPlayer::KnockBack()
 			else if (CXEnemy::EEnemyState::EATTACK_2)
 			{
 				mPlayer_Hp = mPlayer_Hp - mPlayer_Damage_EnemySp2;
-			}
-			else if (CXEnemy::EEnemyState::EATTACK_3)
-			{
-				mPlayer_Hp = mPlayer_Hp - mPlayer_Damage_EnemySp3;
 			}
 		}
 
