@@ -16,6 +16,201 @@
     <Filter Include="ソース ファイル\Lib">
       <UniqueIdentifier>{71337753-7d4e-4fb3-a565-77caf26ac0fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Lib\Enemy">
+      <UniqueIdentifier>{b97735c3-4c1b-41d1-9e51-ba45f7dd7545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Model">
+      <UniqueIdentifier>{8e3aa5a0-0bc9-484c-b02c-a85c95227e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Model\Model_cpp">
+      <UniqueIdentifier>{4198f26e-f410-429f-821f-a41bc257ab61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Model\Model_h">
+      <UniqueIdentifier>{bd00c661-4166-45d0-881e-f7327d43a0da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Character">
+      <UniqueIdentifier>{1d42e1b2-86b3-49de-a537-61f4f8c0d7cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider">
+      <UniqueIdentifier>{02404635-6359-4ddd-997c-9bbfd5a1e323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderCapsule">
+      <UniqueIdentifier>{f54c2824-c10c-46ff-9720-e486ce3f71e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderMesh">
+      <UniqueIdentifier>{58252b32-0d64-4a80-b282-8d99cbd6bd7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderLine">
+      <UniqueIdentifier>{74a0f863-25c2-407a-a52f-7547e78073b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderTriangle">
+      <UniqueIdentifier>{b33c98b9-0b13-44f9-9465-82b40872b0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderTriangle\cpp">
+      <UniqueIdentifier>{21670bdf-9157-4421-ad97-697d4ccdea83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderTriangle\h">
+      <UniqueIdentifier>{2a007a45-a5d4-435f-84b2-08af2faf5206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\Collider">
+      <UniqueIdentifier>{9d78ad0e-78f4-44c3-b754-0120076f8215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\Collider\cpp">
+      <UniqueIdentifier>{1ff2bea2-42af-4e14-8a25-bcfff663b7cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\Collider\h">
+      <UniqueIdentifier>{e281172b-38e2-4c53-849c-c7d010c8ae8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderCapsule\cpp">
+      <UniqueIdentifier>{12eaf995-95c3-45f4-88e6-ca12c85a9880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderCapsule\h">
+      <UniqueIdentifier>{7b43bad8-345e-4611-9280-c0e3a7a1add0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderMesh\cpp">
+      <UniqueIdentifier>{247cab31-b220-41a7-b3f7-ac3377b37a21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderMesh\h">
+      <UniqueIdentifier>{a89961c6-885e-4870-af3c-0057f5a0e3a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderLine\cpp">
+      <UniqueIdentifier>{6838fe84-3d94-4851-bcbe-4b37fcf06b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\ColliderLine\h">
+      <UniqueIdentifier>{5cf9ea66-d492-40f4-a020-ae475fdb2e43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\CollisionManager">
+      <UniqueIdentifier>{d0667c06-015d-4ea5-bdb0-463ce475e397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\CollisionManager\cpp">
+      <UniqueIdentifier>{7ab8be88-8634-410d-ae9b-0d02b1493d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Collider\CollisionManager\h">
+      <UniqueIdentifier>{e0982a92-9dfd-44ff-b140-82728c02714d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Enemy\cpp">
+      <UniqueIdentifier>{93cd2fcd-a003-488c-a4cf-eefa37af63cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Enemy\h">
+      <UniqueIdentifier>{1063cf03-5050-4c24-8375-63439a3355b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Enemy\Data">
+      <UniqueIdentifier>{64bddef3-0f67-42a7-920f-4bb74fe80eac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Player">
+      <UniqueIdentifier>{3920030b-a167-40b0-82d5-e525fec99dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Player\Data">
+      <UniqueIdentifier>{1a66c3c5-aaba-42f9-a1f8-69837520c2fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Player\cpp">
+      <UniqueIdentifier>{c0cb29b3-6ed8-4414-b6b3-69237fa8147c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Player\h">
+      <UniqueIdentifier>{009d9d3e-d9c5-4838-994d-c2897c076412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Game">
+      <UniqueIdentifier>{9875cf6f-3004-4e20-8620-a1c24e639566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Res">
+      <UniqueIdentifier>{e0243ee1-1324-416b-8c1a-16533e8c426b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Res\cpp">
+      <UniqueIdentifier>{48a67160-9e76-4429-adfd-6afcf35b647a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Res\h">
+      <UniqueIdentifier>{2fa44c60-cabb-47eb-8a0f-067f938b1c4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Camera">
+      <UniqueIdentifier>{9ea070ab-b85d-43b4-a135-c08b4595c0b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Camera\cpp">
+      <UniqueIdentifier>{51883abf-a4e8-458c-b38d-0e7cbae723ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Camera\h">
+      <UniqueIdentifier>{d9a41c7d-e933-46ba-9ed7-24ef3b0fb03f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Game\cpp">
+      <UniqueIdentifier>{4d47496f-682c-4047-8155-06d4892c02fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Game\h">
+      <UniqueIdentifier>{b52b099a-d743-4251-b306-1dd97bd191dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\CModelX">
+      <UniqueIdentifier>{eadb5afe-aea5-4ba3-921d-1a5ef7bb2b62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\CModelX\cpp">
+      <UniqueIdentifier>{6e561498-37cb-423c-8c1e-0a8c9ba2c483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\CModelX\h">
+      <UniqueIdentifier>{8eab9be4-bc87-49c1-bbe8-7b5408068ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Map">
+      <UniqueIdentifier>{277556e6-0750-4193-962f-355a5b7c5654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Map\cpp">
+      <UniqueIdentifier>{75d5c43b-96ba-4a62-ad8c-3ea2684a7ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Map\h">
+      <UniqueIdentifier>{5cd9f0d9-0242-4759-8867-e8b9af8646fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Character\cpp">
+      <UniqueIdentifier>{48ccf822-5db0-44b6-bd92-deecd1133b9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Character\h">
+      <UniqueIdentifier>{352015d8-638b-40cf-8209-2eea734bfaf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\CXCharacter">
+      <UniqueIdentifier>{907404ed-8622-4846-b38b-d2179b74ea85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\CXCharacter\cpp">
+      <UniqueIdentifier>{321f48ff-c495-437e-ac35-dbe254b32a33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\CXCharacter\h">
+      <UniqueIdentifier>{f233a638-35d7-473d-8fb0-72c8f1735441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Task">
+      <UniqueIdentifier>{b5e6fc5e-c376-45a6-a3bb-2e8efb86e3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Task\Task_h">
+      <UniqueIdentifier>{11b5d02b-1541-4336-a86f-a6f9786a14cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Task\TaskManager_h">
+      <UniqueIdentifier>{1272fc69-f28c-48f0-9a93-358eb2d80844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Task\TaskManager_cpp">
+      <UniqueIdentifier>{1a35a898-509e-481e-9de2-394168d0c64f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Effect">
+      <UniqueIdentifier>{2e7f88ed-80d2-4db4-b39e-43fa851dcb78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Effect\cpp">
+      <UniqueIdentifier>{a8df0069-14a1-454e-95ed-08f5c1e6ab93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Effect\h">
+      <UniqueIdentifier>{f4eb5a52-4bc1-4f75-a2d2-2bf616642df2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Scene">
+      <UniqueIdentifier>{4873b35a-1efb-4fc5-8737-3baf14629ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Scene\Scene_h">
+      <UniqueIdentifier>{48fc13ef-7e4a-44c0-8645-cce00f62c8d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Scene\SceneManager_h">
+      <UniqueIdentifier>{704a2a14-6350-40c9-9a0e-7022dc75b9c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Scene\SceneManager_cpp">
+      <UniqueIdentifier>{c23a7c07-dcf5-4364-8837-3d71686121d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Scene\SceneTitle">
+      <UniqueIdentifier>{275918ec-5d8f-44c0-bfe9-551b047bdc65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Scene\SceneTitle\cp">
+      <UniqueIdentifier>{98b18c33-b82a-4ebc-9d14-83e8e86813f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Lib\Scene\SceneTitle\h">
+      <UniqueIdentifier>{1f75d23d-c650-4d1f-853d-dcc458547161}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -27,30 +222,6 @@
     <ClCompile Include="src\CBillBoard.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\CCamera.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CCharacter.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CCollider.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CColliderLine.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CColliderMesh.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CColliderTriangle.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CCollisionManager.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CEffect.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\CKey.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
@@ -60,19 +231,7 @@
     <ClCompile Include="src\CMatrix.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\CModel.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CSceneGame.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CSceneManager.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\CSound.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CTaskManager.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
     <ClCompile Include="src\CText.cpp">
@@ -93,18 +252,6 @@
     <ClCompile Include="src\CVector.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\CModelX.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CXCharacter.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CXPlayer.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CXEnemy.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\CMyShader.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
@@ -114,23 +261,71 @@
     <ClCompile Include="src\CInput.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\CMap.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CColliderCapsule.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CRes.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\CShadowMap.cpp">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CSceneTitle.cpp">
       <Filter>ソース ファイル\Lib</Filter>
     </ClCompile>
     <ClCompile Include="src\CTable.cpp">
       <Filter>ソース ファイル\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CXEnemy.cpp">
+      <Filter>ソース ファイル\Lib\Enemy\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CModel.cpp">
+      <Filter>ソース ファイル\Lib\Model\Model_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CCharacter.cpp">
+      <Filter>ソース ファイル\Lib\Character\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CColliderTriangle.cpp">
+      <Filter>ソース ファイル\Lib\Collider\ColliderTriangle\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CCollider.cpp">
+      <Filter>ソース ファイル\Lib\Collider\Collider\h</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CColliderCapsule.cpp">
+      <Filter>ソース ファイル\Lib\Collider\ColliderCapsule\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CColliderMesh.cpp">
+      <Filter>ソース ファイル\Lib\Collider\ColliderMesh\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CColliderLine.cpp">
+      <Filter>ソース ファイル\Lib\Collider\ColliderLine\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CCollisionManager.cpp">
+      <Filter>ソース ファイル\Lib\Collider\CollisionManager\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CXPlayer.cpp">
+      <Filter>ソース ファイル\Lib\Player\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CSceneGame.cpp">
+      <Filter>ソース ファイル\Lib\Game\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CRes.cpp">
+      <Filter>ソース ファイル\Lib\Res\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CCamera.cpp">
+      <Filter>ソース ファイル\Lib\Camera\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CModelX.cpp">
+      <Filter>ソース ファイル\Lib\CModelX\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CMap.cpp">
+      <Filter>ソース ファイル\Lib\Map\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CXCharacter.cpp">
+      <Filter>ソース ファイル\Lib\CXCharacter\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CTaskManager.cpp">
+      <Filter>ソース ファイル\Lib\Task\TaskManager_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CEffect.cpp">
+      <Filter>ソース ファイル\Lib\Effect\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CSceneManager.cpp">
+      <Filter>ソース ファイル\Lib\Scene\SceneManager_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CSceneTitle.cpp">
+      <Filter>ソース ファイル\Lib\Scene\SceneTitle\cp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -138,30 +333,6 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\CBillBoard.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CCamera.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CCharacter.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CCollider.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CColliderLine.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CColliderMesh.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CColliderTriangle.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CCollisionManager.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CEffect.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
     <ClInclude Include="src\CKey.h">
@@ -173,25 +344,7 @@
     <ClInclude Include="src\CMatrix.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
-    <ClInclude Include="src\CModel.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CScene.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CSceneGame.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CSceneManager.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="src\CSound.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CTask.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CTaskManager.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
     <ClInclude Include="src\CText.h">
@@ -212,18 +365,6 @@
     <ClInclude Include="src\CVector.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
-    <ClInclude Include="src\CModelX.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CXCharacter.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CXPlayer.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CXEnemy.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="src\CMyShader.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
@@ -233,25 +374,7 @@
     <ClInclude Include="src\CInput.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
-    <ClInclude Include="src\CMap.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CRes.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CColliderCapsule.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="src\CShadowMap.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CSceneTitle.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CEnemyData.h">
-      <Filter>ソース ファイル\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CPlayerData.h">
       <Filter>ソース ファイル\Lib</Filter>
     </ClInclude>
     <ClInclude Include="src\CTable.h">
@@ -259,6 +382,78 @@
     </ClInclude>
     <ClInclude Include="src\TitleData.h">
       <Filter>ソース ファイル\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CPlayerData.h">
+      <Filter>ソース ファイル\Lib\Player\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CXEnemy.h">
+      <Filter>ソース ファイル\Lib\Enemy\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEnemyData.h">
+      <Filter>ソース ファイル\Lib\Enemy\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CModel.h">
+      <Filter>ソース ファイル\Lib\Model\Model_h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CCharacter.h">
+      <Filter>ソース ファイル\Lib\Character\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CColliderTriangle.h">
+      <Filter>ソース ファイル\Lib\Collider\ColliderTriangle\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CCollider.h">
+      <Filter>ソース ファイル\Lib\Collider\Collider\cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CColliderCapsule.h">
+      <Filter>ソース ファイル\Lib\Collider\ColliderCapsule\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CColliderMesh.h">
+      <Filter>ソース ファイル\Lib\Collider\ColliderMesh\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CColliderLine.h">
+      <Filter>ソース ファイル\Lib\Collider\ColliderLine\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CCollisionManager.h">
+      <Filter>ソース ファイル\Lib\Collider\CollisionManager\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CXPlayer.h">
+      <Filter>ソース ファイル\Lib\Player\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CSceneGame.h">
+      <Filter>ソース ファイル\Lib\Game\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CRes.h">
+      <Filter>ソース ファイル\Lib\Res\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CCamera.h">
+      <Filter>ソース ファイル\Lib\Camera\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CModelX.h">
+      <Filter>ソース ファイル\Lib\CModelX\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CMap.h">
+      <Filter>ソース ファイル\Lib\Map\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CXCharacter.h">
+      <Filter>ソース ファイル\Lib\CXCharacter\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CTask.h">
+      <Filter>ソース ファイル\Lib\Task\Task_h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CTaskManager.h">
+      <Filter>ソース ファイル\Lib\Task\TaskManager_h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CEffect.h">
+      <Filter>ソース ファイル\Lib\Effect\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CScene.h">
+      <Filter>ソース ファイル\Lib\Scene\Scene_h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CSceneManager.h">
+      <Filter>ソース ファイル\Lib\Scene\SceneManager_h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CSceneTitle.h">
+      <Filter>ソース ファイル\Lib\Scene\SceneTitle\h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -44,6 +44,7 @@ void CRes::Init() {
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_ATTACKSP2);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_WALK);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DASH);
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_BACKSTEP);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_IDLE);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_KNOCKBACK);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DEATH);

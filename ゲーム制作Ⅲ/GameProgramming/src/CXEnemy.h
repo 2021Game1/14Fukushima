@@ -29,11 +29,11 @@ public:
 		EIDLE = 0,								//待機
 		EAUTOMOVE,								//移動
 		EDASH,									//ダッシュ
+		EBACKSTEP,								//後退
 		EATTACK_1,								//攻撃1
 		EATTACK_2,								//攻撃2
 		EATTACK_3,								//攻撃3
 		EKNOCKBACK,								//ノックバック
-		//EREPELLED,								//はじかれた時のノックバック
 		EDEATH,									//死亡
 	};
 	bool GetIsAnimationFrame();
@@ -73,7 +73,8 @@ protected:
 	//敵の行動メソッド関数
 	void Idle();								//待機処理
 	void Move();								//移動処理
-	void Dash();								//追跡処理
+	void Dash();								//ダッシュ処理
+	void BackStep();							//後退処理
 	void Attack_1();							//攻撃1処理
 	void Attack_2();							//攻撃2処理
 	void Attack_3();							//攻撃3処理
@@ -84,54 +85,56 @@ protected:
 
 private:
 	void EnemyTable();
-	int mEnemy_Priority;//描画優先度
-	float mEnemy_Speed_WalkPattern;//移動スピードパターン
-	float mEnemy_Speed_DashPattern;//走行スピードパターン
-	float mEnemy_Walk_Dis; //歩行開始の距離
-	float mEnemy_Dash_Dis; //走行開始の距離
-	float mEnemy_Walk_Dis_Max; //歩行終了の距離
-	float mEnemy_Dash_Dis_Max; //走行終了の距離
-	float mEnemy_Attack_Dis;//攻撃可能な距離
-	float mEnemy_Attack_Reception;//当たり判定の開始
-	float mEnemy_Attack_Outreception;//当たり判定の終了
-	int mEnemy_Attack_Walk_Rand;
-	int mEnemy_Attack_Dash_Rand;
-	int mEnemy_Damage_PlayerSp1;
-	int mEnemy_Damage_PlayerSp2;
-	int mEnemy_Damage_PlayerSp3;
-	float mEnemy_Idle_Animation_Frame;
-	float mEnemy_Move_Animation_Frame;
-	float mEnemy_Dash_Animation_Frame;
-	float mEnemy_Attack1_Animation_Frame;
-	float mEnemy_Attack2_Animation_Frame;
-	float mEnemy_Attack3_Animation_Frame;
-	float mEnemy_Knockback_Animation_Frame;
-	float mEnemy_Death_Animation_Frame;
-	int mEnemy_Animation_No_Attack_1;
-	int mEnemy_Animation_No_Attack_2;
-	int mEnemy_Animation_No_Attack_3;
-	int mEnemy_Animation_No_Walk;
-	int mEnemy_Animation_No_Dash;
-	int mEnemy_Animation_No_Idle;
-	int mEnemy_Animation_No_Knockback;
-	int mEnemy_Animation_No_Death;
-	float mEnemy_Position_X;//位置のX座標
-	float mEnemy_Position_Y;//位置のY座標
-	float mEnemy_Position_Z;//位置のZ座標
-	float mEnemy_Scale_X;   //スケールのX座標
-	float mEnemy_Scale_Y;   //スケールのY座標
-	float mEnemy_Scale_Z;   //スケールのZ座標
-	float mEnemy_Rotation_X;//モデルの回転X座標
-	float mEnemy_Rotation_Y;//モデルの回転Y座標
-	float mEnemy_Rotation_Z;//モデルの回転Z座標
-	int mEnemy_Probability_Low_Set1;
-	int mEnemy_Probability_Max_Set1;
-	int mEnemy_Probability_Low_Set2;
-	int mEnemy_Probability_Max_Set2;
-	float mEnemy_Gravity;
-	int mEnemy_Hp;          //HP
-	int mEnemy_Hp_Max;      //HP最大値
-	int mEnemy_Death_Hp;    //死亡条件
+	int mEnemy_Priority;						//描画優先度
+	float mEnemy_Speed_WalkPattern;				//移動スピードパターン
+	float mEnemy_Speed_DashPattern;				//ダッシュスピードパターン
+	float mEnemy_Walk_Dis;						//歩行開始の距離
+	float mEnemy_Dash_Dis;						//走行開始の距離
+	float mEnemy_Walk_Dis_Max;					//歩行終了の距離
+	float mEnemy_Dash_Dis_Max;					//走行終了の距離
+	float mEnemy_Attack_Dis;					//攻撃可能な距離
+	float mEnemy_Attack_Reception;				//当たり判定の開始
+	float mEnemy_Attack_Outreception;			//当たり判定の終了
+	int mEnemy_Attack_Walk_Rand;				//歩行時、ランダムに攻撃する
+	int mEnemy_Attack_Dash_Rand;				//走行時、ランダムに攻撃する
+	int mEnemy_Damage_PlayerSp1;				//プレイヤの攻撃1のダメージ
+	int mEnemy_Damage_PlayerSp2;				//プレイヤの攻撃2のダメージ
+	float mEnemy_Idle_Animation_Frame;			//敵の待機アニメーションフレーム
+	float mEnemy_Move_Animation_Frame;			//敵の移動アニメーションフレーム
+	float mEnemy_Dash_Animation_Frame;			//敵の走行アニメーションフレーム
+	float mEnemy_BackStep_Animation_Frame;		//敵のバックステップアニメーションフレーム
+	float mEnemy_Attack1_Animation_Frame;		//敵の攻撃1アニメーションフレーム
+	float mEnemy_Attack2_Animation_Frame;		//敵の攻撃2アニメーションフレーム
+	float mEnemy_Attack3_Animation_Frame;		//敵の攻撃3アニメーションフレーム
+	float mEnemy_Knockback_Animation_Frame;		//敵のノックバックアニメーションフレーム
+	float mEnemy_Death_Animation_Frame;			//敵の死亡アニメーションフレーム
+	int mEnemy_Animation_No_Attack_1;			//敵の攻撃1アニメーション番号
+	int mEnemy_Animation_No_Attack_2;			//敵の攻撃2アニメーション番号
+	int mEnemy_Animation_No_Attack_3;			//敵の攻撃3アニメーション番号
+	int mEnemy_Animation_No_Walk;				//敵の移動アニメーション番号
+	int mEnemy_Animation_No_Dash;				//敵の走行アニメーション番号
+	int mEnemy_Animation_No_BackStep;			//敵のバックステップアニメーション番号
+	int mEnemy_Animation_No_Idle;				//敵の待機アニメーション番号
+	int mEnemy_Animation_No_Knockback;			//敵のノックバックアニメーション番号
+	int mEnemy_Animation_No_Death;				//敵の死亡アニメーション番号
+	float mEnemy_Position_X;					//初期位置のX座標
+	float mEnemy_Position_Y;					//初期位置のY座標
+	float mEnemy_Position_Z;					//初期位置のZ座標
+	float mEnemy_Scale_X;						//モデルスケールのX座標
+	float mEnemy_Scale_Y;						//モデルスケールのY座標
+	float mEnemy_Scale_Z;						//モデルスケールのZ座標
+	float mEnemy_Rotation_X;					//モデルの回転X座標
+	float mEnemy_Rotation_Y;					//モデルの回転Y座標
+	float mEnemy_Rotation_Z;					//モデルの回転Z座標
+	int mEnemy_Probability_Low_Set1;			//敵の行動1設定ランダム変数最低値設定
+	int mEnemy_Probability_Max_Set1;			//敵の行動1設定ランダム変数最高値設定
+	int mEnemy_Probability_Low_Set2;			//敵の行動2設定ランダム変数最低値設定
+	int mEnemy_Probability_Max_Set2;			//敵の行動2設定ランダム変数最高値設定
+	float mEnemy_Gravity;						//敵の重力
+	int mEnemy_Hp;								//HP
+	int mEnemy_Hp_Max;							//HP最大値
+	int mEnemy_Hp_State;						//HP状態推移設定
+	int mEnemy_Death_Hp;						//死亡条件
 };
 #endif
 

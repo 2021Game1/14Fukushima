@@ -18,7 +18,7 @@
 #define ENEMY_COLSPHERE_BODY_X 0.0f					//球コライダのX座標設定
 #define ENEMY_COLSPHERE_BODY_Y 94.0f				//球コライダのY座標設定
 #define ENEMY_COLSPHERE_BODY_Z 5.0f					//球コライダのZ座標設定
-#define ENEMY_COLSPHERE_BODY_SIZE 1.3f				//球コライダのサイズ設定
+#define ENEMY_COLSPHERE_BODY_SIZE 1.6f				//球コライダのサイズ設定
 
 //敵の右手
 #define ENEMY_COLSPHERE_RIGHTARM_SIZE 0.7f				//球コライダのサイズ設定

@@ -8,7 +8,6 @@
 //SE・プレイヤ
 #define SE_PLAYER_ATTACK1 "res\\Se\\SE_Player_AttackSp1.wav"
 #define SE_PLAYER_ATTACK2 "res\\Se\\SE_Player_AttackSp2.wav"
-#define SE_PLAYER_ATTACK3 "res\\Se\\SE_Player_AttackSp3.wav"
 #define SE_PLAYER_WALK "res\\Se\\SE_Player_Walk.wav"
 #define SE_PLAYER_DEATH "res\\Se\\SE_Player_Death.wav"
 //SE・敵
@@ -34,10 +33,10 @@
 #define PLAYER_COLSPHERE_SHIELD_SIZE 0.5				//球コライダのサイズ
 
 //プレイヤの剣
-#define PLAYER_COLSPHERE_SWORD_HEAD_X -13.0f			//球コライダのX座標設定
-#define PLAYER_COLSPHERE_SWORD_HEAD_Y 0.0f				//球コライダのY座標設定
-#define PLAYER_COLSPHERE_SWORD_HEAD_Z 70.0f				//球コライダのZ座標設定
-#define PLAYER_COLSPHERE_SWORD_SIZE 0.3					//球コライダのサイズ設定
+#define PLAYER_COLSPHERE_SWORD_X -13.0f				//球コライダのX座標設定
+#define PLAYER_COLSPHERE_SWORD_Y 0.0f				//球コライダのY座標設定
+#define PLAYER_COLSPHERE_SWORD_Z 70.0f				//球コライダのZ座標設定
+#define PLAYER_COLSPHERE_SWORD_SIZE 0.35			//球コライダのサイズ設定
 
 //プレイヤのHPフレーム,HPゲージ座標,幅,高さ
 #define PLAYER_GAUGE_FRAME_TEX_WID 480															//ゲージ枠の画像の幅

@@ -43,6 +43,7 @@
 #define ENEMY_ANIMATION_ATTACKSP2 "res\\Enemy\\Mutant\\Attack2.x"
 #define ENEMY_ANIMATION_WALK "res\\Enemy\\Mutant\\Walk.x"
 #define ENEMY_ANIMATION_DASH "res\\Enemy\\Mutant\\Dash.x"
+#define ENEMY_ANIMATION_BACKSTEP "res\\Enemy\\Mutant\\BackStep.x"
 #define ENEMY_ANIMATION_IDLE "res\\Enemy\\Mutant\\Idle.x"
 #define ENEMY_ANIMATION_KNOCKBACK "res\\Enemy\\Mutant\\KnockBack.x"
 #define ENEMY_ANIMATION_DEATH "res\\Enemy\\Mutant\\Death.x"

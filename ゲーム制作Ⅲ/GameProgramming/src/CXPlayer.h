@@ -60,17 +60,18 @@ public:
 	CVector GetSwordColPos();			//剣のコライダの座標を取得する
 private:
 	//コライダの宣言
-	CCollider mPlayer_ColSphereSword;						//剣
+	CCollider mPlayer_ColSphereSword;				//剣
 	CCollider mPlayer_ColSphereShield;				//盾
 	CCollider mPlayer_ColSphereBody;				//球の身体
 	CColliderCapsule mPlayer_ColCapsuleBody;		//カプセルの身体
 	//プレイヤの状態推移
 	EPlayerState mPlayer_State;			//プレイヤの状態判断用
-	bool mPlayer_InvincibleFlag;				//無敵状態の時trueを返す
-
+	bool mPlayer_InvincibleFlag;		//無敵状態の時trueを返す
+	bool mPlayer_Avoid;					//回避状態の時trueを返す
 
 	//プレイヤのHPゲージ用の変数
 	float mPlayer_FollowGaugeWid;		//被ダメージ分後追いするゲージの幅
+	float mPlayer_Gauge_Hp_Rate;		//プレイヤのHPゲージの揺れ幅設定
 
 	//プレイヤの移動用変数
 	CVector mPlayer_Point;				//プレイヤ移動時の目標地点
@@ -79,29 +80,26 @@ private:
 	CVector mPlayer_MoveDirKeep;		//プレイヤの移動時の方向を保存する
 	CVector mPlayer_KnockBackDir;		//プレイヤのノックバックする方向を保持する
 	CVector mPlayer_AttackDir;			//プレイヤの攻撃時の方向を保持する
-	float mPlayer_Speed;				//プレイヤのスピード
+	float mPlayer_Speed;				//プレイヤのスピード(デフォルト)
+	float mPlayer_Speed_Avoid;			//プレイヤのスピード(回避)
+	float mPlayer_Avoid_Time;			//プレイヤの回避時間
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
 	float mPlayer_EnemyDis;				//プレイヤが敵の座標参照用
-	float mPlayer_Gauge_Hp_Rate;
-	float mPlayer_Attack_Dis;
-
-
-
-
+	float mPlayer_Attack_Dis;			//プレイヤの攻撃対象判別後の距離設定
 
 	//カメラのパラメータを作成する
 	CVector mPlayer_SideVec;			//プレイヤの横ベクトル
 	CVector mPlayer_FrontVec;			//プレイヤのカメラの正面ベクトル
 	int mPlayer_Hp;						//プレイヤの体力
-	int mPlayer_Hp_Max;
-	int mPlayer_Damage_EnemySp1;
-	int mPlayer_Damage_EnemySp2;
-	int mPlayer_Damage_EnemySp3;
+	int mPlayer_Hp_Max;					//プレイヤの体力の上限
+	int mPlayer_Damage_EnemySp1;		//敵から受けるダメージ攻撃1
+	int mPlayer_Damage_EnemySp2;		//敵から受けるダメージ攻撃2
+	int mPlayer_Damage_EnemySp3;		//敵から受けるダメージ攻撃3
 
-	int	mPlayer_Gauge_Hp_Shake_X;
-	int	mPlayer_Gauge_Hp_Shake_Y;
-	int	mPlayer_Gauge_Hp_Shake_Range_X;
-	int	mPlayer_Gauge_Hp_Shake_Range_Y;
+	int	mPlayer_Gauge_Hp_Shake_X;		//HPゲージの揺れ幅最小値のX
+	int	mPlayer_Gauge_Hp_Shake_Y;		//HPゲージの揺れ幅最小値のY
+	int	mPlayer_Gauge_Hp_Shake_Range_X; //HPゲージの揺れ幅最小値のX
+	int	mPlayer_Gauge_Hp_Shake_Range_Y; //HPゲージの揺れ幅最小値のY
 
 	//プレイヤの攻撃フラグ変数
 	bool mPlayer_AttackFlag_1;			//プレイヤの攻撃1状態の時trueを返す
@@ -127,84 +125,88 @@ private:
 	//移動の計算処理
 	void MovingCalculation();
 	//プレイヤの衝突判定関数
-	void Collision(CCollider* m, CCollider* o);	//衝突処理
+	void Collision(CCollider* m, CCollider* o);		//衝突処理
 private:
+	//テーブル取得関数
 	void PlayerTable();
 
-	int Player_Priority;
-	int Player_Hp;
-	int	Player_Hp_Max;
-	int Player_GameOver_Hp;
-	float Player_Speed_Default;
-	float Player_Gravity;
-	float Player_Thrust;
-	float Player_Se;
-	float Player_Damage_Se;
-	float Player_Push_Reception;
-	float Player_Attack_InReception;
-	float Player_Attack_OutReception;
-	float Player_Attack_Dis;
-	int Player_Damage_EnemySp1;
-	int Player_Damage_EnemySp2;
-	float Player_Position_X;
-	float Player_Position_Y;
-	float Player_Position_Z;
-	float Player_Scale_X;
-	float Player_Scale_Y;
-	float Player_Scale_Z;
-	float Player_Rotation_X;
-	float Player_Rotation_Y;
-	float Player_Rotation_Z;
-	float Player_Idle_Animation_Frame;
-	float Player_Move_Animation_Frame;
-	float Player_Avoidance_Animation_Frame;
-	float Player_Attack1_Animation_Frame;
-	float Player_Attack1_Idle_Animation_Frame;
-	float Player_Attack2_Animation_Frame;
-	float Player_Attack2_Idle_Animation_Frame;
-	float Player_KnockBack_Animation_Frame;
-	float Player_Death_Animation_Frame;
-	int Player_Animation_No_Move;
-	int Player_Animation_No_Attack1;
-	int Player_Animation_No_Attack1_Idle;
-	int Player_Animation_No_Attack2;
-	int Player_Animation_No_Attack2_Idle;
-	int Player_Animation_No_AvoidDance;
-	int Player_Animation_No_Idle;
-	int Player_Animation_No_Knockback;
-	int Player_Animation_No_Death;
-	float Player_Gauge_Frame_Tex_Wid;
-	float Player_Gauge_Frame_Tex_First_Wid;
-	float Player_Gauge_Frame_Tex_Hei;
-	float Player_Gauge_Frame_Tex_First_Hei;
-	float Player_Gauge_Frame_Left;
-	float Player_Gauge_Frame_Right;
-	float Player_Gauge_Frame_Top;
-	float Player_Gauge_Frame_Bottom;
-	float Player_Gauge_Wid;
-	float Player_Gauge_Wid_First;
-	float Player_Gauge_Height;
-	float Player_Gauge_Height_first;
-	float Player_Gauge_Hp_Top;
-	float Player_Gauge_Hp_Bottom;
-	int Player_Gauge_Hp_Shake_X;
-	int Player_Gauge_Hp_Shake_Y;
-	int Player_Gauge_Hp_Shake_Range_X;
-	int Player_Gauge_Hp_Shake_Range_Y;
-	float Player_Gauge_Hp_Rate;
-	float Player_Trun_Set;
-	float Player_Trun_Speeds_Set;
-	float Player_Trun_Check_Speeds_Set;
-	float Player_Trun_Check_Set;
+	//テーブル取得用変数
+	int Player_Priority;							//描画優先度
+	int Player_Hp;									//プレイヤのHP
+	int	Player_Hp_Max;								//プレイヤのHP上限
+	int Player_GameOver_Hp;							//プレイヤのゲームオーバー条件(HP)
+	float Player_Speed_Default;						//プレイヤのスピード(デフォルト)
+	float Player_Speed_Avoid;						//プレイヤのスピード(回避)
+	float Player_Avoid_Time;						//プレイヤの回避時間
+	float Player_Gravity;							//プレイヤに掛かる重力
+	float Player_Thrust;							//プレイヤに掛かる推力
+	float Player_Se;								//SEの音量設定
+	float Player_Damage_Se;							//ダメージSEの音量設定
+	float Player_Push_Reception;					//マウス左クリックの反応タイミング
+	float Player_Attack_InReception;				//攻撃判定始め
+	float Player_Attack_OutReception;				//攻撃判定終わり
+	float Player_Attack_Dis;						//プレイヤの攻撃対象判別後の距離設定
+	int Player_Damage_EnemySp1;						//敵から受けるダメージ攻撃1
+	int Player_Damage_EnemySp2;						//敵から受けるダメージ攻撃2
+	int Player_Damage_EnemySp3;						//敵から受けるダメージ攻撃3
+	float Player_Position_X;						//プレイヤの位置X座標
+	float Player_Position_Y;						//プレイヤの位置Y座標
+	float Player_Position_Z;						//プレイヤの位置Z座標
+	float Player_Scale_X;							//プレイヤのスケールX座標
+	float Player_Scale_Y;							//プレイヤのスケールY座標
+	float Player_Scale_Z;							//プレイヤのスケールZ座標
+	float Player_Rotation_X;						//プレイヤのモデルの回転値
+	float Player_Rotation_Y;						//プレイヤのモデルの回転値
+	float Player_Rotation_Z;						//プレイヤのモデルの回転値
+	float Player_Idle_Animation_Frame;				//プレイヤの待機アニメーションフレーム
+	float Player_Move_Animation_Frame;				//プレイヤの移動アニメーションフレーム
+	float Player_Avoidance_Animation_Frame;			//プレイヤの回避アニメーションフレーム
+	float Player_Attack1_Animation_Frame;			//プレイヤの攻撃1アニメーションフレーム
+	float Player_Attack1_Idle_Animation_Frame;		//プレイヤの攻撃1の後、再生する待機アニメーションフレーム
+	float Player_Attack2_Animation_Frame;			//プレイヤの攻撃2アニメーションフレーム
+	float Player_Attack2_Idle_Animation_Frame;		//プレイヤの攻撃2の後、再生する待機アニメーションフレーム
+	float Player_KnockBack_Animation_Frame;			//プレイヤのノックバックアニメーションフレーム
+	float Player_Death_Animation_Frame;				//プレイヤの死亡アニメーションフレーム
+	int Player_Animation_No_Move;					//プレイヤの移動アニメーション番号
+	int Player_Animation_No_Attack1;				//プレイヤの攻撃1アニメーション番号
+	int Player_Animation_No_Attack1_Idle;			//攻撃1再生後の待機アニメーション番号
+	int Player_Animation_No_Attack2;				//プレイヤの攻撃2アニメーション番号
+	int Player_Animation_No_Attack2_Idle;			//攻撃2再生後の待機アニメーション番号
+	int Player_Animation_No_AvoidDance;				//プレイヤの回避アニメーション番号
+	int Player_Animation_No_Idle;					//プレイヤの待機アニメーション番号
+	int Player_Animation_No_Knockback;				//プレイヤのノックバックアニメーション番号
+	int Player_Animation_No_Death;					//プレイヤの死亡アニメーション番号
+	float Player_Gauge_Frame_Tex_Wid;				//プレイヤのHPゲージフレームテクスチャ終点の横幅
+	float Player_Gauge_Frame_Tex_First_Wid;			//プレイヤのHPゲージフレームテクスチャ始点の横幅
+	float Player_Gauge_Frame_Tex_Hei;				//プレイヤのHPゲージフレームテクスチャ終点の縦幅
+	float Player_Gauge_Frame_Tex_First_Hei;			//プレイヤのHPゲージフレームテクスチャ始点の縦幅
+	float Player_Gauge_Frame_Left;					//プレイヤのHPゲージフレーム左座標指定
+	float Player_Gauge_Frame_Right;					//プレイヤのHPゲージフレーム右座標指定
+	float Player_Gauge_Frame_Top;					//プレイヤのHPゲージフレーム頂点座標指定
+	float Player_Gauge_Frame_Bottom;				//プレイヤのHPゲージフレーム底辺座標指定
+	float Player_Gauge_Wid;							//プレイヤのHPゲージ終点の横幅
+	float Player_Gauge_Wid_First;					//プレイヤのHPゲージ始点の横幅
+	float Player_Gauge_Height;						//プレイヤのHPゲージ終点の縦幅
+	float Player_Gauge_Height_first;				//プレイヤのHPゲージ始点の縦幅
+	float Player_Gauge_Hp_Top;						//プレイヤのHPゲージ頂点座標指定
+	float Player_Gauge_Hp_Bottom;					//プレイヤのHPゲージ底辺座標指定
+	int Player_Gauge_Hp_Shake_X;					//プレイヤのHPゲージを揺らすX座標の初期値値設定
+	int Player_Gauge_Hp_Shake_Y;					//プレイヤのHPゲージを揺らすY座標の初期値設定
+	int Player_Gauge_Hp_Shake_Range_X;				//プレイヤのHPゲージを揺らすX座標の最大値
+	int Player_Gauge_Hp_Shake_Range_Y;				//プレイヤのHPゲージを揺らすY座標の最大値
+	float Player_Gauge_Hp_Rate;						//プレイヤのHPゲージの揺れ判定
+	float Player_Trun_Set;							//プレイヤの回転設定
+	float Player_Trun_Speeds_Set;					//プレイヤの回転速度設定
+	float Player_Trun_Check_Speeds_Set;				//プレイヤの回転速度チェック設定
+	float Player_Trun_Check_Set;					//プレイヤの回転チェック設定
 
 	//プレイヤSE
-	CSound Se_Player_AttackSp1;
-	CSound Se_Player_AttackSp2;
-	CSound Se_Player_AttackSp3;
-	CSound Se_Player_Walk;
-	CSound Se_Player_Death;
+	CSound Se_Player_AttackSp1;						//プレイヤが攻撃1の時流す
+	CSound Se_Player_AttackSp2;						//プレイヤが攻撃2の時流す
+	CSound Se_Player_Walk;							//プレイヤが移動時流す
+	CSound Se_Player_Death;							//プレイヤ死亡時流す
 	//敵SE
-	CSound Se_Enemy_AttackSp;
+	CSound Se_Enemy_AttackSp;						//敵から攻撃を受けた時に流す
 };
 #endif 
 
