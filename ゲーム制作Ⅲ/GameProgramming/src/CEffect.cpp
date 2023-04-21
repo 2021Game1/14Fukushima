@@ -5,6 +5,7 @@ CMaterial CEffectPlayerSp2::sMaterial; //マテリアル.テクスチャ
 CMaterial CEffectPlayerSp3::sMaterial; //マテリアル.テクスチャ
 CMaterial CEffectEnemyDamageSp1::sMaterial; //マテリアル.テクスチャ
 CMaterial CEffectEnemyDamageSp2::sMaterial; //マテリアル.テクスチャ
+CMaterial CEffectEnemyAttack::sMaterial;	//マテリアル.テクスチャ
 
 CEffectPlayerSp1::CEffectPlayerSp1(const CVector &pos, float w, float h, char *texture, int row, int col, int fps)
 : CBillBoard(pos, w, h), mRows(row), mCols(col), mFps(fps), mFrame(0)
@@ -239,6 +240,7 @@ void CEffectEnemyDamageSp2::Render()
 	CBillBoard::Render(&sMaterial);
 	glEnable(GL_DEPTH_TEST); //深度テスト有効
 }
+
 
 
 

@@ -24,7 +24,7 @@ public:
 	enum ETag
 	{
 		EBODY,			//–{‘Ì
-		ESHIERD,		//‚
+		EHEAD,			//“ª
 		ESWORD,			//Œ•
 		ERIGHTARM,		//‰E˜r
 		ELEFTARM,		//¶˜r

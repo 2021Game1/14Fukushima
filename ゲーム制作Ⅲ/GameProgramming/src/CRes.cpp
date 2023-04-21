@@ -41,7 +41,6 @@ void CRes::Init() {
 	gEnemy_Model_Mutant.Load(ENEMY_MODEL_FILE);
 	//エネミーのアニメーションの追加
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_ATTACKSP1);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_ATTACKSP2);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_WALK);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DASH);
 	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_BACKSTEP);

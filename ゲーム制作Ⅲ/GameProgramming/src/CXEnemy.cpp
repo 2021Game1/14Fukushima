@@ -4,6 +4,59 @@
 
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
 
+void CXEnemy::EnemyTable()
+{
+	OX::Table table(ENEMY_DATATABLE);
+	Enemy_Priority = table["Enemy_Priority"]["Value"].iVal;
+	Enemy_Speed_WalkPattern = table["Enemy_Speed_WalkPattern"]["Value"].fVal;
+	Enemy_Speed_DashPattern = table["Enemy_Speed_DashPattern"]["Value"].fVal;
+	Enemy_Walk_Dis = table["Enemy_Walk_Dis"]["Value"].fVal;
+	Enemy_Dash_Dis = table["Enemy_Dash_Dis"]["Value"].fVal;
+	Enemy_Walk_Dis_Max = table["Enemy_Walk_Dis_Max"]["Value"].fVal;
+	Enemy_Dash_Dis_Max = table["Enemy_Dash_Dis_Max"]["Value"].fVal;
+	Enemy_Attack_Dis = table["Enemy_Attack_Dis"]["Value"].fVal;
+	Enemy_Attack_Reception = table["Enemy_Attack_Reception"]["Value"].fVal;
+	Enemy_Attack_Outreception = table["Enemy_Attack_Outreception"]["Value"].fVal;
+	Enemy_Attack_Walk_Rand = table["Enemy_Attack_Walk_Rand"]["Value"].iVal;
+	Enemy_Attack_Dash_Rand = table["Enemy_Attack_Dash_Rand"]["Value"].iVal;
+	Enemy_Idle_Animation_Frame = table["Enemy_Idle_Animation_Frame"]["Value"].fVal;
+	Enemy_Move_Animation_Frame = table["Enemy_Move_Animation_Frame"]["Value"].fVal;
+	Enemy_Dash_Animation_Frame = table["Enemy_Dash_Animation_Frame"]["Value"].fVal;
+	Enemy_BackStep_Animation_Frame = table["Enemy_BackStep_Animation_Frame"]["Value"].fVal;
+	Enemy_Attack1_Animation_Frame = table["Enemy_Attack1_Animation_Frame"]["Value"].fVal;
+	Enemy_Attack2_Animation_Frame = table["Enemy_Attack2_Animation_Frame"]["Value"].fVal;
+	Enemy_Knockback_Animation_Frame = table["Enemy_Knockback_Animation_Frame"]["Value"].fVal;
+	Enemy_Death_Animation_Frame = table["Enemy_Death_Animation_Frame"]["Value"].fVal;
+	Enemy_Animation_No_Attack_1 = table["Enemy_Animation_No_Attack_1"]["Value"].iVal;
+	Enemy_Animation_No_Attack_2 = table["Enemy_Animation_No_Attack_2"]["Value"].iVal;
+	Enemy_Animation_No_Walk = table["Enemy_Animation_No_Walk"]["Value"].iVal;
+	Enemy_Animation_No_Dash = table["Enemy_Animation_No_Dash"]["Value"].iVal;
+	Enemy_Animation_No_BackStep = table["Enemy_Animaton_No_BackStep"]["Value"].iVal;
+	Enemy_Animation_No_Idle = table["Enemy_Animation_No_Idle"]["Value"].iVal;
+	Enemy_Animation_No_Knockback = table["Enemy_Animation_No_Knockback"]["Value"].iVal;
+	Enemy_Animation_No_Death = table["Enemy_Animation_No_Death"]["Value"].iVal;
+	Enemy_Position_X = table["Enemy_Position_X"]["Value"].fVal;
+	Enemy_Position_Y = table["Enemy_Position_Y"]["Value"].fVal;
+	Enemy_Position_Z = table["Enemy_Position_Z"]["Value"].fVal;
+	Enemy_Scale_X = table["Enemy_Scale_X"]["Value"].fVal;
+	Enemy_Scale_Y = table["Enemy_Scale_Y"]["Value"].fVal;
+	Enemy_Scale_Z = table["Enemy_Scale_Z"]["Value"].fVal;
+	Enemy_Rotation_X = table["Enemy_Rotation_X"]["Value"].fVal;
+	Enemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
+	Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
+	Enemy_Gravity = table["Enemy_Gravity"]["Value"].fVal;
+	Enemy_StanAccumulation = table["Enemy_StanAccumulation"]["Value"].iVal;
+	Enemy_StanAccumulation_Max = table["Enemy_StanAccumulation_Max"]["Value"].iVal;
+	Enemy_Hp = table["Enemy_Hp"]["Value"].iVal;
+	Enemy_Hp_Max = table["Enemy_Hp_Max"]["Value"].iVal;
+	Enemy_Attack_Point = table["Enemy_Attack_Point"]["Value"].iVal;
+	Enemy_Defense_Point = table["Enemy_Defense_Point"]["Value"].iVal;
+	Enemy_Stan_Point = table["Enemy_Stan_Point"]["Value"].iVal;
+	Enemy_Hp_State = table["Enemy_Hp_State"]["Value"].iVal;
+	Enemy_Death_Hp = table["Enemy_Death_Hp"]["Value"].iVal;
+
+}
+
 //コライダ初期化
 CXEnemy::CXEnemy()
 	: mEnemy_Speed(ENEMY_SPEED)
@@ -27,11 +80,15 @@ CXEnemy::CXEnemy()
 	mEnemy_ColSphereLeftarm.Tag(CCollider::ELEFTARM);	//左手
 	mpEnemy_Instance = this;
 	EnemyTable();
-	mHp = mEnemy_Hp;
+	mHp = Enemy_Hp;
+	mAttack_Point = Enemy_Attack_Point;
+	mDefense_Point = Enemy_Defense_Point;
+	mStan_Point = Enemy_Stan_Point;
+	mStanAccumulation = Enemy_StanAccumulation;
 	//タグの設定
 	mTag = EENEMY;
 	//優先度を1に変更する
-	mPriority = mEnemy_Priority;
+	mPriority = Enemy_Priority;
 	CTaskManager::Get()->Remove(this);//削除して
 	CTaskManager::Get()->Add(this);//追加する
 }
@@ -44,9 +101,9 @@ void CXEnemy::Init(CModelX* model)
 	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[2]);
 	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[68]);
 	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
-	mPosition.Set(mEnemy_Position_X, mEnemy_Position_Y, mEnemy_Position_Z);
-	mScale.Set(mEnemy_Scale_X, mEnemy_Scale_Y, mEnemy_Scale_Z);
-	mRotation.Set(mEnemy_Rotation_X, mEnemy_Rotation_Y, mEnemy_Rotation_Z);
+	mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
+	mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
+	mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
 }
 
 void CXEnemy::Update() {
@@ -65,11 +122,7 @@ void CXEnemy::Update() {
 		Attack_2();	//攻撃2の処理を呼ぶ
 		break;
 
-	case EATTACK_3:	//攻撃3状態の時
-		Attack_3();	//攻撃3の処理を呼ぶ
-		break;
-
-	case EAUTOMOVE:	//移動状態
+	case EMOVE:	//移動状態
 		Move();	//移動状態の処理を呼ぶ
 		break;
 
@@ -88,14 +141,14 @@ void CXEnemy::Update() {
 		break;
 	}
 	MovingCalculation();
-	if (mEnemy_PlayerDis >= mEnemy_Attack_Dis) {
+	if (mEnemy_PlayerDis >= Enemy_Attack_Dis) {
 		mEnemy_AttackDir = mEnemy_Player_Point; //攻撃時の向きを求める
 	}
 	//体力が0になると死亡
-	if (mHp <= mEnemy_Death_Hp)
+	if (mHp <= Enemy_Death_Hp)
 	{
 		mEnemy_State = EDEATH;	//死亡状態へ移行
-		mHp = mEnemy_Death_Hp;
+		mHp = Enemy_Death_Hp;
 	}
 	//プレイヤーの攻撃判定が無効になると敵の無敵判定を解除する
 	if (CXPlayer::GetInstance()->GetIsHit() == false) {
@@ -111,7 +164,7 @@ void CXEnemy::Render2D()
 	CVector ret;
 	tpos = mPosition + CVector(ret.X(), ret.Y()+ 7.0f, 0.0f);
 	Camera.WorldToScreen(&ret, tpos);
-	float HpRate = (float)mHp / (float)mEnemy_Hp_Max; //体力最大値に対する、現在の体力の割合
+	float HpRate = (float)mHp / (float)Enemy_Hp_Max; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
 	//被ダメージ分後追いするゲージの幅が体力ゲージの幅より大きい時
 	if (mEnemy_FollowGaugeWid > HpGaugeWid) {
@@ -125,14 +178,11 @@ void CXEnemy::Render2D()
 	}
 	//画面外の時に表示しない
 	if (ret.X() > WINDOW_FIRST_WIDTH && ret.X() < WINDOW_WIDTH) {
-		if (!mHp <= mEnemy_Death_Hp)
-		{
-			CRes::GetInstance()->GetInEnemyUiHpBackBar().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
-			//被ダメージ分後追いするゲージを表示
-			CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
-			//体力ゲージ
-			CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
-		}
+		CRes::GetInstance()->GetInEnemyUiHpBackBar().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
+		//被ダメージ分後追いするゲージを表示
+		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
+		//体力ゲージ
+		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + HpGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
 	}
 	//2Dの描画終了
 	CUtil::End2D();
@@ -146,40 +196,40 @@ void CXEnemy::Idle()
 	{
 		mEnemy_Flag = false;
 		//プレイヤーが一定距離まで近づくと追跡状態へ移行
-		if (mEnemy_PlayerDis <= mEnemy_Walk_Dis)
+		if (mEnemy_PlayerDis <= Enemy_Walk_Dis)
 		{
-			mEnemy_State = EAUTOMOVE;
+			mEnemy_State = EMOVE;
 		}
-		else if (mEnemy_PlayerDis <= mEnemy_Dash_Dis)
+		else if (mEnemy_PlayerDis <= Enemy_Dash_Dis)
 		{
 			mEnemy_State = EDASH;
 		}
 		else
 		{
 			//アニメーションの設定
-			ChangeAnimation(mEnemy_Animation_No_Idle, true, mEnemy_Idle_Animation_Frame);
+			ChangeAnimation(Enemy_Animation_No_Idle, true, Enemy_Idle_Animation_Frame);
 		}
 	}
 	else 
 	{
 		//アニメーションの設定
-		ChangeAnimation(mEnemy_Animation_No_Idle, true, mEnemy_Idle_Animation_Frame);
+		ChangeAnimation(Enemy_Animation_No_Idle, true, Enemy_Idle_Animation_Frame);
 	}
 }
 void CXEnemy::Move(){
 	//アニメーションの設定
-	ChangeAnimation(mEnemy_Animation_No_Walk, true, mEnemy_Move_Animation_Frame);
-	mEnemy_Speed = mEnemy_Speed_WalkPattern;
+	ChangeAnimation(Enemy_Animation_No_Walk, true, Enemy_Move_Animation_Frame);
+	mEnemy_Speed = Enemy_Speed_WalkPattern;
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirにプレイヤー方向のベクトルを入れる
 	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//およそ1秒毎に目標地点を更新
-	int r = rand() % mEnemy_Attack_Walk_Rand; //rand()は整数の乱数を返す
+	int r = rand() % Enemy_Attack_Walk_Rand; //rand()は整数の乱数を返す
 						 //%10は10で割った余りを求める
 	//攻撃出来る距離にいなければ目標地点に移動
-	if (mEnemy_PlayerDis > mEnemy_Attack_Dis)
+	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
 		if (r == ENEMY_INT_INITIALIZATION)
 		{
@@ -188,12 +238,12 @@ void CXEnemy::Move(){
 	}
 	int random = ENEMY_INT_INITIALIZATION;
 	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= mEnemy_Attack_Dis)
+	if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 	{
 		if (random == ENEMY_INT_INITIALIZATION)
 		{
 			//ランダムで攻撃の種類を決める
-			random = rand() % 3;
+			random = rand() % 2;
 			switch (random) 
 			{
 			case 0:
@@ -202,14 +252,11 @@ void CXEnemy::Move(){
 			case 1:
 				mEnemy_State = EATTACK_2; //攻撃2状態へ移行
 			break;
-			case 2:
-				mEnemy_State = EATTACK_3; //攻撃3状態へ移行
-			break;
 			}
 		}
 	}
 	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= mEnemy_Walk_Dis_Max)
+	if (mEnemy_PlayerDis >= Enemy_Walk_Dis_Max)
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}
@@ -219,19 +266,19 @@ void CXEnemy::Move(){
 void CXEnemy::Dash()
 {
 	//アニメーションの設定
-	ChangeAnimation(mEnemy_Animation_No_Dash, true, mEnemy_Dash_Animation_Frame);
+	ChangeAnimation(Enemy_Animation_No_Dash, true, Enemy_Dash_Animation_Frame);
 	//移動スピードを変更
-	mEnemy_Speed = mEnemy_Speed_DashPattern;
+	mEnemy_Speed = Enemy_Speed_DashPattern;
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirに目標地点方向のベクトルを入れる
 	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//およそ1秒毎に目標地点を更新
-	int r = rand() % mEnemy_Attack_Dash_Rand; //rand()は整数の乱数を返す
+	int r = rand() % Enemy_Attack_Dash_Rand; //rand()は整数の乱数を返す
 						  //%25は25で割った余りを求める
 	//攻撃出来る距離にいなければ目標地点に移動
-	if (mEnemy_PlayerDis > mEnemy_Attack_Dis)
+	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
 		if (r == ENEMY_INT_INITIALIZATION)
 		{
@@ -240,12 +287,12 @@ void CXEnemy::Dash()
 	}
 	int random = ENEMY_INT_INITIALIZATION;
 	//プレイヤーが攻撃可能な距離にいるとき
-	if (mEnemy_PlayerDis <= mEnemy_Attack_Dis)
+	if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 	{
 		if (random == ENEMY_INT_INITIALIZATION)
 		{
 			//ランダムで攻撃の種類を決める
-			random = rand() % 3;
+			random = rand() % 2;
 			switch (random) 
 			{
 			case 0:
@@ -254,14 +301,11 @@ void CXEnemy::Dash()
 			case 1:
 				mEnemy_State = EATTACK_2; //攻撃2状態へ移行
 			break;
-			case 2:
-				mEnemy_State = EATTACK_3; //攻撃3状態へ移行
-			break;
 			}
 		}
 	}
 	//プレイヤーが追跡可能な距離にいないとき
-	if (mEnemy_PlayerDis >= mEnemy_Dash_Dis_Max)
+	if (mEnemy_PlayerDis >= Enemy_Dash_Dis_Max)
 	{
 		mEnemy_State = EIDLE; //待機状態へ移行
 	}
@@ -274,10 +318,10 @@ void CXEnemy::BackStep()
 {
 	if (mEnemy_Flag == false)
 	{
-		ChangeAnimation(mEnemy_Animation_No_BackStep, false, mEnemy_BackStep_Animation_Frame);
+		ChangeAnimation(Enemy_Animation_No_BackStep, false, Enemy_BackStep_Animation_Frame);
 		mEnemy_Flag = true;
 	}
-	if (IsAnimationFinished() == false && mAnimationIndex == mEnemy_Animation_No_BackStep) {
+	if (IsAnimationFinished() == false && mAnimationIndex == Enemy_Animation_No_BackStep) {
 		//バック方向
 		CVector BackVec = mEnemy_Player_Point.Normalize();
 		//バック量
@@ -287,7 +331,7 @@ void CXEnemy::BackStep()
 	}
 	if (IsAnimationFinished()) {
 		//プレイヤーが攻撃可能な距離にいないとき
-		if (mEnemy_PlayerDis > mEnemy_Attack_Dis)
+		if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 		{
 			mEnemy_State = EDASH;
 		}
@@ -297,17 +341,16 @@ void CXEnemy::BackStep()
 void CXEnemy::Attack_1()
 {
 	//アニメーションの設定
-	ChangeAnimation(mEnemy_Animation_No_Attack_1, false, mEnemy_Attack1_Animation_Frame);
+	ChangeAnimation(Enemy_Animation_No_Attack_1, false, Enemy_Attack1_Animation_Frame);
 
 	//ヒット判定発生
-	if (IsAnimationFinished() == false && mAnimationIndex == mEnemy_Animation_No_Attack_1)
+	if (IsAnimationFinished() == false && mAnimationIndex == Enemy_Animation_No_Attack_1)
 	{
 		//目的地点までのベクトルを求める
 		mEnemy_Player_Point = mEnemy_Point - mPosition;
 		mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
-		mEnemy_Point = CXPlayer::GetInstance()->Position();
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
-		if (mAnimationFrame <= mEnemy_Attack_Reception)
+		if (mAnimationFrame <= Enemy_Attack_Reception)
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
@@ -316,7 +359,7 @@ void CXEnemy::Attack_1()
 			mEnemy_IsHit = true;
 		}
 		//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
-		if (mAnimationFrame > mEnemy_Attack_Outreception)
+		if (mAnimationFrame > Enemy_Attack_Outreception)
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
@@ -329,25 +372,45 @@ void CXEnemy::Attack_1()
 	if (IsAnimationFinished())
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
-		mEnemy_State = EIDLE; //待機状態に移行
+		int random = ENEMY_INT_INITIALIZATION;
+		//プレイヤーが攻撃可能な距離にいるとき
+		if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
+		{
+			if (random == ENEMY_INT_INITIALIZATION)
+			{
+				//ランダムで攻撃の種類を決める
+				random = rand() % 2;
+				switch (random)
+				{
+				case 0:
+					mEnemy_State = EBACKSTEP; //バックステップへ移行
+					break;
+				case 1:
+					mEnemy_State = EATTACK_2; //攻撃2状態へ移行
+					break;
+				}
+			}
+		}
+		else {
+			mEnemy_State = EDASH; //走行へ移行
+		}
 	}
 }
 
 void CXEnemy::Attack_2()
 {
 	//アニメーションの設定
-	ChangeAnimation(mEnemy_Animation_No_Attack_2, false, mEnemy_Attack2_Animation_Frame);
+	ChangeAnimation(Enemy_Animation_No_Attack_2, false, Enemy_Attack2_Animation_Frame);
 
 
 	//ヒット判定発生
-	if (IsAnimationFinished() == false && mAnimationIndex == mEnemy_Animation_No_Attack_2)
+	if (IsAnimationFinished() == false && mAnimationIndex == Enemy_Animation_No_Attack_2)
 	{
 		//目的地点までのベクトルを求める
 		mEnemy_Player_Point = mEnemy_Point - mPosition;
 		mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
-		mEnemy_Point = CXPlayer::GetInstance()->Position();
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
-		if (mAnimationFrame <= mEnemy_Attack_Reception)
+		if (mAnimationFrame <= Enemy_Attack_Reception)
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
@@ -356,7 +419,7 @@ void CXEnemy::Attack_2()
 			mEnemy_IsHit = true;
 		}
 		//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
-		if (mAnimationFrame > mEnemy_Attack_Outreception)
+		if (mAnimationFrame > Enemy_Attack_Outreception)
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
@@ -369,47 +432,28 @@ void CXEnemy::Attack_2()
 	if (IsAnimationFinished())
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
-		mEnemy_State = EIDLE; //待機状態に移行
-	}
-}
-
-void CXEnemy::Attack_3()
-{
-	//アニメーションの設定
-	ChangeAnimation(mEnemy_Animation_No_Attack_3, false, mEnemy_Attack3_Animation_Frame);
-
-
-	//ヒット判定発生
-	if (IsAnimationFinished() == false && mAnimationIndex == mEnemy_Animation_No_Attack_3)
-	{
-		//目的地点までのベクトルを求める
-		mEnemy_Player_Point = mEnemy_Point - mPosition;
-		mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
-		mEnemy_Point = CXPlayer::GetInstance()->Position();
-		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
-		if (mAnimationFrame <= mEnemy_Attack_Reception)
+		int random = ENEMY_INT_INITIALIZATION;
+		//プレイヤーが攻撃可能な距離にいるとき
+		if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 		{
-			mEnemy_IsHit = false; //ヒット判定終了
+			if (random == ENEMY_INT_INITIALIZATION)
+			{
+				//ランダムで攻撃の種類を決める
+				random = rand() % 2;
+				switch (random)
+				{
+				case 0:
+					mEnemy_State = EATTACK_1; //攻撃1状態へ移行
+					break;
+				case 1:
+					mEnemy_State = EBACKSTEP; //バックステップへ移行
+					break;
+				}
+			}
 		}
-		//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
 		else {
-			mEnemy_IsHit = true;
+			mEnemy_State = EDASH; //走行へ移行
 		}
-		//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
-		if (mAnimationFrame > mEnemy_Attack_Outreception)
-		{
-			mEnemy_IsHit = false; //ヒット判定終了
-		}
-		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
-		{
-			mEnemy_IsHit = false; //ヒット判定終了
-		}
-	}
-	//アニメーション終了時
-	if (IsAnimationFinished())
-	{
-		mEnemy_IsHit = false; //ヒット判定終了
-		mEnemy_State = EIDLE; //待機状態に移行
 	}
 }
 
@@ -417,7 +461,7 @@ void CXEnemy::Attack_3()
 void CXEnemy::KnockBack()
 {
 	//アニメーションの設定
-	ChangeAnimation(mEnemy_Animation_No_Knockback, false, mEnemy_Knockback_Animation_Frame);
+	ChangeAnimation(Enemy_Animation_No_Knockback, false, Enemy_Knockback_Animation_Frame);
 	//アニメーションが再生中時
 	if (IsAnimationFinished() == false)
 	{
@@ -427,18 +471,13 @@ void CXEnemy::KnockBack()
 	if (IsAnimationFinished())
 	{
 		mEnemy_Flag = false;
-		if (mHp > mEnemy_Hp_State) {
-			mEnemy_State = EIDLE; //待機状態へ移行
-		}
-		else if (mHp < mEnemy_Hp_State){
-			mEnemy_State = EBACKSTEP;//後退状態へ移行
-		}
+		mEnemy_State = EATTACK_2; //攻撃2
 	}
 }
 
 void CXEnemy::Death()
 {
-	ChangeAnimation(mEnemy_Animation_No_Death, false, mEnemy_Death_Animation_Frame);
+	ChangeAnimation(Enemy_Animation_No_Death, false, Enemy_Death_Animation_Frame);
 	mEnemy_IsHit = false;
 }
 
@@ -446,14 +485,13 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-	if (!mHp <= mEnemy_Death_Hp)
+
+	if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ECAPSUL)
 	{
-		if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ECAPSUL)
+		CVector adjust;//調整用ベクトル
+		//コライダのmとoが衝突しているかの判定
+		if (CCollider::CollisionCapsule(m, o, &adjust))
 		{
-			CVector adjust;//調整用ベクトル
-			//コライダのmとoが衝突しているかの判定
-			if (CCollider::CollisionCapsule(m, o, &adjust))
-			{
 			if (m->Tag() == CCollider::EBODY && o->Tag() == CCollider::EBODY)
 			{
 				//位置の更新(mPosition + adjust)
@@ -461,9 +499,9 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 				//行列の更新
 				CTransform::Update();
 			}
-			}
 		}
 	}
+
 
 	if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
@@ -479,69 +517,75 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 
 
 
-	if (!mHp <= mEnemy_Death_Hp)
-	{
-		//自身のコライダタイプの判定
-		if (m->Type() == CCollider::ESPHERE) {
-			//相手のコライダが球コライダの時
-			if (o->Type() == CCollider::ESPHERE) {
-				//球の衝突判定
-				if (CCollider::Collision(m, o)) {
-					//相手の親のタグがプレイヤー
-					if (o->Parent()->Tag() == EPLAYER)
-					{
-						//相手のコライダのタグが剣
-						if (o->Tag() == CCollider::ESWORD)
-						{
-							if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
-							{
-								if (CXPlayer::GetInstance()->GetIsHit() == true) {
-									//ダメージ処理
-									//1度しか動かさないためのカウンタ
-									if (mEnemy_Flag == false)
-									{
-										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
-										{
-											mHp = mHp - mEnemy_Damage_PlayerSp1;
-											new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
-											new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
-											if (mHp > mEnemy_Hp_State)
-											{
-												mEnemy_State = EKNOCKBACK;
-												mEnemy_IsHit = false;
-											}
-											else if (mHp < mEnemy_Hp_State) {
-												
-											}
-											
-										}
-										else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
-										{
-											mHp = mHp - mEnemy_Damage_PlayerSp2;
-											new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
-											new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
-											if (mHp > mEnemy_Hp_State)
-											{
-												mEnemy_State = EKNOCKBACK;
-												mEnemy_IsHit = false;
-											}
-											else if (mHp < mEnemy_Hp_State) {
-												
-											}
-											
-										}
-										mEnemy_Flag = true;
-									}
 
+		//自身のコライダタイプの判定
+	if (m->Type() == CCollider::ESPHERE) {
+		//相手のコライダが球コライダの時
+		if (o->Type() == CCollider::ESPHERE) {
+			//球の衝突判定
+			if (CCollider::Collision(m, o)) {
+				//相手の親のタグがプレイヤー
+				if (o->Parent()->Tag() == EPLAYER)
+				{
+					//相手のコライダのタグが剣
+					if (o->Tag() == CCollider::ESWORD)
+					{
+						if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
+						{
+							if (CXPlayer::GetInstance()->GetIsHit() == true) {
+								//ダメージ処理
+								//1度しか動かさないためのカウンタ
+								if (mEnemy_Flag == false)
+								{
+									if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
+									{
+										mDamage = CXPlayer::GetInstance()->GetIsAttackPoint() * (CXPlayer::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsAttackPoint() * ENEMY_ATTACK_MAGNIFICATION);
+										mHp = mHp - mDamage;
+										new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
+										new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
+										mEnemy_IsHit = false;
+										if (Enemy_StanAccumulation_Max <= mStanAccumulation)
+										{
+											mEnemy_State = EKNOCKBACK;
+											mStanAccumulation = Enemy_StanAccumulation;
+										}
+										else {
+											mStan_Damage = CXPlayer::GetInstance()->GetIsStanPoint() * (CXPlayer::GetInstance()->GetIsStanPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsStanPoint() * ENEMY_ATTACK_MAGNIFICATION);
+											mStanAccumulation = mStanAccumulation + mStan_Damage;
+										}
+
+									}
+									else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
+									{
+										mDamage = CXPlayer::GetInstance()->GetIsAttackPoint() * (CXPlayer::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsAttackPoint() * ENEMY_ATTACK_MAGNIFICATION);
+										mHp = mHp - mDamage;
+										new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
+										new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
+										mEnemy_IsHit = false;
+										if (Enemy_StanAccumulation_Max <= mStanAccumulation)
+										{
+											mEnemy_State = EKNOCKBACK;
+											mStanAccumulation = Enemy_StanAccumulation;
+										}
+										else {
+											mStan_Damage = CXPlayer::GetInstance()->GetIsStanPoint() * (CXPlayer::GetInstance()->GetIsStanPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsStanPoint() * ENEMY_ATTACK_MAGNIFICATION);
+											mStanAccumulation = mStanAccumulation + mStan_Damage;
+										}
+
+									}
+									mEnemy_Flag = true;
 								}
+
 							}
 						}
 					}
 				}
 			}
-		}	
+		}
+
 	}
 }
+
 
 void CXEnemy::MovingCalculation() {
 	//プレイヤー方向のベクトルを求める
@@ -572,7 +616,7 @@ void CXEnemy::MovingCalculation() {
 	}
 	//移動する
 	mPosition += mEnemy_MoveDir * mEnemy_Speed;
-	mPosition.Y(mPosition.Y() * mEnemy_Gravity);
+	mPosition.Y(mPosition.Y() * Enemy_Gravity);
 
 	//移動方向リセット
 	mEnemy_MoveDir = CVector(0.0f, 0.0f, 0.0f);
@@ -592,62 +636,12 @@ void CXEnemy::TaskCollision()
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereRightarm, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLeftarm, COLLISIONRANGE);
 }
-void CXEnemy::EnemyTable()
-{
-	OX::Table table("res\\Enemy\\EnemyData.txt");
-	mEnemy_Priority = table["Enemy_Priority"]["Value"].iVal;
-	mEnemy_Speed_WalkPattern = table["Enemy_Speed_WalkPattern"]["Value"].fVal;
-	mEnemy_Speed_DashPattern = table["Enemy_Speed_DashPattern"]["Value"].fVal;
-	mEnemy_Walk_Dis = table["Enemy_Walk_Dis"]["Value"].fVal;
-	mEnemy_Dash_Dis = table["Enemy_Dash_Dis"]["Value"].fVal;
-	mEnemy_Walk_Dis_Max = table["Enemy_Walk_Dis_Max"]["Value"].fVal;
-	mEnemy_Dash_Dis_Max = table["Enemy_Dash_Dis_Max"]["Value"].fVal;
-	mEnemy_Attack_Dis = table["Enemy_Attack_Dis"]["Value"].fVal;
-	mEnemy_Attack_Reception = table["Enemy_Attack_Reception"]["Value"].fVal;
-	mEnemy_Attack_Outreception = table["Enemy_Attack_Outreception"]["Value"].fVal;
-	mEnemy_Attack_Walk_Rand = table["Enemy_Attack_Walk_Rand"]["Value"].iVal;
-	mEnemy_Attack_Dash_Rand = table["Enemy_Attack_Dash_Rand"]["Value"].iVal;
-	mEnemy_Damage_PlayerSp1 = table["Enemy_Damage_PlayerSp1"]["Value"].iVal;
-	mEnemy_Damage_PlayerSp2 = table["Enemy_Damage_PlayerSp2"]["Value"].iVal;
-	mEnemy_Idle_Animation_Frame = table["Enemy_Idle_Animation_Frame"]["Value"].fVal;
-	mEnemy_Move_Animation_Frame = table["Enemy_Move_Animation_Frame"]["Value"].fVal;
-	mEnemy_Dash_Animation_Frame = table["Enemy_Dash_Animation_Frame"]["Value"].fVal;
-	mEnemy_BackStep_Animation_Frame = table["Enemy_BackStep_Animation_Frame"]["Value"].fVal;
-	mEnemy_Attack1_Animation_Frame = table["Enemy_Attack1_Animation_Frame"]["Value"].fVal;
-	mEnemy_Attack2_Animation_Frame = table["Enemy_Attack2_Animation_Frame"]["Value"].fVal;
-	mEnemy_Attack3_Animation_Frame = table["Enemy_Attack3_Animation_Frame"]["Value"].fVal;
-	mEnemy_Knockback_Animation_Frame = table["Enemy_Knockback_Animation_Frame"]["Value"].fVal;
-	mEnemy_Death_Animation_Frame = table["Enemy_Death_Animation_Frame"]["Value"].fVal;
-	mEnemy_Animation_No_Attack_1 = table["Enemy_Animation_No_Attack_1"]["Value"].iVal;
-	mEnemy_Animation_No_Attack_2 = table["Enemy_Animation_No_Attack_2"]["Value"].iVal;
-	mEnemy_Animation_No_Attack_3 = table["Enemy_Animation_No_Attack_3"]["Value"].iVal;
-	mEnemy_Animation_No_Walk = table["Enemy_Animation_No_Walk"]["Value"].iVal;
-	mEnemy_Animation_No_Dash = table["Enemy_Animation_No_Dash"]["Value"].iVal;
-	mEnemy_Animation_No_BackStep = table["Enemy_Animaton_No_BackStep"]["Value"].iVal;
-	mEnemy_Animation_No_Idle = table["Enemy_Animation_No_Idle"]["Value"].iVal;
-	mEnemy_Animation_No_Knockback = table["Enemy_Animation_No_Knockback"]["Value"].iVal;
-	mEnemy_Animation_No_Death = table["Enemy_Animation_No_Death"]["Value"].iVal;
-	mEnemy_Position_X = table["Enemy_Position_X"]["Value"].fVal;
-	mEnemy_Position_Y = table["Enemy_Position_Y"]["Value"].fVal;
-	mEnemy_Position_Z = table["Enemy_Position_Z"]["Value"].fVal;
-	mEnemy_Scale_X = table["Enemy_Scale_X"]["Value"].fVal;
-	mEnemy_Scale_Y = table["Enemy_Scale_Y"]["Value"].fVal;
-	mEnemy_Scale_Z = table["Enemy_Scale_Z"]["Value"].fVal;
-	mEnemy_Rotation_X = table["Enemy_Rotation_X"]["Value"].fVal;
-	mEnemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
-	mEnemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
-	mEnemy_Gravity = table["Enemy_Gravity"]["Value"].fVal;
-	mEnemy_Hp = table["Enemy_Hp"]["Value"].iVal;
-	mEnemy_Hp_Max = table["Enemy_Hp_Max"]["Value"].iVal;
-	mEnemy_Hp_State = table["Enemy_Hp_State"]["Value"].iVal;
-	mEnemy_Death_Hp = table["Enemy_Death_Hp"]["Value"].iVal;
 
-}
 CXEnemy* CXEnemy::GetInstance()
 {
 	return mpEnemy_Instance;
 }
-bool CXEnemy::GetHp()
+int CXEnemy::GetHp()
 {
 	return mHp;
 }
@@ -665,7 +659,16 @@ void CXEnemy::SetIsHit(bool hitflag)
 {
 	mEnemy_IsHit = hitflag;
 }
-
+//攻撃力を取得する
+int CXEnemy::GetIsAttackPoint()
+{
+	return mAttack_Point;
+}
+//スタン値を取得する
+int CXEnemy::GetIsStanPoint()
+{
+	return mStan_Point;
+}
 //プレイヤーの状態を取得する
 CXEnemy::EEnemyState CXEnemy::GetState()
 {

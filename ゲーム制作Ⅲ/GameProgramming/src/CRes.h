@@ -40,7 +40,6 @@
 
 #define ENEMY_MODEL_FILE "res\\Enemy\\Mutant\\mutant.x"
 #define ENEMY_ANIMATION_ATTACKSP1 "res\\Enemy\\Mutant\\Attack1.x"
-#define ENEMY_ANIMATION_ATTACKSP2 "res\\Enemy\\Mutant\\Attack2.x"
 #define ENEMY_ANIMATION_WALK "res\\Enemy\\Mutant\\Walk.x"
 #define ENEMY_ANIMATION_DASH "res\\Enemy\\Mutant\\Dash.x"
 #define ENEMY_ANIMATION_BACKSTEP "res\\Enemy\\Mutant\\BackStep.x"

@@ -1,654 +1,639 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib">
+    <Filter Include="Lib">
       <UniqueIdentifier>{71337753-7d4e-4fb3-a565-77caf26ac0fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene">
+    <Filter Include="MainScene">
       <UniqueIdentifier>{daaa2299-61e6-4899-88cc-633978e436af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\GameScene">
+    <Filter Include="MainScene\GameScene">
       <UniqueIdentifier>{9875cf6f-3004-4e20-8620-a1c24e639566}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\GameScene\cpp">
+    <Filter Include="MainScene\GameScene\cpp">
       <UniqueIdentifier>{4d47496f-682c-4047-8155-06d4892c02fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\GameScene\h">
+    <Filter Include="MainScene\GameScene\h">
       <UniqueIdentifier>{b52b099a-d743-4251-b306-1dd97bd191dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player">
+    <Filter Include="MainScene\Player">
       <UniqueIdentifier>{3920030b-a167-40b0-82d5-e525fec99dda}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Data">
-      <UniqueIdentifier>{1a66c3c5-aaba-42f9-a1f8-69837520c2fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Camera">
+    <Filter Include="MainScene\Player\Camera">
       <UniqueIdentifier>{9ea070ab-b85d-43b4-a135-c08b4595c0b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Camera\cpp">
+    <Filter Include="MainScene\Player\Camera\cpp">
       <UniqueIdentifier>{51883abf-a4e8-458c-b38d-0e7cbae723ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Camera\h">
+    <Filter Include="MainScene\Player\Camera\h">
       <UniqueIdentifier>{d9a41c7d-e933-46ba-9ed7-24ef3b0fb03f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\player">
+    <Filter Include="MainScene\Player\player">
       <UniqueIdentifier>{4b523e25-5380-4b48-8513-46d472f8f211}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\player\h">
+    <Filter Include="MainScene\Player\player\h">
       <UniqueIdentifier>{009d9d3e-d9c5-4838-994d-c2897c076412}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\player\cpp">
+    <Filter Include="MainScene\Player\player\cpp">
       <UniqueIdentifier>{c0cb29b3-6ed8-4414-b6b3-69237fa8147c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Key">
+    <Filter Include="MainScene\Player\Key">
       <UniqueIdentifier>{d5482c7b-f309-400d-ab72-75c7e2e74f4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Key\cpp">
+    <Filter Include="MainScene\Player\Key\cpp">
       <UniqueIdentifier>{65ee8342-cadd-4b84-8c5b-69ce58643147}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Key\h">
+    <Filter Include="MainScene\Player\Key\h">
       <UniqueIdentifier>{67294123-dbbe-4d09-90ca-a6f5b9e40fbf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Input">
+    <Filter Include="MainScene\Player\Input">
       <UniqueIdentifier>{85db849c-0d3a-41d9-9efd-8ad000615ea2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Input\cpp">
+    <Filter Include="MainScene\Player\Input\cpp">
       <UniqueIdentifier>{15775bf0-6b2e-4d33-ae00-3163bc37fd5a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Player\Input\h">
+    <Filter Include="MainScene\Player\Input\h">
       <UniqueIdentifier>{055caab4-0b8a-44ac-91a5-d1e38b7169d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Enemy">
+    <Filter Include="MainScene\Enemy">
       <UniqueIdentifier>{b97735c3-4c1b-41d1-9e51-ba45f7dd7545}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Enemy\cpp">
+    <Filter Include="MainScene\Enemy\cpp">
       <UniqueIdentifier>{93cd2fcd-a003-488c-a4cf-eefa37af63cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Enemy\h">
+    <Filter Include="MainScene\Enemy\h">
       <UniqueIdentifier>{1063cf03-5050-4c24-8375-63439a3355b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Enemy\Data">
+    <Filter Include="MainScene\Enemy\Data">
       <UniqueIdentifier>{64bddef3-0f67-42a7-920f-4bb74fe80eac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Map">
+    <Filter Include="MainScene\Map">
       <UniqueIdentifier>{277556e6-0750-4193-962f-355a5b7c5654}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Map\Map">
+    <Filter Include="MainScene\Map\Map">
       <UniqueIdentifier>{75d5c43b-96ba-4a62-ad8c-3ea2684a7ee5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Map\Map\cpp">
+    <Filter Include="MainScene\Map\Map\cpp">
       <UniqueIdentifier>{5cd9f0d9-0242-4759-8867-e8b9af8646fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Map\Map\h">
+    <Filter Include="MainScene\Map\Map\h">
       <UniqueIdentifier>{4d77a32f-5e18-478b-9c7b-8dd0a501a037}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Map\ShadowMap">
+    <Filter Include="MainScene\Map\ShadowMap">
       <UniqueIdentifier>{0571287d-a402-46bd-8b95-96e44d4fe256}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Map\ShadowMap\cpp">
+    <Filter Include="MainScene\Map\ShadowMap\cpp">
       <UniqueIdentifier>{85d90b08-36d4-4710-a0ee-06081b7e151d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Map\ShadowMap\h">
+    <Filter Include="MainScene\Map\ShadowMap\h">
       <UniqueIdentifier>{7fc1f8f5-a522-4f1c-a1e2-caa88e7fcb3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene">
+    <Filter Include="MainScene\Scene">
       <UniqueIdentifier>{4873b35a-1efb-4fc5-8737-3baf14629ecd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\Scene_h">
+    <Filter Include="MainScene\Scene\Scene_h">
       <UniqueIdentifier>{48fc13ef-7e4a-44c0-8645-cce00f62c8d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\SceneManager">
+    <Filter Include="MainScene\Scene\SceneManager">
       <UniqueIdentifier>{c23a7c07-dcf5-4364-8837-3d71686121d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\SceneManager\cpp">
+    <Filter Include="MainScene\Scene\SceneManager\cpp">
       <UniqueIdentifier>{704a2a14-6350-40c9-9a0e-7022dc75b9c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\SceneManager\h">
+    <Filter Include="MainScene\Scene\SceneManager\h">
       <UniqueIdentifier>{0f225ae4-2f9a-46a1-b768-1b37b21c8559}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\SceneTitle">
+    <Filter Include="MainScene\Scene\SceneTitle">
       <UniqueIdentifier>{275918ec-5d8f-44c0-bfe9-551b047bdc65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\SceneTitle\cpp">
+    <Filter Include="MainScene\Scene\SceneTitle\cpp">
       <UniqueIdentifier>{98b18c33-b82a-4ebc-9d14-83e8e86813f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\SceneTitle\h">
+    <Filter Include="MainScene\Scene\SceneTitle\h">
       <UniqueIdentifier>{1f75d23d-c650-4d1f-853d-dcc458547161}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\SceneTitle\data">
+    <Filter Include="MainScene\Scene\SceneTitle\data">
       <UniqueIdentifier>{ab278151-7062-4dc5-b9ba-855d76c8141d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\main_h">
+    <Filter Include="MainScene\Scene\main_h">
       <UniqueIdentifier>{17410b3d-8a5b-4ebc-83a7-ae2fecc9ab55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\Update">
+    <Filter Include="MainScene\Scene\Update">
       <UniqueIdentifier>{82d639b9-229d-40a2-adb0-d800af3a21d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\Update\cpp">
+    <Filter Include="MainScene\Scene\Update\cpp">
       <UniqueIdentifier>{4bc9d129-29e4-430e-9c21-a36252c3b3e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Scene\Update\h">
+    <Filter Include="MainScene\Scene\Update\h">
       <UniqueIdentifier>{d6040793-a715-4bce-b937-74eef69fe71f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Task">
+    <Filter Include="MainScene\Task">
       <UniqueIdentifier>{b5e6fc5e-c376-45a6-a3bb-2e8efb86e3df}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Task\Task_h">
+    <Filter Include="MainScene\Task\Task_h">
       <UniqueIdentifier>{11b5d02b-1541-4336-a86f-a6f9786a14cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Task\TaskManager">
+    <Filter Include="MainScene\Task\TaskManager">
       <UniqueIdentifier>{1a35a898-509e-481e-9de2-394168d0c64f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Task\TaskManager\cpp">
+    <Filter Include="MainScene\Task\TaskManager\cpp">
       <UniqueIdentifier>{a320defa-e2c6-423c-b676-66c4a8cd2581}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\MainScene\Task\TaskManager\h">
+    <Filter Include="MainScene\Task\TaskManager\h">
       <UniqueIdentifier>{2bc0a0e9-cb9d-45b9-92d7-2456ec4d6ec9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource">
-      <UniqueIdentifier>{46d975af-7051-4a9a-bb8f-adabeef636bd}</UniqueIdentifier>
+    <Filter Include="MainScene\Player\player\Data">
+      <UniqueIdentifier>{1a66c3c5-aaba-42f9-a1f8-69837520c2fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Res">
-      <UniqueIdentifier>{e0243ee1-1324-416b-8c1a-16533e8c426b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Res\cpp">
-      <UniqueIdentifier>{48a67160-9e76-4429-adfd-6afcf35b647a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Res\h">
-      <UniqueIdentifier>{2fa44c60-cabb-47eb-8a0f-067f938b1c4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Sound">
-      <UniqueIdentifier>{97128df4-f2bf-4000-a593-849684e118ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Sound\cpp">
-      <UniqueIdentifier>{2527feb6-ee6b-42f3-bdcd-899530714d8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Sound\h">
-      <UniqueIdentifier>{4fe96aa0-7a15-4581-a797-4fcd7cd44e9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Table">
-      <UniqueIdentifier>{847ac665-d9d4-48bd-b15a-23870e90ebe8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Table\cpp">
-      <UniqueIdentifier>{8080d43f-953f-4d21-b076-e2633e230f86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Table\h">
-      <UniqueIdentifier>{f69a8c63-6034-4465-bbdd-57e14786a903}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture">
+    <Filter Include="Lib\Texture">
       <UniqueIdentifier>{5f680657-fef2-485a-9c50-d5fbd31fb3dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\Text">
+    <Filter Include="Lib\Texture\Text">
       <UniqueIdentifier>{fa5ef88b-c58f-4837-9b2a-db0af4b8c2a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\Text\cpp">
+    <Filter Include="Lib\Texture\Text\cpp">
       <UniqueIdentifier>{b51fc38d-4e06-497f-b7d0-71e758b09f1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\Text\h">
+    <Filter Include="Lib\Texture\Text\h">
       <UniqueIdentifier>{33d87a77-f224-467f-981c-1721ac243735}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\BillBoard">
+    <Filter Include="Lib\Texture\BillBoard">
       <UniqueIdentifier>{2c035bf0-9675-4486-9a59-d8431c40a21c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\BillBoard\cpp">
+    <Filter Include="Lib\Texture\BillBoard\cpp">
       <UniqueIdentifier>{e73c94f2-b808-49f6-b18d-df66792c806c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\BillBoard\h">
+    <Filter Include="Lib\Texture\BillBoard\h">
       <UniqueIdentifier>{d7ca785f-8cb6-4560-823a-56b3d63713d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\Effect">
+    <Filter Include="Lib\Texture\Effect">
       <UniqueIdentifier>{2e7f88ed-80d2-4db4-b39e-43fa851dcb78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\Effect\cpp">
+    <Filter Include="Lib\Texture\Effect\cpp">
       <UniqueIdentifier>{a8df0069-14a1-454e-95ed-08f5c1e6ab93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Texture\Effect\h">
+    <Filter Include="Lib\Texture\Effect\h">
       <UniqueIdentifier>{f4eb5a52-4bc1-4f75-a2d2-2bf616642df2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider">
-      <UniqueIdentifier>{02404635-6359-4ddd-997c-9bbfd5a1e323}</UniqueIdentifier>
+    <Filter Include="Lib\Table">
+      <UniqueIdentifier>{847ac665-d9d4-48bd-b15a-23870e90ebe8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderCapsule">
-      <UniqueIdentifier>{f54c2824-c10c-46ff-9720-e486ce3f71e6}</UniqueIdentifier>
+    <Filter Include="Lib\Table\cpp">
+      <UniqueIdentifier>{8080d43f-953f-4d21-b076-e2633e230f86}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderCapsule\cpp">
-      <UniqueIdentifier>{12eaf995-95c3-45f4-88e6-ca12c85a9880}</UniqueIdentifier>
+    <Filter Include="Lib\Table\h">
+      <UniqueIdentifier>{f69a8c63-6034-4465-bbdd-57e14786a903}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderCapsule\h">
-      <UniqueIdentifier>{7b43bad8-345e-4611-9280-c0e3a7a1add0}</UniqueIdentifier>
+    <Filter Include="Lib\Sound">
+      <UniqueIdentifier>{97128df4-f2bf-4000-a593-849684e118ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderMesh">
-      <UniqueIdentifier>{58252b32-0d64-4a80-b282-8d99cbd6bd7f}</UniqueIdentifier>
+    <Filter Include="Lib\Sound\cpp">
+      <UniqueIdentifier>{2527feb6-ee6b-42f3-bdcd-899530714d8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderMesh\cpp">
-      <UniqueIdentifier>{247cab31-b220-41a7-b3f7-ac3377b37a21}</UniqueIdentifier>
+    <Filter Include="Lib\Sound\h">
+      <UniqueIdentifier>{4fe96aa0-7a15-4581-a797-4fcd7cd44e9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderMesh\h">
-      <UniqueIdentifier>{a89961c6-885e-4870-af3c-0057f5a0e3a0}</UniqueIdentifier>
+    <Filter Include="Lib\Res">
+      <UniqueIdentifier>{e0243ee1-1324-416b-8c1a-16533e8c426b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderLine">
-      <UniqueIdentifier>{74a0f863-25c2-407a-a52f-7547e78073b3}</UniqueIdentifier>
+    <Filter Include="Lib\Res\cpp">
+      <UniqueIdentifier>{48a67160-9e76-4429-adfd-6afcf35b647a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderLine\cpp">
-      <UniqueIdentifier>{6838fe84-3d94-4851-bcbe-4b37fcf06b23}</UniqueIdentifier>
+    <Filter Include="Lib\Res\h">
+      <UniqueIdentifier>{2fa44c60-cabb-47eb-8a0f-067f938b1c4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderLine\h">
-      <UniqueIdentifier>{5cf9ea66-d492-40f4-a020-ae475fdb2e43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderTriangle">
-      <UniqueIdentifier>{b33c98b9-0b13-44f9-9465-82b40872b0c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderTriangle\cpp">
-      <UniqueIdentifier>{21670bdf-9157-4421-ad97-697d4ccdea83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\ColliderTriangle\h">
-      <UniqueIdentifier>{2a007a45-a5d4-435f-84b2-08af2faf5206}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\Collider">
-      <UniqueIdentifier>{9d78ad0e-78f4-44c3-b754-0120076f8215}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\Collider\cpp">
-      <UniqueIdentifier>{1ff2bea2-42af-4e14-8a25-bcfff663b7cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\Collider\h">
-      <UniqueIdentifier>{e281172b-38e2-4c53-849c-c7d010c8ae8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\CollisionManager">
-      <UniqueIdentifier>{d0667c06-015d-4ea5-bdb0-463ce475e397}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\CollisionManager\cpp">
-      <UniqueIdentifier>{7ab8be88-8634-410d-ae9b-0d02b1493d39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Collider\CollisionManager\h">
-      <UniqueIdentifier>{e0982a92-9dfd-44ff-b140-82728c02714d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character">
-      <UniqueIdentifier>{1861f161-78d0-4121-8a18-5519a673e69e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Character">
-      <UniqueIdentifier>{1d42e1b2-86b3-49de-a537-61f4f8c0d7cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Character\cpp">
-      <UniqueIdentifier>{48ccf822-5db0-44b6-bd92-deecd1133b9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Character\h">
-      <UniqueIdentifier>{352015d8-638b-40cf-8209-2eea734bfaf2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model">
-      <UniqueIdentifier>{8e3aa5a0-0bc9-484c-b02c-a85c95227e03}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Model">
-      <UniqueIdentifier>{f4ed5acd-309e-4f57-ac52-9bf458492bdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Model\h">
-      <UniqueIdentifier>{bd00c661-4166-45d0-881e-f7327d43a0da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Model\cpp">
-      <UniqueIdentifier>{4198f26e-f410-429f-821f-a41bc257ab61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Triangle">
-      <UniqueIdentifier>{3885fb01-3506-44a3-8e82-f02eb256404c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Triangle\cpp">
-      <UniqueIdentifier>{fcc65a83-f5e8-41fe-832f-d35362938c0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Triangle\h">
-      <UniqueIdentifier>{e85c67fc-4c86-4b1c-af99-cbd3531b8869}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Transform">
-      <UniqueIdentifier>{1633e712-684a-4cd8-92c3-dbe78846d847}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Transform\cpp">
-      <UniqueIdentifier>{f4316c57-1be5-4511-8be8-b4989ebbd14a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Transform\h">
-      <UniqueIdentifier>{5cb3c37d-5d17-48ba-a5b7-3c7ec376b267}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Texture">
-      <UniqueIdentifier>{0cea0e89-de1c-4b1f-bc50-5fb75339c8f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Texture\cpp">
-      <UniqueIdentifier>{3ad4e2cf-e50c-4e3c-834c-afbb849bf661}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Texture\h">
-      <UniqueIdentifier>{d662ed47-70b9-415a-8653-9e9fe82d7c68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Material">
-      <UniqueIdentifier>{807b274a-369b-4d97-bffa-cbad74bc213a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Material\cpp">
-      <UniqueIdentifier>{cff0ea07-9ca6-449d-940e-6ae942a93a73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Material\h">
-      <UniqueIdentifier>{5103d18f-c300-48c8-9432-cc720857fc41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Matrix">
-      <UniqueIdentifier>{0fe28781-600a-4149-b3bb-be3fba550512}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Matrix\cpp">
-      <UniqueIdentifier>{13edcbcc-ae95-4836-afb2-d075cb8245a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\Matrix\h">
-      <UniqueIdentifier>{2ec9e344-351a-4ee5-a26a-c2961c8037f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\CVector">
-      <UniqueIdentifier>{45347340-86be-44c0-bef4-16c234654120}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\CVector\cpp">
-      <UniqueIdentifier>{cb0af365-f9c7-4dc0-ab41-8055e38518dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\Character\Model\CVector\h">
-      <UniqueIdentifier>{9ec1edd5-d9ce-4888-b931-08787ed3aa75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter">
+    <Filter Include="Lib\CXCharacter">
       <UniqueIdentifier>{6171de39-868b-41fa-80b0-55047fc84b81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CXCharacter">
+    <Filter Include="Lib\CXCharacter\CXCharacter">
       <UniqueIdentifier>{907404ed-8622-4846-b38b-d2179b74ea85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CXCharacter\cpp">
+    <Filter Include="Lib\CXCharacter\CXCharacter\cpp">
       <UniqueIdentifier>{321f48ff-c495-437e-ac35-dbe254b32a33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CXCharacter\h">
+    <Filter Include="Lib\CXCharacter\CXCharacter\h">
       <UniqueIdentifier>{f233a638-35d7-473d-8fb0-72c8f1735441}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX">
+    <Filter Include="Lib\CXCharacter\CModelX">
       <UniqueIdentifier>{eadb5afe-aea5-4ba3-921d-1a5ef7bb2b62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\CModelX">
+    <Filter Include="Lib\CXCharacter\CModelX\CModelX">
       <UniqueIdentifier>{c1cdd5c8-4a83-4fcb-a133-b08dbe8d046f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\CModelX\h">
+    <Filter Include="Lib\CXCharacter\CModelX\CModelX\h">
       <UniqueIdentifier>{8eab9be4-bc87-49c1-bbe8-7b5408068ebd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\CModelX\cpp">
+    <Filter Include="Lib\CXCharacter\CModelX\CModelX\cpp">
       <UniqueIdentifier>{6e561498-37cb-423c-8c1e-0a8c9ba2c483}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader">
+    <Filter Include="Lib\CXCharacter\CModelX\Shader">
       <UniqueIdentifier>{68db393f-1db6-48f5-b813-6ae035e87850}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\MyShader">
+    <Filter Include="Lib\CXCharacter\CModelX\Shader\MyShader">
       <UniqueIdentifier>{fc313c71-d2e8-4b9b-a21b-349a98d8f26a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\MyShader\h">
+    <Filter Include="Lib\CXCharacter\CModelX\Shader\MyShader\h">
       <UniqueIdentifier>{a52eca43-fb82-4234-8ec8-3af085448498}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\MyShader\cpp">
+    <Filter Include="Lib\CXCharacter\CModelX\Shader\MyShader\cpp">
       <UniqueIdentifier>{367db0fd-39ea-4fb6-adb9-c6ca006c5227}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\Shader">
+    <Filter Include="Lib\CXCharacter\CModelX\Shader\Shader">
       <UniqueIdentifier>{511a1290-ef94-42fc-a0d4-f88835de73d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\Shader\cpp">
+    <Filter Include="Lib\CXCharacter\CModelX\Shader\Shader\cpp">
       <UniqueIdentifier>{b53b2ec0-e3fe-4289-a038-6c2e6872872d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\Shader\h">
+    <Filter Include="Lib\CXCharacter\CModelX\Shader\Shader\h">
       <UniqueIdentifier>{ea3a7e16-8b8b-430b-9e40-c9777b56d8b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Util">
+    <Filter Include="Lib\CXCharacter\CModelX\Util">
       <UniqueIdentifier>{2898c367-637a-4d99-95d9-7de175929c17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Util\cpp">
+    <Filter Include="Lib\CXCharacter\CModelX\Util\cpp">
       <UniqueIdentifier>{46597691-328e-4f54-bf1c-a72166b97c3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Lib\Resource\CXCharacter\CModelX\Util\h">
+    <Filter Include="Lib\CXCharacter\CModelX\Util\h">
       <UniqueIdentifier>{33e765b5-0a69-4836-8158-77c1aac3977c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider">
+      <UniqueIdentifier>{02404635-6359-4ddd-997c-9bbfd5a1e323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderCapsule">
+      <UniqueIdentifier>{f54c2824-c10c-46ff-9720-e486ce3f71e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderCapsule\cpp">
+      <UniqueIdentifier>{12eaf995-95c3-45f4-88e6-ca12c85a9880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderCapsule\h">
+      <UniqueIdentifier>{7b43bad8-345e-4611-9280-c0e3a7a1add0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderMesh">
+      <UniqueIdentifier>{58252b32-0d64-4a80-b282-8d99cbd6bd7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderMesh\cpp">
+      <UniqueIdentifier>{247cab31-b220-41a7-b3f7-ac3377b37a21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderMesh\h">
+      <UniqueIdentifier>{a89961c6-885e-4870-af3c-0057f5a0e3a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderLine">
+      <UniqueIdentifier>{74a0f863-25c2-407a-a52f-7547e78073b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderLine\cpp">
+      <UniqueIdentifier>{6838fe84-3d94-4851-bcbe-4b37fcf06b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderLine\h">
+      <UniqueIdentifier>{5cf9ea66-d492-40f4-a020-ae475fdb2e43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderTriangle">
+      <UniqueIdentifier>{b33c98b9-0b13-44f9-9465-82b40872b0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderTriangle\cpp">
+      <UniqueIdentifier>{21670bdf-9157-4421-ad97-697d4ccdea83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\ColliderTriangle\h">
+      <UniqueIdentifier>{2a007a45-a5d4-435f-84b2-08af2faf5206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\Collider">
+      <UniqueIdentifier>{9d78ad0e-78f4-44c3-b754-0120076f8215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\Collider\cpp">
+      <UniqueIdentifier>{1ff2bea2-42af-4e14-8a25-bcfff663b7cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\Collider\h">
+      <UniqueIdentifier>{e281172b-38e2-4c53-849c-c7d010c8ae8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\CollisionManager">
+      <UniqueIdentifier>{d0667c06-015d-4ea5-bdb0-463ce475e397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\CollisionManager\cpp">
+      <UniqueIdentifier>{7ab8be88-8634-410d-ae9b-0d02b1493d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Collider\CollisionManager\h">
+      <UniqueIdentifier>{e0982a92-9dfd-44ff-b140-82728c02714d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character">
+      <UniqueIdentifier>{1861f161-78d0-4121-8a18-5519a673e69e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Character">
+      <UniqueIdentifier>{1d42e1b2-86b3-49de-a537-61f4f8c0d7cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Character\cpp">
+      <UniqueIdentifier>{48ccf822-5db0-44b6-bd92-deecd1133b9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Character\h">
+      <UniqueIdentifier>{352015d8-638b-40cf-8209-2eea734bfaf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model">
+      <UniqueIdentifier>{8e3aa5a0-0bc9-484c-b02c-a85c95227e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Model">
+      <UniqueIdentifier>{f4ed5acd-309e-4f57-ac52-9bf458492bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Model\h">
+      <UniqueIdentifier>{bd00c661-4166-45d0-881e-f7327d43a0da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Model\cpp">
+      <UniqueIdentifier>{4198f26e-f410-429f-821f-a41bc257ab61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Triangle">
+      <UniqueIdentifier>{3885fb01-3506-44a3-8e82-f02eb256404c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Triangle\cpp">
+      <UniqueIdentifier>{fcc65a83-f5e8-41fe-832f-d35362938c0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Triangle\h">
+      <UniqueIdentifier>{e85c67fc-4c86-4b1c-af99-cbd3531b8869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Transform">
+      <UniqueIdentifier>{1633e712-684a-4cd8-92c3-dbe78846d847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Transform\cpp">
+      <UniqueIdentifier>{f4316c57-1be5-4511-8be8-b4989ebbd14a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Transform\h">
+      <UniqueIdentifier>{5cb3c37d-5d17-48ba-a5b7-3c7ec376b267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Texture">
+      <UniqueIdentifier>{0cea0e89-de1c-4b1f-bc50-5fb75339c8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Texture\cpp">
+      <UniqueIdentifier>{3ad4e2cf-e50c-4e3c-834c-afbb849bf661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Texture\h">
+      <UniqueIdentifier>{d662ed47-70b9-415a-8653-9e9fe82d7c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Material">
+      <UniqueIdentifier>{807b274a-369b-4d97-bffa-cbad74bc213a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Material\cpp">
+      <UniqueIdentifier>{cff0ea07-9ca6-449d-940e-6ae942a93a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Material\h">
+      <UniqueIdentifier>{5103d18f-c300-48c8-9432-cc720857fc41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Matrix">
+      <UniqueIdentifier>{0fe28781-600a-4149-b3bb-be3fba550512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Matrix\cpp">
+      <UniqueIdentifier>{13edcbcc-ae95-4836-afb2-d075cb8245a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\Matrix\h">
+      <UniqueIdentifier>{2ec9e344-351a-4ee5-a26a-c2961c8037f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\CVector">
+      <UniqueIdentifier>{45347340-86be-44c0-bef4-16c234654120}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\CVector\cpp">
+      <UniqueIdentifier>{cb0af365-f9c7-4dc0-ab41-8055e38518dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Character\Model\CVector\h">
+      <UniqueIdentifier>{9ec1edd5-d9ce-4888-b931-08787ed3aa75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CXEnemy.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Enemy\cpp</Filter>
+      <Filter>MainScene\Enemy\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CModel.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Model\cpp</Filter>
+      <Filter>Lib\Character\Model\Model\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CCharacter.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Character\cpp</Filter>
+      <Filter>Lib\Character\Character\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CColliderTriangle.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderTriangle\cpp</Filter>
+      <Filter>Lib\Collider\ColliderTriangle\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CCollider.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Collider\Collider\h</Filter>
+      <Filter>Lib\Collider\Collider\h</Filter>
     </ClCompile>
     <ClCompile Include="src\CColliderCapsule.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderCapsule\cpp</Filter>
+      <Filter>Lib\Collider\ColliderCapsule\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CColliderMesh.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderMesh\cpp</Filter>
+      <Filter>Lib\Collider\ColliderMesh\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CColliderLine.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderLine\cpp</Filter>
+      <Filter>Lib\Collider\ColliderLine\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CCollisionManager.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Collider\CollisionManager\cpp</Filter>
+      <Filter>Lib\Collider\CollisionManager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CXPlayer.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Player\player\cpp</Filter>
+      <Filter>MainScene\Player\player\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CSceneGame.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\GameScene\cpp</Filter>
+      <Filter>MainScene\GameScene\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CRes.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Res\cpp</Filter>
+      <Filter>Lib\Res\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CCamera.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Player\Camera\cpp</Filter>
+      <Filter>MainScene\Player\Camera\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CModelX.cpp">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\CModelX\cpp</Filter>
+      <Filter>Lib\CXCharacter\CModelX\CModelX\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CXCharacter.cpp">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CXCharacter\cpp</Filter>
+      <Filter>Lib\CXCharacter\CXCharacter\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CEffect.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Texture\Effect\cpp</Filter>
+      <Filter>Lib\Texture\Effect\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CSceneTitle.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\SceneTitle\cpp</Filter>
+      <Filter>MainScene\Scene\SceneTitle\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CSceneManager.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\SceneManager\cpp</Filter>
+      <Filter>MainScene\Scene\SceneManager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTaskManager.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Task\TaskManager\cpp</Filter>
+      <Filter>MainScene\Task\TaskManager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\Update.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\Update\cpp</Filter>
+      <Filter>MainScene\Scene\Update\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CMaterial.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Material\cpp</Filter>
+      <Filter>Lib\Character\Model\Material\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CSound.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Sound\cpp</Filter>
+      <Filter>Lib\Sound\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CMatrix.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Matrix\cpp</Filter>
+      <Filter>Lib\Character\Model\Matrix\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CBillBoard.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Texture\BillBoard\cpp</Filter>
+      <Filter>Lib\Texture\BillBoard\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CInput.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Player\Input\cpp</Filter>
+      <Filter>MainScene\Player\Input\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CKey.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Player\Key\cpp</Filter>
+      <Filter>MainScene\Player\Key\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CMyShader.cpp">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\MyShader\cpp</Filter>
+      <Filter>Lib\CXCharacter\CModelX\Shader\MyShader\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CShader.cpp">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\Shader\cpp</Filter>
+      <Filter>Lib\CXCharacter\CModelX\Shader\Shader\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CShadowMap.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Map\ShadowMap\cpp</Filter>
+      <Filter>MainScene\Map\ShadowMap\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CMap.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Map\Map\cpp</Filter>
+      <Filter>MainScene\Map\Map\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTable.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Table\cpp</Filter>
+      <Filter>Lib\Table\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CText.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Texture\Text\cpp</Filter>
+      <Filter>Lib\Texture\Text\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTexture.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Texture\cpp</Filter>
+      <Filter>Lib\Character\Model\Texture\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTransform.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Transform\cpp</Filter>
+      <Filter>Lib\Character\Model\Transform\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTriangle.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Triangle\cpp</Filter>
+      <Filter>Lib\Character\Model\Triangle\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CUtil.cpp">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\Util\cpp</Filter>
+      <Filter>Lib\CXCharacter\CModelX\Util\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CVector.cpp">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\CVector\cpp</Filter>
+      <Filter>Lib\Character\Model\CVector\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\main_h</Filter>
+      <Filter>MainScene\Scene\main_h</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CPlayerData.h">
-      <Filter>ソース ファイル\Lib\MainScene\Player\Data</Filter>
+      <Filter>MainScene\Player\player\Data</Filter>
     </ClInclude>
     <ClInclude Include="src\CXEnemy.h">
-      <Filter>ソース ファイル\Lib\MainScene\Enemy\h</Filter>
+      <Filter>MainScene\Enemy\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CEnemyData.h">
-      <Filter>ソース ファイル\Lib\MainScene\Enemy\Data</Filter>
+      <Filter>MainScene\Enemy\Data</Filter>
     </ClInclude>
     <ClInclude Include="src\CModel.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Model\h</Filter>
+      <Filter>Lib\Character\Model\Model\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CCharacter.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Character\h</Filter>
+      <Filter>Lib\Character\Character\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CColliderTriangle.h">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderTriangle\h</Filter>
+      <Filter>Lib\Collider\ColliderTriangle\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CCollider.h">
-      <Filter>ソース ファイル\Lib\Resource\Collider\Collider\cpp</Filter>
+      <Filter>Lib\Collider\Collider\cpp</Filter>
     </ClInclude>
     <ClInclude Include="src\CColliderCapsule.h">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderCapsule\h</Filter>
+      <Filter>Lib\Collider\ColliderCapsule\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CColliderMesh.h">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderMesh\h</Filter>
+      <Filter>Lib\Collider\ColliderMesh\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CColliderLine.h">
-      <Filter>ソース ファイル\Lib\Resource\Collider\ColliderLine\h</Filter>
+      <Filter>Lib\Collider\ColliderLine\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CCollisionManager.h">
-      <Filter>ソース ファイル\Lib\Resource\Collider\CollisionManager\h</Filter>
+      <Filter>Lib\Collider\CollisionManager\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CXPlayer.h">
-      <Filter>ソース ファイル\Lib\MainScene\Player\player\h</Filter>
+      <Filter>MainScene\Player\player\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneGame.h">
-      <Filter>ソース ファイル\Lib\MainScene\GameScene\h</Filter>
+      <Filter>MainScene\GameScene\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CRes.h">
-      <Filter>ソース ファイル\Lib\Resource\Res\h</Filter>
+      <Filter>Lib\Res\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CCamera.h">
-      <Filter>ソース ファイル\Lib\MainScene\Player\Camera\h</Filter>
+      <Filter>MainScene\Player\Camera\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CModelX.h">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\CModelX\h</Filter>
+      <Filter>Lib\CXCharacter\CModelX\CModelX\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CXCharacter.h">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CXCharacter\h</Filter>
+      <Filter>Lib\CXCharacter\CXCharacter\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTask.h">
-      <Filter>ソース ファイル\Lib\MainScene\Task\Task_h</Filter>
+      <Filter>MainScene\Task\Task_h</Filter>
     </ClInclude>
     <ClInclude Include="src\CEffect.h">
-      <Filter>ソース ファイル\Lib\Resource\Texture\Effect\h</Filter>
+      <Filter>Lib\Texture\Effect\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CScene.h">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\Scene_h</Filter>
+      <Filter>MainScene\Scene\Scene_h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneTitle.h">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\SceneTitle\h</Filter>
+      <Filter>MainScene\Scene\SceneTitle\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneManager.h">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\SceneManager\h</Filter>
+      <Filter>MainScene\Scene\SceneManager\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTaskManager.h">
-      <Filter>ソース ファイル\Lib\MainScene\Task\TaskManager\h</Filter>
+      <Filter>MainScene\Task\TaskManager\h</Filter>
     </ClInclude>
     <ClInclude Include="src\Update.h">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\Update\h</Filter>
+      <Filter>MainScene\Scene\Update\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CMaterial.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Material\h</Filter>
+      <Filter>Lib\Character\Model\Material\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSound.h">
-      <Filter>ソース ファイル\Lib\Resource\Sound\h</Filter>
+      <Filter>Lib\Sound\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CMatrix.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Matrix\h</Filter>
+      <Filter>Lib\Character\Model\Matrix\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CBillBoard.h">
-      <Filter>ソース ファイル\Lib\Resource\Texture\BillBoard\h</Filter>
+      <Filter>Lib\Texture\BillBoard\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CInput.h">
-      <Filter>ソース ファイル\Lib\MainScene\Player\Input\h</Filter>
+      <Filter>MainScene\Player\Input\h</Filter>
     </ClInclude>
     <ClInclude Include="src\TitleData.h">
-      <Filter>ソース ファイル\Lib\MainScene\Scene\SceneTitle\data</Filter>
+      <Filter>MainScene\Scene\SceneTitle\data</Filter>
     </ClInclude>
     <ClInclude Include="src\CKey.h">
-      <Filter>ソース ファイル\Lib\MainScene\Player\Key\h</Filter>
+      <Filter>MainScene\Player\Key\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CMyShader.h">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\MyShader\h</Filter>
+      <Filter>Lib\CXCharacter\CModelX\Shader\MyShader\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CShader.h">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\Shader\Shader\h</Filter>
+      <Filter>Lib\CXCharacter\CModelX\Shader\Shader\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CShadowMap.h">
-      <Filter>ソース ファイル\Lib\MainScene\Map\ShadowMap\h</Filter>
+      <Filter>MainScene\Map\ShadowMap\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CMap.h">
-      <Filter>ソース ファイル\Lib\MainScene\Map\Map\h</Filter>
+      <Filter>MainScene\Map\Map\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTable.h">
-      <Filter>ソース ファイル\Lib\Resource\Table\h</Filter>
+      <Filter>Lib\Table\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CText.h">
-      <Filter>ソース ファイル\Lib\Resource\Texture\Text\h</Filter>
+      <Filter>Lib\Texture\Text\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTexture.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Texture\h</Filter>
+      <Filter>Lib\Character\Model\Texture\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTransform.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Transform\h</Filter>
+      <Filter>Lib\Character\Model\Transform\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTriangle.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\Triangle\h</Filter>
+      <Filter>Lib\Character\Model\Triangle\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CUtil.h">
-      <Filter>ソース ファイル\Lib\Resource\CXCharacter\CModelX\Util\h</Filter>
+      <Filter>Lib\CXCharacter\CModelX\Util\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CVector.h">
-      <Filter>ソース ファイル\Lib\Resource\Character\Model\CVector\h</Filter>
+      <Filter>Lib\Character\Model\CVector\h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

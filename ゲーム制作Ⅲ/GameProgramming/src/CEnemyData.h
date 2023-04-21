@@ -38,6 +38,12 @@
 #define ENEMY_TURN_SPEEDS_SET 0.3f																//回転速度設定
 #define ENEMY_TRUN_CHECK_SPEEDS_SET 1.5f														//急な回転速度を調整
 #define ENEMY_TRUN_CHECK_SET 0.0f																//回転速度を検出し可動域を設定
+#define ENEMY_ATTACK_MAGNIFICATION 0.2
+
+//敵データテーブル
+#define ENEMY_DATATABLE "res\\Enemy\\DataTeble\\EnemyData.txt"
+
+
 
 //SE・敵
 #define SE_EMEMY_DEATH "res\\Se\\SE_Enemy_Death.wav"
@@ -47,5 +53,7 @@
 //敵ダメージエフェクト
 #define ENEMY_EF_DAMAGESP1 "Effect\\Enemy_DamageSp1.png"
 #define ENEMY_EF_DAMAGESP2 "Effect\\Enemy_DamageSp2.png"
+//敵攻撃予備動作エフェクト
+#define ENEMY_ATTACK_ACTION "Effect\\Enemy_Attack_Action.png"
 
 #endif // !

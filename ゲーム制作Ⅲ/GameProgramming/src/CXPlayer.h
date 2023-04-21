@@ -47,13 +47,17 @@ public:
 	//デフォルトコンストラクタ
 	CXPlayer();
 	//プレイヤのHP取得関数
-	bool GetHp();	
+	int GetHp();	
 	//プレイヤのインスタンス取得関数
 	static CXPlayer* GetInstance();		//staticで処理を作る
 	//プレイヤのアニメーションフレーム取得関数
 	bool GetIsAnimationFrame();
 	//プレイヤのヒット判定取得関数
 	bool GetIsHit();					//ヒット状態の判別
+	//プレイヤの与えるダメージ取得用
+	int GetIsAttackPoint();
+	//プレイヤの与えるスタンダメージ取得用
+	int GetIsStanPoint();
 	//プレイヤの状態取得関数
 	CXPlayer::EPlayerState GetState();	//プレイヤの状態を取得する
 	//プレイヤの剣コライダの座標取得
@@ -61,8 +65,8 @@ public:
 private:
 	//コライダの宣言
 	CCollider mPlayer_ColSphereSword;				//剣
-	CCollider mPlayer_ColSphereShield;				//盾
 	CCollider mPlayer_ColSphereBody;				//球の身体
+	CCollider mPlayer_ColSphereHead;				//球の頭
 	CColliderCapsule mPlayer_ColCapsuleBody;		//カプセルの身体
 	//プレイヤの状態推移
 	EPlayerState mPlayer_State;			//プレイヤの状態判断用
@@ -90,11 +94,7 @@ private:
 	//カメラのパラメータを作成する
 	CVector mPlayer_SideVec;			//プレイヤの横ベクトル
 	CVector mPlayer_FrontVec;			//プレイヤのカメラの正面ベクトル
-	int mPlayer_Hp;						//プレイヤの体力
-	int mPlayer_Hp_Max;					//プレイヤの体力の上限
-	int mPlayer_Damage_EnemySp1;		//敵から受けるダメージ攻撃1
-	int mPlayer_Damage_EnemySp2;		//敵から受けるダメージ攻撃2
-	int mPlayer_Damage_EnemySp3;		//敵から受けるダメージ攻撃3
+
 
 	int	mPlayer_Gauge_Hp_Shake_X;		//HPゲージの揺れ幅最小値のX
 	int	mPlayer_Gauge_Hp_Shake_Y;		//HPゲージの揺れ幅最小値のY
@@ -109,6 +109,17 @@ private:
 	int mPlayer_ComboCount;				//プレイヤのコンボルート判別用変数
 	int mPlayer_Flag;					//プレイヤのフラグ
 
+	//敵に与える攻撃
+	int mDamage;					//敵からのダメージ
+	int mStan_Damage;				//敵からのスタンダメージ
+	int mStanAccumulation;			//スタン蓄積
+	//ステータス
+	int mPlayer_Hp;					//体力
+	int mPlayer_Hp_Max;				//体力の上限
+	int mAttack_Point;				//攻撃力
+	int mDefense_Point;				//守備力
+	int mStan_Point;				//スタン値
+
 	//プレイヤのポインタ
 	static CXPlayer* mpPlayer_Instance;	//別のクラスでプレイヤの変数を呼び出す場合,staticでポインタを作る
 
@@ -118,7 +129,6 @@ private:
 	void Move();						//移動処理
 	void Attack_1();					//攻撃1処理
 	void Attack_2();					//攻撃2処理
-	void Attack_3();					//攻撃3処理
 	void Avoidance();					//回避処理
 	void Death();						//死亡処理
 	void KnockBack();					//ノックバック処理
@@ -134,6 +144,11 @@ private:
 	int Player_Priority;							//描画優先度
 	int Player_Hp;									//プレイヤのHP
 	int	Player_Hp_Max;								//プレイヤのHP上限
+	int Player_Attack_Point;						//プレイヤの攻撃力
+	int Player_Defense_Point;						//プレイヤの守備力
+	int	Player_Stan_Point;							//敵に与えるスタン値
+	int Player_StanAccumulation;					//プレイヤのスタン蓄積
+	int Player_StanAccumulation_Max;				//プレイヤのスタン蓄積最大値
 	int Player_GameOver_Hp;							//プレイヤのゲームオーバー条件(HP)
 	float Player_Speed_Default;						//プレイヤのスピード(デフォルト)
 	float Player_Speed_Avoid;						//プレイヤのスピード(回避)
@@ -146,9 +161,6 @@ private:
 	float Player_Attack_InReception;				//攻撃判定始め
 	float Player_Attack_OutReception;				//攻撃判定終わり
 	float Player_Attack_Dis;						//プレイヤの攻撃対象判別後の距離設定
-	int Player_Damage_EnemySp1;						//敵から受けるダメージ攻撃1
-	int Player_Damage_EnemySp2;						//敵から受けるダメージ攻撃2
-	int Player_Damage_EnemySp3;						//敵から受けるダメージ攻撃3
 	float Player_Position_X;						//プレイヤの位置X座標
 	float Player_Position_Y;						//プレイヤの位置Y座標
 	float Player_Position_Z;						//プレイヤの位置Z座標

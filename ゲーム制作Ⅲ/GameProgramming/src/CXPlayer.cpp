@@ -4,11 +4,16 @@
 CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタンス変数の初期化
 
 void CXPlayer::PlayerTable() {
-	OX::Table table("res\\Player\\PlayerData.txt");
+	OX::Table table(PLAYER_DATATABLE);
 
 	Player_Priority = table["Player_Priority"]["Value"].iVal;
 	Player_Hp = table["Player_Hp"]["Value"].iVal;
 	Player_Hp_Max = table["Player_Hp_Max"]["Value"].iVal;
+	Player_Attack_Point = table["Player_Attack_Point"]["Value"].iVal;
+	Player_Defense_Point = table["Player_Defense_Point"]["Value"].iVal;
+	Player_Stan_Point = table["Player_Stan_Point"]["Value"].iVal;
+	Player_StanAccumulation = table["Player_StanAccumulation"]["Value"].iVal;
+	Player_StanAccumulation_Max = table["Player_StanAccumulation_Max"]["Value"].iVal;
 	Player_GameOver_Hp = table["Player_GameOver_Hp"]["Value"].iVal;
 	Player_Speed_Default = table["Player_Speed_Default"]["Value"].fVal;
 	Player_Speed_Avoid = table["Player_Speed_Avoid"]["Value"].fVal;
@@ -21,9 +26,6 @@ void CXPlayer::PlayerTable() {
 	Player_Attack_InReception = table["Player_Attack_InReception"]["Value"].fVal;
 	Player_Attack_OutReception = table["Player_Attack_OutReception"]["Value"].fVal;
 	Player_Attack_Dis = table["Player_Attack_Dis"]["Value"].fVal;
-	Player_Damage_EnemySp1 = table["Player_Damage_EnemySp1"]["Value"].iVal;
-	Player_Damage_EnemySp2 = table["Player_Damage_EnemySp2"]["Value"].iVal;
-	Player_Damage_EnemySp3 = table["Player_Damage_EnemySp3"]["Value"].iVal;
 	Player_Position_X = table["Player_Position_X"]["Value"].fVal;
 	Player_Position_Y = table["Player_Position_Y"]["Value"].fVal;
 	Player_Position_Z = table["Player_Position_Z"]["Value"].fVal;
@@ -65,8 +67,8 @@ void CXPlayer::PlayerTable() {
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
 	: mPlayer_ColCapsuleBody(this, nullptr, CVector(PLAYER_COLCAPSULE_BODY_X, PLAYER_COLCAPSULE_BODY_TOP_Y, PLAYER_COLCAPSULE_BODY_Z), CVector(PLAYER_COLCAPSULE_BODY_X, PLAYER_COLCAPSULE_BODY_BOTTOM_Y, PLAYER_COLCAPSULE_BODY_Z), PLAYER_COLCAPSULE_BODY_SIZE)
+	,mPlayer_ColSphereHead(this,nullptr,CVector(0.0f,15.0f,0.0f),PLAYER_COLSPHER_HEAD_SIZE)
 	, mPlayer_ColSphereBody(this, nullptr, CVector(), PLAYER_COLSPHERE_BODY_SIZE)
-	, mPlayer_ColSphereShield(this, nullptr, CVector(PLAYER_COLSPHERE_SHIELD_X, PLAYER_COLSPHERE_SHIELD_Y, PLAYER_COLSPHERE_SHIELD_Z), PLAYER_COLSPHERE_SHIELD_SIZE)
 	, mPlayer_ColSphereSword(this, nullptr, CVector(PLAYER_COLSPHERE_SWORD_X, PLAYER_COLSPHERE_SWORD_Y, PLAYER_COLSPHERE_SWORD_Z), PLAYER_COLSPHERE_SWORD_SIZE)
 	, mPlayer_ComboCount(PLAYER_INT_INITIALIZATION)
 	, mPlayer_Turnspeed(PLAYER_FLOAT_INITIALIZATION)
@@ -77,7 +79,6 @@ CXPlayer::CXPlayer()
 	, mPlayer_AttackFlag_Once(false)
 	, mPlayer_Flag(false)
 	, mPlayer_Avoid(false)
-
 {
 	//プレイヤのインスタンスを設定
 	mpPlayer_Instance = this;										//プレイヤのインスタンスを自身に設定する
@@ -88,7 +89,7 @@ CXPlayer::CXPlayer()
 	//コライダのタグを設定
 	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
 	mPlayer_ColSphereBody.Tag(CCollider::EBODY);					//体
-	mPlayer_ColSphereShield.Tag(CCollider::ESHIERD);				//盾
+	mPlayer_ColSphereHead.Tag(CCollider::EHEAD);
 	mPlayer_ColSphereSword.Tag(CCollider::ESWORD);					//剣
 	PlayerTable();
 	//優先度を1に変更する
@@ -100,11 +101,12 @@ CXPlayer::CXPlayer()
 	mPlayer_Gauge_Hp_Shake_Range_Y = Player_Gauge_Hp_Shake_Range_Y;
 	mPlayer_FollowGaugeWid = Player_Gauge_Wid;
 	mPlayer_Speed = Player_Speed_Default;
+	mAttack_Point = Player_Attack_Point;
+	mDefense_Point = Player_Defense_Point;
+	mStan_Point = Player_Stan_Point;
+	mStanAccumulation = Player_StanAccumulation;
 	mPlayer_Hp = Player_Hp;
 	mPlayer_Hp_Max = Player_Hp_Max;
-	mPlayer_Damage_EnemySp1 = Player_Damage_EnemySp1;
-	mPlayer_Damage_EnemySp2 = Player_Damage_EnemySp2;
-	mPlayer_Damage_EnemySp3 = Player_Damage_EnemySp3;
 	mPlayer_Gauge_Hp_Rate = Player_Gauge_Hp_Rate;
 	mPlayer_Attack_Dis = Player_Attack_Dis;
 	CTaskManager::Get()->Remove(this);//削除して
@@ -123,8 +125,8 @@ void CXPlayer::Init(CModelX* model)
 	Se_Enemy_AttackSp.Load(SE_ENEMY_ATTACK);
 	//合成行列の設定
 	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[3]);
-	mPlayer_ColSphereBody.Matrix(&mpCombinedMatrix[16]);
-	mPlayer_ColSphereShield.Matrix(&mpCombinedMatrix[41]);
+	mPlayer_ColSphereBody.Matrix(&mpCombinedMatrix[15]);
+	mPlayer_ColSphereHead.Matrix(&mpCombinedMatrix[16]);
 	mPlayer_ColSphereSword.Matrix(&mpCombinedMatrix[71]);
 	//プレイヤの位置,拡縮,回転の設定
 	mPosition.Set(Player_Position_X, Player_Position_Y, Player_Position_Z);								//位置を設定
@@ -392,9 +394,8 @@ void CXPlayer::Attack_1()
 void CXPlayer::Attack_2()
 {
 	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1) {
-
-			mPlayer_AttackFlag_Once = true;								//プレイヤの攻撃フラグをtrueに設定
-			ChangeAnimation(Player_Animation_No_Attack2, false, Player_Attack2_Animation_Frame);							//プレイヤの攻撃2モーション
+			mPlayer_AttackFlag_Once = true;																//プレイヤの攻撃フラグをtrueに設定
+			ChangeAnimation(Player_Animation_No_Attack2, false, Player_Attack2_Animation_Frame);		//プレイヤの攻撃2モーション
 			Se_Player_AttackSp2.Play(Player_Se);
 	}
 
@@ -473,18 +474,6 @@ void CXPlayer::KnockBack()
 	if (mPlayer_Flag == false)
 	{
 		mPlayer_Flag = true;
-		if (CXEnemy::EEnemyState::EATTACK_1)
-		{
-			mPlayer_Hp = mPlayer_Hp - mPlayer_Damage_EnemySp1;
-		}
-		else if (CXEnemy::EEnemyState::EATTACK_2)
-		{
-			mPlayer_Hp = mPlayer_Hp - mPlayer_Damage_EnemySp2;
-		}
-		else if (CXEnemy::EEnemyState::EATTACK_3)
-		{
-			mPlayer_Hp = mPlayer_Hp - mPlayer_Damage_EnemySp3;
-		}
 	}
 
 	//アニメーション終了時
@@ -642,11 +631,13 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 						//プレイヤーが無敵状態ではないとき
 						if (mPlayer_InvincibleFlag == false)
 						{
-							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1 || CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_3)
+							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
 							{
 								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
 								{
 									((CXEnemy*)(o->Parent()))->SetIsHit(false);
+									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point);
+									mPlayer_Hp = mPlayer_Hp - mDamage;
 									mPlayer_InvincibleFlag = true;
 									mPlayer_IsHit = false;		//ヒット判定終了
 									mPlayer_State = EKNOCKBACK;
@@ -660,14 +651,25 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 						//プレイヤーが無敵状態ではないとき
 						if (mPlayer_InvincibleFlag == false)
 						{
-							if (CXEnemy::EEnemyState::EATTACK_2)
+							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
 							{
 								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
 								{
 									((CXEnemy*)(o->Parent()))->SetIsHit(false);
+									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * PLAYER_ATTACK_MAGNIFICATION);
+									mPlayer_Hp = mPlayer_Hp - mDamage;
 									mPlayer_InvincibleFlag = true;
 									mPlayer_State = EKNOCKBACK;
 									Se_Enemy_AttackSp.Play(Player_Damage_Se);
+									if (Player_StanAccumulation_Max <= mStanAccumulation)
+									{
+										mPlayer_State = EKNOCKBACK;
+										mStanAccumulation = Player_StanAccumulation;
+									}
+									else {
+										mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
+										mStanAccumulation = mStanAccumulation + mStan_Damage;
+									}
 								}
 							}
 						}
@@ -682,14 +684,12 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		//相手のコライダがカプセルコライダの時
 		if (o->Type() == CCollider::ECAPSUL) {
 			CVector adjust;//調整用ベクトル
-			if (!mPlayer_Hp <= Player_GameOver_Hp) {
-				if (CCollider::CollisionCapsule(m, o, &adjust))
-				{
-					//位置の更新(mPosition + adjust)
-					mPosition = mPosition + adjust;
-					//行列の更新
-					CTransform::Update();
-				}
+			if (CCollider::CollisionCapsule(m, o, &adjust))
+			{
+				//位置の更新(mPosition + adjust)
+				mPosition = mPosition + adjust;
+				//行列の更新
+				CTransform::Update();
 			}
 		}
 	}
@@ -752,12 +752,12 @@ void CXPlayer::TaskCollision()
 	//コライダの優先度変更
 	mPlayer_ColCapsuleBody.ChangePriority();
 	mPlayer_ColSphereBody.ChangePriority();
-	mPlayer_ColSphereShield.ChangePriority();
+	mPlayer_ColSphereHead.ChangePriority();
 	mPlayer_ColSphereSword.ChangePriority();
 	//衝突処理を実行
 	CCollisionManager::Get()->Collision(&mPlayer_ColCapsuleBody, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mPlayer_ColSphereBody, COLLISIONRANGE);
-	CCollisionManager::Get()->Collision(&mPlayer_ColSphereShield, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mPlayer_ColSphereHead, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mPlayer_ColSphereSword, COLLISIONRANGE);
 }
 
@@ -767,7 +767,7 @@ CXPlayer* CXPlayer::GetInstance()
 	return mpPlayer_Instance;
 }
 //プレイヤのHPの取得
-bool CXPlayer::GetHp()
+int CXPlayer::GetHp()
 {
 	return mPlayer_Hp;
 }
@@ -780,7 +780,14 @@ bool CXPlayer::GetIsHit()
 {
 	return mPlayer_IsHit; //攻撃の当たり判定を返す
 }
-
+int CXPlayer::GetIsAttackPoint()
+{
+	return mAttack_Point;
+}
+int CXPlayer::GetIsStanPoint()
+{
+	return mStan_Point;
+}
 //プレイヤーの状態を取得する
 CXPlayer::EPlayerState CXPlayer::GetState()
 {

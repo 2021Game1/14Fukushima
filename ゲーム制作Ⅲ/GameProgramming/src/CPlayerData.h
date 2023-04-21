@@ -5,6 +5,10 @@
 #define PLAYER_INT_INITIALIZATION 0																//初期化
 #define PLAYER_FLOAT_INITIALIZATION 0.0f														//浮動小数点の初期化
 
+#define PLAYER_DATATABLE "res\\Player\\DataTable\\PlayerData.txt"
+
+/*SE設定*/
+
 //SE・プレイヤ
 #define SE_PLAYER_ATTACK1 "res\\Se\\SE_Player_AttackSp1.wav"
 #define SE_PLAYER_ATTACK2 "res\\Se\\SE_Player_AttackSp2.wav"
@@ -13,8 +17,13 @@
 //SE・敵
 #define SE_ENEMY_ATTACK "res\\Se\\SE_Enemy_AttackSp.wav" 
 
+#define PLAYER_ATTACK_MAGNIFICATION 0.2
+
 
 /*プレイヤのコライダ設定*/
+
+//プレイヤの頭
+#define PLAYER_COLSPHER_HEAD_SIZE 0.7f					//球コライダサイズ
 
 //プレイヤーの身体
 #define PLAYER_COLCAPSULE_BODY_X 0.0f					//カプセルコライダのX座標設定
@@ -26,17 +35,13 @@
 //プレイヤの当たり判定
 #define PLAYER_COLSPHERE_BODY_SIZE 0.9					//球コライダのサイズ設定
 
-//プレイヤの盾
-#define PLAYER_COLSPHERE_SHIELD_X 0.0f					//球コライダのX座標
-#define PLAYER_COLSPHERE_SHIELD_Y 0.0f					//球コライダのY座標
-#define PLAYER_COLSPHERE_SHIELD_Z -5.0f					//球コライダのZ座標
-#define PLAYER_COLSPHERE_SHIELD_SIZE 0.5				//球コライダのサイズ
-
 //プレイヤの剣
 #define PLAYER_COLSPHERE_SWORD_X -13.0f				//球コライダのX座標設定
 #define PLAYER_COLSPHERE_SWORD_Y 0.0f				//球コライダのY座標設定
 #define PLAYER_COLSPHERE_SWORD_Z 70.0f				//球コライダのZ座標設定
 #define PLAYER_COLSPHERE_SWORD_SIZE 0.35			//球コライダのサイズ設定
+
+/*プレイヤのUI設定*/
 
 //プレイヤのHPフレーム,HPゲージ座標,幅,高さ
 #define PLAYER_GAUGE_FRAME_TEX_WID 480															//ゲージ枠の画像の幅
