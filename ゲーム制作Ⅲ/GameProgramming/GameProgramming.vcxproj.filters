@@ -91,9 +91,6 @@
     <Filter Include="MainScene\Scene">
       <UniqueIdentifier>{4873b35a-1efb-4fc5-8737-3baf14629ecd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\Scene\Scene_h">
-      <UniqueIdentifier>{48fc13ef-7e4a-44c0-8645-cce00f62c8d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainScene\Scene\SceneManager">
       <UniqueIdentifier>{c23a7c07-dcf5-4364-8837-3d71686121d2}</UniqueIdentifier>
     </Filter>
@@ -114,9 +111,6 @@
     </Filter>
     <Filter Include="MainScene\Scene\SceneTitle\data">
       <UniqueIdentifier>{ab278151-7062-4dc5-b9ba-855d76c8141d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Scene\main_h">
-      <UniqueIdentifier>{17410b3d-8a5b-4ebc-83a7-ae2fecc9ab55}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainScene\Scene\Update">
       <UniqueIdentifier>{82d639b9-229d-40a2-adb0-d800af3a21d7}</UniqueIdentifier>
@@ -391,6 +385,12 @@
     <Filter Include="Lib\Character\Model\CVector\h">
       <UniqueIdentifier>{9ec1edd5-d9ce-4888-b931-08787ed3aa75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainScene\Scene\main">
+      <UniqueIdentifier>{17410b3d-8a5b-4ebc-83a7-ae2fecc9ab55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\Scene">
+      <UniqueIdentifier>{48fc13ef-7e4a-44c0-8645-cce00f62c8d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CXEnemy.cpp">
@@ -505,7 +505,7 @@
       <Filter>Lib\Character\Model\CVector\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
-      <Filter>MainScene\Scene\main_h</Filter>
+      <Filter>MainScene\Scene\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -567,7 +567,7 @@
       <Filter>Lib\Texture\Effect\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CScene.h">
-      <Filter>MainScene\Scene\Scene_h</Filter>
+      <Filter>MainScene\Scene\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneTitle.h">
       <Filter>MainScene\Scene\SceneTitle\h</Filter>

@@ -107,6 +107,8 @@ private:
 	float Enemy_Attack_Outreception;			//当たり判定の終了
 	int Enemy_Attack_Walk_Rand;					//歩行時、ランダムに攻撃する
 	int Enemy_Attack_Dash_Rand;					//走行時、ランダムに攻撃する
+	int Enemy_AttackSp1_Set;					//攻撃1の時、攻撃可能時追従する精度設定
+	int Enemy_AttackSp2_Set;					//攻撃2の時、攻撃可能時追従する精度設定
 	float Enemy_Idle_Animation_Frame;			//敵の待機アニメーションフレーム
 	float Enemy_Move_Animation_Frame;			//敵の移動アニメーションフレーム
 	float Enemy_Dash_Animation_Frame;			//敵の走行アニメーションフレーム

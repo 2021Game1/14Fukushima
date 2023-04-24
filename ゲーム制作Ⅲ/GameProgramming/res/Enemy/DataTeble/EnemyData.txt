@@ -1,5 +1,5 @@
 3
-58
+60
 ID,Name,Value
 Enemy_Priority,描画優先度,80
 Enemy_Speed_WalkPattern,通常移動のスピードパターン,0.1
@@ -9,10 +9,12 @@ Enemy_Dash_Dis,走行状態を開始する距離,60
 Enemy_Walk_Dis_Max,歩行状態を終了する距離,50
 Enemy_Dash_Dis_Max,走行状態を終了する距離,80
 Enemy_Attack_Dis,攻撃可能になる距離,4.4
-Enemy_Attack_Reception,当たり判定の発生,26
-Enemy_Attack_Outreception,当たり判定の終了,60
-Enemy_Attack_Walk_Rand,歩行状態からの攻撃行動発生の確率,30
-Enemy_Attack_Dash_Rand,走行状態からの攻撃行動発生の確率,25
+Enemy_Attack_Reception,当たり判定の発生,10
+Enemy_Attack_Outreception,当たり判定の終了,80
+Enemy_Attack_Walk_Rand,歩行状態からの攻撃行動発生の確率,5
+Enemy_Attack_Dash_Rand,走行状態からの攻撃行動発生の確率,5
+Enemy_AttackSp1_Set,攻撃1の時、攻撃可能時追従する精度設定,7
+Enemy_AttackSp2_Set,攻撃2の時、攻撃可能時追従する精度設定,7
 Enemy_Idle_Animation_Frame,待機アニメーションフレーム,60
 Enemy_Move_Animation_Frame,歩行アニメーションフレーム,60
 Enemy_Dash_Animation_Frame,走行アニメーションフレーム,50
@@ -32,8 +34,8 @@ Enemy_Animation_No_Death,死亡アニメーション番号,7
 Enemy_Position_X,X座標,0
 Enemy_Position_Y,Y座標,1.5
 Enemy_Position_Z,Z座標,-20
-Enemy_Scale_X,モデルのスケール設定X座標,3
-Enemy_Scale_Y,モデルのスケール設定Y座標,2.63
+Enemy_Scale_X,モデルのスケール設定X座標,2
+Enemy_Scale_Y,モデルのスケール設定Y座標,2.4
 Enemy_Scale_Z,モデルのスケール設定Z座標,2
 Enemy_Rotation_X,モデルの回転設定X座標,0
 Enemy_Rotation_Y,モデルの回転設定Y座標,0

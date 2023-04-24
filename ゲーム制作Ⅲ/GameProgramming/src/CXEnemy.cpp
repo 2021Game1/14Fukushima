@@ -19,6 +19,8 @@ void CXEnemy::EnemyTable()
 	Enemy_Attack_Outreception = table["Enemy_Attack_Outreception"]["Value"].fVal;
 	Enemy_Attack_Walk_Rand = table["Enemy_Attack_Walk_Rand"]["Value"].iVal;
 	Enemy_Attack_Dash_Rand = table["Enemy_Attack_Dash_Rand"]["Value"].iVal;
+	Enemy_AttackSp1_Set = table["Enemy_AttackSp1_Set"]["Value"].iVal;
+	Enemy_AttackSp2_Set = table["Enemy_AttackSp1_Set"]["Value"].iVal;
 	Enemy_Idle_Animation_Frame = table["Enemy_Idle_Animation_Frame"]["Value"].fVal;
 	Enemy_Move_Animation_Frame = table["Enemy_Move_Animation_Frame"]["Value"].fVal;
 	Enemy_Dash_Animation_Frame = table["Enemy_Dash_Animation_Frame"]["Value"].fVal;
@@ -154,6 +156,7 @@ void CXEnemy::Update() {
 	if (CXPlayer::GetInstance()->GetIsHit() == false) {
 		mEnemy_Flag = false;
 	}
+
 	CXCharacter::Update();
 }
 void CXEnemy::Render2D()
@@ -162,7 +165,7 @@ void CXEnemy::Render2D()
 	CUtil::Start2D(WINDOW_FIRST_WIDTH, WINDOW_WIDTH, WINDOW_FIRST_HEIGHT, WINDOW_HEIGHT);
 	CVector tpos;
 	CVector ret;
-	tpos = mPosition + CVector(ret.X(), ret.Y()+ 7.0f, 0.0f);
+	tpos = mPosition + CVector(ret.X(), ret.Y()+ ENEMY_GAUGE_HP_Y, ENEMY_GAUGE_HP_Z);
 	Camera.WorldToScreen(&ret, tpos);
 	float HpRate = (float)mHp / (float)Enemy_Hp_Max; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
@@ -225,9 +228,9 @@ void CXEnemy::Move(){
 	//mMoveDirにプレイヤー方向のベクトルを入れる
 	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
-	//およそ1秒毎に目標地点を更新
+	//目標地点を更新
 	int r = rand() % Enemy_Attack_Walk_Rand; //rand()は整数の乱数を返す
-						 //%10は10で割った余りを求める
+	//%Enemy_Attack_Walk_RandはEnemy_Attack_Walk_Randで割った余りを求める
 	//攻撃出来る距離にいなければ目標地点に移動
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
@@ -274,9 +277,9 @@ void CXEnemy::Dash()
 	//mMoveDirに目標地点方向のベクトルを入れる
 	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
-	//およそ1秒毎に目標地点を更新
+	//目標地点を更新
 	int r = rand() % Enemy_Attack_Dash_Rand; //rand()は整数の乱数を返す
-						  //%25は25で割った余りを求める
+	//%Enemy_Attack_Dash_RandはEnemy_Attack_Dash_Randで割った余りを求める
 	//攻撃出来る距離にいなければ目標地点に移動
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
@@ -343,6 +346,17 @@ void CXEnemy::Attack_1()
 	//アニメーションの設定
 	ChangeAnimation(Enemy_Animation_No_Attack_1, false, Enemy_Attack1_Animation_Frame);
 
+	//攻撃出来る距離に居れば追従して攻撃
+	int r = rand() % Enemy_AttackSp1_Set; //rand()は整数の乱数を返す
+	//%Enemy_AttackSp1_SetはEnemy_AttackSp1_Setで割った余りを求める
+	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
+	{
+		if (r == ENEMY_INT_INITIALIZATION)
+		{
+			mEnemy_Point = CXPlayer::GetInstance()->Position();
+		}
+	}
+
 	//ヒット判定発生
 	if (IsAnimationFinished() == false && mAnimationIndex == Enemy_Animation_No_Attack_1)
 	{
@@ -402,6 +416,16 @@ void CXEnemy::Attack_2()
 	//アニメーションの設定
 	ChangeAnimation(Enemy_Animation_No_Attack_2, false, Enemy_Attack2_Animation_Frame);
 
+	//攻撃出来る距離に居れば追従して攻撃
+	int r = rand() % Enemy_AttackSp2_Set; //rand()は整数の乱数を返す
+	//%Enemy_AttackSp2_SetはEnemy_AttackSp2_Setで割った余りを求める
+	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
+	{
+		if (r == ENEMY_INT_INITIALIZATION)
+		{
+			mEnemy_Point = CXPlayer::GetInstance()->Position();
+		}
+	}
 
 	//ヒット判定発生
 	if (IsAnimationFinished() == false && mAnimationIndex == Enemy_Animation_No_Attack_2)
@@ -541,8 +565,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 									{
 										mDamage = CXPlayer::GetInstance()->GetIsAttackPoint() * (CXPlayer::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsAttackPoint() * ENEMY_ATTACK_MAGNIFICATION);
 										mHp = mHp - mDamage;
-										new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
-										new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
 										mEnemy_IsHit = false;
 										if (Enemy_StanAccumulation_Max <= mStanAccumulation)
 										{
@@ -559,8 +581,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 									{
 										mDamage = CXPlayer::GetInstance()->GetIsAttackPoint() * (CXPlayer::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsAttackPoint() * ENEMY_ATTACK_MAGNIFICATION);
 										mHp = mHp - mDamage;
-										new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
-										new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
 										mEnemy_IsHit = false;
 										if (Enemy_StanAccumulation_Max <= mStanAccumulation)
 										{

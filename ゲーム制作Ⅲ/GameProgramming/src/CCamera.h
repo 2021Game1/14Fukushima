@@ -14,7 +14,7 @@
 
 
 //カメラ
-#define CAMERA_SENSITIVITY 0.0003f		//カメラの感度設定
+#define CAMERA_SENSITIVITY 0.0002f		//カメラの感度設定
 #define CAMERA_COLLIDE_DIST 0.05f			//カメラの衝突判定時の描写体に近づく距離
 #define CAMERA_DELAY_RATE 0.003f		//カメラアングル移動時の遅延割合
 
@@ -40,7 +40,7 @@
 #define CAMERA_SCREEN_HEIGHT 0.5f
 
 //カメラの距離設定
-#define CAMERA_DEF_DIST 8.0f	//カメラの距離設定
+#define CAMERA_DEF_DIST 4.0f	//カメラの距離設定
 //カメラの注目視点の設定
 #define CAMERA_HEAD_ADJUST 2.0f	//注視点の高さ調整
 

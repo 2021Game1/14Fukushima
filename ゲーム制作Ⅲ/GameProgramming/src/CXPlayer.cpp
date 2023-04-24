@@ -640,8 +640,16 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 									mPlayer_Hp = mPlayer_Hp - mDamage;
 									mPlayer_InvincibleFlag = true;
 									mPlayer_IsHit = false;		//ÉqÉbÉgîªíËèIóπ
-									mPlayer_State = EKNOCKBACK;
 									Se_Enemy_AttackSp.Play(Player_Damage_Se);
+									mPlayer_State = EKNOCKBACK;
+									if (Player_StanAccumulation_Max < mStanAccumulation)
+									{	
+										mStanAccumulation = Player_StanAccumulation;
+									}
+									else {
+										mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
+										mStanAccumulation = mStanAccumulation + mStan_Damage;
+									}
 								}
 							}
 						}
@@ -659,11 +667,10 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * PLAYER_ATTACK_MAGNIFICATION);
 									mPlayer_Hp = mPlayer_Hp - mDamage;
 									mPlayer_InvincibleFlag = true;
-									mPlayer_State = EKNOCKBACK;
 									Se_Enemy_AttackSp.Play(Player_Damage_Se);
-									if (Player_StanAccumulation_Max <= mStanAccumulation)
-									{
-										mPlayer_State = EKNOCKBACK;
+									mPlayer_State = EKNOCKBACK;
+									if (Player_StanAccumulation_Max < mStanAccumulation)
+									{	
 										mStanAccumulation = Player_StanAccumulation;
 									}
 									else {
