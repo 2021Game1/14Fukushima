@@ -1,5 +1,5 @@
 3
-56
+57
 ID,Name,Value
 Player_Priority,描画優先度,95
 Player_Hp,プレイヤ体力,100
@@ -9,6 +9,7 @@ Player_Defense_Point,プレイヤの防御力,25
 Player_Stan_Point,プレイヤの与えるスタン値,40
 Player_StanAccumulation,プレイヤのスタン蓄積,0
 Player_StanAccumulation_Max,プレイヤのスタン蓄積最大値,120
+Player_Damage_Magnification,プレイヤのダメージ倍率,0.2
 Player_GameOver_Hp,ゲームオーバー条件,0
 Player_Speed_Default,スピード初期値,0.2
 Player_Speed_Avoid,回避スピード,0.3
@@ -20,7 +21,7 @@ Player_Damage_Se,プレイヤのダメージSE音量設定,0.3
 Player_Push_Reception,プレイヤのコンボ終了時間,220
 Player_Attack_InReception,プレイヤの攻撃の当たり判定開始時間,1
 Player_Attack_OutReception,プレイヤの攻撃の当たり判定終了時間,60
-Player_Attack_Dis,プレイヤの攻撃が追従する距離,2.2
+Player_Attack_Dis,プレイヤの攻撃が追従する距離,1.1
 Player_Position_X,プレイヤの位置X座標,0
 Player_Position_Y,プレイヤの位置Y座標,0
 Player_Position_Z,プレイヤの位置Z座標,20

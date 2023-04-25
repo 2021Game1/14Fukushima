@@ -14,6 +14,7 @@ void CXPlayer::PlayerTable() {
 	Player_Stan_Point = table["Player_Stan_Point"]["Value"].iVal;
 	Player_StanAccumulation = table["Player_StanAccumulation"]["Value"].iVal;
 	Player_StanAccumulation_Max = table["Player_StanAccumulation_Max"]["Value"].iVal;
+	Player_Damage_Magnification = table["Player_Damage_Magnification"]["Value"].fVal;
 	Player_GameOver_Hp = table["Player_GameOver_Hp"]["Value"].iVal;
 	Player_Speed_Default = table["Player_Speed_Default"]["Value"].fVal;
 	Player_Speed_Avoid = table["Player_Speed_Avoid"]["Value"].fVal;
@@ -67,7 +68,7 @@ void CXPlayer::PlayerTable() {
 CXPlayer::CXPlayer()
 //プレイヤの変数の初期化
 	: mPlayer_ColCapsuleBody(this, nullptr, CVector(PLAYER_COLCAPSULE_BODY_X, PLAYER_COLCAPSULE_BODY_TOP_Y, PLAYER_COLCAPSULE_BODY_Z), CVector(PLAYER_COLCAPSULE_BODY_X, PLAYER_COLCAPSULE_BODY_BOTTOM_Y, PLAYER_COLCAPSULE_BODY_Z), PLAYER_COLCAPSULE_BODY_SIZE)
-	,mPlayer_ColSphereHead(this,nullptr,CVector(0.0f,15.0f,0.0f),PLAYER_COLSPHER_HEAD_SIZE)
+	,mPlayer_ColSphereHead(this,nullptr,CVector(0.0f,16.0f,0.0f),PLAYER_COLSPHER_HEAD_SIZE)
 	, mPlayer_ColSphereBody(this, nullptr, CVector(), PLAYER_COLSPHERE_BODY_SIZE)
 	, mPlayer_ColSphereSword(this, nullptr, CVector(PLAYER_COLSPHERE_SWORD_X, PLAYER_COLSPHERE_SWORD_Y, PLAYER_COLSPHERE_SWORD_Z), PLAYER_COLSPHERE_SWORD_SIZE)
 	, mPlayer_ComboCount(PLAYER_INT_INITIALIZATION)
@@ -83,9 +84,9 @@ CXPlayer::CXPlayer()
 	//プレイヤのインスタンスを設定
 	mpPlayer_Instance = this;										//プレイヤのインスタンスを自身に設定する
 	//タグの紐づけ
-	mTag = EPLAYER;													//タグをプレイヤに設定
+	mTag = CCharacter::ETag::EPLAYER;													//タグをプレイヤに設定
 	//初期状態を設定
-	mPlayer_State = EIDLE;											//プレイヤの初期状態を待機状態に設定する
+	mPlayer_State = CXPlayer::EPlayerState::EIDLE;											//プレイヤの初期状態を待機状態に設定する
 	//コライダのタグを設定
 	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
 	mPlayer_ColSphereBody.Tag(CCollider::EBODY);					//体
@@ -323,13 +324,15 @@ void CXPlayer::Attack_1()
 		ChangeAnimation(Player_Animation_No_Attack1, false, Player_Attack1_Animation_Frame);	//プレイヤの攻撃1モーション
 		Se_Player_AttackSp1.Play(Player_Se);
 	}
+
+	if (mPlayer_EnemyDis > mPlayer_Attack_Dis) {
+		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
+		mPlayer_MoveDir = mPlayer_Point.Normalize();
+	}
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
-			if (mPlayer_EnemyDis >= mPlayer_Attack_Dis) {
-				mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
-				mPlayer_MoveDir = mPlayer_AttackDir;
-			}
+
 			//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 			if (mAnimationFrame <= Player_Attack_InReception)
 			{
@@ -399,12 +402,14 @@ void CXPlayer::Attack_2()
 			Se_Player_AttackSp2.Play(Player_Se);
 	}
 
+	if (mPlayer_EnemyDis > mPlayer_Attack_Dis) {
+		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
+		mPlayer_MoveDir = mPlayer_Point.Normalize();
+	}
+
 	//ヒット判定発生
 	if (IsAnimationFinished() == false && mAnimationIndex == Player_Animation_No_Attack2) {
-		if (mPlayer_EnemyDis >= mPlayer_Attack_Dis) {
-			mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
-			mPlayer_MoveDir = mPlayer_AttackDir;
-		}
+
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
 		if (mAnimationFrame <= Player_Attack_InReception)
 		{
@@ -504,12 +509,13 @@ void CXPlayer::KnockBack()
 		//WASDキーを押すと移動へ移行
 		else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
 			mPlayer_State = EMOVE;
+
 		}
 		else {
 			mPlayer_State = EIDLE;
-			mPlayer_Flag = false;
-			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
+		mPlayer_Flag = false;
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 }
 
@@ -616,27 +622,27 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 	//自身のコライダタイプの判定
-	switch (m->Type()) {
+	switch (m->CCollider::Type()) {
 	case CCollider::ESPHERE: {//球コライダ
 		//相手のコライダが球コライダの時
-		if (o->Type() == CCollider::ESPHERE) {
+		if (o->CCollider::Type() == CCollider::ESPHERE) {
 			//球の衝突判定
 			if (CCollider::Collision(m, o)) {
 				//相手の親のタグがプレイヤー
-				if (o->Parent()->Tag() == EENEMY)
+				if (o->Parent()->Tag() == CCharacter::ETag::EENEMY)
 				{
 					//相手のコライダのタグが右手
-					if (o->Tag() == CCollider::ERIGHTARM)
+					if (o->CCollider::Tag() == CCollider::ERIGHTARM)
 					{
 						//プレイヤーが無敵状態ではないとき
 						if (mPlayer_InvincibleFlag == false)
 						{
-							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_1)
+							if (CXEnemy::EEnemyState::EATTACK_1 == CXEnemy::GetInstance()->CXEnemy::GetState())
 							{
 								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
 								{
 									((CXEnemy*)(o->Parent()))->SetIsHit(false);
-									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point);
+									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
 									mPlayer_Hp = mPlayer_Hp - mDamage;
 									mPlayer_InvincibleFlag = true;
 									mPlayer_IsHit = false;		//ヒット判定終了
@@ -654,7 +660,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 							}
 						}
 					}
-					else if (o->Tag() == CCollider::ELEFTARM)
+					else if (o->CCollider::Tag() == CCollider::ELEFTARM)
 					{
 						//プレイヤーが無敵状態ではないとき
 						if (mPlayer_InvincibleFlag == false)
@@ -664,9 +670,10 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
 								{
 									((CXEnemy*)(o->Parent()))->SetIsHit(false);
-									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * PLAYER_ATTACK_MAGNIFICATION);
+									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
 									mPlayer_Hp = mPlayer_Hp - mDamage;
 									mPlayer_InvincibleFlag = true;
+									mPlayer_IsHit = false;		//ヒット判定終了
 									Se_Enemy_AttackSp.Play(Player_Damage_Se);
 									mPlayer_State = EKNOCKBACK;
 									if (Player_StanAccumulation_Max < mStanAccumulation)

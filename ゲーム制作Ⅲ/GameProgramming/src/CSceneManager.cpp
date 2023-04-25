@@ -17,7 +17,7 @@ CSceneManager::~CSceneManager() {
 //初期化処理
 void CSceneManager::Init() {
 	//シーンの識別を設定する
-	mScene = CScene::ETITLE;
+	mScene = CScene::EScene::ETITLE;
 	//シーンを生成し、ポインタを設定する
 	mpScene = new CSceneTitle();
 	//生成したクラスのメソッドが呼ばれる

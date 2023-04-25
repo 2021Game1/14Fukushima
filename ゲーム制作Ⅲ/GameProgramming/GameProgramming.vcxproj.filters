@@ -405,9 +405,6 @@
     <ClCompile Include="src\CColliderTriangle.cpp">
       <Filter>Lib\Collider\ColliderTriangle\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="src\CCollider.cpp">
-      <Filter>Lib\Collider\Collider\h</Filter>
-    </ClCompile>
     <ClCompile Include="src\CColliderCapsule.cpp">
       <Filter>Lib\Collider\ColliderCapsule\cpp</Filter>
     </ClCompile>
@@ -507,6 +504,9 @@
     <ClCompile Include="src\main.cpp">
       <Filter>MainScene\Scene\main</Filter>
     </ClCompile>
+    <ClCompile Include="src\CCollider.cpp">
+      <Filter>Lib\Collider\Collider\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CPlayerData.h">
@@ -526,9 +526,6 @@
     </ClInclude>
     <ClInclude Include="src\CColliderTriangle.h">
       <Filter>Lib\Collider\ColliderTriangle\h</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CCollider.h">
-      <Filter>Lib\Collider\Collider\cpp</Filter>
     </ClInclude>
     <ClInclude Include="src\CColliderCapsule.h">
       <Filter>Lib\Collider\ColliderCapsule\h</Filter>
@@ -634,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="src\CVector.h">
       <Filter>Lib\Character\Model\CVector\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CCollider.h">
+      <Filter>Lib\Collider\Collider\h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
