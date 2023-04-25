@@ -11,7 +11,7 @@ CSceneGame::~CSceneGame()
 
 void CSceneGame::Init() {
 	//ƒV[ƒ“‚Ìİ’è
-	mScene = EGAME;
+	mScene = CScene::EScene::EGAME;
 	mRes.Init();
 	CRes::GetInstance()->GetinSoundBgmGame().Repeat(0.2);
 	//‰e‚Ìİ’è

@@ -13,6 +13,31 @@ CCamera* CCamera::Instance()
 	return mpCameraInstance;
 }
 
+//デフォルトコンストラクタ
+CCamera::CCamera()
+	:mSkip(true)
+	, mAngleX(0.0f)
+	, mAngleY(0.0f)
+	, mDist(0.0f)
+	, mOldMouseX(0)
+	, mOldMouseY(0)
+	, mMouseX(0)
+	, mMouseY(0)
+	, mAngleDelayX(0.0f)
+	, mAngleDelayY(0.0f)
+	, mRotRad(0.0f)
+	, mOldMousePosX(0)
+	, mOldMousePosY(0)
+	, mScreenHeight(0.0f)
+	, mScreenWidth(0.0f)
+{
+	//優先度を設定
+	mPriority = 100;
+	CTaskManager::Get()->Remove(this);//
+	CTaskManager::Get()->Add(this);//追加する
+	mpCameraInstance = this;
+}
+
 void CCamera::Init()
 {
 	int viewport[CAMERA_VIEWPORT];
@@ -128,28 +153,7 @@ void CCamera::Draw() {
 	CBillBoard::ModelViewInverse(&inverse);
 }
 
-//デフォルトコンストラクタ
-CCamera::CCamera()
-	:mSkip(true)
-	, mAngleX(0.0f)
-	, mAngleY(0.0f)
-	, mDist(0.0f)
-	, mOldMouseX(0)
-	, mOldMouseY(0)
-	, mMouseX(0)
-	, mMouseY(0)
-	, mAngleDelayX(0.0f)
-	, mAngleDelayY(0.0f)
-	, mRotRad(0.0f)
-	, mOldMousePosX(0)
-	, mOldMousePosY(0)
-{
-//優先度を設定
-mPriority = 100;
-CTaskManager::Get()->Remove(this);//
-CTaskManager::Get()->Add(this);//追加する
-mpCameraInstance = this;
-}
+
 
 //当たり判定
 void CCamera::Collision(CCollider* m, CCollider* o) {

@@ -149,6 +149,7 @@ private:
 	int	Player_Stan_Point;							//敵に与えるスタン値
 	int Player_StanAccumulation;					//プレイヤのスタン蓄積
 	int Player_StanAccumulation_Max;				//プレイヤのスタン蓄積最大値
+	float Player_Damage_Magnification;				//プレイヤのダメージ倍率
 	int Player_GameOver_Hp;							//プレイヤのゲームオーバー条件(HP)
 	float Player_Speed_Default;						//プレイヤのスピード(デフォルト)
 	float Player_Speed_Avoid;						//プレイヤのスピード(回避)

@@ -50,6 +50,7 @@ void CTaskManager::Add(CTask *addTask)
 	//task‚Ì‘O‚ğaddTask‚É
 	task->mpPrev = addTask;
 }
+
 //XV
 void CTaskManager::Update() {
 	//æ“ª‚©‚çÅŒã‚Ü‚ÅŒJ‚è•Ô‚µ

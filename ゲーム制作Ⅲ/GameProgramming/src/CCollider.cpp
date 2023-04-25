@@ -11,8 +11,8 @@ CCharacter* CCollider::Parent()
 CCollider::CCollider()
 : mpParent(nullptr)
 , mpMatrix(&mMatrix)
-, mType(ESPHERE)
-, mTag(EBODY)
+, mType(CCollider::EType::ESPHERE)
+, mTag(CCollider::ETag::EBODY)
 , mRadius(0)
 {
 	//コリジョンマネージャyに追加
@@ -185,6 +185,7 @@ bool CCollider::CollisionTriangleSphere(CCollider *t, CCollider *s, CVector *a)
 //	//衝突していないとき
 //	return false;
 //}
+
 
 //カプセルコライダ同士の衝突判定
 //CollisionCapsule(コライダ1, コライダ2, 調整ベクトル)

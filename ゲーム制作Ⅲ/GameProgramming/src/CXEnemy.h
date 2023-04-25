@@ -24,7 +24,7 @@ public:
 	void Render2D();
 	void TaskCollision();
 	//敵の状態
-	enum EEnemyState
+	enum class EEnemyState
 	{
 		EIDLE = 0,								//待機
 		EMOVE,									//移動
@@ -96,8 +96,19 @@ protected:
 private:
 	void EnemyTable();
 	int Enemy_Priority;							//描画優先度
+	int Enemy_Hp;								//HP
+	int Enemy_Hp_Max;							//HP最大値
+	int Enemy_Attack_Point;						//攻撃力
+	int Enemy_Defense_Point;					//守備力
+	int Enemy_Stan_Point;						//スタン値
+	float Enemy_Damage_Magnification;			//ダメージ倍率
+	int Enemy_Death_Hp;							//死亡条件
+	float Enemy_Gravity;						//敵の重力
+	int Enemy_StanAccumulation;				    //敵のスタン蓄積
+	int Enemy_StanAccumulation_Max;				//敵のスタン蓄積最大値
 	float Enemy_Speed_WalkPattern;				//移動スピードパターン
 	float Enemy_Speed_DashPattern;				//ダッシュスピードパターン
+	float Enemy_Speed_BackPattern;				//後退スピードパターン
 	float Enemy_Walk_Dis;						//歩行開始の距離
 	float Enemy_Dash_Dis;						//走行開始の距離
 	float Enemy_Walk_Dis_Max;					//歩行終了の距離
@@ -105,6 +116,7 @@ private:
 	float Enemy_Attack_Dis;						//攻撃可能な距離
 	float Enemy_Attack_Reception;				//当たり判定の開始
 	float Enemy_Attack_Outreception;			//当たり判定の終了
+	int Enemy_Action_Rand;					//アクションの推移設定
 	int Enemy_Attack_Walk_Rand;					//歩行時、ランダムに攻撃する
 	int Enemy_Attack_Dash_Rand;					//走行時、ランダムに攻撃する
 	int Enemy_AttackSp1_Set;					//攻撃1の時、攻撃可能時追従する精度設定
@@ -134,16 +146,7 @@ private:
 	float Enemy_Rotation_X;						//モデルの回転X座標
 	float Enemy_Rotation_Y;						//モデルの回転Y座標
 	float Enemy_Rotation_Z;						//モデルの回転Z座標
-	float Enemy_Gravity;						//敵の重力
-	int Enemy_StanAccumulation;				    //敵のスタン蓄積
-	int Enemy_StanAccumulation_Max;				//敵のスタン蓄積最大値
-	int Enemy_Hp;								//HP
-	int Enemy_Hp_Max;							//HP最大値
-	int Enemy_Attack_Point;						//攻撃力
-	int Enemy_Defense_Point;					//守備力
-	int Enemy_Stan_Point;						//スタン値
-	int Enemy_Hp_State;							//HP状態推移設定
-	int Enemy_Death_Hp;							//死亡条件
+
 };
 #endif
 
