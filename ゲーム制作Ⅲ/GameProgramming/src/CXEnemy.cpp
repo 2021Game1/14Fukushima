@@ -92,7 +92,7 @@ CXEnemy::CXEnemy()
 	mStan_Point = Enemy_Stan_Point;
 	mStanAccumulation = Enemy_StanAccumulation;
 	//タグの設定
-	mTag = CCharacter::ETag::EENEMY;
+	mTag = EENEMY;
 	//優先度を1に変更する
 	mPriority = Enemy_Priority;
 	CTaskManager::Get()->Remove(this);//削除して
@@ -169,7 +169,7 @@ void CXEnemy::Render2D()
 	CUtil::Start2D(WINDOW_FIRST_WIDTH, WINDOW_WIDTH, WINDOW_FIRST_HEIGHT, WINDOW_HEIGHT);
 	CVector tpos;
 	CVector ret;
-	tpos = mPosition + CVector(ret.X(), ret.Y()+ ENEMY_GAUGE_HP_Y, ENEMY_GAUGE_HP_Z);
+	tpos = mPosition + CVector(ret.X(), mPosition.Y()+ ENEMY_GAUGE_HP_Y, ret.Z());
 	Camera.WorldToScreen(&ret, tpos);
 	float HpRate = (float)mHp / (float)Enemy_Hp_Max; //体力最大値に対する、現在の体力の割合
 	float HpGaugeWid = ENEMY_GAUGE_WID_MAX * HpRate; //体力ゲージの幅
@@ -299,7 +299,7 @@ void CXEnemy::Dash()
 		if (random == ENEMY_INT_INITIALIZATION)
 		{
 			//ランダムで攻撃の種類を決める
-			random = rand() % 2;
+			random = rand() % Enemy_Action_Rand;
 			switch (random) 
 			{
 			case 0:
@@ -401,7 +401,7 @@ void CXEnemy::Attack_1()
 			if (random == ENEMY_INT_INITIALIZATION)
 			{
 				//ランダムで攻撃の種類を決める
-				random = rand() % 2;
+				random = rand() % Enemy_Action_Rand;
 				switch (random)
 				{
 				case 0:
@@ -676,6 +676,14 @@ CXEnemy* CXEnemy::GetInstance()
 int CXEnemy::GetHp()
 {
 	return mHp;
+}
+float CXEnemy::GetIsEnemyAttackDis()
+{
+	return Enemy_Attack_Dis;
+}
+float CXEnemy::GetIsEnemyPlayerDis()
+{
+	return mEnemy_PlayerDis;
 }
 //アニメーションフレームの取得
 bool CXEnemy::GetIsAnimationFrame() {

@@ -33,6 +33,7 @@
     <ClCompile Include="src\CSceneGame.cpp" />
     <ClCompile Include="src\CSceneManager.cpp" />
     <ClCompile Include="src\CSceneTitle.cpp" />
+    <ClCompile Include="src\CSceneTutorial.cpp" />
     <ClCompile Include="src\CShader.cpp" />
     <ClCompile Include="src\CShadowMap.cpp" />
     <ClCompile Include="src\CSound.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="src\CTexture.cpp" />
     <ClCompile Include="src\CTransform.cpp" />
     <ClCompile Include="src\CTriangle.cpp" />
+    <ClCompile Include="src\CTutorial.cpp" />
     <ClCompile Include="src\CUtil.cpp" />
     <ClCompile Include="src\CVector.cpp" />
     <ClCompile Include="src\CXCharacter.cpp" />
@@ -76,6 +78,7 @@
     <ClInclude Include="src\CSceneGame.h" />
     <ClInclude Include="src\CSceneManager.h" />
     <ClInclude Include="src\CSceneTitle.h" />
+    <ClInclude Include="src\CSceneTutorial.h" />
     <ClInclude Include="src\CShader.h" />
     <ClInclude Include="src\CShadowMap.h" />
     <ClInclude Include="src\CSound.h" />
@@ -86,6 +89,7 @@
     <ClInclude Include="src\CTexture.h" />
     <ClInclude Include="src\CTransform.h" />
     <ClInclude Include="src\CTriangle.h" />
+    <ClInclude Include="src\CTutorial.h" />
     <ClInclude Include="src\CUtil.h" />
     <ClInclude Include="src\CVector.h" />
     <ClInclude Include="src\CXCharacter.h" />

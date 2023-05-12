@@ -12,47 +12,36 @@
 #define WINDOW_HEIGHT 600				//ゲーム画面の描画範囲高さ設定
 #define WINDOW_FIRST_HEIGHT 0				//ゲーム画面の描画し始める範囲高さ設定
 
-
-//カメラ
-#define CAMERA_SENSITIVITY 0.0002f		//カメラの感度設定
-#define CAMERA_COLLIDE_DIST 0.05f			//カメラの衝突判定時の描写体に近づく距離
-#define CAMERA_DELAY_RATE 0.003f		//カメラアングル移動時の遅延割合
-
 //カメラの視点描画設定
 #define CAMERA_VIEWPORT 4				//現在のカメラ全体のビューポート初期設定
 #define CAMERA_VIEWPORT_WIDTH 2			//現在のカメラのビューポートの幅設定
 #define CAMERA_VIEWPORT_HEIGHT 3		//現在のカメラのビューポートの高さ設定
 
-//カメラの視点座標設定
-#define CAMERA_POINT_VIEW_X 1.0f			//カメラ視点のX座標設定
-#define CAMERA_POINT_VIEW_Y 6.0f			//カメラ視点のY座標設定
-#define CAMERA_POINT_VIEW_Z 10.0f			//カメラ視点のZ座標設定
-
-//カメラの視点設置座標
-#define CAMERA_POINT_INSTALLATION_X 0.0f		//カメラ設置のX座標設定
-#define CAMERA_POINT_INSTALLATION_Y 1.0f		//カメラ設置のY座標設定
-#define CAMERA_POINT_INSTALLATION_Z 0.0f		//カメラ設置のZ座標設定
-
-//カメラのスクリーン変換設定
-#define CAMERA_SCREEN_POS_X 1.0f
-#define CAMERA_SCREEN_POS_Y 1.0f
-#define CAMERA_SCREEN_WIDTH 0.5f
-#define CAMERA_SCREEN_HEIGHT 0.5f
-
 //カメラの距離設定
 #define CAMERA_DEF_DIST 4.0f	//カメラの距離設定
-//カメラの注目視点の設定
-#define CAMERA_HEAD_ADJUST 2.0f	//注視点の高さ調整
+//カメラの距離設定変更
+#define CAMERA_DEF_DIST_CHANGE 8.0 //カメラの距離設定変更
 
 //カメラ操作時のマウス設定
 #define WIN_CENTRAL_X WINDOW_WIDTH/2 //画面の中央（X軸）
 #define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
 #define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
 
-//カメラの視点ズーム設定
-#define CAMERA_CENTER_ZOOM_X 0.0f
-#define CAMERA_CENTER_ZOOM_Y 0.0f
-#define CAMERA_CENTER_ZOOM_Z -2.0f
+#define CAMERA_PRIORITY 100
+#define CAMERA_SENSITIVITY 0.0002f
+#define CAMERA_COLLIDE_DIST 0.05f
+#define CAMERA_DELAY_RATE 0.003f
+#define CAMERA_POINT_VIEW_X 1.0f
+#define CAMERA_POINT_VIEW_Y 6.0f
+#define CAMERA_POINT_VIEW_Z 10.0f
+#define CAMERA_POINT_HERD_ADJUST 2.0f
+#define CAMERA_POINT_INSTALLATION_X 0.0f
+#define CAMERA_POINT_INSTALLATION_Y 1.0f
+#define CAMERA_POINT_INSTALLATION_Z 0.0f
+#define CAMERA_SCREEN_POS_X 1.0f
+#define CAMERA_SCREEN_POS_Y 1.0f
+#define CAMERA_SCREEN_WIDTH 0.5f
+#define CAMERA_SCREEN_HEIGHT 0.5f
 
 /*
 カメラクラス
@@ -63,8 +52,14 @@ public:
 	//カメラの設定
 	//Set(視点, 注視点, 上方向)
 	void Set(const CVector& eye, const CVector& center,
-		const CVector& up);
+		const CVector& up);	
+	//カメラのアングル変更設定
+	void CameraAngleChange();
+	//カメラのアングルデフォルト設定
+	void CameraAngleDefault();
+	//カメラのターゲット設定
 	void SetTarget(const CVector& target);
+	//一度しか更新しない
 	void Init();
 	//カメラ更新
 	void Update();
@@ -79,8 +74,6 @@ public:
 	float mLerp(float start, float point, float rate);
 	//HPの線形補間
 	float mHpLerp(float start, float point, float rate);
-	//カメラの視点ズーム
-	void CameraEyeZoom();
 	//コリジョンマネージャ追加処理
 	void TaskCollision();
 	//インスタンスの取得
@@ -94,6 +87,38 @@ public:
 	bool WorldToScreen(CVector* screen, const CVector& world);
 
 private:
+	//描画優先度
+	int mCamera_Priority;
+	//カメラの感度設定
+	float mCamera_Sensitivity;
+	//当たり判定の距離
+	float mCamera_Collide_Dist;
+	//カメラの遅延設定
+	float mCamera_Delay_Rate;
+	//カメラの描画位置X座標
+	float mCamera_Point_View_X;
+	//カメラの描画位置Y座標
+	float mCamera_Point_View_Y;
+	//カメラの描画位置Z座標
+	float mCamera_Point_View_Z;
+	//カメラの高さ調整
+	float mCamera_Point_Herd_Adjust;
+	//カメラの上方向X座標設定
+	float mCamera_Point_Installation_X;
+	//カメラの上方向Y座標設定
+	float mCamera_Point_Installation_Y;
+	//カメラの上方向Z座標設定
+	float mCamera_Point_Installation_Z;
+	//カメラのスクリーンX座標設定
+	float mCamera_Screen_Pos_X;
+	//カメラのスクリーンY座標設定
+	float mCamera_Screen_Pos_Y;
+	//カメラのスクリーン幅設定
+	float mCamera_Screen_Width;
+	//カメラのスクリーン高さ設定
+	float mCamera_Screen_Height;
+
+
 	CVector mRotation;//回転
 	CVector mEye;//視点
 	CVector mCenter;//注視点
@@ -128,6 +153,8 @@ private:
 	int mMouseX, mMouseY;		//現在の座標
 		//staticでポインタを作る
 	static CCamera* mpCameraInstance;
+
+
 };
 
 //カメラの外部参照

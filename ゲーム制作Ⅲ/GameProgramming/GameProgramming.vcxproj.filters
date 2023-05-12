@@ -28,15 +28,6 @@
     <Filter Include="MainScene\Player\Camera\h">
       <UniqueIdentifier>{d9a41c7d-e933-46ba-9ed7-24ef3b0fb03f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\Player\player">
-      <UniqueIdentifier>{4b523e25-5380-4b48-8513-46d472f8f211}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Player\player\h">
-      <UniqueIdentifier>{009d9d3e-d9c5-4838-994d-c2897c076412}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Player\player\cpp">
-      <UniqueIdentifier>{c0cb29b3-6ed8-4414-b6b3-69237fa8147c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainScene\Player\Key">
       <UniqueIdentifier>{d5482c7b-f309-400d-ab72-75c7e2e74f4e}</UniqueIdentifier>
     </Filter>
@@ -135,9 +126,6 @@
     </Filter>
     <Filter Include="MainScene\Task\TaskManager\h">
       <UniqueIdentifier>{2bc0a0e9-cb9d-45b9-92d7-2456ec4d6ec9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Player\player\Data">
-      <UniqueIdentifier>{1a66c3c5-aaba-42f9-a1f8-69837520c2fd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lib\Texture">
       <UniqueIdentifier>{5f680657-fef2-485a-9c50-d5fbd31fb3dd}</UniqueIdentifier>
@@ -391,6 +379,36 @@
     <Filter Include="MainScene\Scene\Scene">
       <UniqueIdentifier>{48fc13ef-7e4a-44c0-8645-cce00f62c8d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainScene\Player\Player">
+      <UniqueIdentifier>{4b523e25-5380-4b48-8513-46d472f8f211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Player\Player\h">
+      <UniqueIdentifier>{009d9d3e-d9c5-4838-994d-c2897c076412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Player\Player\cpp">
+      <UniqueIdentifier>{c0cb29b3-6ed8-4414-b6b3-69237fa8147c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Player\Player\Data">
+      <UniqueIdentifier>{1a66c3c5-aaba-42f9-a1f8-69837520c2fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\GameScene\CSceneTutorial">
+      <UniqueIdentifier>{99dc59b3-13c0-42cf-bc6e-3575a9c459f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\GameScene\CSceneTutorial\cpp">
+      <UniqueIdentifier>{3c31e6ff-f94c-4cba-bf7f-f3f78adb2c07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\GameScene\CSceneTutorial\h">
+      <UniqueIdentifier>{0ec50430-8dbd-4f81-8d17-248af7a58985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\GameScene\CSceneTutorial\Tutorial">
+      <UniqueIdentifier>{dbc8f4b9-4995-4165-b2a2-e184a11fb8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\GameScene\CSceneTutorial\Tutorial\cpp">
+      <UniqueIdentifier>{283c810a-20e7-4a57-949e-bdbacf316c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\GameScene\CSceneTutorial\Tutorial\h">
+      <UniqueIdentifier>{37fcfba0-474f-48e3-985c-f42364476327}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CXEnemy.cpp">
@@ -418,7 +436,7 @@
       <Filter>Lib\Collider\CollisionManager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CXPlayer.cpp">
-      <Filter>MainScene\Player\player\cpp</Filter>
+      <Filter>MainScene\Player\Player\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CSceneGame.cpp">
       <Filter>MainScene\GameScene\cpp</Filter>
@@ -507,10 +525,16 @@
     <ClCompile Include="src\CCollider.cpp">
       <Filter>Lib\Collider\Collider\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="src\CTutorial.cpp">
+      <Filter>MainScene\GameScene\CSceneTutorial\Tutorial\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CSceneTutorial.cpp">
+      <Filter>MainScene\GameScene\CSceneTutorial\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CPlayerData.h">
-      <Filter>MainScene\Player\player\Data</Filter>
+      <Filter>MainScene\Player\Player\Data</Filter>
     </ClInclude>
     <ClInclude Include="src\CXEnemy.h">
       <Filter>MainScene\Enemy\h</Filter>
@@ -540,7 +564,7 @@
       <Filter>Lib\Collider\CollisionManager\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CXPlayer.h">
-      <Filter>MainScene\Player\player\h</Filter>
+      <Filter>MainScene\Player\Player\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneGame.h">
       <Filter>MainScene\GameScene\h</Filter>
@@ -634,6 +658,12 @@
     </ClInclude>
     <ClInclude Include="src\CCollider.h">
       <Filter>Lib\Collider\Collider\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CTutorial.h">
+      <Filter>MainScene\GameScene\CSceneTutorial\Tutorial\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CSceneTutorial.h">
+      <Filter>MainScene\GameScene\CSceneTutorial\h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

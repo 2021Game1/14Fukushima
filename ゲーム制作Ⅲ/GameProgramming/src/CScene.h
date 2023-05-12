@@ -8,6 +8,7 @@ class CScene {
 public:
 	enum EScene {
 		EGAME,		//ゲーム
+		ETUTORIAL,	//チュートリアル
 		ETITLE, 	//タイトル
 	};
 	EScene mScene;

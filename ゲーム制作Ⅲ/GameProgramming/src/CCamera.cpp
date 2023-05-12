@@ -3,6 +3,7 @@
 #include"CXPlayer.h"
 #include"CXEnemy.h"
 #include "CTaskManager.h"
+#include "CTable.h"
 //カメラの外部変数
 CCamera Camera;
 CCamera* CCamera::mpCameraInstance;
@@ -12,6 +13,7 @@ CCamera* CCamera::Instance()
 {
 	return mpCameraInstance;
 }
+
 
 //デフォルトコンストラクタ
 CCamera::CCamera()
@@ -30,9 +32,24 @@ CCamera::CCamera()
 	, mOldMousePosY(0)
 	, mScreenHeight(0.0f)
 	, mScreenWidth(0.0f)
+	, mCamera_Sensitivity(CAMERA_SENSITIVITY)
+	,mCamera_Collide_Dist(CAMERA_COLLIDE_DIST)
+	,mCamera_Delay_Rate(CAMERA_DELAY_RATE)
+	,mCamera_Point_View_X(CAMERA_POINT_VIEW_X)
+	,mCamera_Point_View_Y(CAMERA_POINT_VIEW_Y)
+	,mCamera_Point_View_Z(CAMERA_POINT_VIEW_Z)
+	,mCamera_Point_Herd_Adjust(CAMERA_POINT_HERD_ADJUST)
+	,mCamera_Point_Installation_X(CAMERA_POINT_INSTALLATION_X)
+	,mCamera_Point_Installation_Y(CAMERA_POINT_INSTALLATION_Y)
+	,mCamera_Point_Installation_Z(CAMERA_POINT_INSTALLATION_Z)
+	,mCamera_Screen_Pos_X(CAMERA_SCREEN_POS_X)
+	,mCamera_Screen_Pos_Y(CAMERA_SCREEN_POS_Y)
+	,mCamera_Screen_Width(CAMERA_SCREEN_WIDTH)
+	,mCamera_Screen_Height(CAMERA_SCREEN_HEIGHT)
 {
+
 	//優先度を設定
-	mPriority = 100;
+	mPriority = CAMERA_PRIORITY;
 	CTaskManager::Get()->Remove(this);//
 	CTaskManager::Get()->Add(this);//追加する
 	mpCameraInstance = this;
@@ -51,15 +68,16 @@ void CCamera::Init()
 	//カメラのパラメータを作成する
 	CVector e, c, u;//視点、注視点、上方向
 	//視点を求める
-	e = CVector(CAMERA_POINT_VIEW_X, CAMERA_POINT_VIEW_Y, CAMERA_POINT_VIEW_Z);
+	e = CVector(mCamera_Point_View_X, mCamera_Point_View_Y, mCamera_Point_View_Z);
 	//注視点を求める
 	c = CVector();
 	//上方向を求める
-	u = CVector(CAMERA_POINT_INSTALLATION_X, CAMERA_POINT_INSTALLATION_Y, CAMERA_POINT_INSTALLATION_Z);
+	u = CVector(mCamera_Point_Installation_X, mCamera_Point_Installation_Y, mCamera_Point_Installation_Z);
 
 	//カメラクラスの設定
 	Set(e, c, u);
 }
+
 float CCamera::mLerp(float start, float point, float rate)
 {
 	return start + point * (point * rate);
@@ -85,8 +103,8 @@ void CCamera::Update() {
 	float moveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
-		if (moveX != CAMERA_SENSITIVITY)mAngleX += (moveX * CAMERA_SENSITIVITY);
-		mAngleX = mLerp(mAngleX, mAngleDelayX, CAMERA_DELAY_RATE);
+		if (moveX != mCamera_Sensitivity)mAngleX += (moveX * mCamera_Sensitivity);
+		mAngleX = mLerp(mAngleX, mAngleDelayX, mCamera_Delay_Rate);
 	}
 	mSkip = false;
 	int X = WIN_CENTRAL_X;
@@ -102,7 +120,7 @@ void CCamera::Update() {
 	mPos.Z(mTarget.Z() + (cosf(mAngleX)) * (mDist * sinf(mAngleY)));
 
 	mCenter = mTarget;
-	mCenter.Y(mCenter.Y() + CAMERA_HEAD_ADJUST);
+	mCenter.Y(mCenter.Y() + mCamera_Point_Herd_Adjust);
 	mEye = mPos;
 
 	//線コライダセット
@@ -153,7 +171,13 @@ void CCamera::Draw() {
 	CBillBoard::ModelViewInverse(&inverse);
 }
 
+void CCamera::CameraAngleChange() {
+	mDist = CAMERA_DEF_DIST_CHANGE;
+}
 
+void CCamera::CameraAngleDefault() {
+	mDist = CAMERA_DEF_DIST;
+}
 
 //当たり判定
 void CCamera::Collision(CCollider* m, CCollider* o) {
@@ -177,10 +201,6 @@ void CCamera::TaskCollision()
 	CCollisionManager::Get()->Collision(&mColliderLine, COLLISIONRANGE);
 }
 
-void CCamera::CameraEyeZoom() {
-	mEye = mEye + CVector(CAMERA_CENTER_ZOOM_X, CAMERA_CENTER_ZOOM_Y, CAMERA_CENTER_ZOOM_Z);
-	mColliderLine.Set(this, nullptr, mEye, mCenter);
-}
 
 //ワールド座標をスクリーン座標へ変換する
 //WorldToScreen(スクリーン座標, ワールド座標)
@@ -198,8 +218,8 @@ bool CCamera::WorldToScreen(CVector* screen, const CVector& world)
 	screen_pos = screen_pos * (1.0f / -modelview_pos.Z());
 
 	//スクリーン変換
-	screen->X((CAMERA_SCREEN_POS_X + screen_pos.X()) * mScreenWidth * CAMERA_SCREEN_WIDTH);
-	screen->Y((CAMERA_SCREEN_POS_Y + screen_pos.Y()) * mScreenHeight * CAMERA_SCREEN_HEIGHT);
+	screen->X((mCamera_Screen_Pos_X + screen_pos.X()) * mScreenWidth * mCamera_Screen_Width);
+	screen->Y((mCamera_Screen_Pos_Y + screen_pos.Y()) * mScreenHeight * mCamera_Screen_Height);
 	screen->Z(screen_pos.Z());
 
 	return true;

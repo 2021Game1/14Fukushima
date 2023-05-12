@@ -84,9 +84,9 @@ CXPlayer::CXPlayer()
 	//プレイヤのインスタンスを設定
 	mpPlayer_Instance = this;										//プレイヤのインスタンスを自身に設定する
 	//タグの紐づけ
-	mTag = CCharacter::ETag::EPLAYER;													//タグをプレイヤに設定
+	mTag = EPLAYER;													//タグをプレイヤに設定
 	//初期状態を設定
-	mPlayer_State = CXPlayer::EPlayerState::EIDLE;											//プレイヤの初期状態を待機状態に設定する
+	mPlayer_State = EIDLE;											//プレイヤの初期状態を待機状態に設定する
 	//コライダのタグを設定
 	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
 	mPlayer_ColSphereBody.Tag(CCollider::EBODY);					//体
@@ -177,6 +177,12 @@ void CXPlayer::Update() {
 	if (mPlayer_EnemyDis >= mPlayer_Attack_Dis) {
 		mPlayer_AttackDir = mPlayer_Point; //攻撃時の向きを求める
 	}
+	if (CKey::Push(VK_F1)) {
+		Camera.CameraAngleChange();
+	}
+	else if(CKey::Push(VK_F2)) {
+		Camera.CameraAngleDefault();
+	}
 	//カメラの設定
 	Camera.SetTarget(mPosition);									//カメラをプレイヤの位置に設定
 	//キャラクタの更新処理
@@ -192,7 +198,7 @@ void CXPlayer::Idle()
 		mPlayer_State = EATTACK_1;
 	}
 	//WASDキーを押すと移動へ移行
-	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
+	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
 		mPlayer_State = EMOVE;
 		Se_Player_Walk.Repeat(Player_Se);
 	}
@@ -251,7 +257,7 @@ void CXPlayer::Move()
 		mPlayer_IsHit = false;
 	}
 	//WASDキーを押すと移動へ移行
-	else if (CKey::Push('W') || CKey::Push('A') || CKey::Push('S') || CKey::Push('D')) {
+	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
 		ChangeAnimation(Player_Animation_No_Move, true, Player_Move_Animation_Frame);
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
 		Se_Player_Walk.Repeat(Player_Se);

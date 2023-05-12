@@ -24,7 +24,7 @@ void CSceneTitle::Init() {
 void CSceneTitle::Update() {
 	if (CKey::Once(VK_RETURN)) {
 		//Ÿ‚ÌƒV[ƒ“‚ÍƒQ[ƒ€
-		mNextScene = EGAME;
+		mNextScene = ETUTORIAL;
 		mSceneChange = true;
 		Title_Bgm.Stop();
 	}

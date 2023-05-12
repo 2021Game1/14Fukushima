@@ -39,7 +39,9 @@ public:
 	int GetHp();								//敵のHP取得関数
 	bool GetIsHit();							//ヒット状態の判別
 	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
-	int GetIsAttackPoint();					//プレイヤに与えるダメージ取得用
+	float GetIsEnemyAttackDis();				
+	float GetIsEnemyPlayerDis();
+	int GetIsAttackPoint();						//プレイヤに与えるダメージ取得用
 	int GetIsStanPoint();						//プレイヤに与えるスタンダメージ取得用
 	CXEnemy::EEnemyState GetState();			//プレイヤーの状態を取得する
 	//他のクラスで参照用の関数

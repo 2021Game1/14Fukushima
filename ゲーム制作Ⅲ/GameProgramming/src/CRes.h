@@ -58,6 +58,15 @@
 #define GAMECLEAR_IMAGE "res\\Image\\GameClear.png"
 //ゲームオーバー画像
 #define GAMEOVER_IMAGE "res\\Image\\GameOver_Image.png"
+//チュートリアル画像
+//アクションチュートリアル画像
+#define ACTION_TUTORIAL_IMAGE "res\\Image\\Action_Tutorial.png"
+//移動チュートリアル画像
+#define MOVE_TUTORIAL_IMAGE "res\\Image\\Move_Tutorial.png"
+//回避アクションチュートリアル画像
+#define AVOIDANCE_TUTORIAL_IMAGE "res\\Image\\AvoidDance_Tutorial.png"
+//カメラ操作チュートリアル画像
+#define CAMERA_ACTION_TUTORIAL_IMAGE "res\\Image\\Camera_Angle_Tutorial.png"
 //HPゲージ
 #define CHARACTER_UI_HP_GREENGAUGE "res\\Ui\\HP_Gauge.png"
 #define CHARACTER_UI_HP_REDGAUGE "res\\Ui\\HP_RedGauge.png"
@@ -79,6 +88,14 @@ public:
 	CTexture& GetinGameClearImage();
 	//ゲームオーバー画像を取得する
 	CTexture& GetinGameOverImage();
+	//アクションのチュートリアル画像を取得する
+	CTexture& GetinActionTutorialImage();
+	//移動のチュートリアル画像を取得する
+	CTexture& GetinMoveTutorialImage();
+	//回避アクションのチュートリアル画像を取得する
+	CTexture& GetinAvoidDanceTutorialImage();
+	//カメラ操作のチュートリアル画像を取得する
+	CTexture& GetinCameraTutorialImage();
 	//UIフォントの取得
 	CText& GetInUiFont();
 	//HPゲージを取得する
@@ -127,6 +144,14 @@ private:
 	CTexture gGameClear_Image;
 	//ゲームオーバー画像
 	CTexture gGameOver_Image;
+	//アクションチュートリアル画像
+	CTexture gAction_Tutorial_Image;
+	//移動チュートリアル画像
+	CTexture gMove_Tutorial_Image;
+	//回避アクションチュートリアル画像
+	CTexture gAvoidDance_Tutorial_Image;
+	//カメラ操作のチュートリアル画像
+	CTexture gCamera_Tutorial_Image;
 	//キャラクタのUIインスタンス
 	CTexture gCharacter_Ui_Hp_GreenGauge;
 	CTexture gCharacter_Ui_Hp_RedGauge;
