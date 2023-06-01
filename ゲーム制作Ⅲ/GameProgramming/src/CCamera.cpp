@@ -4,6 +4,7 @@
 #include"CXEnemy.h"
 #include "CTaskManager.h"
 #include "CTable.h"
+#include <math.h>
 //カメラの外部変数
 CCamera Camera;
 CCamera* CCamera::mpCameraInstance;
@@ -33,23 +34,23 @@ CCamera::CCamera()
 	, mScreenHeight(0.0f)
 	, mScreenWidth(0.0f)
 	, mCamera_Sensitivity(CAMERA_SENSITIVITY)
-	,mCamera_Collide_Dist(CAMERA_COLLIDE_DIST)
-	,mCamera_Delay_Rate(CAMERA_DELAY_RATE)
-	,mCamera_Point_View_X(CAMERA_POINT_VIEW_X)
-	,mCamera_Point_View_Y(CAMERA_POINT_VIEW_Y)
-	,mCamera_Point_View_Z(CAMERA_POINT_VIEW_Z)
-	,mCamera_Point_Herd_Adjust(CAMERA_POINT_HERD_ADJUST)
-	,mCamera_Point_Installation_X(CAMERA_POINT_INSTALLATION_X)
-	,mCamera_Point_Installation_Y(CAMERA_POINT_INSTALLATION_Y)
-	,mCamera_Point_Installation_Z(CAMERA_POINT_INSTALLATION_Z)
-	,mCamera_Screen_Pos_X(CAMERA_SCREEN_POS_X)
-	,mCamera_Screen_Pos_Y(CAMERA_SCREEN_POS_Y)
-	,mCamera_Screen_Width(CAMERA_SCREEN_WIDTH)
-	,mCamera_Screen_Height(CAMERA_SCREEN_HEIGHT)
+	, mCamera_Collide_Dist(CAMERA_COLLIDE_DIST)
+	, mCamera_Delay_Rate(CAMERA_DELAY_RATE)
+	, mCamera_Point_View_X(CAMERA_POINT_VIEW_X)
+	, mCamera_Point_View_Y(CAMERA_POINT_VIEW_Y)
+	, mCamera_Point_View_Z(CAMERA_POINT_VIEW_Z)
+	, mCamera_Point_Herd_Adjust(CAMERA_POINT_HERD_ADJUST)
+	, mCamera_Point_Installation_X(CAMERA_POINT_INSTALLATION_X)
+	, mCamera_Point_Installation_Y(CAMERA_POINT_INSTALLATION_Y)
+	, mCamera_Point_Installation_Z(CAMERA_POINT_INSTALLATION_Z)
+	, mCamera_Screen_Pos_X(CAMERA_SCREEN_POS_X)
+	, mCamera_Screen_Pos_Y(CAMERA_SCREEN_POS_Y)
+	, mCamera_Screen_Width(CAMERA_SCREEN_WIDTH)
+	, mCamera_Screen_Height(CAMERA_SCREEN_HEIGHT)
+	, mCameraMoveX(NULL)
+	, mCameraMoveY(NULL)
+	, mCamera_Priority(CAMERA_PRIORITY)
 {
-
-	//優先度を設定
-	mPriority = CAMERA_PRIORITY;
 	CTaskManager::Get()->Remove(this);//
 	CTaskManager::Get()->Add(this);//追加する
 	mpCameraInstance = this;
@@ -99,11 +100,11 @@ const CVector& CCamera::Eye() const
 //カメラのアップデート
 void CCamera::Update() {
 	CInput::GetMousePosWin(&mMouseX, &mMouseY);
-	float moveX = (float)(mOldMouseX - mMouseX);
-	float moveY = (float)(mOldMouseY - mMouseY);
+	mCameraMoveX = (float)(mOldMouseX - mMouseX);
+	mCameraMoveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
-		if (moveX != mCamera_Sensitivity)mAngleX += (moveX * mCamera_Sensitivity);
+		if (mCameraMoveX != mCamera_Sensitivity)mAngleX += (mCameraMoveX * mCamera_Sensitivity);
 		mAngleX = mLerp(mAngleX, mAngleDelayX, mCamera_Delay_Rate);
 	}
 	mSkip = false;
@@ -132,6 +133,11 @@ CMatrix CCamera::GetMat() {
 	return mMatrix;
 }
 
+float CCamera::GetInAngleX()
+{
+	return fabsf(mAngleX);
+}
+
 //カメラセット
 void CCamera::Set(const CVector& eye, const CVector& center,
 	const CVector& up) {
@@ -149,7 +155,7 @@ void CCamera::Set(const CVector& eye, const CVector& center,
 }
 
 //処理なし
-void CCamera::Render() {		
+void CCamera::Render() {
 }
 
 //カメラ適用
@@ -181,18 +187,18 @@ void CCamera::CameraAngleDefault() {
 
 //当たり判定
 void CCamera::Collision(CCollider* m, CCollider* o) {
-		//相手のコライダが三角コライダの時
-		if (o->Type() == CCollider::ETRIANGLE) {
-			if (!o->Parent()->EENEMY)
-			{
-				CVector adjust;//調整用ベクトル
-				if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
-					//マップ等に衝突すると、視点をプレイヤーに近づく
-					mEye = mEye + adjust;
-					mColliderLine.Set(this, nullptr, mEye, mCenter);
-				}
+	//相手のコライダが三角コライダの時
+	if (o->Type() == CCollider::ETRIANGLE) {
+		if (!o->Parent()->EENEMY)
+		{
+			CVector adjust;//調整用ベクトル
+			if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
+				//マップ等に衝突すると、視点をプレイヤーに近づく
+				mEye = mEye + adjust;
+				mColliderLine.Set(this, nullptr, mEye, mCenter);
 			}
 		}
+	}
 }
 
 //タスクコリジョンに追加

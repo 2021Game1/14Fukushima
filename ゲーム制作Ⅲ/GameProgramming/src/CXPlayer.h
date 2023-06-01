@@ -62,6 +62,8 @@ public:
 	CXPlayer::EPlayerState GetState();	//プレイヤの状態を取得する
 	//プレイヤの剣コライダの座標取得
 	CVector GetSwordColPos();			//剣のコライダの座標を取得する
+		//プレイヤの移動量取得
+	CVector GetInMoveDir();
 private:
 	//コライダの宣言
 	CCollider mPlayer_ColSphereSword;				//剣

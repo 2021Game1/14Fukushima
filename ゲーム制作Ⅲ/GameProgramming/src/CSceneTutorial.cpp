@@ -5,6 +5,7 @@
 
 CSceneTutorial::~CSceneTutorial()
 {
+	CXEnemyManager::GetInstance()->Release();	//敵管理解放
 	CTaskManager::Get()->Delete();
 }
 
@@ -13,6 +14,9 @@ void CSceneTutorial::Init() {
 	mScene = ETUTORIAL;
 	mRes.Init();
 	CRes::GetInstance()->GetinSoundBgmGame().Repeat(0.2);
+	//敵管理生成
+	CXEnemyManager::GetInstance()->Generate();
+	CXEnemyManager::GetInstance()->EnemyGenerate(TUTORIAL_GENERATE_A, CXEnemy::EEnemyType::ETYPE_TUTORIAL);
 	//影の設定
 	float shadowColor[] = { SHADOWCOLOR_0, SHADOWCOLOR_1, SHADOWCOLOR_2, SHADOWCOLOR_3 };	//影の色
 	float lightPos[] = { LIGHTPOS_X, LIGHTPOS_Y, LIGHTPOS_Z };		//光源の位置
@@ -20,6 +24,7 @@ void CSceneTutorial::Init() {
 }
 
 void CSceneTutorial::Update() {
+
 	if (CXPlayer::GetInstance()->GetHp() == 0) {
 		CRes::GetInstance()->GetinSoundBgmGame().Stop();
 		if (CKey::Once(VK_RETURN))
@@ -28,24 +33,21 @@ void CSceneTutorial::Update() {
 			mScene = ETITLE;
 		}
 	}
-	if (CXEnemy::GetInstance()->GetHp() == 0) {
+	if (CXEnemyManager::GetInstance()->GetIsEnemyAllDeath()) {
 		CRes::GetInstance()->GetinSoundBgmGame().Stop();
 		if (CKey::Once(VK_RETURN))
 		{
-
 			mScene = EGAME;
 		}
 	}
 
 	mTutorial.Update();
 
-	if (mTutorial.GetIsTutorialFlag() == true) {
-		//更新処理
-		CTaskManager::Get()->Update();
-		//衝突処理
-		CCollisionManager::Get()->Collision();
-	}
-
+	//更新処理
+	CTaskManager::Get()->Update();
+	//衝突処理
+	CCollisionManager::Get()->Collision();
+	CXEnemyManager::GetInstance()->Update();
 
 
 	//タスクリスト削除
@@ -66,12 +68,11 @@ void CSceneTutorial::Render() {
 	mTutorial.Render();
 
 }
-
-void WholeRender() {
-	//タスク描画
-	CTaskManager::Get()->Render();
-}
 CScene::EScene CSceneTutorial::GetNextScene()
 {
 	return mScene;
+}
+void WholeRender() {
+	//タスク描画
+	CTaskManager::Get()->Render();
 }

@@ -23,14 +23,18 @@ void CRes::Init() {
 	gGameClear_Image.Load2D(GAMECLEAR_IMAGE);
 	//ゲームオーバー画像の追加
 	gGameOver_Image.Load2D(GAMEOVER_IMAGE);
+	//チュートリアル画像の追加
+	gTutorial_Image.Load2D(TUTORIAL_IMAGE);
 	//アクションチュートリアル画像の追加
 	gAction_Tutorial_Image.Load2D(ACTION_TUTORIAL_IMAGE);
 	//移動チュートリアル画像の追加
 	gMove_Tutorial_Image.Load2D(MOVE_TUTORIAL_IMAGE);
 	//回避アクションチュートリアル画像の追加
 	gAvoidDance_Tutorial_Image.Load2D(AVOIDANCE_TUTORIAL_IMAGE);
-	//カメラ操作のチュートリアル画像の追加
-	gCamera_Tutorial_Image.Load2D(CAMERA_ACTION_TUTORIAL_IMAGE);
+	//カメラアングルのチュートリアル画像の追加
+	gCamera_Angle_Image.Load2D(CAMERA_ANGLE_TUTORIAL_IMAGE);
+	//プレイヤの視点操作チュートリアル
+	gCamera_Action_Image.Load2D(CAMERA_ACTION_TUTORIAL_IMAGE);
 	//キャラクタのUI追加
 	gCharacter_Ui_Hp_GreenGauge.Load2D(CHARACTER_UI_HP_GREENGAUGE);
 	gCharacter_Ui_Hp_RedGauge.Load2D(CHARACTER_UI_HP_REDGAUGE);
@@ -46,20 +50,8 @@ void CRes::Init() {
 	gMap_Model_Sky.Load(MAP_MODEL_SKY);
 	//マップのコライダファイルの入力
 	gMap_Model_Collision.Load(MAP_COLLISION_MAP);
-	//3Dモデルファイルの読み込み
-	gEnemy_Model_Mutant.Load(ENEMY_MODEL_FILE);
-	//エネミーのアニメーションの追加
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_ATTACKSP1);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_WALK);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DASH);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_BACKSTEP);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_IDLE);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_KNOCKBACK);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DEATH);
 	//キャラクタにモデルを設定
 	mPlayer.Init(&gPlayer_Model_Knight);
-	//敵の初期設定
-	mEnemy.Init(&gEnemy_Model_Mutant);
 	mFont.LoadTexture("Font\\FontG.png", 1, 4096 / 64);
 	mMap.Model(&gMap_Model);
 	mMap_Sky.Model(&gMap_Model_Sky);
@@ -91,6 +83,11 @@ CTexture& CRes::GetinGameOverImage()
 {
 	return gGameOver_Image;
 }
+//チュートリアル画像の取得
+CTexture& CRes::GetinTutorialImage()
+{
+	return gTutorial_Image;
+}
 //アクションチュートリアル画像を取得する
 CTexture& CRes::GetinActionTutorialImage()
 {
@@ -106,10 +103,15 @@ CTexture& CRes::GetinAvoidDanceTutorialImage()
 {
 	return gAvoidDance_Tutorial_Image;
 }
-//カメラチュートリアル画像を取得
-CTexture& CRes::GetinCameraTutorialImage()
+//カメラアングルチュートリアル画像を取得
+CTexture& CRes::GetinCameraAngleImage()
 {
-	return gCamera_Tutorial_Image;
+	return gCamera_Angle_Image;
+}
+//カメラアングルチュートリアル画像を取得
+CTexture& CRes::GetinCameraActionImage()
+{
+	return gCamera_Action_Image;
 }
 //緑HPバーの取得
 CTexture& CRes::GetInUiHpGreenGauge()

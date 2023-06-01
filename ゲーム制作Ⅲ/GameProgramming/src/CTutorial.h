@@ -1,6 +1,10 @@
 #ifndef CTUTORIAL_H
 #define CTUTORIAL_H
 
+#include "CXPlayer.h"
+#include "CXEnemy.h"
+#include "CXEnemyManager.h"
+#include "CRes.h"
 /*
 チュートリアル描画クラス
 */
@@ -31,53 +35,72 @@
 #define GAMEOVER_FIRST_Y 0
 #define GAMEOVER_END_Y 600
 
+/*
+チュートリアル描画クラス
+*/
+
+//2D描画の描画範囲
+#define START2D_FIRST_WID 0
+#define START2D_END_WID 800
+#define START2D_FIRST_HEI 0
+#define START2D_END_HEI 600
+
+//Tutorial画像描画座標
+#define TUTORIAL_FIRST_WID 0
+#define TUTORIAL_END_WID 800
+#define TUTORIAL_FIRST_HEI 0
+#define TUTORIAL_END_HEI 600
+#define TUTORIAL_FIRST_X 0
+#define TUTORIAL_END_X 800
+#define TUTORIAL_FIRST_Y 0
+#define TUTORIAL_END_Y 600
+
 //移動のチュートリアル画像描画座標
 #define MOVE_FIRST_WID 0
 #define MOVE_END_WID 800
-#define MOVE_FIRST_HEI 0
-#define MOVE_END_HEI 600
-#define MOVE_FIRST_X 0
-#define MOVE_END_X 800
-#define MOVE_FIRST_Y 0
-#define MOVE_END_Y 600
+#define MOVE_FIRST_HEI -150
+#define MOVE_END_HEI 500
+#define MOVE_FIRST_X -100
+#define MOVE_END_X 900
+#define MOVE_FIRST_Y -125
+#define MOVE_END_Y 675
 
 //カメラのチュートリアル画像描画座標
 #define CAMERA_FIRST_WID 0
 #define CAMERA_END_WID 800
-#define CAMERA_FIRST_HEI 0
-#define CAMERA_END_HEI 600
-#define CAMERA_FIRST_X 0
-#define CAMERA_END_X 800
-#define CAMERA_FIRST_Y 0
-#define CAMERA_END_Y 600
+#define CAMERA_FIRST_HEI -150
+#define CAMERA_END_HEI 500
+#define CAMERA_FIRST_X -25
+#define CAMERA_END_X 825
+#define CAMERA_FIRST_Y -125
+#define CAMERA_END_Y 675
 
 //攻撃アクションのチュートリアル画像描画座標
 #define ACTION_FIRST_WID 0
 #define ACTION_END_WID 800
-#define ACTION_FIRST_HEI 0
-#define ACTION_END_HEI 600
-#define ACTION_FIRST_X 0
-#define ACTION_END_X 800
-#define ACTION_FIRST_Y 0
+#define ACTION_FIRST_HEI -150
+#define ACTION_END_HEI 500
+#define ACTION_FIRST_X -150
+#define ACTION_END_X 950
+#define ACTION_FIRST_Y -200
 #define ACTION_END_Y 600
 
 //回避アクションのチュートリアル画像描画座標
 #define AVOIDDANCE_FIRST_WID 0
 #define AVOIDDANCE_END_WID 800
-#define AVOIDDANCE_FIRST_HEI 0
-#define AVOIDDANCE_END_HEI 600
-#define AVOIDDANCE_FIRST_X 0
-#define AVOIDDANCE_END_X 800
-#define AVOIDDANCE_FIRST_Y 0
+#define AVOIDDANCE_FIRST_HEI -150
+#define AVOIDDANCE_END_HEI 500
+#define AVOIDDANCE_FIRST_X -150
+#define AVOIDDANCE_END_X 950
+#define AVOIDDANCE_FIRST_Y -200
 #define AVOIDDANCE_END_Y 600
-//カメラアングル
 
 
 
 //アクションのチュートリアル画像表示する際のプレイヤと敵の距離を設定
 #define ACTION_TUTORIAL_ENEMY_PLAYER_VECTOR 2.4f
 
-class CTutorial{
+class CTutorial {
 public:
 	//デフォルトコンストラクタ
 	CTutorial();
@@ -88,24 +111,33 @@ public:
 	//チュートリアルのフラグ取得
 	bool GetIsTutorialFlag();
 private:
+	//チュートリアル画像のフラグ
+	bool mTutorialflag;
 	//アクションのチュートリアル画像のフラグ
 	bool mActionTutorialflag;
 	//移動のチュートリアル画像のフラグ
 	bool mMoveTutorialflag;
 	//回避のチュートリアル画像のフラグ
 	bool mAvoidDanceTutorialflag;
-	//カメラのチュートリアル画像のフラグ
-	bool mCameraTutorialflag;
+	//カメラのアングルチュートリアル画像のフラグ
+	bool mCameraAngleTutorialflag;
+	//プレイヤの視点操作チュートリアル画像のフラグ
+	bool mCameraActionTutorialflag;
 	//チュートリアル画像のフラグ
 	bool mTutorial_Out_flag;
 	//チュートリアルクラスのポインタ
 	static CTutorial* mpTutorial_Instance;	//別のクラスでチュートリアルの変数を呼び出す場合,staticでポインタを作る
+	//歩行チュートリアルのプレイヤの累積移動変数
+	CVector mMoveTutorial_Accumulation;
+	//歩行チュートリアルのプレイヤの累積変数
+	float mMoveTutorial_Accumulation_Pos;
+	//歩行累積移動値の最大値
+	float mMoveTutorial_Accumulation_Max;
+	//カメラ操作チュートリアルの累積変数
+	float mCameraActionTutorial_Accumulation;
+	//カメラ操作累積値の最大値
+	float mCameraActionTutorial_Accumulation_Max;
 };
-
-
-
-
-
 #endif 
 
 

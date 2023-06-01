@@ -46,13 +46,13 @@
 /*
 カメラクラス
 */
-class CCamera : public CCharacter{
+class CCamera : public CCharacter {
 public:
 	CCamera();
 	//カメラの設定
 	//Set(視点, 注視点, 上方向)
 	void Set(const CVector& eye, const CVector& center,
-		const CVector& up);	
+		const CVector& up);
 	//カメラのアングル変更設定
 	void CameraAngleChange();
 	//カメラのアングルデフォルト設定
@@ -78,6 +78,8 @@ public:
 	void TaskCollision();
 	//インスタンスの取得
 	static CCamera* Instance();
+	//カメラの操作アングル取得
+	float GetInAngleX();
 	//ベクトル取得
 	CMatrix GetMat();
 	//視点座標の取得
@@ -85,7 +87,8 @@ public:
 	//ワールド座標をスクリーン座標へ変換する
 	//WorldToScreen(スクリーン座標, ワールド座標)
 	bool WorldToScreen(CVector* screen, const CVector& world);
-
+	//プレイヤの移動量取得
+	CVector GetInMoveDir();
 private:
 	//描画優先度
 	int mCamera_Priority;
@@ -117,6 +120,10 @@ private:
 	float mCamera_Screen_Width;
 	//カメラのスクリーン高さ設定
 	float mCamera_Screen_Height;
+	//カメラX軸の回転値保存
+	float mCameraMoveX;
+	//カメラY軸の回転値保存
+	float mCameraMoveY;
 
 
 	CVector mRotation;//回転
@@ -141,7 +148,7 @@ private:
 
 	bool mSkip;
 	CTransform mTransform; //回転縮小用行列
-	
+
 
 	float	mAngleX;	//アングル
 	float	mAngleY;	//アングル

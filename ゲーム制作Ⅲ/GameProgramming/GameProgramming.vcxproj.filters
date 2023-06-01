@@ -409,6 +409,9 @@
     <Filter Include="MainScene\GameScene\CSceneTutorial\Tutorial\h">
       <UniqueIdentifier>{37fcfba0-474f-48e3-985c-f42364476327}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainScene\Enemy\Manager">
+      <UniqueIdentifier>{5c5084ac-13f2-46ba-b65b-3b646ef1b8c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CXEnemy.cpp">
@@ -530,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="src\CSceneTutorial.cpp">
       <Filter>MainScene\GameScene\CSceneTutorial\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CXEnemyManager.cpp">
+      <Filter>MainScene\Enemy\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -664,6 +670,9 @@
     </ClInclude>
     <ClInclude Include="src\CSceneTutorial.h">
       <Filter>MainScene\GameScene\CSceneTutorial\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CXEnemyManager.h">
+      <Filter>MainScene\Enemy\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

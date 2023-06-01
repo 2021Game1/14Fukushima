@@ -818,3 +818,8 @@ CVector CXPlayer::GetSwordColPos()
 {
 	return mPlayer_ColSphereSword.GetIsMatrix()->GetPos();	//剣のコライダの座標を返す
 }
+//移動量取得
+CVector CXPlayer::GetInMoveDir()
+{
+	return mPlayer_Move;
+}

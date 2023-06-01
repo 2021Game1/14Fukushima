@@ -59,20 +59,27 @@
 //ゲームオーバー画像
 #define GAMEOVER_IMAGE "res\\Image\\GameOver_Image.png"
 //チュートリアル画像
+//チュートリアルシーン画像
+#define TUTORIAL_IMAGE "res\\Image\\Tutorial.png"
+//チュートリアル終了画像
+#define TUTORIAL_END_IMAGE "res\\Image\\Tutorial_End.png"
 //アクションチュートリアル画像
 #define ACTION_TUTORIAL_IMAGE "res\\Image\\Action_Tutorial.png"
 //移動チュートリアル画像
 #define MOVE_TUTORIAL_IMAGE "res\\Image\\Move_Tutorial.png"
 //回避アクションチュートリアル画像
 #define AVOIDANCE_TUTORIAL_IMAGE "res\\Image\\AvoidDance_Tutorial.png"
-//カメラ操作チュートリアル画像
-#define CAMERA_ACTION_TUTORIAL_IMAGE "res\\Image\\Camera_Angle_Tutorial.png"
+//カメラアングル変更チュートリアル画像
+#define CAMERA_ANGLE_TUTORIAL_IMAGE "res\\Image\\Camera_Angle_Tutorial.png"
+//プレイヤ視点の操作チュートリアル画像
+#define CAMERA_ACTION_TUTORIAL_IMAGE "res\\Image\\Camera_Action_Tutorial.png"
 //HPゲージ
 #define CHARACTER_UI_HP_GREENGAUGE "res\\Ui\\HP_Gauge.png"
 #define CHARACTER_UI_HP_REDGAUGE "res\\Ui\\HP_RedGauge.png"
 //プレイヤUI
 #define PLAYER_UI_HP_FRAME "res\\Ui\\Player_HP_Frame.png"
-
+//敵UI
+#define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
 /*BGM・SE*/
 
 //BGM
@@ -84,18 +91,23 @@ public:
 	//更新処理
 	void Update();
 	void Init();
+	/*画像の取得用関数*/
 	//ゲームクリア画像を取得する
 	CTexture& GetinGameClearImage();
 	//ゲームオーバー画像を取得する
 	CTexture& GetinGameOverImage();
+	//チュートリアル画像
+	CTexture& GetinTutorialImage();
 	//アクションのチュートリアル画像を取得する
 	CTexture& GetinActionTutorialImage();
 	//移動のチュートリアル画像を取得する
 	CTexture& GetinMoveTutorialImage();
 	//回避アクションのチュートリアル画像を取得する
 	CTexture& GetinAvoidDanceTutorialImage();
-	//カメラ操作のチュートリアル画像を取得する
-	CTexture& GetinCameraTutorialImage();
+	//カメラアングルのチュートリアル画像を取得する
+	CTexture& GetinCameraAngleImage();
+	//プレイヤ視点のチュートリアル画像を取得する
+	CTexture& GetinCameraActionImage();
 	//UIフォントの取得
 	CText& GetInUiFont();
 	//HPゲージを取得する
@@ -119,8 +131,7 @@ private:
 	CModelX gPlayer_Model_Knight;
 	//プレイヤのガードアクションエフェクト
 	CModel gPlayer_GuardSP_Model;
-	//敵モデル
-	CModelX gEnemy_Model_Mutant;
+
 	//マップモデル
 	CModel gMap_Model;
 	//マップの背景モデル
@@ -129,8 +140,6 @@ private:
 	CModel gMap_Model_Collision;
 	//プレイヤクラスのインスタンス
 	CXPlayer mPlayer;
-	//敵クラスのインスタンス
-	CXEnemy mEnemy;
 	//マップクラスのインスタンス
 	CMap mMap;
 	CMap mMap_Sky;
@@ -140,18 +149,23 @@ private:
 	CMatrix mBackGroundMatrix;
 	//モデルからコライダを生成
 	CColliderMesh mColliderMesh;
+	/*画像変数*/
 	//ゲームクリア画像
 	CTexture gGameClear_Image;
 	//ゲームオーバー画像
 	CTexture gGameOver_Image;
+	//チュートリアル画像
+	CTexture gTutorial_Image;
 	//アクションチュートリアル画像
 	CTexture gAction_Tutorial_Image;
 	//移動チュートリアル画像
 	CTexture gMove_Tutorial_Image;
 	//回避アクションチュートリアル画像
 	CTexture gAvoidDance_Tutorial_Image;
-	//カメラ操作のチュートリアル画像
-	CTexture gCamera_Tutorial_Image;
+	//カメラアングルのチュートリアル画像
+	CTexture gCamera_Angle_Image;
+	//プレイヤ視点の操作チュートリアル画像
+	CTexture gCamera_Action_Image;
 	//キャラクタのUIインスタンス
 	CTexture gCharacter_Ui_Hp_GreenGauge;
 	CTexture gCharacter_Ui_Hp_RedGauge;

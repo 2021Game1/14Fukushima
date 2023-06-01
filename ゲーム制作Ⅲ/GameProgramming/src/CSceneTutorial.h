@@ -16,7 +16,8 @@
 #define LIGHTPOS_Y 160.0f
 #define LIGHTPOS_Z 50.0f
 
-
+//チュートリアルステージに出現する敵の数
+#define TUTORIAL_GENERATE_A 1
 
 /*
 ゲームのシーン

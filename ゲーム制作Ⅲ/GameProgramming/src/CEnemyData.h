@@ -25,6 +25,7 @@
 
 //敵の左手
 #define ENEMY_COLSPHERE_LEFTARM_SIZE 0.7f					//球コライダのサイズ設定
+
 //敵のHPフレーム,HPゲージ座標,幅,高さ
 #define ENEMY_GAUGE_WID_MAX 100.0f										//ゲージの幅の最大値
 #define ENEMY_GAUGE_HEIGHT 20.0f										//ゲージ描画時の高さ
@@ -43,15 +44,22 @@
 #define ENEMY_ATTACK_MAGNIFICATION 0.2									//ダメージの倍率設定
 
 //敵データテーブル
-#define ENEMY_DATATABLE "res\\Enemy\\DataTeble\\EnemyData.txt"
+
+//敵データテーブル(チュートリアル版)
+#define ENEMY_DATATABLE_TUTORIAL "res\\Enemy\\DataTable\\Tutorial\\EnemyData_Tutorial.txt"
+
+//敵データテーブル(本番のゲーム版で使用する敵1設定)
+#define ENEMY_DATATABLE_MAINGAME1 "res\\Enemy\\DataTable\\MainGame\\EnemyData_MainGame1.txt"
+
+//敵データテーブル(本番のゲーム版で使用する敵2設定)
+#define ENEMY_DATATABLE_MAINGAME2 "res\\Enemy\\DataTable\\MainGame\\EnemyData_MainGame2.txt"
 
 
 
 //SE・敵
 #define SE_EMEMY_DEATH "res\\Se\\SE_Enemy_Death.wav"
 
-//敵UI
-#define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
+
 //敵ダメージエフェクト
 #define ENEMY_EF_DAMAGESP1 "Effect\\Enemy_DamageSp1.png"
 #define ENEMY_EF_DAMAGESP2 "Effect\\Enemy_DamageSp2.png"
