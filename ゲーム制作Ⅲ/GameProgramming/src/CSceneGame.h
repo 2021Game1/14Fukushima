@@ -3,6 +3,12 @@
 #include <time.h>
 #include "CScene.h"
 #include "CRes.h"
+#include "CTutorial.h"
+#include "CCamera.h"
+#include "CXEnemyManager.h"
+#include "CXPlayerManager.h"
+#include "CMap.h"
+#include "CSceneTutorial.h"
 
 //影の設定
 #define SHADOWCOLOR_0 0.4f
@@ -41,6 +47,10 @@
 #define GAMEOVER_FIRST_Y 0
 #define GAMEOVER_END_Y 600
 
+//敵生成数
+#define ENEMY_GENERATE_A 1
+#define ENEMY_GENERATE_B 1
+
 /*
 ゲームのシーン
 */
@@ -58,6 +68,8 @@ private:
 
 	//リソースクラスのインスタンス
 	CRes mRes;
+	//マップクラスのインスタンス
+	CMap mMap;
 	//シャドウマップのインスタンス
 	CShadowMap mShadowMap;
 };

@@ -6,11 +6,14 @@
 #define ENEMY_FLOAT_INITIALIZATION 0.0f															//浮動小数点の初期化
 #define ENEMY_NUM 5
 
+//敵UI
+#define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
+
 /*敵のコライダ設定*/
 //敵の身体
 #define ENEMY_COLCAPSULE_BODY_X 0.0f					//カプセルコライダのX座標設定
 #define ENEMY_COLCAPSULE_BODY_TOP_Y 190.0f				//カプセルコライダ頂点Y座標設定
-#define ENEMY_COLCAPSULE_BODY_BOTTOM_Y -31.0f			//カプセルコライダ底のY座標設定
+#define ENEMY_COLCAPSULE_BODY_BOTTOM_Y -20.0f			//カプセルコライダ底のY座標設定
 #define ENEMY_COLCAPSULE_BODY_Z 0.0f					//カプセルコライダのZ座標設定
 #define ENEMY_COLCAPSULE_BODY_SIZE 1.2f					//カプセルコライダのサイズ設定
 
@@ -43,7 +46,7 @@
 #define ENEMY_TRUN_CHECK_SET 0.0f										//回転速度を検出し可動域を設定
 #define ENEMY_ATTACK_MAGNIFICATION 0.2									//ダメージの倍率設定
 
-//敵データテーブル
+/*敵データテーブル*/
 
 //敵データテーブル(チュートリアル版)
 #define ENEMY_DATATABLE_TUTORIAL "res\\Enemy\\DataTable\\Tutorial\\EnemyData_Tutorial.txt"
@@ -54,11 +57,23 @@
 //敵データテーブル(本番のゲーム版で使用する敵2設定)
 #define ENEMY_DATATABLE_MAINGAME2 "res\\Enemy\\DataTable\\MainGame\\EnemyData_MainGame2.txt"
 
+/*エネミーのアニメーションモデル*/
 
+#define ENEMY_MODEL_FILE "res\\Enemy\\Mutant\\mutant.x"
+#define ENEMY_ANIMATION_ATTACKSP1 "res\\Enemy\\Mutant\\Attack1.x"
+#define ENEMY_ANIMATION_WALK "res\\Enemy\\Mutant\\Walk.x"
+#define ENEMY_ANIMATION_DASH "res\\Enemy\\Mutant\\Dash.x"
+#define ENEMY_ANIMATION_BACKSTEP "res\\Enemy\\Mutant\\BackStep.x"
+#define ENEMY_ANIMATION_IDLE "res\\Enemy\\Mutant\\Idle.x"
+#define ENEMY_ANIMATION_KNOCKBACK "res\\Enemy\\Mutant\\KnockBack.x"
+#define ENEMY_ANIMATION_DEATH "res\\Enemy\\Mutant\\Death.x"
 
-//SE・敵
+/*SE*/
+
+//死亡SE
 #define SE_EMEMY_DEATH "res\\Se\\SE_Enemy_Death.wav"
 
+/*エフェクト*/
 
 //敵ダメージエフェクト
 #define ENEMY_EF_DAMAGESP1 "Effect\\Enemy_DamageSp1.png"
@@ -66,4 +81,8 @@
 //敵攻撃予備動作エフェクト
 #define ENEMY_ATTACK_ACTION "Effect\\Enemy_Attack_Action.png"
 
+/*UI*/
+
+//敵UI
+#define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
 #endif // !

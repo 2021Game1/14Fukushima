@@ -537,6 +537,9 @@
     <ClCompile Include="src\CXEnemyManager.cpp">
       <Filter>MainScene\Enemy\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="src\CXPlayerManager.cpp">
+      <Filter>MainScene\Player\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CPlayerData.h">
@@ -673,6 +676,9 @@
     </ClInclude>
     <ClInclude Include="src\CXEnemyManager.h">
       <Filter>MainScene\Enemy\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CXPlayerManager.h">
+      <Filter>MainScene\Player\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

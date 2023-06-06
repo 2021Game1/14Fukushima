@@ -208,6 +208,57 @@ CXEnemy::CXEnemy()
 	, mEnemy_ColSphereBody(this, nullptr, CVector(ENEMY_COLSPHERE_BODY_X, ENEMY_COLSPHERE_BODY_Y, ENEMY_COLSPHERE_BODY_Z), ENEMY_COLSPHERE_BODY_SIZE)
 	, mEnemy_ColSphereRightarm(this, nullptr, CVector(), ENEMY_COLSPHERE_RIGHTARM_SIZE)
 	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), ENEMY_COLSPHERE_LEFTARM_SIZE)
+	, Enemy_Priority(NULL)
+	,Enemy_Hp(NULL)
+	,Enemy_Hp_Max(NULL)
+    ,Enemy_Attack_Point(NULL)
+	,Enemy_Defense_Point(NULL)
+    ,Enemy_Stan_Point(NULL)
+    ,Enemy_Damage_Magnification(NULL)
+    ,Enemy_Death_Hp(NULL)
+    ,Enemy_Gravity(NULL)
+    ,Enemy_StanAccumulation(NULL)
+    ,Enemy_StanAccumulation_Max(NULL)
+    ,Enemy_Speed_WalkPattern(NULL)
+    ,Enemy_Speed_DashPattern(NULL)
+    ,Enemy_Speed_BackPattern(NULL)
+    ,Enemy_Walk_Dis(NULL)
+    ,Enemy_Dash_Dis(NULL)
+    ,Enemy_Walk_Dis_Max(NULL)
+    ,Enemy_Dash_Dis_Max(NULL)
+    ,Enemy_Attack_Dis(NULL)
+    ,Enemy_Attack_Reception(NULL)
+    ,Enemy_Attack_Outreception(NULL)
+    ,Enemy_Action_Rand(NULL)
+    ,Enemy_Attack_Walk_Rand(NULL)
+    ,Enemy_Attack_Dash_Rand(NULL)
+    ,Enemy_AttackSp1_Set(NULL)
+    ,Enemy_AttackSp2_Set(NULL)
+    ,Enemy_Idle_Animation_Frame(NULL)
+    ,Enemy_Move_Animation_Frame(NULL)
+    ,Enemy_Dash_Animation_Frame(NULL)
+    ,Enemy_BackStep_Animation_Frame(NULL)
+    ,Enemy_Attack1_Animation_Frame(NULL)
+    ,Enemy_Attack2_Animation_Frame(NULL)
+    ,Enemy_Knockback_Animation_Frame(NULL)
+    ,Enemy_Death_Animation_Frame(NULL)
+    ,Enemy_Animation_No_Attack_1(NULL)
+    ,Enemy_Animation_No_Attack_2(NULL)
+    ,Enemy_Animation_No_Walk(NULL)
+    ,Enemy_Animation_No_Dash(NULL)
+    ,Enemy_Animation_No_BackStep(NULL)
+    ,Enemy_Animation_No_Idle(NULL)
+    ,Enemy_Animation_No_Knockback(NULL)
+    ,Enemy_Animation_No_Death(NULL)
+    ,Enemy_Position_X(NULL)
+    ,Enemy_Position_Y(NULL)
+    ,Enemy_Position_Z(NULL)
+    ,Enemy_Scale_X(NULL)
+    ,Enemy_Scale_Y(NULL)
+    ,Enemy_Scale_Z(NULL)
+    ,Enemy_Rotation_X(NULL)
+    ,Enemy_Rotation_Y(NULL)
+    ,Enemy_Rotation_Z(NULL)
 {
 	//初期状態を設定
 	mEnemy_State = CXEnemy::EEnemyState::EIDLE;	//待機状態
@@ -217,7 +268,8 @@ CXEnemy::CXEnemy()
 	mEnemy_ColSphereRightarm.Tag(CCollider::ERIGHTARM);	//右手
 	mEnemy_ColSphereLeftarm.Tag(CCollider::ELEFTARM);	//左手
 	mpEnemy_Instance = this;
-
+	//敵のUIの追加
+	gEnemy_Ui_Hp_BackBar.Load2D(ENEMY_UI_HP_BACKBAR);
 
 	//タグの設定
 	mTag = EENEMY;
@@ -308,7 +360,7 @@ void CXEnemy::Render2D()
 	}
 	//画面外の時に表示しない
 	if (ret.X() > WINDOW_FIRST_WIDTH && ret.X() < WINDOW_WIDTH) {
-		CRes::GetInstance()->GetInEnemyUiHpBackBar().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
+		gEnemy_Ui_Hp_BackBar.Draw(ret.X() - ENEMY_GAUGE_WID_MAX, ret.X() + ENEMY_GAUGE_WID_MAX, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 0, 30);
 		//被ダメージ分後追いするゲージを表示
 		CRes::GetInstance()->GetInUiHpRedGauge().Draw(ret.X() - ENEMY_GAUGE_WID_MAX, (ret.X() - ENEMY_GAUGE_WID_MAX) + mEnemy_FollowGaugeWid * 2.0f, ret.Y() + ENEMY_GAUGE_HP_BOTTOM, ret.Y() + ENEMY_GAUGE_HP_TOP, 0, 480, 10, 30);
 		//体力ゲージ
@@ -662,6 +714,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 		CVector adjust;//調整用ベクトル
 		if (CCollider::CollisionTriangleLine(o, m, &adjust))
 		{
+			mPosition.Y(NULL);
 			//位置の更新(mPosition + adjust)
 			mPosition = mPosition + adjust;
 			//行列の更新
@@ -802,6 +855,10 @@ CXEnemy* CXEnemy::GetInstance()
 }
 int CXEnemy::GetHp() {
 	return mHp;
+}
+CXEnemy::EEnemyType CXEnemy::GetIsType()
+{
+	return mEnemy_Type;
 }
 float CXEnemy::GetIsEnemyAttackDis()
 {

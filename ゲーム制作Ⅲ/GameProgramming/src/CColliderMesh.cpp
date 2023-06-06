@@ -1,5 +1,7 @@
 #include "CColliderMesh.h"
 
+CColliderMesh* CColliderMesh::mpColliderMesh_Instance = nullptr;										//インスタンス変数の初期化
+
 CColliderMesh::CColliderMesh()
 : mpColliderTriangles(nullptr)
 {
@@ -26,4 +28,7 @@ void CColliderMesh::Set(CCharacter *parent, CMatrix *matrix, CModel *model)
 			, model->Triangles()[i].V2());
 		mpColliderTriangles[i].ChangePriority();
 	}
+}
+CColliderMesh* CColliderMesh::GetInstance() {
+	return mpColliderMesh_Instance;
 }

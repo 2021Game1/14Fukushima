@@ -87,8 +87,6 @@ public:
 	//ワールド座標をスクリーン座標へ変換する
 	//WorldToScreen(スクリーン座標, ワールド座標)
 	bool WorldToScreen(CVector* screen, const CVector& world);
-	//プレイヤの移動量取得
-	CVector GetInMoveDir();
 private:
 	//描画優先度
 	int mCamera_Priority;

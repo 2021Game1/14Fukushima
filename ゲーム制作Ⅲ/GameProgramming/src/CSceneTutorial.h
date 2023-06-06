@@ -4,6 +4,10 @@
 #include "CScene.h"
 #include "CRes.h"
 #include "CTutorial.h"
+#include "CCamera.h"
+#include "CXEnemyManager.h"
+#include "CXPlayerManager.h"
+#include "CMap.h"
 
 //影の設定
 #define SHADOWCOLOR_0 0.4f
@@ -38,8 +42,10 @@ private:
 	CTutorial mTutorial;
 	//リソースクラスのインスタンス
 	CRes mRes;
+	CMap mMap;
 	//シャドウマップのインスタンス
 	CShadowMap mShadowMap;
+
 };
 void WholeRender();
 #endif

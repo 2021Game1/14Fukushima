@@ -1,7 +1,9 @@
 #include"CXPlayer.h"
 #include"CRes.h"
 
+
 CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタンス変数の初期化
+
 
 void CXPlayer::PlayerTable() {
 	OX::Table table(PLAYER_DATATABLE);
@@ -63,6 +65,24 @@ void CXPlayer::PlayerTable() {
 	Player_Trun_Speeds_Set = table["Player_Trun_Speeds_Set"]["Value"].fVal;
 	Player_Trun_Check_Speeds_Set = table["Player_Trun_Check_Speeds_Set"]["Value"].fVal;
 	Player_Trun_Check_Set = table["Player_Trun_Check_Set"]["Value"].fVal;
+
+	//優先度を1に変更する
+	mPriority = Player_Priority;
+	//テーブル取得データを代入
+	mPlayer_Gauge_Hp_Shake_X = Player_Gauge_Hp_Shake_X;
+	mPlayer_Gauge_Hp_Shake_Y = Player_Gauge_Hp_Shake_Y;
+	mPlayer_Gauge_Hp_Shake_Range_X = Player_Gauge_Hp_Shake_Range_X;
+	mPlayer_Gauge_Hp_Shake_Range_Y = Player_Gauge_Hp_Shake_Range_Y;
+	mPlayer_FollowGaugeWid = Player_Gauge_Wid;
+	mPlayer_Speed = Player_Speed_Default;
+	mAttack_Point = Player_Attack_Point;
+	mDefense_Point = Player_Defense_Point;
+	mStan_Point = Player_Stan_Point;
+	mStanAccumulation = Player_StanAccumulation;
+	mPlayer_Hp = Player_Hp;
+	mPlayer_Hp_Max = Player_Hp_Max;
+	mPlayer_Gauge_Hp_Rate = Player_Gauge_Hp_Rate;
+	mPlayer_Attack_Dis = Player_Attack_Dis;
 }
 
 CXPlayer::CXPlayer()
@@ -93,30 +113,14 @@ CXPlayer::CXPlayer()
 	mPlayer_ColSphereHead.Tag(CCollider::EHEAD);
 	mPlayer_ColSphereSword.Tag(CCollider::ESWORD);					//剣
 	PlayerTable();
-	//優先度を1に変更する
-	mPriority = Player_Priority;
-	//テーブル取得データを代入
-	mPlayer_Gauge_Hp_Shake_X = Player_Gauge_Hp_Shake_X;
-	mPlayer_Gauge_Hp_Shake_Y = Player_Gauge_Hp_Shake_Y;
-	mPlayer_Gauge_Hp_Shake_Range_X = Player_Gauge_Hp_Shake_Range_X;
-	mPlayer_Gauge_Hp_Shake_Range_Y = Player_Gauge_Hp_Shake_Range_Y;
-	mPlayer_FollowGaugeWid = Player_Gauge_Wid;
-	mPlayer_Speed = Player_Speed_Default;
-	mAttack_Point = Player_Attack_Point;
-	mDefense_Point = Player_Defense_Point;
-	mStan_Point = Player_Stan_Point;
-	mStanAccumulation = Player_StanAccumulation;
-	mPlayer_Hp = Player_Hp;
-	mPlayer_Hp_Max = Player_Hp_Max;
-	mPlayer_Gauge_Hp_Rate = Player_Gauge_Hp_Rate;
-	mPlayer_Attack_Dis = Player_Attack_Dis;
+
 	CTaskManager::Get()->Remove(this);//削除して
 	CTaskManager::Get()->Add(this);//追加する
 }
 
 void CXPlayer::Init(CModelX* model)
 {
-	CXCharacter::Init(model);
+
 	//プレイヤSE
 	Se_Player_AttackSp1.Load(SE_PLAYER_ATTACK1);
 	Se_Player_AttackSp2.Load(SE_PLAYER_ATTACK2);
@@ -124,6 +128,10 @@ void CXPlayer::Init(CModelX* model)
 	Se_Player_Death.Load(SE_PLAYER_DEATH);
 	//敵SE
 	Se_Enemy_AttackSp.Load(SE_ENEMY_ATTACK);
+	//プレイヤのUIの追加
+	gPlayer_Ui_Hp_Frame.Load2D(PLAYER_UI_HP_FRAME);
+
+	CXCharacter::Init(model);
 	//合成行列の設定
 	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[3]);
 	mPlayer_ColSphereBody.Matrix(&mpCombinedMatrix[15]);
@@ -197,12 +205,7 @@ void CXPlayer::Idle()
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = EATTACK_1;
 	}
-	//WASDキーを押すと移動へ移行
-	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
-		mPlayer_State = EMOVE;
-		Se_Player_Walk.Repeat(Player_Se);
-	}
-	else if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
+	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_IsHit = false;
@@ -222,6 +225,11 @@ void CXPlayer::Idle()
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//WASDキーを押すと移動へ移行
+	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
+		mPlayer_State = EMOVE;
+		Se_Player_Walk.Repeat(Player_Se);
+	}
 	else{
 		mPlayer_ComboCount = PLAYER_INT_INITIALIZATION;
 		ChangeAnimation(Player_Animation_No_Idle, true, Player_Idle_Animation_Frame);
@@ -236,7 +244,8 @@ void CXPlayer::Move()
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = EATTACK_1;
 	} 
-	else if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
+
+	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
 		mPlayer_State = EAVOIDANCE;
 		mPlayer_IsHit = false;
@@ -330,8 +339,11 @@ void CXPlayer::Attack_1()
 		ChangeAnimation(Player_Animation_No_Attack1, false, Player_Attack1_Animation_Frame);	//プレイヤの攻撃1モーション
 		Se_Player_AttackSp1.Play(Player_Se);
 	}
+	if (CXEnemy::GetInstance() == CXEnemy::EEnemyType::ETYPE_GAME_1)
+	{
 
-	if (mPlayer_EnemyDis > mPlayer_Attack_Dis) {
+	}
+	if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
 		mPlayer_MoveDir = mPlayer_Point.Normalize();
 	}
@@ -408,7 +420,7 @@ void CXPlayer::Attack_2()
 			Se_Player_AttackSp2.Play(Player_Se);
 	}
 
-	if (mPlayer_EnemyDis > mPlayer_Attack_Dis) {
+	if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
 		mPlayer_MoveDir = mPlayer_Point.Normalize();
 	}
@@ -586,6 +598,7 @@ void CXPlayer::MoveCamera()
 	}
 
 }
+
 //2D描画
 void CXPlayer::Render2D()
 {
@@ -616,7 +629,7 @@ void CXPlayer::Render2D()
 	if(mPlayer_Hp >= Player_GameOver_Hp){
 		CRes::GetInstance()->GetInUiHpRedGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + mPlayer_FollowGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_HEI, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
 		CRes::GetInstance()->GetInUiHpGreenGauge().Draw(PLAYER_GAUGE_LEFT + shakeX, PLAYER_GAUGE_LEFT + HpGaugeWid + shakeX, PLAYER_GAUGE_HP_BOTTOM + shakeY, PLAYER_GAUGE_HP_TOP + shakeY, PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_FIRST_HEI, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
-		CRes::GetInstance()->GetInPlayerUiHpFrame().Draw(PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_RIGHT, PLAYER_GAUGE_FRAME_BOTTOM, PLAYER_GAUGE_FRAME_TOP, PLAYER_GAUGE_FRAME_TEX_FIRST_WID, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_HEI, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
+		gPlayer_Ui_Hp_Frame.Draw(PLAYER_GAUGE_FRAME_LEFT, PLAYER_GAUGE_FRAME_RIGHT, PLAYER_GAUGE_FRAME_BOTTOM, PLAYER_GAUGE_FRAME_TOP, PLAYER_GAUGE_FRAME_TEX_FIRST_WID, PLAYER_GAUGE_FRAME_TEX_WID, PLAYER_GAUGE_FRAME_TEX_HEI, PLAYER_GAUGE_FRAME_TEX_FIRST_WID);
 	}
 	//2Dの描画終了
 	CUtil::End2D();
@@ -719,6 +732,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		CVector adjust;//調整用ベクトル
 		if (CCollider::CollisionTriangleLine(o, m, &adjust))
 		{
+			mPosition.Y(NULL);
 			//位置の更新(mPosition + adjust)
 			mPosition = mPosition + adjust;
 			//行列の更新
@@ -756,12 +770,15 @@ void CXPlayer::MovingCalculation() {
 	if (tCheck.cross > Player_Trun_Check_Set) {
 		mRotation = mRotation + CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
 	}
-	if (tCheck.cross < Player_Trun_Check_Set){
+	if (tCheck.cross < Player_Trun_Check_Set) {
 		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
 	}
-	mPlayer_Point = CXEnemy::GetInstance()->Position() - mPosition;
-	//プレイヤーまでの距離を求める
-	mPlayer_EnemyDis = mPlayer_Point.Length();
+	if (CXEnemy::GetInstance()) {
+		mPlayer_Point = CXEnemy::GetInstance()->Position() - mPosition;
+		//プレイヤーまでの距離を求める
+		mPlayer_EnemyDis = mPlayer_Point.Length();
+	}
+
 	//リセット
 	mPlayer_MoveDir = CVector(0.0f, 0.0f, 0.0f);
 
@@ -822,4 +839,20 @@ CVector CXPlayer::GetSwordColPos()
 CVector CXPlayer::GetInMoveDir()
 {
 	return mPlayer_Move;
+}
+void CXPlayer::GetPos()
+{
+	mPosition.Set(Player_Position_X, Player_Position_Y, Player_Position_Z);								//位置を設定
+
+}
+
+void CXPlayer::GetScale()
+{
+	mScale.Set(Player_Scale_X, Player_Scale_Y, Player_Scale_Z);										//スケール設定
+
+}
+
+void CXPlayer::GetRotation()
+{
+	mRotation.Set(Player_Rotation_X, Player_Rotation_Y, Player_Rotation_Z);								//回転を設定
 }

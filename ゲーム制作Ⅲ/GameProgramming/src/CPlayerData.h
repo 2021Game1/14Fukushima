@@ -5,7 +5,25 @@
 #define PLAYER_INT_INITIALIZATION 0																//初期化
 #define PLAYER_FLOAT_INITIALIZATION 0.0f														//浮動小数点の初期化
 
+//プレイヤUI
+#define PLAYER_UI_HP_FRAME "res\\Ui\\Player_HP_Frame.png"
+
+/*データテーブル*/
+
+//プレイヤのデータテーブル
 #define PLAYER_DATATABLE "res\\Player\\DataTable\\PlayerData.txt"
+
+/*プレイヤのアニメーションモデル*/
+
+#define PLAYER_MODEL_FILE "res\\Player\\Paladin\\paladin.x"
+#define PLAYER_ANIMATION_ATTACKSP1 "res\\Player\\Paladin\\Attack1.x"
+#define PLAYER_ANIMATION_ATTACKSP1_IDLE "res\\Player\\Paladin\\Attack1_Idle.x"
+#define PLAYER_ANIMATION_ATTACKSP2 "res\\Player\\Paladin\\Attack2.x"
+#define PLAYER_ANIMATION_ATTACKSP2_IDLE "res\\Player\\Paladin\\Attack2_Idle.x"
+#define PLAYER_ANIMATION_AVOIDANCE "res\\Player\\Paladin\\Avoidance.x" 
+#define PLAYER_ANIMATION_IDLE "res\\Player\\Paladin\\Idle.x"
+#define PLAYER_ANIMATION_KNOCKBACK "res\\Player\\Paladin\\KnockBack.x"
+#define PLAYER_ANIMATION_DEATH "res\\Player\\Paladin\\Death.x"
 
 /*SE設定*/
 

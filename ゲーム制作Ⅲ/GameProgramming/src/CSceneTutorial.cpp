@@ -6,16 +6,31 @@
 CSceneTutorial::~CSceneTutorial()
 {
 	CXEnemyManager::GetInstance()->Release();	//敵管理解放
+	CXPlayerManager::GetInstance()->Release();	//プレイヤ管理開放
+	CMap::GetInstance()->Release();
+	CSkyMap::GetInstance()->Release();
 	CTaskManager::Get()->Delete();
 }
 
 void CSceneTutorial::Init() {
 	//シーンの設定
 	mScene = ETUTORIAL;
+	//カメラ初期化
+	Camera.Init();
+	//マップ設定
+	CMap::GetInstance()->Generate();
+	CSkyMap::GetInstance()->Generate();
+	//リソースの読み込み設定
 	mRes.Init();
+	//BGMセット(リピート）
 	CRes::GetInstance()->GetinSoundBgmGame().Repeat(0.2);
+	//プレイヤ管理生成
+	CXPlayerManager::GetInstance()->Generate();
 	//敵管理生成
 	CXEnemyManager::GetInstance()->Generate();
+	//プレイヤ生成
+	CXPlayerManager::GetInstance()->PlayerGenerate();
+	//敵生成
 	CXEnemyManager::GetInstance()->EnemyGenerate(TUTORIAL_GENERATE_A, CXEnemy::EEnemyType::ETYPE_TUTORIAL);
 	//影の設定
 	float shadowColor[] = { SHADOWCOLOR_0, SHADOWCOLOR_1, SHADOWCOLOR_2, SHADOWCOLOR_3 };	//影の色

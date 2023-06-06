@@ -90,12 +90,20 @@
 #define AVOIDDANCE_END_WID 800
 #define AVOIDDANCE_FIRST_HEI -150
 #define AVOIDDANCE_END_HEI 500
-#define AVOIDDANCE_FIRST_X -150
-#define AVOIDDANCE_END_X 950
-#define AVOIDDANCE_FIRST_Y -200
+#define AVOIDDANCE_FIRST_X -25
+#define AVOIDDANCE_END_X 825
+#define AVOIDDANCE_FIRST_Y -125
 #define AVOIDDANCE_END_Y 600
 
+//カメラアングルの操作累積値設定
+#define CAMERA_ANGLE_ACCEUMULATION 1
+//カメラアングルの操作累積値設定
+#define CAMERA_ANGLE_ACCEUMULATION_MAX 4
 
+//回避操作累積値設定
+#define AVOIDDANCE_ACCEUMULATION 1
+//回避操作累積値設定
+#define AVOIDDANCE_ACCEUMULATION_MAX 6
 
 //アクションのチュートリアル画像表示する際のプレイヤと敵の距離を設定
 #define ACTION_TUTORIAL_ENEMY_PLAYER_VECTOR 2.4f
@@ -111,7 +119,7 @@ public:
 	//チュートリアルのフラグ取得
 	bool GetIsTutorialFlag();
 private:
-	//チュートリアル画像のフラグ
+	//チュートリアル開始の画像のフラグ
 	bool mTutorialflag;
 	//アクションのチュートリアル画像のフラグ
 	bool mActionTutorialflag;
@@ -123,7 +131,10 @@ private:
 	bool mCameraAngleTutorialflag;
 	//プレイヤの視点操作チュートリアル画像のフラグ
 	bool mCameraActionTutorialflag;
-	//チュートリアル画像のフラグ
+	//チュートリアル終了の画像フラグ
+	bool mTutorialEndflag;
+
+	//チュートリアルの終了フラグ
 	bool mTutorial_Out_flag;
 	//チュートリアルクラスのポインタ
 	static CTutorial* mpTutorial_Instance;	//別のクラスでチュートリアルの変数を呼び出す場合,staticでポインタを作る
@@ -137,6 +148,10 @@ private:
 	float mCameraActionTutorial_Accumulation;
 	//カメラ操作累積値の最大値
 	float mCameraActionTutorial_Accumulation_Max;
+	//カメラアングル操作累積設定
+	int mCameraAngle_Acceumulation;
+	//回避操作蓄積設定
+	int mAvoidDance_Acceumulation;
 };
 #endif 
 

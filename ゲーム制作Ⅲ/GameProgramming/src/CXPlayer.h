@@ -13,11 +13,14 @@
 #include"CSound.h"
 #include"CTable.h"
 #include"CPlayerData.h"
+#include"CXEnemy.h"
+#include "CModelX.h"
 #include "CCamera.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-
+//プレイヤUI
+#define PLAYER_UI_HP_FRAME "res\\Ui\\Player_HP_Frame.png"
 
 /*
 CXPlayer
@@ -40,6 +43,10 @@ public:
 	void Update();
 	//モデルの設定、初期設定
 	void Init(CModelX* model);
+	//座標、回転値、スケールの取得
+	void GetPos();								//座標の取得
+	void GetScale();							//スケールの取得
+	void GetRotation();							//モデルの回転値取得
 	//2D描画
 	void Render2D();
 	//タスクコリジョン
@@ -50,6 +57,7 @@ public:
 	int GetHp();	
 	//プレイヤのインスタンス取得関数
 	static CXPlayer* GetInstance();		//staticで処理を作る
+	//プレイヤのモデル取得
 	//プレイヤのアニメーションフレーム取得関数
 	bool GetIsAnimationFrame();
 	//プレイヤのヒット判定取得関数
@@ -62,14 +70,27 @@ public:
 	CXPlayer::EPlayerState GetState();	//プレイヤの状態を取得する
 	//プレイヤの剣コライダの座標取得
 	CVector GetSwordColPos();			//剣のコライダの座標を取得する
-		//プレイヤの移動量取得
+	//プレイヤの移動量取得
 	CVector GetInMoveDir();
+	//テーブル取得関数
+	void PlayerTable();
 private:
+	//プレイヤSE
+	CSound Se_Player_AttackSp1;						//プレイヤが攻撃1の時流す
+	CSound Se_Player_AttackSp2;						//プレイヤが攻撃2の時流す
+	CSound Se_Player_Walk;							//プレイヤが移動時流す
+	CSound Se_Player_Death;							//プレイヤ死亡時流す
+	//敵SE
+	CSound Se_Enemy_AttackSp;						//敵から攻撃を受けた時に流す
+	//プレイヤのUIインスタンス
+	CTexture gPlayer_Ui_Hp_Frame;
+
 	//コライダの宣言
 	CCollider mPlayer_ColSphereSword;				//剣
 	CCollider mPlayer_ColSphereBody;				//球の身体
 	CCollider mPlayer_ColSphereHead;				//球の頭
 	CColliderCapsule mPlayer_ColCapsuleBody;		//カプセルの身体
+
 	//プレイヤの状態推移
 	EPlayerState mPlayer_State;			//プレイヤの状態判断用
 	bool mPlayer_InvincibleFlag;		//無敵状態の時trueを返す
@@ -124,23 +145,6 @@ private:
 
 	//プレイヤのポインタ
 	static CXPlayer* mpPlayer_Instance;	//別のクラスでプレイヤの変数を呼び出す場合,staticでポインタを作る
-
-	//プレイヤの行動処理
-	void Idle();						//待機処理
-	void MoveCamera();					//カメラを基準にした移動処理
-	void Move();						//移動処理
-	void Attack_1();					//攻撃1処理
-	void Attack_2();					//攻撃2処理
-	void Avoidance();					//回避処理
-	void Death();						//死亡処理
-	void KnockBack();					//ノックバック処理
-	//移動の計算処理
-	void MovingCalculation();
-	//プレイヤの衝突判定関数
-	void Collision(CCollider* m, CCollider* o);		//衝突処理
-private:
-	//テーブル取得関数
-	void PlayerTable();
 
 	//テーブル取得用変数
 	int Player_Priority;							//描画優先度
@@ -215,13 +219,20 @@ private:
 	float Player_Trun_Check_Speeds_Set;				//プレイヤの回転速度チェック設定
 	float Player_Trun_Check_Set;					//プレイヤの回転チェック設定
 
-	//プレイヤSE
-	CSound Se_Player_AttackSp1;						//プレイヤが攻撃1の時流す
-	CSound Se_Player_AttackSp2;						//プレイヤが攻撃2の時流す
-	CSound Se_Player_Walk;							//プレイヤが移動時流す
-	CSound Se_Player_Death;							//プレイヤ死亡時流す
-	//敵SE
-	CSound Se_Enemy_AttackSp;						//敵から攻撃を受けた時に流す
+	//プレイヤの行動処理
+	void Idle();						//待機処理
+	void MoveCamera();					//カメラを基準にした移動処理
+	void Move();						//移動処理
+	void Attack_1();					//攻撃1処理
+	void Attack_2();					//攻撃2処理
+	void Avoidance();					//回避処理
+	void Death();						//死亡処理
+	void KnockBack();					//ノックバック処理
+	//移動の計算処理
+	void MovingCalculation();
+	//プレイヤの衝突判定関数
+	void Collision(CCollider* m, CCollider* o);		//衝突処理
+
 };
 #endif 
 

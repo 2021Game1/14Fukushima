@@ -41,6 +41,7 @@ public:
 	bool GetIsHit();							//ヒット状態の判別
 	bool GetIsDeath();							//死亡状態の時にtrueを返す
 	int GetHp();								//現在のHPを取得する
+	CXEnemy::EEnemyType GetIsType();			//タイプの取得
 	void SetIsType(EEnemyType type);			//タイプの設定
 	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
 	void SetIsPriority();
@@ -137,7 +138,8 @@ private:
 	float Enemy_Rotation_Z;						//モデルの回転Z座標
 	//終わり
 
-
+	//敵のUIインスタンス
+	CTexture gEnemy_Ui_Hp_BackBar;
 
 	//コライダの宣言
 	CCollider mEnemy_ColSphereRightarm;			//右腕
