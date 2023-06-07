@@ -24,10 +24,10 @@
 #define ENEMY_COLSPHERE_BODY_SIZE 1.6f				//球コライダのサイズ設定
 
 //敵の右手
-#define ENEMY_COLSPHERE_RIGHTARM_SIZE 0.7f				//球コライダのサイズ設定
+#define ENEMY_COLSPHERE_RIGHTARM_SIZE 0.8f				//球コライダのサイズ設定
 
 //敵の左手
-#define ENEMY_COLSPHERE_LEFTARM_SIZE 0.7f					//球コライダのサイズ設定
+#define ENEMY_COLSPHERE_LEFTARM_SIZE 0.8f					//球コライダのサイズ設定
 
 //敵のHPフレーム,HPゲージ座標,幅,高さ
 #define ENEMY_GAUGE_WID_MAX 100.0f										//ゲージの幅の最大値

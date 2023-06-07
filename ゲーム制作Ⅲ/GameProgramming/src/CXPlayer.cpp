@@ -339,14 +339,12 @@ void CXPlayer::Attack_1()
 		ChangeAnimation(Player_Animation_No_Attack1, false, Player_Attack1_Animation_Frame);	//プレイヤの攻撃1モーション
 		Se_Player_AttackSp1.Play(Player_Se);
 	}
-	if (CXEnemy::GetInstance() == CXEnemy::EEnemyType::ETYPE_GAME_1)
-	{
 
-	}
-	if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
-		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
-		mPlayer_MoveDir = mPlayer_Point.Normalize();
-	}
+		if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
+			mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
+			mPlayer_MoveDir = mPlayer_Point.Normalize();
+		}
+
 		//ヒット判定発生
 		if (IsAnimationFinished() == false)
 		{
@@ -424,6 +422,7 @@ void CXPlayer::Attack_2()
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
 		mPlayer_MoveDir = mPlayer_Point.Normalize();
 	}
+
 
 	//ヒット判定発生
 	if (IsAnimationFinished() == false && mAnimationIndex == Player_Animation_No_Attack2) {
@@ -650,68 +649,71 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 				//相手の親のタグがプレイヤー
 				if (o->Parent()->Tag() == CCharacter::ETag::EENEMY)
 				{
-					//相手のコライダのタグが右手
-					if (o->CCollider::Tag() == CCollider::ERIGHTARM)
-					{
-						//プレイヤーが無敵状態ではないとき
-						if (mPlayer_InvincibleFlag == false)
+					if (m->CCollider::Tag() == CCollider::EBODY) {
+						//相手のコライダのタグが右手
+						if (o->CCollider::Tag() == CCollider::ERIGHTARM)
 						{
-							if (CXEnemy::EEnemyState::EATTACK_1 == CXEnemy::GetInstance()->CXEnemy::GetState())
-							{
-								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
+							if (((CXEnemy*)(o->Parent()))->GetState() != CXEnemy::EEnemyState::EATTACK_2) {
+								//プレイヤーが無敵状態ではないとき
+								if (mPlayer_InvincibleFlag == false)
 								{
-									((CXEnemy*)(o->Parent()))->SetIsHit(false);
-									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
-									mPlayer_Hp = mPlayer_Hp - mDamage;
-									mPlayer_InvincibleFlag = true;
-									mPlayer_IsHit = false;		//ヒット判定終了
-									Se_Enemy_AttackSp.Play(Player_Damage_Se);
-									mPlayer_State = EKNOCKBACK;
-									if (Player_StanAccumulation_Max < mStanAccumulation)
-									{	
-										mStanAccumulation = Player_StanAccumulation;
+									if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
+									{
+										((CXEnemy*)(o->Parent()))->SetIsHit(false);
+										mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
+										mPlayer_Hp = mPlayer_Hp - mDamage;
+										mPlayer_InvincibleFlag = true;
+										mPlayer_IsHit = false;		//ヒット判定終了
+										Se_Enemy_AttackSp.Play(Player_Damage_Se);
+										mPlayer_State = EKNOCKBACK;
+										if (Player_StanAccumulation_Max < mStanAccumulation)
+										{
+											mStanAccumulation = Player_StanAccumulation;
+										}
+										else {
+											mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
+											mStanAccumulation = mStanAccumulation + mStan_Damage;
+										}
 									}
-									else {
-										mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
-										mStanAccumulation = mStanAccumulation + mStan_Damage;
-									}
+
 								}
 							}
 						}
-					}
-					else if (o->CCollider::Tag() == CCollider::ELEFTARM)
-					{
-						//プレイヤーが無敵状態ではないとき
-						if (mPlayer_InvincibleFlag == false)
+						else if (o->CCollider::Tag() == CCollider::ELEFTARM)
 						{
-							if (CXEnemy::GetInstance()->GetState() == CXEnemy::EEnemyState::EATTACK_2)
-							{
-								if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
+							if (((CXEnemy*)(o->Parent()))->GetState() != CXEnemy::EEnemyState::EATTACK_1) {
+								//プレイヤーが無敵状態ではないとき
+								if (mPlayer_InvincibleFlag == false)
 								{
-									((CXEnemy*)(o->Parent()))->SetIsHit(false);
-									mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
-									mPlayer_Hp = mPlayer_Hp - mDamage;
-									mPlayer_InvincibleFlag = true;
-									mPlayer_IsHit = false;		//ヒット判定終了
-									Se_Enemy_AttackSp.Play(Player_Damage_Se);
-									mPlayer_State = EKNOCKBACK;
-									if (Player_StanAccumulation_Max < mStanAccumulation)
-									{	
-										mStanAccumulation = Player_StanAccumulation;
+									if (((CXEnemy*)(o->Parent()))->GetIsHit() == true)
+									{
+										((CXEnemy*)(o->Parent()))->SetIsHit(false);
+										mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
+										mPlayer_Hp = mPlayer_Hp - mDamage;
+										mPlayer_InvincibleFlag = true;
+										mPlayer_IsHit = false;		//ヒット判定終了
+										Se_Enemy_AttackSp.Play(Player_Damage_Se);
+										mPlayer_State = EKNOCKBACK;
+										if (Player_StanAccumulation_Max < mStanAccumulation)
+										{
+											mStanAccumulation = Player_StanAccumulation;
+										}
+										else {
+											mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
+											mStanAccumulation = mStanAccumulation + mStan_Damage;
+										}
 									}
-									else {
-										mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
-										mStanAccumulation = mStanAccumulation + mStan_Damage;
-									}
+
 								}
 							}
 						}
 					}
 				}
 			}
+
 		}
-		break;
 	}
+	break;
 
 	case CCollider::ECAPSUL: {//カプセルコライダ
 		//相手のコライダがカプセルコライダの時
@@ -773,9 +775,14 @@ void CXPlayer::MovingCalculation() {
 	if (tCheck.cross < Player_Trun_Check_Set) {
 		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
 	}
+	//敵のいるほうに攻撃するための処理
 	if (CXEnemy::GetInstance()) {
+		switch (CXEnemy::GetInstance()->mEnemy_Type){
+		case CXEnemy::EEnemyType::ETYPE_GAME_1:
+
+		}
 		mPlayer_Point = CXEnemy::GetInstance()->Position() - mPosition;
-		//プレイヤーまでの距離を求める
+		//敵との距離を求める
 		mPlayer_EnemyDis = mPlayer_Point.Length();
 	}
 

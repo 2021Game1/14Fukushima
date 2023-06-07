@@ -42,7 +42,6 @@ private:
 	CTutorial mTutorial;
 	//リソースクラスのインスタンス
 	CRes mRes;
-	CMap mMap;
 	//シャドウマップのインスタンス
 	CShadowMap mShadowMap;
 

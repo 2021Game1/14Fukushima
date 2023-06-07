@@ -51,10 +51,12 @@ CCamera::CCamera()
 	, mCameraMoveY(NULL)
 	, mCamera_Priority(CAMERA_PRIORITY)
 {
+	mPriority = mCamera_Priority;
 	CTaskManager::Get()->Remove(this);//
 	CTaskManager::Get()->Add(this);//’Ç‰Á‚·‚é
 	mpCameraInstance = this;
 }
+
 
 void CCamera::Init()
 {

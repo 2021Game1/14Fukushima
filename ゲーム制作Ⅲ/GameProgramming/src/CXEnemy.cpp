@@ -321,6 +321,7 @@ void CXEnemy::Update() {
 		KnockBack(); //ノックバック処理を呼ぶ
 		break;
 	}
+
 	MovingCalculation();
 	if (mEnemy_PlayerDis >= Enemy_Attack_Dis) {
 		mEnemy_AttackDir = mEnemy_Player_Point; //攻撃時の向きを求める
@@ -623,7 +624,7 @@ void CXEnemy::Attack_2()
 		}
 		//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
 		else if (mAnimationFrame > Enemy_Attack_Reception) {
-			mEnemy_IsHit = true;
+				mEnemy_IsHit = true;
 		}
 		//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
 		if (mAnimationFrame > Enemy_Attack_Outreception)

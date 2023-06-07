@@ -30,9 +30,10 @@ public:
 		EKNOCKBACK,								//ノックバック
 		EDEATH,									//死亡
 	};
+	EEnemyState mEnemy_State;					//敵の状態判断用
 	//敵の強さの種類
 	enum class EEnemyType {
-		ETYPE_TUTORIAL,						//チュートリアル時の敵の強さ
+		ETYPE_TUTORIAL,							//チュートリアル時の敵の強さ
 		ETYPE_GAME_1,							//ゲーム本番時の敵の強さ(強い)
 		ETYPE_GAME_2,							//ゲーム本番時の敵の強さ(弱い)
 	};
@@ -41,7 +42,7 @@ public:
 	bool GetIsHit();							//ヒット状態の判別
 	bool GetIsDeath();							//死亡状態の時にtrueを返す
 	int GetHp();								//現在のHPを取得する
-	CXEnemy::EEnemyType GetIsType();			//タイプの取得
+	CXEnemy::EEnemyType GetIsType();
 	void SetIsType(EEnemyType type);			//タイプの設定
 	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
 	void SetIsPriority();
@@ -165,7 +166,6 @@ private:
 	CVector mEnemy_MoveDirKeep;					//敵の移動時の方向を保存する
 	CVector mEnemy_Player_Point;				//プレイヤの方向ベクトル保存用
 	CVector mEnemy_AttackDir;					//敵の攻撃時の方向を保持する
-	EEnemyState mEnemy_State;					//敵の状態判断用
 	bool mEnemy_Flag;							//敵のフラグ
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	//ステータス
