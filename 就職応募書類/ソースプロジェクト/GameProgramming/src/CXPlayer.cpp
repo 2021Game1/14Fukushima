@@ -576,8 +576,7 @@ void CXPlayer::MoveCamera()
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir•Û‘¶
 		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//ˆÚ“®—Ê‚ğİ’è
 	}
-
-	if (mPlayer_State == EAVOIDANCE)
+	else if (mPlayer_State == EAVOIDANCE)
 	{
 		if (CKey::Push(VK_A)) {
 			mPlayer_MoveDir -= mPlayer_SideVec;
@@ -595,7 +594,11 @@ void CXPlayer::MoveCamera()
 		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir•Û‘¶
 	}
-
+	else {
+		//ƒWƒƒƒ“ƒv‚È‚Ç‚ÍY²‚ğ³‹K‰»‚µ‚È‚¢‚æ‚¤’ˆÓ
+		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();
+		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir•Û‘¶
+	}
 }
 
 //2D•`‰æ
