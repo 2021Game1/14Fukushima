@@ -63,6 +63,8 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_X = table["Enemy_Rotation_X"]["Value"].fVal;
 		Enemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
+		//タグの設定
+		mTag = EENEMY;
 		//優先度を1に変更する
 		mPriority = Enemy_Priority;
 		mHp = Enemy_Hp;
@@ -130,6 +132,8 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_X = table["Enemy_Rotation_X"]["Value"].fVal;
 		Enemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
+		//タグの設定
+		mTag = EENEMY;
 		//優先度を1に変更する
 		mPriority = Enemy_Priority;
 		mHp = Enemy_Hp;
@@ -197,6 +201,8 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_X = table["Enemy_Rotation_X"]["Value"].fVal;
 		Enemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
+		//タグの設定
+		mTag = EENEMY;
 		//優先度を1に変更する
 		mPriority = Enemy_Priority;
 		mHp = Enemy_Hp;

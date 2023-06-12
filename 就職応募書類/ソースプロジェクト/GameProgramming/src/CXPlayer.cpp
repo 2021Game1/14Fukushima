@@ -377,11 +377,6 @@ void CXPlayer::Attack_1()
 				}
 			}
 
-
-		if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1) {
-			ChangeAnimation(Player_Animation_No_Attack1_Idle, false, Player_Attack1_Idle_Animation_Frame);
-		}
-		if (IsAnimationFinished() == false && mAnimationIndex == Player_Animation_No_Attack1_Idle) {
 			if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
 				MoveCamera();
 				mPlayer_State = EAVOIDANCE;
@@ -402,6 +397,9 @@ void CXPlayer::Attack_1()
 				mPlayer_State = EAVOIDANCE;
 				mPlayer_IsHit = false;
 			}
+
+		if (IsAnimationFinished()) {
+			ChangeAnimation(Player_Animation_No_Attack1_Idle, false, Player_Attack1_Idle_Animation_Frame);
 		}
 		if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1_Idle) {
 				mPlayer_IsHit = false;								//ヒット判定終了
@@ -453,31 +451,31 @@ void CXPlayer::Attack_2()
 		}
 	}
 
-	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2) {
+	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
+		MoveCamera();
+		mPlayer_State = EAVOIDANCE;
+		mPlayer_IsHit = false;
+	}
+	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
+		MoveCamera();
+		mPlayer_State = EAVOIDANCE;
+		mPlayer_IsHit = false;
+	}
+	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
+		MoveCamera();
+		mPlayer_State = EAVOIDANCE;
+		mPlayer_IsHit = false;
+	}
+	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
+		MoveCamera();
+		mPlayer_State = EAVOIDANCE;
+		mPlayer_IsHit = false;
+	}
+
+	if (IsAnimationFinished()) {
 		ChangeAnimation(Player_Animation_No_Attack2_Idle, false, Player_Attack2_Idle_Animation_Frame);
 	}	
-	if (IsAnimationFinished() == false && mAnimationIndex == Player_Animation_No_Attack2_Idle) {
-		if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-			MoveCamera();
-			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
-		}
-		else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-			MoveCamera();
-			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
-		}
-		else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-			MoveCamera();
-			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
-		}
-		else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-			MoveCamera();
-			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
-		}
-	}
+
 	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2_Idle) {
 			mPlayer_IsHit = false;								//ヒット判定終了
 			mPlayer_State = EIDLE;								//待機状態へ移行
