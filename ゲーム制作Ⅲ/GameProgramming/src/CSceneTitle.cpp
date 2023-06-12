@@ -17,7 +17,7 @@ void CSceneTitle::Init() {
 	//タイトル画像の追加
 	gTitle_Image.Load2D(TITLE_IMAGE);
 	Title_Bgm.Load(BGM_TITLE);
-
+	Title_Bgm.Play(BGM_TITLE_VOLUME);
 }
 
 //更新処理のオーバーライド
@@ -35,8 +35,8 @@ void CSceneTitle::Update() {
 
 void CSceneTitle::Render() {
 	//2Dの描画開始
-	CUtil::Start2D(0, 800, 0, 600);
-	gTitle_Image.Draw(0, 800, 0, 600, 0, 800, 600, 0);
+	CUtil::Start2D(START2D_FIRST_WID, START2D_END_WID, START2D_FIRST_HEI, START2D_END_HEI);
+	gTitle_Image.Draw(TITLE_FIRST_WID, TITLE_END_WID, TITLE_FIRST_HEI, TITLE_END_HEI, TITLE_FIRST_X, TITLE_END_X, TITLE_END_Y, TITLE_FIRST_Y);
 	//2Dの描画終了
 	CUtil::End2D();
 }

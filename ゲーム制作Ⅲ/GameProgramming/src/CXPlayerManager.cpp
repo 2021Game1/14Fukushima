@@ -4,13 +4,15 @@
 
 CXPlayerManager* CXPlayerManager::mInstance = nullptr;
 
-
+//初期化
 CXPlayerManager::CXPlayerManager()
 	: mPlayerList(0)
 {
 
 }
 
+//終了時
+//プレイヤを削除する
 CXPlayerManager::~CXPlayerManager()
 {
 	for (size_t i = 0; i < mPlayerList.size(); i++) {
@@ -18,11 +20,13 @@ CXPlayerManager::~CXPlayerManager()
 	}
 }
 
+//プレイヤマネージャを生成する
 void CXPlayerManager::Generate()
 {
 	mInstance = new CXPlayerManager;
 }
 
+//プレイヤマネージャを削除する
 void CXPlayerManager::Release()
 {
 	if (mInstance) {
@@ -31,7 +35,7 @@ void CXPlayerManager::Release()
 	}
 }
 
-
+//外部クラスからプレイヤマネージャのインスタンスを取得用
 CXPlayerManager* CXPlayerManager::GetInstance()
 {
 	return mInstance;
@@ -52,23 +56,32 @@ void CXPlayerManager::PlayerGenerate() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_KNOCKBACK);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
 
+	//プレイヤの生成
 	CXPlayer* tmp = new CXPlayer;
 	//敵の初期設定
+	//プレイヤのテーブルを呼び出す
+	//HPなどのステータスが呼び出される
 	tmp->PlayerTable();
+	//ポジションを設定する
 	tmp->GetPos();
+	//プレイヤのモデルの大きさを設定する
 	tmp->GetScale();
+	//プレイヤのモデルの回転を設定する
 	tmp->GetRotation();
+	//プレイヤのモデルを設定する
 	tmp->Init(&gPlayer_Model_Knight);
+	//更新処理を呼び出す
 	tmp->Update();
+	//当たり判定タスクを設定する
 	tmp->TaskCollision();
 	mPlayerList.push_back(tmp);	//リストに追加
 
 }
-
+//更新処理を動かさない
 void CXPlayerManager::Update()
 {
 }
-
+//描画処理も動かさない
 void CXPlayerManager::Render()
 {
 }

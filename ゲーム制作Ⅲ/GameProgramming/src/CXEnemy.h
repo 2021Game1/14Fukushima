@@ -12,8 +12,6 @@
 #include <math.h>
 #include<time.h>
 
-
-
 class CXEnemy : public CXCharacter {
 public:
 	//他のクラスで参照用の関数
@@ -42,10 +40,10 @@ public:
 	bool GetIsHit();							//ヒット状態の判別
 	bool GetIsDeath();							//死亡状態の時にtrueを返す
 	int GetHp();								//現在のHPを取得する
-	CXEnemy::EEnemyType GetIsType();
+	CXEnemy::EEnemyType GetIsType();			//現在の敵のタイプを取得
 	void SetIsType(EEnemyType type);			//タイプの設定
 	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
-	void SetIsPriority();
+	void SetIsPriority();						//描画優先度の設定
 	float GetIsEnemyAttackDis();				//敵が攻撃する距離を取得する
 	float GetIsEnemyPlayerDis();				//プレイヤと敵の距離を取得する
 	int GetIsAttackPoint();						//プレイヤに与えるダメージ取得用
@@ -128,9 +126,9 @@ private:
 	int Enemy_Animation_No_Idle;				//敵の待機アニメーション番号
 	int Enemy_Animation_No_Knockback;			//敵のノックバックアニメーション番号
 	int Enemy_Animation_No_Death;				//敵の死亡アニメーション番号
-	float Enemy_Position_X;
-	float Enemy_Position_Y;
-	float Enemy_Position_Z;
+	float Enemy_Position_X;						//敵のポジション設定X座標
+	float Enemy_Position_Y;						//敵のポジション設定Y座標
+	float Enemy_Position_Z;						//敵のポジション設定Z座標
 	float Enemy_Scale_X;						//モデルスケールのX座標
 	float Enemy_Scale_Y;						//モデルスケールのY座標
 	float Enemy_Scale_Z;						//モデルスケールのZ座標

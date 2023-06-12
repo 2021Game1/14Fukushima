@@ -1,4 +1,5 @@
 #include"CXPlayer.h"
+#include"CXEnemyManager.h"
 #include"CRes.h"
 
 
@@ -342,7 +343,7 @@ void CXPlayer::Attack_1()
 
 		if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
 			mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir•Û‘¶
-			mPlayer_MoveDir = mPlayer_Point.Normalize();
+			mPlayer_MoveDir = CXEnemyManager::GetInstance()->GetTargetEnemy();
 		}
 
 		//ƒqƒbƒg”»’è”­¶
@@ -420,7 +421,7 @@ void CXPlayer::Attack_2()
 
 	if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir•Û‘¶
-		mPlayer_MoveDir = mPlayer_Point.Normalize();
+		mPlayer_MoveDir = CXEnemyManager::GetInstance()->GetTargetEnemy();
 	}
 
 
@@ -774,16 +775,6 @@ void CXPlayer::MovingCalculation() {
 	}
 	if (tCheck.cross < Player_Trun_Check_Set) {
 		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
-	}
-	//“G‚Ì‚¢‚é‚Ù‚¤‚ÉUŒ‚‚·‚é‚½‚ß‚Ìˆ—
-	if (CXEnemy::GetInstance()) {
-		switch (CXEnemy::GetInstance()->mEnemy_Type){
-		case CXEnemy::EEnemyType::ETYPE_GAME_1:
-
-		}
-		mPlayer_Point = CXEnemy::GetInstance()->Position() - mPosition;
-		//“G‚Æ‚Ì‹——£‚ğ‹‚ß‚é
-		mPlayer_EnemyDis = mPlayer_Point.Length();
 	}
 
 	//ƒŠƒZƒbƒg

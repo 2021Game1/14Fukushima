@@ -15,28 +15,39 @@ public:
 	~CXEnemyManager();	//ƒfƒXƒgƒ‰ƒNƒ^
 	static CXEnemyManager* GetInstance(); //ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
 
-	void Generate(); //¶¬
+	static void Generate(); //¶¬
 
-	void Release(); //”jŠü
+	static void Release(); //”jŠü
 
 	void Update();	//XV
 
-	void Render();
+	void Init();    //‰Šú‰»
+
+	void Render();	//•`‰æ(•`‰æ‚Í‚µ‚È‚¢)
 
 	void EnemyGenerate(int num, CXEnemy::EEnemyType type); //“G¶¬Aˆø”‚Å¶¬”‚Æ“G‚Ìí—Ş‚ğw’è‚·‚é
 
 	bool GetIsEnemyAllDeath(); //“G‚ª‘S‚Ä€–Só‘Ô‚É‚È‚é‚Ætrue‚ğ•Ô‚·
 
+	CVector GetTargetEnemy(); //ˆê”Ô‹ß‚¢“G‚ğæ“¾‚·‚é
+
 private:
-
-	static CXEnemyManager* mInstance; //“GŠÇ—‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
-
-	std::vector<CXEnemy*> mEnemyList; //“GŠi”[
-
-	int mEnemyDeathNum; //€–Só‘Ô‚Ì“G‚Ì”
+	//“GŠÇ—‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
+	static CXEnemyManager* mInstance;
+	//“GŠi”[
+	std::vector<CXEnemy*> mEnemyList;
+	//€–Só‘Ô‚Ì“G‚Ì”
+	int mEnemyDeathNum;
 	//“Gƒ‚ƒfƒ‹
 	CModelX gEnemy_Model_Mutant;
-
+	//ƒ^[ƒQƒbƒgİ’è
+	CVector mTargetEnemy; //ˆê”ÔƒvƒŒƒCƒ„‚©‚ç‹ß‚¢“G‚ğŠi”[
+	//ƒ^[ƒQƒbƒgİ’è•Û‘¶
+	CVector mTarget; //ˆê”ÔƒvƒŒƒCƒ„‚©‚ç‹ß‚¢“G‚ğŠi”[
+	//ƒvƒŒƒCƒ„À•W
+	float mPlayerPos;
+	//“GÀ•W
+	float mEnemyPos;
 };
 #endif
 

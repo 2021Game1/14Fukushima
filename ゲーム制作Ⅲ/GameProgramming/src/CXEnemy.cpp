@@ -678,6 +678,7 @@ void CXEnemy::KnockBack()
 	//アニメーション終了時
 	if (IsAnimationFinished())
 	{
+		//当たり判定のフラグを判定するように変更
 		mEnemy_Flag = false;
 		mEnemy_State = CXEnemy::EEnemyState::EATTACK_2; //攻撃2
 	}
@@ -685,7 +686,9 @@ void CXEnemy::KnockBack()
 
 void CXEnemy::Death()
 {
+	//死亡アニメーション
 	ChangeAnimation(Enemy_Animation_No_Death, false, Enemy_Death_Animation_Frame);
+	//敵の攻撃判定をfalseにする
 	mEnemy_IsHit = false;
 }
 
@@ -710,9 +713,10 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 
-
+	//カプセルと三角形の衝突処理
 	if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
+		//三角形コライダとカプセルの衝突処理
 		if (CCollider::CollisionTriangleLine(o, m, &adjust))
 		{
 			mPosition.Y(NULL);
@@ -725,7 +729,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	}
 
 
-
+	//敵が死亡していないとき
 	if (!mHp <= Enemy_Death_Hp) {
 		//自身のコライダタイプの判定
 		if (m->Type() == CCollider::ESPHERE) {
@@ -748,17 +752,24 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 									{
 										if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_1)
 										{
+											//ダメージ計算
 											mDamage = CXPlayer::GetInstance()->GetIsAttackPoint() * (CXPlayer::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsAttackPoint() * Enemy_Damage_Magnification);
+											//ダメージ処理
 											mHp = mHp - mDamage;
+											//攻撃判定をfalseにする
 											mEnemy_IsHit = false;
+											//当たったときのエフェクト
 											new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
 											new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
+											//怯み値が上限を超えたら、ひるむ
 											if (Enemy_StanAccumulation_Max <= mStanAccumulation)
 											{
+												//ノックバックする
 												mEnemy_State = CXEnemy::EEnemyState::EKNOCKBACK;
 												mStanAccumulation = Enemy_StanAccumulation;
 											}
 											else {
+												//敵のひるみ値設定
 												mStan_Damage = CXPlayer::GetInstance()->GetIsStanPoint() * (CXPlayer::GetInstance()->GetIsStanPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsStanPoint() * Enemy_Damage_Magnification);
 												mStanAccumulation = mStanAccumulation + mStan_Damage;
 											}
@@ -766,22 +777,30 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 										}
 										else if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EATTACK_2)
 										{
+											//ダメージ計算
 											mDamage = CXPlayer::GetInstance()->GetIsAttackPoint() * (CXPlayer::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsAttackPoint() * Enemy_Damage_Magnification);
+											//ダメージ処理
 											mHp = mHp - mDamage;
+											//攻撃判定をfalseにする
 											mEnemy_IsHit = false;
+											//当たったときのエフェクト
 											new CEffectEnemyDamageSp1(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP1, 2, 5, 2);
 											new CEffectEnemyDamageSp2(CXPlayer::GetInstance()->GetSwordColPos(), 2.0f, 2.0f, ENEMY_EF_DAMAGESP2, 4, 5, 2);
+											//怯み値が上限を超えたら、ひるむ
 											if (Enemy_StanAccumulation_Max <= mStanAccumulation)
 											{
+												//ノックバックする
 												mEnemy_State = CXEnemy::EEnemyState::EKNOCKBACK;
 												mStanAccumulation = Enemy_StanAccumulation;
 											}
 											else {
+												//敵のひるみ値設定
 												mStan_Damage = CXPlayer::GetInstance()->GetIsStanPoint() * (CXPlayer::GetInstance()->GetIsStanPoint() / mDefense_Point) + (CXPlayer::GetInstance()->GetIsStanPoint() * Enemy_Damage_Magnification);
 												mStanAccumulation = mStanAccumulation + mStan_Damage;
 											}
 
 										}
+										//プレイヤとの衝突処理を停止する
 										mEnemy_Flag = true;
 									}
 
@@ -794,6 +813,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 
 		}
 	}
+	//死亡しているときは、衝突判定をスルーする
 	else if (mHp <= Enemy_Death_Hp) {
 
 	}
@@ -818,17 +838,19 @@ void CXEnemy::MovingCalculation() {
 	//急な振り返りを抑制
 	if (tCheck.turn > ENEMY_TRUN_CHECK_SPEEDS_SET) tCheck.turn = ENEMY_TRUN_CHECK_SPEEDS_SET;
 
-	//移動方向へキャラを向かせる
+	//移動方向にキャラを向かせる
 	if (tCheck.cross > ENEMY_TRUN_CHECK_SET)
 	{
 		mRotation.Y(mRotation.Y() + tCheck.turn * mEnemy_Turnspeed);
 	}
+	//移動方向にキャラを向かせる
 	if (tCheck.cross < ENEMY_TRUN_CHECK_SET)
 	{
 		mRotation.Y(mRotation.Y() - tCheck.turn * mEnemy_Turnspeed);
 	}
 	//移動する
 	mPosition += mEnemy_MoveDir * mEnemy_Speed;
+	//キャラに重力を掛ける
 	mPosition.Y(mPosition.Y() * Enemy_Gravity);
 
 	//移動方向リセット
@@ -852,9 +874,11 @@ void CXEnemy::TaskCollision()
 
 CXEnemy* CXEnemy::GetInstance()
 {
+	//インスタンスの設定
 	return mpEnemy_Instance;
 }
 int CXEnemy::GetHp() {
+	//HPの取得
 	return mHp;
 }
 CXEnemy::EEnemyType CXEnemy::GetIsType()

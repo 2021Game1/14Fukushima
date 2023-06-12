@@ -108,6 +108,12 @@
 //アクションのチュートリアル画像表示する際のプレイヤと敵の距離を設定
 #define ACTION_TUTORIAL_ENEMY_PLAYER_VECTOR 2.4f
 
+//移動操作量上限の設定
+#define MOVE_ACCEUMULATION_MAX 15
+
+//カメラ操作量上限設定
+#define CAMERA_ACCEUMULATION_MAX 180
+
 class CTutorial {
 public:
 	//デフォルトコンストラクタ

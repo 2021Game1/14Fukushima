@@ -5,7 +5,7 @@
 
 CSceneTutorial::~CSceneTutorial()
 {
-	CXEnemyManager::GetInstance()->Release();	//“GŠÇ—‰ð•ú
+	CXEnemyManager::GetInstance()->~CXEnemyManager();	//“GŠÇ—‰ð•ú
 	CXPlayerManager::GetInstance()->Release();	//ƒvƒŒƒCƒ„ŠÇ—ŠJ•ú
 	CMap::GetInstance()->Release();
 	CSkyMap::GetInstance()->Release();
