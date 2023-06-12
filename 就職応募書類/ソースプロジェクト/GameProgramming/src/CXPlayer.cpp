@@ -499,41 +499,42 @@ void CXPlayer::KnockBack()
 		mPlayer_Flag = true;
 	}
 
+
+
 	//アニメーション終了時
 	if (IsAnimationFinished())
-	{
-		//左クリックで攻撃1へ移行
+	{	//左クリックで攻撃1へ移行
 		if (CKey::Once(VK_LBUTTON)) {
 			mPlayer_State = EATTACK_1;
-			mPlayer_IsHit = false;
+			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		else if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
 			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
+			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
 			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
+			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
 			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
+			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-			
+
 			mPlayer_State = EAVOIDANCE;
-			mPlayer_IsHit = false;
+			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		//WASDキーを押すと移動へ移行
 		else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
 			mPlayer_State = EMOVE;
-
+			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		else {
 			mPlayer_State = EIDLE;
+			mPlayer_Flag = false;
+			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
-		mPlayer_Flag = false;
-		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 }
 
