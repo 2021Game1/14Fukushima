@@ -52,7 +52,7 @@ public:
 	//*演算子のオーバーロード
 	//CVector * float の演算結果を返す
 	CVector operator*(const float &f) const;
-	CVector operator/(const float& f);
+	CVector operator/(const float &f);
 	//正規化
 	//大きさ1のベクトルを返す
 	CVector Normalize() const;

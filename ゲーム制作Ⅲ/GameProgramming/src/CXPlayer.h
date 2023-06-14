@@ -88,6 +88,7 @@ private:
 	//コライダの宣言
 	CCollider mPlayer_ColSphereSword;				//剣
 	CCollider mPlayer_ColSphereBody;				//球の身体
+	CCollider mPlayer_ColSphereLowerBody;				//球の身体
 	CCollider mPlayer_ColSphereHead;				//球の頭
 	CColliderCapsule mPlayer_ColCapsuleBody;		//カプセルの身体
 
@@ -113,6 +114,7 @@ private:
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
 	float mPlayer_EnemyDis;				//プレイヤが敵の座標参照用
 	float mPlayer_Attack_Dis;			//プレイヤの攻撃対象判別後の距離設定
+	CVector mPlayer_Gravity;				//重力の保存用
 
 	//カメラのパラメータを作成する
 	CVector mPlayer_SideVec;			//プレイヤの横ベクトル

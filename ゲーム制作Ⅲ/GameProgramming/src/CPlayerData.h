@@ -50,6 +50,12 @@
 #define PLAYER_COLCAPSULE_BODY_Z 0.0f				//カプセルコライダのZ座標設定
 #define PLAYER_COLCAPSULE_BODY_SIZE 0.7f			//カプセルコライダのサイズ設定
 
+//プレイヤーの下半身
+#define PLAYER_COLSPHERE_LOWERBODY_X 0.0f			//球コライダのX座標設定
+#define PLAYER_COLSPHERE_LOWERBODY_Y 5.0f		//球コライダのY座標設定
+#define PLAYER_COLSPHERE_LOWERBODY_Z 0.0f			//球コライダのZ座標設定
+#define PLAYER_COLSPHERE_LOWERBODY_SIZE 0.3f			//球コライダのサイズ設定
+
 //プレイヤの当たり判定
 #define PLAYER_COLSPHERE_BODY_SIZE 0.9				//球コライダのサイズ設定
 

@@ -15,7 +15,7 @@ CMap* CMap::GetInstance()
 CMap::CMap()
 {
 	mpMap_Instance = this;
-
+	mTag = EMAP;
 	//マップモデルファイルの入力
 	gMap_Model.Load(MAP_MODEL_MAP);
 	Model(&gMap_Model);
@@ -24,7 +24,8 @@ CMap::CMap()
 	//マップの移動行列
 	mBackGroundMatrix.Translate(0.0f, 0.0f, 0.1f);
 	//親インスタンスと親行列はなし
-	mColliderMesh.Set(nullptr, &mBackGroundMatrix, &gMap_Model_Collision);
+	mColliderMesh.Set(this, &mBackGroundMatrix, &gMap_Model_Collision);
+
 	//優先度を設定
 	mPriority = MAP_PRIORITY;
 	CTaskManager::Get()->Remove(this);//
@@ -69,6 +70,7 @@ void CMap::Collision(CCollider* m, CCollider* o) {
 
 CSkyMap::CSkyMap()
 {
+	mTag = EMAP;
 	mpSkyMap_Instance = this;
 	//スカイモデルファイルの入力
 	gSky_Map_Model.Load(MAP_MODEL_SKY);
