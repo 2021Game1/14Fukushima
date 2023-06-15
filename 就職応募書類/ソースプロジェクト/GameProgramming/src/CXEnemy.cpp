@@ -573,13 +573,17 @@ void CXEnemy::Attack_1()
 		//目的地点までのベクトルを求める
 		mEnemy_Player_Point = mEnemy_Point - mPosition;
 		mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
+		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
+		{
+			mEnemy_IsHit = false; //ヒット判定終了
+		}
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
-		if (mAnimationFrame <= Enemy_Attack_Reception)
+		else if (mAnimationFrame <= Enemy_Attack_Reception)
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
 		//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
-		else if (mAnimationFrame > Enemy_Attack_Reception) {
+		else{
 			mEnemy_IsHit = true;
 		}
 		//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
@@ -587,10 +591,7 @@ void CXEnemy::Attack_1()
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
-		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
-		{
-			mEnemy_IsHit = false; //ヒット判定終了
-		}
+
 	}
 
 	//アニメーション終了時
@@ -644,13 +645,17 @@ void CXEnemy::Attack_2()
 		//目的地点までのベクトルを求める
 		mEnemy_Player_Point = mEnemy_Point - mPosition;
 		mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
+		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
+		{
+			mEnemy_IsHit = false; //ヒット判定終了
+		}
 		//アニメーションフレームの当たり判定が受付外の時は、当たり判定をfalseにする
-		if (mAnimationFrame <= Enemy_Attack_Reception)
+		else if (mAnimationFrame <= Enemy_Attack_Reception)
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
 		//アニメーションフレームの当たり判定が受付時間のため、当たり判定をtrueにする
-		else if (mAnimationFrame > Enemy_Attack_Reception) {
+		else {
 				mEnemy_IsHit = true;
 		}
 		//アニメーションフレームが当たり判定の終了の時は、当たり判定をfalseにする
@@ -658,10 +663,7 @@ void CXEnemy::Attack_2()
 		{
 			mEnemy_IsHit = false; //ヒット判定終了
 		}
-		if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EAVOIDANCE)
-		{
-			mEnemy_IsHit = false; //ヒット判定終了
-		}
+
 	}
 	//アニメーション終了時
 	if (IsAnimationFinished())
@@ -754,7 +756,23 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 		}
 
 	}
-
+	if (m->Type() == CCollider::ESPHERE && o->Type() == CCollider::ETRIANGLE) {
+		CVector adjust;//調整用ベクトル
+		//相手の親のタグがマップ
+		if (o->Parent()->Tag() == EMAP)
+		{
+			//自分のコライダのタグが頭or体
+			if (m->Tag() == CCollider::EBODY) {
+				if (CCollider::CollisionTriangleSphere(o, m, &adjust))
+				{
+					//位置の更新(mPosition + adjust)
+					mPosition = mPosition + adjust;
+					//行列の更新
+					CTransform::Update();
+				}
+			}
+		}
+	}
 
 	//敵が死亡していないとき
 	if (!mHp <= Enemy_Death_Hp) {

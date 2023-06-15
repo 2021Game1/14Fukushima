@@ -6,9 +6,10 @@
 CSceneGame::~CSceneGame()
 {
 	CXEnemyManager::GetInstance()->~CXEnemyManager();	//敵管理解放
-	CMap::GetInstance()->Release();
-	CSkyMap::GetInstance()->Release();
-	CTaskManager::Get()->Delete();
+	CXPlayerManager::GetInstance()->~CXPlayerManager(); //プレイヤ管理解放
+	CMap::GetInstance()->Release();						//マップモデル解放
+	CSkyMap::GetInstance()->Release();					//背景モデル解放
+	CTaskManager::Get()->Delete();						//タスクマネージャの解放
 }
 
 void CSceneGame::Init() {

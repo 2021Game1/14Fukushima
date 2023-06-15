@@ -67,9 +67,6 @@
     <Filter Include="MainScene\Map\Map\cpp">
       <UniqueIdentifier>{5cd9f0d9-0242-4759-8867-e8b9af8646fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\Map\Map\h">
-      <UniqueIdentifier>{4d77a32f-5e18-478b-9c7b-8dd0a501a037}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainScene\Map\ShadowMap">
       <UniqueIdentifier>{0571287d-a402-46bd-8b95-96e44d4fe256}</UniqueIdentifier>
     </Filter>
@@ -411,6 +408,9 @@
     </Filter>
     <Filter Include="MainScene\Enemy\Manager">
       <UniqueIdentifier>{5c5084ac-13f2-46ba-b65b-3b646ef1b8c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Map\Map\h">
+      <UniqueIdentifier>{4d77a32f-5e18-478b-9c7b-8dd0a501a037}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
