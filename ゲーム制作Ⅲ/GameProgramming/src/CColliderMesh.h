@@ -12,7 +12,9 @@ public:
 	static CColliderMesh* GetInstance();//staticで処理を作る
 	//三角コライダの配列作成
 	CColliderTriangle *mpColliderTriangles;
+	//デフォルトコンストラクタ
 	CColliderMesh();
+	//デストラクタ
 	~CColliderMesh();
 	//Set(親, 親行列, モデル)
 	//モデルから三角コライダの生成

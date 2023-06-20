@@ -2,16 +2,17 @@
 #include "CPlayerData.h"
 #include "CXEnemy.h"
 
+//プレイヤマネージャクラスのポインタをnullptrに設定
 CXPlayerManager* CXPlayerManager::mInstance = nullptr;
 
-//初期化
+//デフォルトコンストラクタ
 CXPlayerManager::CXPlayerManager()
 	: mPlayerList(0)
 {
 
 }
 
-//終了時
+//デストラクタ
 //プレイヤを削除する
 CXPlayerManager::~CXPlayerManager()
 {
@@ -76,12 +77,4 @@ void CXPlayerManager::PlayerGenerate() {
 	tmp->TaskCollision();
 	mPlayerList.push_back(tmp);	//リストに追加
 
-}
-//更新処理を動かさない
-void CXPlayerManager::Update()
-{
-}
-//描画処理も動かさない
-void CXPlayerManager::Render()
-{
 }

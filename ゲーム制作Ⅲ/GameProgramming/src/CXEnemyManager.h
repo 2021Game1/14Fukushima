@@ -7,9 +7,11 @@
 /*
 CXEnemyManagerクラス
 */
-
+//エネミーリストの生成数の把握用
 #define ENEMY_A 1
 #define ENEMY_B 2
+//プレイヤの攻撃範囲座標
+#define PLAYER_ATTACK_POS 5.3
 
 class CXEnemyManager{
 public:
@@ -24,8 +26,6 @@ public:
 	void Update();	//更新
 
 	void Init();    //初期化
-
-	void Render();	//描画(描画はしない)
 
 	void EnemyGenerate(int num, CXEnemy::EEnemyType type); //敵生成、引数で生成数と敵の種類を指定する
 
@@ -46,18 +46,10 @@ private:
 	CVector mTargetEnemy; //一番プレイヤから近い敵を格納
 	//ターゲット設定保存
 	CVector mTarget; 
-	//ターゲット設定保存
-	CVector mTargetGame1; 
-	//ターゲット設定保存
-	CVector mTargetGame2;
 	//プレイヤ座標
 	float mPlayerPos;
 	//敵座標
 	float mEnemyPos;
-	//敵座標
-	float mEnemyPosGame1;
-	//敵座標
-	float mEnemyPosGame2;
 };
 #endif
 

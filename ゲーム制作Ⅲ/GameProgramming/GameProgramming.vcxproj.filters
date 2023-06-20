@@ -540,6 +540,7 @@
     <ClCompile Include="src\CXPlayerManager.cpp">
       <Filter>MainScene\Player\Player</Filter>
     </ClCompile>
+    <ClCompile Include="include\glut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CPlayerData.h">

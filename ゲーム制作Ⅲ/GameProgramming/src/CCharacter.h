@@ -15,7 +15,7 @@ class CCollider;
 */
 class CCharacter : public CTransform ,public CTask {
 public:
-	enum ETag
+	enum class ETag
 	{
 		EZERO,		//初期値
 		EPLAYER,	//プレイヤー

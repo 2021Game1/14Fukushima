@@ -6,10 +6,10 @@ CXEnemyManager* CXEnemyManager::mInstance = nullptr;
 
 //‰Šú‰»
 CXEnemyManager::CXEnemyManager()
-	: mEnemyDeathNum(0)
-	, mEnemyList(0)
-	, mPlayerPos(5.3)
-	, mEnemyPos(0)
+	: mEnemyDeathNum(NULL)
+	, mEnemyList(NULL)
+	, mPlayerPos(PLAYER_ATTACK_POS)
+	, mEnemyPos(NULL)
 {
 
 }
@@ -40,6 +40,8 @@ CXEnemyManager* CXEnemyManager::GetInstance()
 {
 	return mInstance;
 }
+
+
 
 //“G‚Ì¶¬ˆ—
 //ˆø”‚Å¶¬”Aí—Ş‚ğİ’è‚·‚é
@@ -145,27 +147,27 @@ void CXEnemyManager::Init()
 void CXEnemyManager::Update()
 {
 	//ƒŠƒZƒbƒg
-	mEnemyDeathNum = 0;
+	mEnemyDeathNum = NULL;
 	//ƒŠƒXƒg‚ÉŠi”[‚³‚ê‚Ä‚¢‚é“G‚ª€–Só‘Ô‚©A‚Ç‚¤‚©‚ğ”»•Ê‚·‚é
-	for (size_t i = 0; i < mEnemyList.size(); i++) {
+	for (size_t i = NULL; i < mEnemyList.size(); i++) {
 		//€–Só‘Ô‚¾‚Á‚½
 		if (CXEnemy::GetInstance()->GetIsDeath()) {
 			mEnemyDeathNum++; //€–Só‘Ô‚Ì“G‚ÌƒJƒEƒ“ƒg‰ÁZ
 			continue; //“Ç‚İ”ò‚Î‚µ
 		}
+		//ƒ^[ƒQƒbƒgİ’è
+		//“G‚ÌƒŠƒXƒg‚ÉŠi”[‚³‚ê‚Ä‚¢‚éˆÊ’uî•ñ‚ğƒvƒŒƒCƒ„‚Æ‚Ì‹——£‚ÆQÆ
 		mTarget = mEnemyList[i]->GetInstance()->Position() - CXPlayer::GetInstance()->Position();
+		//“G‚ÌˆÊ’uî•ñ‚ğƒxƒNƒgƒ‹‚É•ÏŠ·‚µAŠi”[
 		mEnemyPos = mTarget.Length();
+		//“G‚ÌˆÊ’uî•ñ‚ªƒvƒŒƒCƒ„‚ÌUŒ‚‹——£‚æ‚è‹ß‚¢ê‡AÀs‚·‚é
 		if (mPlayerPos > mEnemyPos) {
+			//ƒ^[ƒQƒbƒg‚ÉŠi”[‚·‚é
 			mTargetEnemy = mTarget.Normalize();
 		}
 	}
 }
 
-
-//•`‰æ‚µ‚È‚¢
-void CXEnemyManager::Render()
-{
-}
 
 //“G‚ª‘S‚Ä€–Só‘Ô‚Ì‚Æ‚«true‚ğ•Ô‚·
 bool CXEnemyManager::GetIsEnemyAllDeath()
@@ -175,7 +177,9 @@ bool CXEnemyManager::GetIsEnemyAllDeath()
 	//ˆê’v‚µ‚È‚¯‚ê‚Îfalse
 	else return false;
 }
+//ƒ^[ƒQƒbƒg‚·‚é‚×‚«“G‚ğæ“¾‚·‚é
 CVector CXEnemyManager::GetTargetEnemy()
 {
+	//Ši”[‚µ‚½“G‚ÌˆÊ’uî•ñ‚ğ•Ô‚·
 	return mTargetEnemy;
 }

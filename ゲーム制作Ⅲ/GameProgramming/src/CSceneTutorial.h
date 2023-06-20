@@ -28,6 +28,7 @@
 */
 class CSceneTutorial : public CScene {
 private:
+	//デストラクタ
 	~CSceneTutorial();
 	//初期化処理のオーバーライド
 	void Init();

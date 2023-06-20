@@ -7,8 +7,9 @@ CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタ
 
 //テーブルのデータを変数に保存
 void CXPlayer::PlayerTable() {
+	//読み込むテーブルを設定
 	OX::Table table(PLAYER_DATATABLE);
-
+	//変数にデータを代入
 	Player_Priority = table["Player_Priority"]["Value"].iVal;
 	Player_Hp = table["Player_Hp"]["Value"].iVal;
 	Player_Hp_Max = table["Player_Hp_Max"]["Value"].iVal;
@@ -67,9 +68,8 @@ void CXPlayer::PlayerTable() {
 	Player_Trun_Check_Speeds_Set = table["Player_Trun_Check_Speeds_Set"]["Value"].fVal;
 	Player_Trun_Check_Set = table["Player_Trun_Check_Set"]["Value"].fVal;
 
-	//優先度を1に変更する
+	//テーブルデータを取得した変数からクラスの変数に代入
 	mPriority = Player_Priority;
-	//テーブル取得データを代入
 	mPlayer_Gauge_Hp_Shake_X = Player_Gauge_Hp_Shake_X;
 	mPlayer_Gauge_Hp_Shake_Y = Player_Gauge_Hp_Shake_Y;
 	mPlayer_Gauge_Hp_Shake_Range_X = Player_Gauge_Hp_Shake_Range_X;
@@ -106,15 +106,15 @@ CXPlayer::CXPlayer()
 	//プレイヤのインスタンスを設定
 	mpPlayer_Instance = this;										//プレイヤのインスタンスを自身に設定する
 	//タグの紐づけ
-	mTag = EPLAYER;													//タグをプレイヤに設定
+	mTag = CCharacter::ETag::EPLAYER;													//タグをプレイヤに設定
 	//初期状態を設定
-	mPlayer_State = EIDLE;											//プレイヤの初期状態を待機状態に設定する
+	mPlayer_State = CXPlayer::EPlayerState::EIDLE;											//プレイヤの初期状態を待機状態に設定する
 	//コライダのタグを設定
-	mPlayer_ColCapsuleBody.Tag(CCollider::EBODY);					//体
-	mPlayer_ColSphereBody.Tag(CCollider::EBODY);					//体
-	mPlayer_ColSphereLowerBody.Tag(CCollider::EBODY);				//下半身
-	mPlayer_ColSphereHead.Tag(CCollider::EHEAD);					//頭
-	mPlayer_ColSphereSword.Tag(CCollider::ESWORD);					//剣
+	mPlayer_ColCapsuleBody.Tag(CCollider::ETag::EBODY);					//体
+	mPlayer_ColSphereBody.Tag(CCollider::ETag::EBODY);					//体
+	mPlayer_ColSphereLowerBody.Tag(CCollider::ETag::EBODY);				//下半身
+	mPlayer_ColSphereHead.Tag(CCollider::ETag::EHEAD);					//頭
+	mPlayer_ColSphereSword.Tag(CCollider::ETag::ESWORD);					//剣
 	//プレイヤのテーブルを呼び出し
 	PlayerTable();
 	//タスクマネージャへの追加
@@ -134,7 +134,7 @@ void CXPlayer::Init(CModelX* model)
 	Se_Enemy_AttackSp.Load(SE_ENEMY_ATTACK);
 	//プレイヤのUIの追加
 	gPlayer_Ui_Hp_Frame.Load2D(PLAYER_UI_HP_FRAME);
-
+	//キャラクタのモデルをセット設定を呼び出す
 	CXCharacter::Init(model);
 	//合成行列の設定
 	mPlayer_ColSphereLowerBody.Matrix(&mpCombinedMatrix[2]);
@@ -153,48 +153,49 @@ void CXPlayer::Update() {
 	CVector tpos = mPlayer_ColSphereSword.GetIsMatrix()->GetPos();
 	//状態を判別
 	switch (mPlayer_State) {
-	case EIDLE:														//待機状態
+	case CXPlayer::EPlayerState::EIDLE:														//待機状態
 		Idle();														//待機処理を呼ぶ
 		break;
 
-	case EATTACK_1:													//攻撃1状態の時
+	case CXPlayer::EPlayerState::EATTACK_1:													//攻撃1状態の時
 		Attack_1();													//攻撃1の処理を呼ぶ
 		break;
 
-	case EATTACK_2:													//攻撃2状態の時
+	case CXPlayer::EPlayerState::EATTACK_2:													//攻撃2状態の時
 		Attack_2();													//攻撃2の処理を呼ぶ
 		break;
 
-	case EMOVE:														//移動状態
+	case CXPlayer::EPlayerState::EMOVE:														//移動状態
 		Move();														//移動状態の処理を呼ぶ
 		break;
 
-	case EAVOIDANCE:												//回避状態
+	case CXPlayer::EPlayerState::EAVOIDANCE:												//回避状態
 		Avoidance();												//回避処理を呼ぶ
 		break;
 
-	case EDEATH:													//死亡状態
+	case CXPlayer::EPlayerState::EDEATH:													//死亡状態
 		Death();													//死亡処理を呼ぶ
 		break;
 
-	case EKNOCKBACK:												//ノックバック状態
+	case CXPlayer::EPlayerState::EKNOCKBACK:												//ノックバック状態
 		KnockBack();												//ノックバック処理を呼ぶ
 		break;
 	}
 	MovingCalculation();
 	//体力が0になると死亡
+	//プレイヤの体力がゲームオーバー条件のHPと同じまたは低ければ、処理を実行
 	if (mPlayer_Hp <= Player_GameOver_Hp) {
-		mPlayer_State = EDEATH;										//死亡状態へ移行
-		mPlayer_Hp = Player_GameOver_Hp;
-	}
-	if (mPlayer_EnemyDis >= mPlayer_Attack_Dis) {
-		mPlayer_AttackDir = mPlayer_Point; //攻撃時の向きを求める
+		mPlayer_State = CXPlayer::EPlayerState::EDEATH;										//死亡状態へ移行
+		//プレイヤのHPをゲームオーバー条件のHPに上書き
+		mPlayer_Hp = Player_GameOver_Hp;							
 	}
 	//カメラアングルの変更
+	//F1キーを入力していたら実行
 	if (CKey::Push(VK_F1)) {
 		Camera.CameraAngleChange();
 	}
 	//カメラアングルの変更
+	//F2キーを入力していたら実行
 	else if(CKey::Push(VK_F2)) {
 		Camera.CameraAngleDefault();
 	}
@@ -210,32 +211,36 @@ void CXPlayer::Idle()
 	mPlayer_Flag = false;							//ダメージフラグの解除
 	//左クリックで攻撃
 	if (CKey::Once(VK_LBUTTON)) {
-		mPlayer_State = EATTACK_1;
+		mPlayer_State = CXPlayer::EPlayerState::EATTACK_1;
 	}
 	//回避状態へ移行
+	//Wキーを入力して、なおかつShiftキーを入力していたら実行
 	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Aキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Sキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Dキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
 	//WASDキーを押すと移動へ移行
 	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
-		mPlayer_State = EMOVE;
+		mPlayer_State = CXPlayer::EPlayerState::EMOVE;
 		Se_Player_Walk.Repeat(Player_Se);
 	}
 	//何も入力されなかったので待機処理を動かす
@@ -251,30 +256,34 @@ void CXPlayer::Move()
 	mPlayer_AttackFlag_1 = false;					//プレイヤの攻撃1フラグをfalseにする
 	//左クリックで攻撃1へ移行
 	if (CKey::Once(VK_LBUTTON)) {
-		mPlayer_State = EATTACK_1;
+		mPlayer_State = CXPlayer::EPlayerState::EATTACK_1;
 	} 
 	//回避状態へ移行
+	//Wキーを入力して、なおかつShiftキーを入力していたら実行
 	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Aキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Sキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Dキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
 		MoveCamera();
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
-	//WASDキーを押すと移動へ移行
+	//WASDキーのいずれかを入力すると移動状態へ移行
 	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
 		ChangeAnimation(Player_Animation_No_Move, true, Player_Move_Animation_Frame);
 		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
@@ -282,10 +291,10 @@ void CXPlayer::Move()
 	}
 	//待機状態へ移行
 	else {
-		mPlayer_State = EIDLE;
+		mPlayer_State = CXPlayer::EPlayerState::EIDLE;
 	}
 	//歩行状態では無いので歩行SEを停止する
-	if (mPlayer_State != EMOVE) {
+	if (mPlayer_State != CXPlayer::EPlayerState::EMOVE) {
 		Se_Player_Walk.Stop();
 	}
 }
@@ -319,11 +328,11 @@ void CXPlayer::Avoidance()
 			if (mPlayer_Avoid == false) {
 				//回避終了時WASDキーが押されていると移動
 				if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
-					mPlayer_State = EMOVE;
+					mPlayer_State = CXPlayer::EPlayerState::EMOVE;
 				}
 				//待機状態へ移行
 				else {
-					mPlayer_State = EIDLE;
+					mPlayer_State = CXPlayer::EPlayerState::EIDLE;
 				}
 			}
 		}
@@ -349,7 +358,7 @@ void CXPlayer::Attack_1()
 		Se_Player_AttackSp1.Play(Player_Se);													//プレイヤの攻撃SEを再生
 	}
 		//敵の距離がプレイヤの攻撃範囲に入ったら自動的に敵に攻撃が追従する
-		if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
+		if (CXEnemyManager::GetInstance()->GetTargetEnemy().Length() <= mPlayer_Attack_Dis) {
 			mPlayer_MoveDirKeep = mPlayer_MoveDir;							  //MoveDir保存
 			mPlayer_MoveDir = CXEnemyManager::GetInstance()->GetTargetEnemy();//敵のリストに入っている敵の位置を代入
 		}
@@ -377,30 +386,36 @@ void CXPlayer::Attack_1()
 
 		
 			//左クリックされた場合
+			//アニメーションが攻撃1でかつ、入力制限時間内でクリックされれば実行する
 			if (CKey::Once(VK_LBUTTON)) {
-				//アニメーションが攻撃1でかつ、入力制限時間内でクリックされれば実行する
+				//アニメーション番号が攻撃1のアニメーションで
 				if (mAnimationIndex == Player_Animation_No_Attack1) {
+					//フレーム数が入力制限時間内でクリックされれば実行する
 					if (mAnimationFrame < Player_Push_Reception) {
 						//攻撃2モーションへ移行
-						mPlayer_State = EATTACK_2;							
+						mPlayer_State = CXPlayer::EPlayerState::EATTACK_2;
 					}
 				}
 			}
-			//移動状態へ移行
+			//回避状態へ移行
+			//Wキーを入力して、なおかつShiftキーを入力していたら実行
 			if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = EAVOIDANCE;
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 				mPlayer_IsHit = false;
 			}
+			//Aキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = EAVOIDANCE;
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 				mPlayer_IsHit = false;
 			}
+			//Sキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = EAVOIDANCE;
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 				mPlayer_IsHit = false;
 			}
+			//Dキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = EAVOIDANCE;
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 				mPlayer_IsHit = false;
 			}
 		//アニメーション終了時
@@ -412,7 +427,7 @@ void CXPlayer::Attack_1()
 		//待機状態へ移行
 		if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1_Idle) {
 				mPlayer_IsHit = false;								//ヒット判定終了
-				mPlayer_State = EIDLE;								//待機状態へ移行
+				mPlayer_State = CXPlayer::EPlayerState::EIDLE;								//待機状態へ移行
 				mPlayer_AttackFlag_1 = false;						//プレイヤの攻撃1フラグをfalseにする
 		}
 }
@@ -427,9 +442,8 @@ void CXPlayer::Attack_2()
 		ChangeAnimation(Player_Animation_No_Attack2, false, Player_Attack2_Animation_Frame);		//プレイヤの攻撃2モーション
 		Se_Player_AttackSp2.Play(Player_Se);														//攻撃2のSEを再生する		
 	}
-
 	//敵の距離がプレイヤの攻撃範囲に入ったら自動的に敵に攻撃が追従する
-	if (mPlayer_EnemyDis <= mPlayer_Attack_Dis) {
+	if (CXEnemyManager::GetInstance()->GetTargetEnemy().Length() <= mPlayer_Attack_Dis) {
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;							  //MoveDir保存
 		mPlayer_MoveDir = CXEnemyManager::GetInstance()->GetTargetEnemy();//敵のリストに入っている敵の位置を代入
 	}
@@ -456,30 +470,36 @@ void CXPlayer::Attack_2()
 	}
 
 	//左クリックされた場合
-	//攻撃2のアニメーションかつ、、入力制限時間内でクリックされれば実行する
+	//攻撃2のアニメーションかつ、入力制限時間内でクリックされれば実行する
 	if (CKey::Once(VK_LBUTTON)) {
+		//アニメーション番号が攻撃2のアニメーションで
 		if (mAnimationIndex == Player_Animation_No_Attack2) {
+			//フレーム数が入力制限時間内でクリックされれば実行する
 			if (mAnimationFrame < Player_Push_Reception) {
 				//攻撃1モーションへ移行
-				mPlayer_State = EATTACK_1;						
+				mPlayer_State = CXPlayer::EPlayerState::EATTACK_1;
 			}
 		}
 	}
-	//移動状態へ移行
+	//回避状態へ移行
+	//Wキーを入力して、なおかつShiftキーを入力していたら実行
 	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Aキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Sキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
+	//Dキーを入力して、なおかつShiftキーを入力していたら実行
 	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = EAVOIDANCE;
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
 		mPlayer_IsHit = false;
 	}
 	//アニメーション終了時
@@ -491,7 +511,7 @@ void CXPlayer::Attack_2()
 	//待機状態へ移行
 	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2_Idle) {
 			mPlayer_IsHit = false;								//ヒット判定終了
-			mPlayer_State = EIDLE;								//待機状態へ移行
+			mPlayer_State = CXPlayer::EPlayerState::EIDLE;								//待機状態へ移行
 	}
 }
 
@@ -516,30 +536,34 @@ void CXPlayer::KnockBack()
 
 		//左クリックで攻撃1へ移行
 		if (CKey::Once(VK_LBUTTON)) {
-			mPlayer_State = EATTACK_1;		//攻撃1状態へ移行
+			mPlayer_State = CXPlayer::EPlayerState::EATTACK_1;		//攻撃1状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
+		//Wキーを入力して、なおかつShiftキーを入力していたら実行
 		else if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-			mPlayer_State = EAVOIDANCE;		//回避状態へ移行
+			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
+		//Aキーを入力して、なおかつShiftキーを入力していたら実行
 		else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-			mPlayer_State = EAVOIDANCE;		//回避状態へ移行
+			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
+		//Sキーを入力して、なおかつShiftキーを入力していたら実行
 		else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-			mPlayer_State = EAVOIDANCE;		//回避状態へ移行
+			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
+		//Dキーを入力して、なおかつShiftキーを入力していたら実行
 		else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
 
-			mPlayer_State = EAVOIDANCE;		//回避状態へ移行
+			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 
 	//アニメーション終了時
 	if (IsAnimationFinished()){
-		mPlayer_State = EIDLE;			//待機状態へ移行
+		mPlayer_State = CXPlayer::EPlayerState::EIDLE;			//待機状態へ移行
 		mPlayer_Flag = false;			//フラグをfalseにする
 		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
@@ -572,17 +596,25 @@ void CXPlayer::MoveCamera()
 
 	//移動状態時の場合
 	//移動量を代入
-	if (mPlayer_State == EMOVE) {
+	if (mPlayer_State == CXPlayer::EPlayerState::EMOVE) {
+		//Aキーを入力していれば、移動量を代入する
 		if (CKey::Push(VK_A)) {
+			//移動量を代入
 			mPlayer_MoveDir -= mPlayer_SideVec;
 		}
+		//Dキーを入力していれば、移動量を代入する
 		else if (CKey::Push(VK_D)) {
+			//移動量を代入
 			mPlayer_MoveDir += mPlayer_SideVec;
 		}
+		//Wキーを入力していれば、移動量を代入する
 		if (CKey::Push(VK_W)) {
+			//移動量を代入
 			mPlayer_MoveDir += mPlayer_FrontVec;
 		}
+		//Sキーを入力していれば、移動量を代入する
 		else if (CKey::Push(VK_S)) {
+			//移動量を代入
 			mPlayer_MoveDir -= mPlayer_FrontVec;
 		}
 		//ジャンプ時などはY軸を正規化しないよう注意
@@ -592,18 +624,26 @@ void CXPlayer::MoveCamera()
 	}
 	//回避状態の場合
 	//移動量を代入
-	else if (mPlayer_State == EAVOIDANCE)
+	else if (mPlayer_State == CXPlayer::EPlayerState::EAVOIDANCE)
 	{
+		//Aキーを入力していれば、移動量を代入する
 		if (CKey::Push(VK_A)) {
+			//移動量を代入
 			mPlayer_MoveDir -= mPlayer_SideVec;
 		}
+		//Dキーを入力していれば、移動量を代入する
 		else if (CKey::Push(VK_D)) {
+			//移動量を代入
 			mPlayer_MoveDir += mPlayer_SideVec;
 		}
+		//Wキーを入力していれば、移動量を代入する
 		if (CKey::Push(VK_W)) {
+			//移動量を代入
 			mPlayer_MoveDir += mPlayer_FrontVec;
 		}
+		//Sキーを入力していれば、移動量を代入する
 		else if (CKey::Push(VK_S)) {
+			//移動量を代入
 			mPlayer_MoveDir -= mPlayer_FrontVec;
 		}
 		//ジャンプ時などはY軸を正規化しないよう注意
@@ -665,17 +705,17 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	if (o->Parent() == this)return;
 	//自身のコライダタイプの判定
 	switch (m->CCollider::Type()) {
-	case CCollider::ESPHERE: {//球コライダ
+	case CCollider::EType::ESPHERE: {//球コライダ
 		//相手のコライダが球コライダの時
-		if (o->CCollider::Type() == CCollider::ESPHERE) {
+		if (o->CCollider::Type() == CCollider::EType::ESPHERE) {
 			//球の衝突判定
 			if (CCollider::Collision(m, o)) {
 				//相手の親のタグがプレイヤー
 				if (o->Parent()->Tag() == CCharacter::ETag::EENEMY)
 				{
-					if (m->CCollider::Tag() == CCollider::EBODY) {
+					if (m->CCollider::Tag() == CCollider::ETag::EBODY) {
 						//相手のコライダのタグが右手
-						if (o->CCollider::Tag() == CCollider::ERIGHTARM)
+						if (o->CCollider::Tag() == CCollider::ETag::ERIGHTARM)
 						{
 							if (((CXEnemy*)(o->Parent()))->GetState() != CXEnemy::EEnemyState::EATTACK_2) {
 								//プレイヤーが無敵状態ではないとき
@@ -696,7 +736,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 										//プレイヤ被弾時のSEを再生
 										Se_Enemy_AttackSp.Play(Player_Damage_Se);
 										//ノックバック状態へ移行
-										mPlayer_State = EKNOCKBACK;
+										mPlayer_State = CXPlayer::EPlayerState::EKNOCKBACK;
 										//スタン蓄積値が上限を超えていれば
 										//ノックバックし、蓄積したスタン値を初期化する
 										if (Player_StanAccumulation_Max < mStanAccumulation)
@@ -718,7 +758,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 							}
 						}
 						//コライダのポインタが左手であれば
-						else if (o->CCollider::Tag() == CCollider::ELEFTARM)
+						else if (o->CCollider::Tag() == CCollider::ETag::ELEFTARM)
 						{
 							//ポインタが敵かつ、攻撃1の状態で
 							if (((CXEnemy*)(o->Parent()))->GetState() != CXEnemy::EEnemyState::EATTACK_1) {
@@ -740,7 +780,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 										//プレイヤ被弾時のSEを再生
 										Se_Enemy_AttackSp.Play(Player_Damage_Se);
 										//ノックバック状態へ移行
-										mPlayer_State = EKNOCKBACK;
+										mPlayer_State = CXPlayer::EPlayerState::EKNOCKBACK;
 										//スタン蓄積値が上限を超えていれば
 										//ノックバックし、蓄積したスタン値を初期化する
 										if (Player_StanAccumulation_Max < mStanAccumulation)
@@ -769,9 +809,9 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	}
 	break;
 
-	case CCollider::ECAPSUL: {//カプセルコライダ
+	case CCollider::EType::ECAPSUL: {//カプセルコライダ
 		//相手のコライダがカプセルコライダの時
-		if (o->Type() == CCollider::ECAPSUL) {
+		if (o->Type() == CCollider::EType::ECAPSUL) {
 			CVector adjust;//調整用ベクトル
 			if (CCollider::CollisionCapsule(m, o, &adjust))
 			{
@@ -784,13 +824,13 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	}
 	}
 
-	if (m->Type() == CCollider::ESPHERE && o->Type() == CCollider::ETRIANGLE) {
+	if (m->Type() == CCollider::EType::ESPHERE && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
 		//相手の親のタグがマップ
-		if (o->Parent()->Tag() == EMAP)
+		if (o->Parent()->Tag() == CCharacter::ETag::EMAP)
 		{
 			//自分のコライダのタグが頭or体
-			if (m->Tag() == CCollider::EBODY) {
+			if (m->Tag() == CCollider::ETag::EBODY) {
 				if (CCollider::CollisionTriangleSphere(o, m, &adjust))
 				{
 					//位置の更新(mPosition + adjust)
@@ -815,7 +855,7 @@ void CXPlayer::MovingCalculation() {
 	//擬似ベクトル計算
 	CVector ChackVec; //チェック用ベクトル
 	//回避状態のとき
-	if (mPlayer_State == EAVOIDANCE) {
+	if (mPlayer_State == CXPlayer::EPlayerState::EAVOIDANCE) {
 		ChackVec = mPlayer_MoveDirKeep.Normalize(); //保存された移動時の方向ベクトルを代入
 	}
 	else {
@@ -838,7 +878,7 @@ void CXPlayer::MovingCalculation() {
 		mRotation = mRotation - CVector(0.0f, tCheck.turn * mPlayer_Turnspeed, 0.0f);
 	}
 
-	//リセット
+	//移動量をリセット
 	mPlayer_MoveDir = CVector(0.0f, 0.0f, 0.0f);
 
 

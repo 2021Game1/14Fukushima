@@ -9,7 +9,7 @@ CColliderLine::CColliderLine(CCharacter *parent, CMatrix *matrix
 
 void CColliderLine::Set(CCharacter *parent, CMatrix *matrix
 	, const CVector &v0, const CVector &v1) {
-	mType = ELINE;//線分コライダ
+	mType = CCollider::EType::ELINE;//線分コライダ
 	mpParent = parent;//親設定
 	if (matrix)
 		mpMatrix = matrix;//親行列あれば設定

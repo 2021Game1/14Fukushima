@@ -29,7 +29,7 @@ CXPlayer
 class CXPlayer : public CXCharacter{
 public:
 	//プレイヤの状態
-	enum EPlayerState
+	enum class EPlayerState
 	{
 		EIDLE = 0,	//待機
 		EMOVE,		//移動
@@ -101,8 +101,6 @@ private:
 	float mPlayer_FollowGaugeWid;		//被ダメージ分後追いするゲージの幅
 	float mPlayer_Gauge_Hp_Rate;		//プレイヤのHPゲージの揺れ幅設定
 
-	//プレイヤの移動用変数
-	CVector mPlayer_Point;				//プレイヤ移動時の目標地点
 	CVector mPlayer_Move;				//プレイヤの方向と速度をかけ合わせたベクトル、プレイヤの移動量
 	CVector mPlayer_MoveDir;			//プレイヤの移動する方向、モデルの回転にも使用している、毎フレームリセットされる
 	CVector mPlayer_MoveDirKeep;		//プレイヤの移動時の方向を保存する
@@ -112,7 +110,6 @@ private:
 	float mPlayer_Speed_Avoid;			//プレイヤのスピード(回避)
 	float mPlayer_Avoid_Time;			//プレイヤの回避時間
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
-	float mPlayer_EnemyDis;				//プレイヤが敵の座標参照用
 	float mPlayer_Attack_Dis;			//プレイヤの攻撃対象判別後の距離設定
 	CVector mPlayer_Gravity;				//重力の保存用
 

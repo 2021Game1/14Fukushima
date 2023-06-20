@@ -9,6 +9,7 @@
 #include"CMatrix.h"
 #include"CUtil.h"
 
+
 //マップの優先順位
 #define MAP_PRIORITY 90
 
@@ -17,11 +18,12 @@
 #define MAP_MODEL_MAP "res\\Map\\map.obj","res\\Map\\map.mtl"
 #define MAP_MODEL_SKY "res\\Sky\\sky.obj","res\\Sky\\sky.mtl"
 #define MAP_COLLISION_MAP "res\\Map\\collision.obj","res\\Map\\collision.mtl"
-
+//マップクラス
 class CMap : public CCharacter {
 public:
+	//デフォルトコンストラクタ
 	CMap();
-	void Init();
+	//当たり判定の設定
 	void Collision(CCollider* m, CCollider* o);
 	//マップ生成
 	void Generate(); //生成
@@ -43,11 +45,12 @@ private:
 	CColliderMesh mColliderMesh;
 
 };
-
+//背景マップクラス
 class CSkyMap : public CCharacter {
 public:
+	//デフォルトコンストラクタ
 	CSkyMap();
-	void Init();
+	//当たり判定の設定
 	void Collision(CCollider* m, CCollider* o);
 	//マップ生成
 	void Generate(); //生成

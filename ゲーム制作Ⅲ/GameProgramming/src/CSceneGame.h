@@ -56,6 +56,7 @@
 */
 class CSceneGame : public CScene {
 private:
+	//デストラクタ
 	~CSceneGame();
 	//初期化処理のオーバーライド
 	void Init();
@@ -68,8 +69,6 @@ private:
 
 	//リソースクラスのインスタンス
 	CRes mRes;
-	//マップクラスのインスタンス
-	CMap mMap;
 	//シャドウマップのインスタンス
 	CShadowMap mShadowMap;
 };

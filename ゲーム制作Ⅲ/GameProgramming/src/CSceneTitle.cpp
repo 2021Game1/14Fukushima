@@ -1,19 +1,23 @@
 #include "CSceneTitle.h"
 
+//デフォルトコンストラクタ
 CSceneTitle::CSceneTitle()
-	: mNextScene(ETITLE)
+	: mNextScene(CScene::EScene::ETITLE)
 	, mSceneChange()
 {
 }
 
+//デストラクタ
 CSceneTitle::~CSceneTitle()
 {
 	CTaskManager::Get()->Delete();
 }
 
+//Init処理
+//一度しか動かさない処理
 void CSceneTitle::Init() {
 	//シーンの設定
-	mScene = ETITLE;
+	mScene = CScene::EScene::ETITLE;
 	//タイトル画像の追加
 	gTitle_Image.Load2D(TITLE_IMAGE);
 	Title_Bgm.Load(BGM_TITLE);
@@ -24,7 +28,7 @@ void CSceneTitle::Init() {
 void CSceneTitle::Update() {
 	if (CKey::Once(VK_RETURN)) {
 		//次のシーンはゲーム
-		mNextScene = ETUTORIAL;
+		mNextScene = CScene::EScene::ETUTORIAL;
 		mSceneChange = true;
 		Title_Bgm.Stop();
 	}
@@ -33,6 +37,7 @@ void CSceneTitle::Update() {
 	}
 }
 
+//描画処理
 void CSceneTitle::Render() {
 	//2Dの描画開始
 	CUtil::Start2D(START2D_FIRST_WID, START2D_END_WID, START2D_FIRST_HEI, START2D_END_HEI);
@@ -41,6 +46,8 @@ void CSceneTitle::Render() {
 	CUtil::End2D();
 }
 
+//次のシーンに移行
 CScene::EScene CSceneTitle::GetNextScene() {
+	//現在のシーンを返す
 	return mScene;
 }

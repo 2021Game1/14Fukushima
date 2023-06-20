@@ -2,20 +2,23 @@
 
 
 
-
+//ポインタをnullptrに設定する
 CMap* CMap::mpMap_Instance = nullptr;												//インスタンス変数の初期化
 CSkyMap* CSkyMap::mpSkyMap_Instance = nullptr;												//インスタンス変数の初期化
 
+//ポインタを外部クラスから参照できるように設定
 CMap* CMap::GetInstance()
 {
+	//ポインタを返す
 	return mpMap_Instance;
 }
 
 //コライダ初期化
 CMap::CMap()
 {
+	//マップのポインタをthisにする
 	mpMap_Instance = this;
-	mTag = EMAP;
+	mTag = CCharacter::ETag::EMAP;
 	//マップモデルファイルの入力
 	gMap_Model.Load(MAP_MODEL_MAP);
 	Model(&gMap_Model);
@@ -28,35 +31,38 @@ CMap::CMap()
 
 	//優先度を設定
 	mPriority = MAP_PRIORITY;
-	CTaskManager::Get()->Remove(this);//
+	//タスクマネージャへの追加処理
+	CTaskManager::Get()->Remove(this);//削除して
 	CTaskManager::Get()->Add(this);//追加する
 }
-void CMap::Init() {
-
-}
-
+//生成処理
 void CMap::Generate()
 {
 	mpMap_Instance = new CMap;
 }
+//削除処理
 void CMap::Release()
 {
+	//ポインタを削除
 	if (mpMap_Instance) {
 		delete mpMap_Instance;
 		mpMap_Instance = nullptr;
 	}
 }
+//衝突処理
 void CMap::Collision(CCollider* m, CCollider* o) {
 	switch (m->Type())
 	{
-	case CCollider::ESPHERE: {
+	//相手のコライダが球の場合
+	case CCollider::EType::ESPHERE: {
 		//コライダのmとoが衝突しているかの判定
 		if (CCollider::Collision(m, o)) {
 			//行列の更新
 			CTransform::Update();
 		}
 	}
-	case CCollider::ECAPSUL: {
+	//相手のコライダがカプセルの場合
+	case CCollider::EType::ECAPSUL: {
 		CVector adjust;//調整用ベクトル
 		if (CCollider::CollisionCapsule(m, o, &adjust))
 		{
@@ -67,10 +73,10 @@ void CMap::Collision(CCollider* m, CCollider* o) {
 
 	}
 }
-
+//デフォルトコンストラクタ
 CSkyMap::CSkyMap()
 {
-	mTag = EMAP;
+	mTag = CCharacter::ETag::EMAP;
 	mpSkyMap_Instance = this;
 	//スカイモデルファイルの入力
 	gSky_Map_Model.Load(MAP_MODEL_SKY);
@@ -80,16 +86,12 @@ CSkyMap::CSkyMap()
 	CTaskManager::Get()->Remove(this);//
 	CTaskManager::Get()->Add(this);//追加する
 }
-void CSkyMap::Init()
-{
-
-}
-
+//衝突処理
 void CSkyMap::Collision(CCollider* m, CCollider* o)
 {
 	switch (m->Type())
 	{
-	case CCollider::ESPHERE: {
+	case CCollider::EType::ESPHERE: {
 		//コライダのmとoが衝突しているかの判定
 		if (CCollider::Collision(m, o)) {
 
@@ -97,12 +99,14 @@ void CSkyMap::Collision(CCollider* m, CCollider* o)
 	}
 	}
 }
-
+//生成処理
+//背景マップのモデルを生成する
 void CSkyMap::Generate()
 {
 	mpSkyMap_Instance = new CSkyMap;
 }
-
+//削除処理
+//ポインタを削除し、nullに設定する
 void CSkyMap::Release()
 {
 	if (mpSkyMap_Instance) {
@@ -110,8 +114,9 @@ void CSkyMap::Release()
 		mpSkyMap_Instance = nullptr;
 	}
 }
-
+//ポインタを外部クラスから参照できるように設定
 CSkyMap* CSkyMap::GetInstance()
 {
+	//ポインタを返す
 	return mpSkyMap_Instance;
 }

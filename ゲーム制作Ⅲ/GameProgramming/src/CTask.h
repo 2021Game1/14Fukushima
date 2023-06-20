@@ -9,6 +9,7 @@ class CCollisionManager;
 タスクリストの要素
 */
 class CTask {
+	//フレンド設定
 	friend CTaskManager;
 	friend CCollisionManager;
 public:

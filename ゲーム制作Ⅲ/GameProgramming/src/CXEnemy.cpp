@@ -64,7 +64,7 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
-		mTag = EENEMY;
+		mTag = CCharacter::ETag::EENEMY;
 		//優先度を1に変更する
 		mPriority = Enemy_Priority;
 		mHp = Enemy_Hp;
@@ -133,7 +133,7 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
-		mTag = EENEMY;
+		mTag = CCharacter::ETag::EENEMY;
 		//優先度を1に変更する
 		mPriority = Enemy_Priority;
 		mHp = Enemy_Hp;
@@ -202,7 +202,7 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Y = table["Enemy_Rotation_Y"]["Value"].fVal;
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
-		mTag = EENEMY;
+		mTag = CCharacter::ETag::EENEMY;
 		//優先度を1に変更する
 		mPriority = Enemy_Priority;
 		mHp = Enemy_Hp;
@@ -224,7 +224,15 @@ void CXEnemy::EnemyTable()
 
 //コライダ初期化
 CXEnemy::CXEnemy()
-	: mEnemy_Speed(ENEMY_SPEED)
+	: mEnemy_Type(CXEnemy::EEnemyType::ETYPE_TUTORIAL)
+	, mHp(NULL)
+	, mDamage(NULL)
+	, mAttack_Point(NULL)
+	, mDefense_Point(NULL)
+	, mStan_Damage(NULL)
+	, mStan_Point(NULL)
+	, mStanAccumulation(NULL)
+	, mEnemy_Speed(ENEMY_SPEED)
 	, mEnemy_Turnspeed(ENEMY_TURNSPEED)
 	, mEnemy_PlayerDis(ENEMY_FLOAT_INITIALIZATION)
 	, mEnemy_FollowGaugeWid(ENEMY_FLOAT_INITIALIZATION)
@@ -290,16 +298,17 @@ CXEnemy::CXEnemy()
 	//初期状態を設定
 	mEnemy_State = CXEnemy::EEnemyState::EIDLE;	//待機状態
 	//コライダのタグを設定
-	mEnemy_ColCapsuleBody.Tag(CCollider::EBODY);	//体
-	mEnemy_ColSphereBody.Tag(CCollider::EBODY);		//体
-	mEnemy_ColSphereRightarm.Tag(CCollider::ERIGHTARM);	//右手
-	mEnemy_ColSphereLeftarm.Tag(CCollider::ELEFTARM);	//左手
+	mEnemy_ColCapsuleBody.Tag(CCollider::ETag::EBODY);	//体
+	mEnemy_ColSphereBody.Tag(CCollider::ETag::EBODY);		//体
+	mEnemy_ColSphereRightarm.Tag(CCollider::ETag::ERIGHTARM);	//右手
+	mEnemy_ColSphereLeftarm.Tag(CCollider::ETag::ELEFTARM);	//左手
 	mpEnemy_Instance = this;
 	//敵のUIの追加
 	gEnemy_Ui_Hp_BackBar.Load2D(ENEMY_UI_HP_BACKBAR);
-
+	//テーブルの呼び出し
+	EnemyTable();
 	//タグの設定
-	mTag = EENEMY;
+	mTag = CCharacter::ETag::EENEMY;
 	CTaskManager::Get()->Remove(this);//削除して
 	CTaskManager::Get()->Add(this);//追加する
 }
@@ -726,13 +735,13 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	if (o->Parent() == this)return;
 
 
-	if (m->CCollider::Type() == CCollider::ECAPSUL && o->CCollider::Type() == CCollider::ECAPSUL)
+	if (m->CCollider::Type() == CCollider::EType::ECAPSUL && o->CCollider::Type() == CCollider::EType::ECAPSUL)
 	{
 		CVector adjust;//調整用ベクトル
 		//コライダのmとoが衝突しているかの判定
 		if (CCollider::CollisionCapsule(m, o, &adjust))
 		{
-			if (m->CCollider::Tag() == CCollider::EBODY && o->CCollider::Tag() == CCollider::EBODY)
+			if (m->CCollider::Tag() == CCollider::ETag::EBODY && o->CCollider::Tag() == CCollider::ETag::EBODY)
 			{
 				//位置の更新(mPosition + adjust)
 				mPosition = mPosition + adjust;
@@ -743,7 +752,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	}
 
 	//カプセルと三角形の衝突処理
-	if (m->Type() == CCollider::ECAPSUL && o->Type() == CCollider::ETRIANGLE) {
+	if (m->Type() == CCollider::EType::ECAPSUL && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
 		//三角形コライダとカプセルの衝突処理
 		if (CCollider::CollisionTriangleLine(o, m, &adjust))
@@ -756,13 +765,13 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 		}
 
 	}
-	if (m->Type() == CCollider::ESPHERE && o->Type() == CCollider::ETRIANGLE) {
+	if (m->Type() == CCollider::EType::ESPHERE && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
 		//相手の親のタグがマップ
-		if (o->Parent()->Tag() == EMAP)
+		if (o->Parent()->Tag() == CCharacter::ETag::EMAP)
 		{
 			//自分のコライダのタグが頭or体
-			if (m->Tag() == CCollider::EBODY) {
+			if (m->Tag() == CCollider::ETag::EBODY) {
 				if (CCollider::CollisionTriangleSphere(o, m, &adjust))
 				{
 					//位置の更新(mPosition + adjust)
@@ -777,16 +786,16 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//敵が死亡していないとき
 	if (!mHp <= Enemy_Death_Hp) {
 		//自身のコライダタイプの判定
-		if (m->Type() == CCollider::ESPHERE) {
+		if (m->Type() == CCollider::EType::ESPHERE) {
 			//相手のコライダが球コライダの時
-			if (o->Type() == CCollider::ESPHERE) {
+			if (o->Type() == CCollider::EType::ESPHERE) {
 				//球の衝突判定
 				if (CCollider::Collision(m, o)) {
 					//相手の親のタグがプレイヤー
 					if (o->Parent()->Tag() == CCharacter::ETag::EPLAYER)
 					{
 						//相手のコライダのタグが剣
-						if (o->Tag() == CCollider::ESWORD)
+						if (o->Tag() == CCollider::ETag::ESWORD)
 						{
 							if (CXPlayer::GetInstance()->GetState() != CXPlayer::EPlayerState::EDEATH)
 							{
@@ -931,16 +940,6 @@ int CXEnemy::GetHp() {
 CXEnemy::EEnemyType CXEnemy::GetIsType()
 {
 	return mEnemy_Type;
-}
-//敵の攻撃してくる距離を取得
-float CXEnemy::GetIsEnemyAttackDis()
-{
-	return Enemy_Attack_Dis;
-}
-//プレイヤと敵の距離を取得
-float CXEnemy::GetIsEnemyPlayerDis()
-{
-	return mEnemy_PlayerDis;
 }
 //アニメーションフレームの取得
 bool CXEnemy::GetIsAnimationFrame() {

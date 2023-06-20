@@ -2,21 +2,29 @@
 //OpenGL
 #include "glut.h"
 
-
+//デストラクタ
 CSceneGame::~CSceneGame()
 {
-	CXEnemyManager::GetInstance()->~CXEnemyManager();	//敵管理解放
-	CXPlayerManager::GetInstance()->~CXPlayerManager(); //プレイヤ管理解放
-	CMap::GetInstance()->Release();						//マップモデル解放
-	CSkyMap::GetInstance()->Release();					//背景モデル解放
-	CTaskManager::Get()->Delete();						//タスクマネージャの解放
+	//敵の管理削除
+	CXEnemyManager::GetInstance()->~CXEnemyManager();
+	//プレイヤを削除
+	CXPlayerManager::GetInstance()->Release();
+	//ステージマップを削除
+	CMap::GetInstance()->Release();
+	//空の背景マップを削除
+	CSkyMap::GetInstance()->Release();
+	//タスクマネージャの削除
+	CTaskManager::Get()->Delete();
 }
-
+//Init処理
+//一度しか動かさない処理
 void CSceneGame::Init() {
 	//シーンの設定
-	mScene = EGAME;
-	//マップ設定
+	//シーンにゲームシーンを設定する
+	mScene = CScene::EScene::EGAME;
+	//マップを生成
 	CMap::GetInstance()->Generate();
+	//マップ背景を生成
 	CSkyMap::GetInstance()->Generate();
 	//リソースの読み込み設定
 	mRes.Init();
@@ -35,38 +43,47 @@ void CSceneGame::Init() {
 	float lightPos[] = { LIGHTPOS_X, LIGHTPOS_Y, LIGHTPOS_Z };		//光源の位置
 	mShadowMap.Init(TEXWIDTH, TEXHEIGHT, WholeRender, shadowColor, lightPos); //シャドウマップ初期化
 }
-
+//更新処理
 void CSceneGame::Update() {
-	if (CXPlayer::GetInstance()->GetHp() == 0) {
+	//プレイヤHPが0になったら実行
+	if (CXPlayer::GetInstance()->GetHp() == NULL) {
+		//ゲームBGMを止める
 		CRes::GetInstance()->GetinSoundBgmGame().Stop();
+		//Enterキーを押したら、タイトルシーンに切り替える
 		if (CKey::Once(VK_RETURN))
 		{
 
-			mScene = ETITLE;
+			mScene = CScene::EScene::ETITLE;
 		}
 	}
+	//エネミーマネージャに格納されている敵が全て死亡してるなら実行
 	if (CXEnemyManager::GetInstance()->GetIsEnemyAllDeath()) {
+		//ゲームBGMを止める
 		CRes::GetInstance()->GetinSoundBgmGame().Stop();
+		//Enterキーを押したら、タイトルシーンに切り替える
 		if (CKey::Once(VK_RETURN))
 		{
-
-			mScene = ETITLE;
+			mScene = CScene::EScene::ETITLE;
 		}
 	}
 
-	//更新処理
+	//タスクマネージャに格納されている全ての更新処理を呼び出す
 	CTaskManager::Get()->Update();
-	//衝突処理
+	//コリジョンマネージャに格納されている全ての衝突処理を呼び出す
 	CCollisionManager::Get()->Collision();
-
+	//エネミーマネージャの更新処理を呼び出す
 	CXEnemyManager::GetInstance()->Update();
 
 	//タスクリスト削除
 	CTaskManager::Get()->Delete();
 }
+//描画処理
 void CSceneGame::Render() {
+	//タスクマネージャの描画を呼び出す
 	CTaskManager::Get()->Draw();
+	//影の描画を取得
 	mShadowMap.Render();
+	//タスクマネージャの2D描画を呼び出す
 	CTaskManager::Get()->Render2D();
 
 	//デバッグバージョンのみ有効
@@ -76,20 +93,24 @@ void CSceneGame::Render() {
 #endif
 	//2Dの描画開始
 	CUtil::Start2D(START2D_FIRST_WID, START2D_END_WID, START2D_FIRST_HEI, START2D_END_HEI);
-	//プレイヤのHPが0だったら、ゲームオーバーを描画する
-	if (CXPlayer::GetInstance()->GetHp() == 0) {
+	//プレイヤのHPが0だったら実行
+	if (CXPlayer::GetInstance()->GetHp() == NULL) {
+		//ゲームオーバー画像を描画
 		CRes::GetInstance()->GetinGameOverImage().DrawImage(GAMEOVER_FIRST_WID, GAMEOVER_END_WID, GAMEOVER_FIRST_HEI, GAMEOVER_END_HEI, GAMEOVER_FIRST_X, GAMEOVER_END_X, GAMEOVER_END_Y, GAMEOVER_FIRST_Y);
 	}
-
+	//敵のマネージャクラスに格納されている敵が全て死亡状態であれば実行
 	if (CXEnemyManager::GetInstance()->GetIsEnemyAllDeath()) {
+		//ゲームクリア画像を描画
 		CRes::GetInstance()->GetinGameClearImage().DrawImage(GAMECLEAR_FIRST_WID, GAMECLEAR_END_WID, GAMECLEAR_FIRST_HEI, GAMECLEAR_END_HEI, GAMECLEAR_FIRST_X, GAMECLEAR_END_X, GAMECLEAR_END_Y, GAMECLEAR_FIRST_Y);
 	}
 	//2Dの描画終了
 	CUtil::End2D(); {
 	}
 }
+//次のシーンを取得
 CScene::EScene CSceneGame::GetNextScene()
 {
+	//現在のシーンを返す
 	return mScene;
 }
 

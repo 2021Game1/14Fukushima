@@ -3,10 +3,10 @@
 #include "CSceneTitle.h"
 #include "CSceneTutorial.h"
 
-//コンストラクタ
+//デフォルトコンストラクタ
 CSceneManager::CSceneManager()
 	: mpScene(nullptr)
-	, mScene(CScene::ETITLE)
+	, mScene(CScene::EScene::ETITLE)
 {}
 //デストラクタ（削除されるときに実行されます）
 CSceneManager::~CSceneManager() {
@@ -19,7 +19,7 @@ CSceneManager::~CSceneManager() {
 //初期化処理
 void CSceneManager::Init() {
 	//シーンの識別を設定する
-	mScene = CScene::ETITLE;
+	mScene = CScene::EScene::ETITLE;
 	//シーンを生成し、ポインタを設定する
 	mpScene = new CSceneTitle();
 	//生成したクラスのメソッドが呼ばれる
@@ -36,17 +36,17 @@ void CSceneManager::Update() {
 		delete mpScene;//今のシーン削除
 		//該当するシーンを生成
 		switch (mScene) {
-		case CScene::EGAME:
+		case CScene::CScene::EScene::EGAME:
 			mpScene = new CSceneGame();
 			mpScene->Init();
 			break;
 
-		case CScene::ETUTORIAL:
+		case CScene::CScene::EScene::ETUTORIAL:
 			mpScene = new CSceneTutorial();
 			mpScene->Init();
 			break;
 
-		case CScene::ETITLE:
+		case CScene::CScene::EScene::ETITLE:
 			mpScene = new CSceneTitle();
 			mpScene->Init();
 			break;

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\glut.cpp" />
     <ClCompile Include="src\CBillBoard.cpp" />
     <ClCompile Include="src\CCamera.cpp" />
     <ClCompile Include="src\CCharacter.cpp" />

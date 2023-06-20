@@ -1,9 +1,10 @@
 #include "CTutorial.h"
 
+//ポインタをnullrtrに設定
 CTutorial* CTutorial::mpTutorial_Instance = nullptr;												//チュートリアルのインスタンス変数の初期化
 
 
-
+//デフォルトコンストラクタ
 CTutorial::CTutorial()
 	:mActionTutorialflag(false)
 	, mMoveTutorialflag(false)
@@ -14,9 +15,15 @@ CTutorial::CTutorial()
 	, mTutorialflag(false)
 	, mMoveTutorial_Accumulation_Max(MOVE_ACCEUMULATION_MAX)
 	, mCameraActionTutorial_Accumulation_Max(CAMERA_ACCEUMULATION_MAX)
+	, mTutorialEndflag(false)
+	, mAvoidDance_Acceumulation(NULL)
+	, mCameraActionTutorial_Accumulation(false)
+	, mCameraAngle_Acceumulation(false)
+	, mMoveTutorial_Accumulation_Pos(NULL)
 {
 
 }
+//更新処理
 void CTutorial::Update()
 {
 	//移動量検出用設定
@@ -102,7 +109,7 @@ void CTutorial::Update()
 	}
 
 }
-
+//描画処理
 void CTutorial::Render(){
 
 	//2Dの描画開始

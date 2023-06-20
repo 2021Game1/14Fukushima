@@ -6,7 +6,7 @@
 */
 class CScene {
 public:
-	enum EScene {
+	enum class EScene {
 		EGAME,		//ゲーム
 		ETUTORIAL,	//チュートリアル
 		ETITLE, 	//タイトル

@@ -9,6 +9,7 @@
 CCamera Camera;
 CCamera* CCamera::mpCameraInstance;
 
+//外部クラスから参照できるようの関数
 //カメラのインスタンス
 CCamera* CCamera::Instance()
 {
@@ -57,7 +58,8 @@ CCamera::CCamera()
 	mpCameraInstance = this;
 }
 
-
+//Init処理
+//一度しか動かさない処理
 void CCamera::Init()
 {
 	int viewport[CAMERA_VIEWPORT];
@@ -80,16 +82,17 @@ void CCamera::Init()
 	//カメラクラスの設定
 	Set(e, c, u);
 }
-
+//線形補完処理
 float CCamera::mLerp(float start, float point, float rate)
 {
 	return start + point * (point * rate);
 }
+//HPゲージ用の線形補完処理
 float CCamera::mHpLerp(float start, float point, float rate)
 {
 	return start + rate * (point - start);
 }
-
+//ターゲットを設定
 void CCamera::SetTarget(const CVector& target)
 {
 	mTarget = target;
@@ -117,24 +120,29 @@ void CCamera::Update() {
 	mOldMousePosY = Y;
 
 
-
+	//カメラの位置座標設定
 	mPos.X(mTarget.X() + (sinf(mAngleX)) * (mDist * sinf(mAngleY)));
 	mPos.Y(mTarget.Y() + cosf(mAngleY) * mDist * sinf(mAngleY));
 	mPos.Z(mTarget.Z() + (cosf(mAngleX)) * (mDist * sinf(mAngleY)));
-
+	//カメラのターゲット設定
 	mCenter = mTarget;
+	//カメラのY座標の高さ調整
 	mCenter.Y(mCenter.Y() + mCamera_Point_Herd_Adjust);
+	//カメラの位置をカメラ視点に格納
 	mEye = mPos;
 
 	//線コライダセット
 	mColliderLine.Set(this, nullptr, mEye, mCenter);
+	//リセット
 	CInput::InputReset();
 }
 
+//マトリックスの取得
 CMatrix CCamera::GetMat() {
 	return mMatrix;
 }
 
+//アングルXを絶対値に変換してから返す
 float CCamera::GetInAngleX()
 {
 	return fabsf(mAngleX);
@@ -190,15 +198,12 @@ void CCamera::CameraAngleDefault() {
 //当たり判定
 void CCamera::Collision(CCollider* m, CCollider* o) {
 	//相手のコライダが三角コライダの時
-	if (o->Type() == CCollider::ETRIANGLE) {
-		if (!o->Parent()->EENEMY)
-		{
-			CVector adjust;//調整用ベクトル
-			if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
-				//マップ等に衝突すると、視点をプレイヤーに近づく
-				mEye = mEye + adjust;
-				mColliderLine.Set(this, nullptr, mEye, mCenter);
-			}
+	if (o->CCollider::Type() == CCollider::EType::ETRIANGLE) {
+		CVector adjust;//調整用ベクトル
+		if (CCollider::CollisionTriangleLine(o, m, &adjust)) {
+			//マップ等に衝突すると、視点をプレイヤーに近づく
+			mEye = mEye + adjust;
+			mColliderLine.Set(this, nullptr, mEye, mCenter);
 		}
 	}
 }
