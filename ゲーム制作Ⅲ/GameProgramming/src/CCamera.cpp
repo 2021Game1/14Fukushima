@@ -1,5 +1,4 @@
 #include "CCamera.h"
-#include "CInput.h"
 #include"CXPlayer.h"
 #include"CXEnemy.h"
 #include "CTaskManager.h"
@@ -57,6 +56,7 @@ CCamera::CCamera()
 	CTaskManager::Get()->Add(this);//’Ç‰Á‚·‚é
 	mpCameraInstance = this;
 }
+
 
 //Initˆ—
 //ˆê“x‚µ‚©“®‚©‚³‚È‚¢ˆ—

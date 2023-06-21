@@ -21,8 +21,6 @@
 //ゲームオーバー画像
 #define GAMEOVER_IMAGE "res\\Image\\GameOver_Image.png"
 //チュートリアル画像
-//チュートリアルシーン画像
-#define TUTORIAL_IMAGE "res\\Image\\Tutorial.png"
 //チュートリアル終了画像
 #define TUTORIAL_END_IMAGE "res\\Image\\Tutorial_End.png"
 //アクションチュートリアル画像
@@ -55,8 +53,6 @@ public:
 	CTexture& GetinGameClearImage();
 	//ゲームオーバー画像を取得する
 	CTexture& GetinGameOverImage();
-	//チュートリアル画像
-	CTexture& GetinTutorialImage();
 	//チュートリアル終了の画像
 	CTexture& GetinTutorialEndImage();
 	//アクションのチュートリアル画像を取得する
@@ -94,8 +90,6 @@ private:
 	CTexture gGameClear_Image;
 	//ゲームオーバー画像
 	CTexture gGameOver_Image;
-	//チュートリアル画像
-	CTexture gTutorial_Image;
 	//チュートリアルの終了画像
 	CTexture gTutorial_End_Image;
 	//アクションチュートリアル画像

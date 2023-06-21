@@ -12,7 +12,6 @@ CTutorial::CTutorial()
 	, mCameraAngleTutorialflag(false)
 	, mCameraActionTutorialflag(false)
 	, mTutorial_Out_flag(false)
-	, mTutorialflag(false)
 	, mMoveTutorial_Accumulation_Max(MOVE_ACCEUMULATION_MAX)
 	, mCameraActionTutorial_Accumulation_Max(CAMERA_ACCEUMULATION_MAX)
 	, mTutorialEndflag(false)
@@ -120,21 +119,10 @@ void CTutorial::Render(){
 	//エネミーリストに登録された敵が全て死亡状態ではないとき
 	//描画する
 	if (!CXEnemyManager::GetInstance()->GetIsEnemyAllDeath()) {
-		//チュートリアル前提がfalseの時表示する
-		if (mTutorialflag == false) {
-			CRes::GetInstance()->GetinTutorialImage().DrawImage(TUTORIAL_FIRST_WID, TUTORIAL_END_WID, TUTORIAL_FIRST_HEI, TUTORIAL_END_HEI, TUTORIAL_FIRST_X, TUTORIAL_END_X, TUTORIAL_END_Y, TUTORIAL_FIRST_Y);
-			//Enterキーを入力されたら、前提をtrueにする
-			if (CKey::Push(VK_RETURN)) {
-				mTutorialflag = true;
-			}
-		}
 		//チュートリアル前提フラグがtrueになったら
-		//移動操作チュートリアルの表示
-		if (mTutorialflag == true) {
-			//移動操作チュートリアルを消す
-			if (mMoveTutorialflag == false) {
-				CRes::GetInstance()->GetinMoveTutorialImage().DrawImage(MOVE_FIRST_WID, MOVE_END_WID, MOVE_FIRST_HEI, MOVE_END_HEI, MOVE_FIRST_X, MOVE_END_X, MOVE_END_Y, MOVE_FIRST_Y);
-			}
+		//移動操作チュートリアルを消す
+		if (mMoveTutorialflag == false) {
+			CRes::GetInstance()->GetinMoveTutorialImage().DrawImage(MOVE_FIRST_WID, MOVE_END_WID, MOVE_FIRST_HEI, MOVE_END_HEI, MOVE_FIRST_X, MOVE_END_X, MOVE_END_Y, MOVE_FIRST_Y);
 		}
 		//移動操作チュートリアルを消した後
 		//カメラ操作チュートリアルを表示

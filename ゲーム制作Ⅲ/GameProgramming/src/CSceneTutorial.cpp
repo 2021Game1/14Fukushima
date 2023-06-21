@@ -23,8 +23,6 @@ void CSceneTutorial::Init() {
 	//シーンの設定
 	//チュートリアルにシーンを設定
 	mScene = CScene::EScene::ETUTORIAL;
-	//カメラ初期化
-	Camera.Init();
 	//地上マップの生成
 	CMap::GetInstance()->Generate();
 	//背景マップの生成

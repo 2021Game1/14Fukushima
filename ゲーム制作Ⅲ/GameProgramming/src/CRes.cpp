@@ -13,8 +13,6 @@ void CRes::Init() {
 	gGameClear_Image.Load2D(GAMECLEAR_IMAGE);
 	//ゲームオーバー画像の追加
 	gGameOver_Image.Load2D(GAMEOVER_IMAGE);
-	//チュートリアル画像の追加
-	gTutorial_Image.Load2D(TUTORIAL_IMAGE);
 	//チュートリアルの終了画像の追加
 	gTutorial_End_Image.Load2D(TUTORIAL_END_IMAGE);
 	//アクションチュートリアル画像の追加
@@ -31,6 +29,8 @@ void CRes::Init() {
 	gCharacter_Ui_Hp_GreenGauge.Load2D(CHARACTER_UI_HP_GREENGAUGE);
 	gCharacter_Ui_Hp_RedGauge.Load2D(CHARACTER_UI_HP_REDGAUGE);
 	mFont.LoadTexture("Font\\FontG.png", 1, 4096 / 64);
+	//カメラ初期化
+	Camera.Init();
 }
 void CRes::Update() {
 
@@ -55,11 +55,7 @@ CTexture& CRes::GetinGameOverImage()
 {
 	return gGameOver_Image;
 }
-//チュートリアル画像の取得
-CTexture& CRes::GetinTutorialImage()
-{
-	return gTutorial_Image;
-}
+
 //チュートリアルの終了画像の取得
 CTexture& CRes::GetinTutorialEndImage()
 {
