@@ -334,15 +334,6 @@
     <Filter Include="Lib\Character\Model\Transform\h">
       <UniqueIdentifier>{5cb3c37d-5d17-48ba-a5b7-3c7ec376b267}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lib\Character\Model\Texture">
-      <UniqueIdentifier>{0cea0e89-de1c-4b1f-bc50-5fb75339c8f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lib\Character\Model\Texture\cpp">
-      <UniqueIdentifier>{3ad4e2cf-e50c-4e3c-834c-afbb849bf661}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lib\Character\Model\Texture\h">
-      <UniqueIdentifier>{d662ed47-70b9-415a-8653-9e9fe82d7c68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lib\Character\Model\Material">
       <UniqueIdentifier>{807b274a-369b-4d97-bffa-cbad74bc213a}</UniqueIdentifier>
     </Filter>
@@ -411,6 +402,15 @@
     </Filter>
     <Filter Include="MainScene\Map\Map\h">
       <UniqueIdentifier>{4d77a32f-5e18-478b-9c7b-8dd0a501a037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Texture\Texture">
+      <UniqueIdentifier>{0cea0e89-de1c-4b1f-bc50-5fb75339c8f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Texture\Texture\cpp">
+      <UniqueIdentifier>{3ad4e2cf-e50c-4e3c-834c-afbb849bf661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Texture\Texture\h">
+      <UniqueIdentifier>{d662ed47-70b9-415a-8653-9e9fe82d7c68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -508,7 +508,7 @@
       <Filter>Lib\Texture\Text\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTexture.cpp">
-      <Filter>Lib\Character\Model\Texture\cpp</Filter>
+      <Filter>Lib\Texture\Texture\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTransform.cpp">
       <Filter>Lib\Character\Model\Transform\cpp</Filter>
@@ -652,7 +652,7 @@
       <Filter>Lib\Texture\Text\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTexture.h">
-      <Filter>Lib\Character\Model\Texture\h</Filter>
+      <Filter>Lib\Texture\Texture\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTransform.h">
       <Filter>Lib\Character\Model\Transform\h</Filter>

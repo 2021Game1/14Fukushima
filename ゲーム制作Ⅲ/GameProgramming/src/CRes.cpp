@@ -7,8 +7,6 @@ void CRes::Init() {
 	mpRes_Instance = this;
 	//BGMの読み込み
 	Game_Bgm.Load(BGM_GAME);
-
-
 	//ゲームクリア画像の追加
 	gGameClear_Image.Load2D(GAMECLEAR_IMAGE);
 	//ゲームオーバー画像の追加

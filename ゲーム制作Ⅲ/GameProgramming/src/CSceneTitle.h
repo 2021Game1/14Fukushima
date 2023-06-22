@@ -34,8 +34,14 @@ private:
 	CScene::EScene CSceneTitle::mNextScene;
 	//タイトル画像
 	CTexture gTitle_Image;
-	//タイトルセレクト画像
+	//タイトルセレクト場面画像
 	CTexture gTitle_Select_Image;
+	//タイトルセレクト場面テキスト画像
+	CTexture gTitle_Select_Text_Image;
+	//ゲーム開始選択時テキスト
+	CTexture gTitle_Select_GameStart_Text_Image;
+	//チュートリアル開始選択時テキスト
+	CTexture gTitle_Select_Tutorial_Text_Image;
 	//ゲームスタート画像
 	CTexture gTitle_Select_GameStart_Image;
 	//チュートリアルスタート画像
