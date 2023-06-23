@@ -21,6 +21,8 @@
 #define TITLE_SELECT_GAMESTART_TEXT "res\\Image\\Title_Select_Game_Text.png"
 //チュートリアル開始選択時テキスト
 #define TITLE_SELECT_TUTORIAL_TEXT "res\\Image\\Title_Select_Tutorial_Text.png"
+//ボタンを押したときに描画されるフェイドアウト、イン用背景
+#define TITLE_SELECT_FADE_IMAGE "res\\Image\\Fade.png"
 
 
 //2D描画の描画範囲

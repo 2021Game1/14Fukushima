@@ -38,8 +38,6 @@ void CTexture::Destory() {
 }
 #include<string>
 
-
-#include <string>
 void CTexture::Load(const char* filename) {
 	//ファイルオープン
 	std::string file(filename);

@@ -46,6 +46,8 @@ private:
 	CTexture gTitle_Select_GameStart_Image;
 	//チュートリアルスタート画像
 	CTexture gTitle_Select_TutorialStart_Image;
+	//ボタンを押したときに描画されるフェイドアウト、イン用背景
+	CTexture gTitle_Select_Fade_Image;
 	//ボタンを押すとtrue
 	bool mIsButtonPush;
 	//チュートリアル開始の画像のフラグ
