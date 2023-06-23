@@ -39,6 +39,10 @@ void CSceneTutorial::Init() {
 	CXPlayerManager::GetInstance()->PlayerGenerate();
 	//敵生成
 	CXEnemyManager::GetInstance()->EnemyGenerate(TUTORIAL_GENERATE_A, CXEnemy::EEnemyType::ETYPE_TUTORIAL);
+	//カメラ初期化
+	Camera.Init();
+	//カメラターゲット
+	Camera.SetTarget(CXPlayer::GetInstance()->Position());
 	//影の設定
 	float shadowColor[] = { SHADOWCOLOR_0, SHADOWCOLOR_1, SHADOWCOLOR_2, SHADOWCOLOR_3 };	//影の色
 	float lightPos[] = { LIGHTPOS_X, LIGHTPOS_Y, LIGHTPOS_Z };		//光源の位置
