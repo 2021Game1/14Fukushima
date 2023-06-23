@@ -27,8 +27,6 @@ void CRes::Init() {
 	gCharacter_Ui_Hp_GreenGauge.Load2D(CHARACTER_UI_HP_GREENGAUGE);
 	gCharacter_Ui_Hp_RedGauge.Load2D(CHARACTER_UI_HP_REDGAUGE);
 	mFont.LoadTexture("Font\\FontG.png", 1, 4096 / 64);
-	//ƒJƒƒ‰‰Šú‰»
-	Camera.Init();
 }
 void CRes::Update() {
 
