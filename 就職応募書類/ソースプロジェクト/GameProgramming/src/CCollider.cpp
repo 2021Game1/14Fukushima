@@ -160,6 +160,9 @@ bool CCollider::CollisionTriangleSphere(CCollider *t, CCollider *s, CVector *a)
 		//三角コライダと線コライダの衝突処理
 		return CollisionTriangleLine(t, &line, a);
 	}
+	else {
+		return false;
+	}
 }
 
 ////カプセルコライダ同士の衝突判定

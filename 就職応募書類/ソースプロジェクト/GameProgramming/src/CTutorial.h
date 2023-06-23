@@ -125,8 +125,6 @@ public:
 	//チュートリアルのフラグ取得
 	bool GetIsTutorialFlag();
 private:
-	//チュートリアル開始の画像のフラグ
-	bool mTutorialflag;
 	//アクションのチュートリアル画像のフラグ
 	bool mActionTutorialflag;
 	//移動のチュートリアル画像のフラグ
@@ -139,7 +137,6 @@ private:
 	bool mCameraActionTutorialflag;
 	//チュートリアル終了の画像フラグ
 	bool mTutorialEndflag;
-
 	//チュートリアルの終了フラグ
 	bool mTutorial_Out_flag;
 	//チュートリアルクラスのポインタ

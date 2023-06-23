@@ -13,7 +13,7 @@ class CCollider : public CTransform, public CTask {
 	friend CCollisionManager;
 public:
 	//コライダタイプ
-	enum EType {
+	enum class EType {
 		ESPHERE,//球コライダ
 		ETRIANGLE,//三角コライダ
 		ELINE, //線分コライダ
@@ -21,7 +21,7 @@ public:
 	};
 	//親ポインタの取得
 	CCharacter* Parent();
-	enum ETag
+	enum class ETag			
 	{
 		EBODY,			//本体
 		EHEAD,			//頭
@@ -32,12 +32,12 @@ public:
 
 	//デフォルトコンストラクタ
 	CCollider();
-
 	//コンストラクタ
 	//CCollider(親, 行列, 位置, 半径)
 	CCollider(CCharacter *parent, CMatrix *matrix, const CVector& position, float radius);
 	//描画
 	void Render();
+	//デストラクタ
 	~CCollider();
 	//衝突判定
 	//Collision(コライダ1, コライダ2)
@@ -66,7 +66,10 @@ public:
 	//タグの設定
 	//Tag(タグ)
 	void Tag(ETag tag);
+	//マトリックスの取得
 	void Matrix(CMatrix* m);
+	//他クラスで参照できるようにする関数
+	//ポインタの取得
 	CMatrix* GetIsMatrix();
 protected:
 	CCharacter* mpParent;//親
@@ -75,6 +78,7 @@ protected:
 	EType mType;//コライダタイプ
 	//頂点
 	CVector mV[3];
+	//タグの設定
 	ETag mTag;
 	
 };

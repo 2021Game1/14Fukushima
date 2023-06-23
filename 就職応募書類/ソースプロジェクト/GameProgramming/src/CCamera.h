@@ -27,27 +27,28 @@
 #define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
 #define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
 
-#define CAMERA_PRIORITY 100
-#define CAMERA_SENSITIVITY 0.0002f
-#define CAMERA_COLLIDE_DIST 0.05f
-#define CAMERA_DELAY_RATE 0.003f
-#define CAMERA_POINT_VIEW_X 1.0f
-#define CAMERA_POINT_VIEW_Y 6.0f
-#define CAMERA_POINT_VIEW_Z 10.0f
-#define CAMERA_POINT_HERD_ADJUST 2.0f
-#define CAMERA_POINT_INSTALLATION_X 0.0f
-#define CAMERA_POINT_INSTALLATION_Y 1.0f
-#define CAMERA_POINT_INSTALLATION_Z 0.0f
-#define CAMERA_SCREEN_POS_X 1.0f
-#define CAMERA_SCREEN_POS_Y 1.0f
-#define CAMERA_SCREEN_WIDTH 0.5f
-#define CAMERA_SCREEN_HEIGHT 0.5f
+#define CAMERA_PRIORITY 100				//カメラの描画優先度
+#define CAMERA_SENSITIVITY 0.0002f		//カメラの感度設定
+#define CAMERA_COLLIDE_DIST 0.05f		//カメラの描画距離
+#define CAMERA_DELAY_RATE 0.003f		//カメラのディレイを掛けた感度設定
+#define CAMERA_POINT_VIEW_X 1.0f		//カメラのX座標
+#define CAMERA_POINT_VIEW_Y 6.0f		//カメラのY座標
+#define CAMERA_POINT_VIEW_Z 10.0f		//カメラのZ座標
+#define CAMERA_POINT_HERD_ADJUST 2.0f	//カメラの上座標設定
+#define CAMERA_POINT_INSTALLATION_X 0.0f //カメラの上座標のX座標設定
+#define CAMERA_POINT_INSTALLATION_Y 1.0f //カメラの上座標のY座標設定
+#define CAMERA_POINT_INSTALLATION_Z 0.0f //カメラの上座標のZ座標設定
+#define CAMERA_SCREEN_POS_X 1.0f		 //カメラの座標をスクリーン座標に変換したX座標設定
+#define CAMERA_SCREEN_POS_Y 1.0f		 //カメラの座標をスクリーン座標に変換したX座標設定
+#define CAMERA_SCREEN_WIDTH 0.5f         //カメラの座標をスクリーン座標に変換した横幅設定
+#define CAMERA_SCREEN_HEIGHT 0.5f        //カメラの座標をスクリーン座標に変換した高さ設定
 
 /*
 カメラクラス
 */
 class CCamera : public CCharacter {
 public:
+	//デフォルトコンストラクタ
 	CCamera();
 	//カメラの設定
 	//Set(視点, 注視点, 上方向)
@@ -63,7 +64,6 @@ public:
 	void Init();
 	//カメラ更新
 	void Update();
-
 	//処理をしないRender
 	void Render();
 	//カメラ描画

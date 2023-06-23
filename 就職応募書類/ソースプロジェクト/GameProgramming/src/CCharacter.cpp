@@ -23,7 +23,7 @@ CCharacter::~CCharacter() {
 
 CCharacter::CCharacter()
 	: mpModel(nullptr)
-	, mTag(EZERO)
+	, mTag(CCharacter::ETag::EZERO)
 {
 	//タスクリストに追加
 	CTaskManager::Get()->Add(this);

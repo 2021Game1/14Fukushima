@@ -21,7 +21,6 @@ C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fuku
   CRes.cpp
   CSceneGame.cpp
   コードを生成中...
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\就職応募書類\ソースプロジェクト\GameProgramming\src\CCollider.cpp(163): warning C4715: 'CCollider::CollisionTriangleSphere': 値を返さないコントロール パスがあります。
   コンパイル中...
   CSceneManager.cpp
   CSceneTitle.cpp
@@ -40,7 +39,7 @@ C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fuku
   CVector.cpp
   CXCharacter.cpp
   CXEnemy.cpp
-C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\就職応募書類\ソースプロジェクト\GameProgramming\src\CXEnemy.cpp(778,6): warning C4804: '<=': 演算中の 'bool' 型の使用方法が安全ではありません
+C:\Users\mokek\OneDrive\デスクトップ\ゲームプログラミング\14Fukushima\就職応募書類\ソースプロジェクト\GameProgramming\src\CXEnemy.cpp(787,6): warning C4804: '<=': 演算中の 'bool' 型の使用方法が安全ではありません
   CXEnemyManager.cpp
   CXPlayer.cpp
   CXPlayerManager.cpp

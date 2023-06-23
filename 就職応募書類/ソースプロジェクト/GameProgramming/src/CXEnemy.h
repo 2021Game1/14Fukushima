@@ -12,6 +12,11 @@
 #include <math.h>
 #include<time.h>
 
+/*
+CXEnemyクラス
+敵のクラス
+*/
+
 class CXEnemy : public CXCharacter {
 public:
 	//他のクラスで参照用の関数
@@ -43,8 +48,6 @@ public:
 	CXEnemy::EEnemyType GetIsType();			//現在の敵のタイプを取得
 	void SetIsType(EEnemyType type);			//タイプの設定
 	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
-	float GetIsEnemyAttackDis();				//敵が攻撃する距離を取得する
-	float GetIsEnemyPlayerDis();				//プレイヤと敵の距離を取得する
 	int GetIsAttackPoint();						//プレイヤに与えるダメージ取得用
 	int GetIsStanPoint();						//プレイヤに与えるスタンダメージ取得用
 	CXEnemy::EEnemyState GetState();			//プレイヤの状態を取得する

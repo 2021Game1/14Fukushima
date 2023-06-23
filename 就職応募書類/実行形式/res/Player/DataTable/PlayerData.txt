@@ -9,7 +9,7 @@ Player_Defense_Point,ƒvƒŒƒCƒ„‚Ì–hŒä—Í,25,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^ ,1ˆ
 Player_Stan_Point,ƒvƒŒƒCƒ„‚Ì—^‚¦‚éƒXƒ^ƒ“’l,40,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆƒXƒ^ƒ“’l‚ªã‚ª‚èA“G‚ð‚Ð‚é‚Ü‚¹‚â‚·‚­‚È‚éB¬‚³‚­‚·‚é‚ÆƒXƒ^ƒ“’l‚ª’á‚­‚È‚èA“G‚ª‚Ð‚é‚Ý‚É‚­‚­‚È‚éB
 Player_StanAccumulation,ƒvƒŒƒCƒ„‚ÌƒXƒ^ƒ“’~Ï,0,,¢‰Šú‰»‚ÌÝ’è,intŒ^,ƒXƒ^ƒ“’l‚Ì‰Šú‰»
 Player_StanAccumulation_Max,ƒvƒŒƒCƒ„‚ÌƒXƒ^ƒ“’~ÏÅ‘å’l,120,,¢s“®ŽwjÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B‚Ð‚é‚Þ‚Ü‚Å‚Ì‹–—e’lÝ’èB‘å‚«‚­‚·‚é‚Æ‚Ð‚é‚Ý‚É‚­‚­‚È‚éB¬‚³‚­‚·‚é‚Æ‚Ð‚é‚Ý‚â‚·‚­‚È‚éB
-Player_Damage_Magnification,ƒvƒŒƒCƒ„‚Ìƒ_ƒ[ƒW”{—¦,0.2,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚Æ“G‚É—^‚¦‚éƒ_ƒ[ƒW‚ªã‚ª‚éB
+Player_Damage_Magnification,ƒvƒŒƒCƒ„‚Ìƒ_ƒ[ƒW”{—¦,0.2,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚Æ“G‚©‚çŽó‚¯‚éƒ_ƒ[ƒW‚ªã‚ª‚éB
 Player_GameOver_Hp,ƒQ[ƒ€ƒI[ƒo[ðŒ,0,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,”’l‚ðÝ’è‚·‚é‚Æ‚»‚Ì”’l‚É‚È‚Á‚½Žž“_‚ÅŽ€–S
 Player_Speed_Default,ˆÚ“®ƒXƒs[ƒh,0.2,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚ÌˆÚ“®‘¬“x‚ªã‚ª‚èA”’l‚ð¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚ÌˆÚ“®‘¬“x‚ª‰º‚ª‚éB
 Player_Speed_Avoid,‰ñ”ðƒXƒs[ƒh,0.3,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ð‘¬“x‚ªã‚ª‚èA”’l‚ð¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ð‘¬“x‚ª‰º‚ª‚éB

@@ -9,7 +9,7 @@ CColliderCapsule::CColliderCapsule(CCharacter* parent, CMatrix* matrix
 
 void CColliderCapsule::Set(CCharacter* parent, CMatrix* matrix
 	, const CVector& v0, const CVector& v1, float radius) {
-	mType = ECAPSUL;//カプセルコライダ
+	mType = CCollider::EType::ECAPSUL;//カプセルコライダ
 	mpParent = parent;//親設定
 	if (matrix)
 		mpMatrix = matrix;//親行列あれば設定

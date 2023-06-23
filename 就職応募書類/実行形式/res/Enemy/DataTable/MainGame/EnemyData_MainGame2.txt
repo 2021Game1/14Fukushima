@@ -2,9 +2,9 @@
 51
 ID,Name,Value,,d—v“x,Œ^–¼,Help
 Enemy_Priority,•`‰æ—Dæ“x,80,,~Ý’è‚ð•ÏX‚Í—vŒŸ“¢,intŒ^,1ˆÈã100ˆÈ‰º‚ÉÝ’èBƒvƒƒOƒ‰ƒ€‚Æ‚ÌŒ“‚Ë‡‚¢‚ª‚ ‚é‚½‚ß•ÏX‚ÍA—vŒŸ“¢B‘Œ¸‚³‚¹‚é‚±‚Æ‚Å•`‰æ‚Ì‡˜‚ª•Ï‚í‚é
-Enemy_Hp,“G‚ÌHP,450,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆHP‚ª‘‚¦‚éB¬‚³‚­‚·‚é‚ÆHP‚ªŒ¸‚é
-Enemy_Hp_Max,“G‚ÌHPÅ‘å’l,450,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆHPãŒÀ‚ª‘‚¦‚éB¬‚³‚­‚·‚é‚ÆHPãŒÀ‚ª‘‚¦‚é
-Enemy_Attack_Point,UŒ‚—Í,30,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆUŒ‚—Í‚ªã‚ª‚èA“G‚ÌUŒ‚‚ª‹­‚­‚È‚éB¬‚³‚­‚·‚é‚ÆUŒ‚—Í‚ª‰º‚ª‚èA“G‚ÌUŒ‚‚ªŽã‚­‚È‚éB
+Enemy_Hp,“G‚ÌHP,300,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆHP‚ª‘‚¦‚éB¬‚³‚­‚·‚é‚ÆHP‚ªŒ¸‚é
+Enemy_Hp_Max,“G‚ÌHPÅ‘å’l,300,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆHPãŒÀ‚ª‘‚¦‚éB¬‚³‚­‚·‚é‚ÆHPãŒÀ‚ª‘‚¦‚é
+Enemy_Attack_Point,UŒ‚—Í,27,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆUŒ‚—Í‚ªã‚ª‚èA“G‚ÌUŒ‚‚ª‹­‚­‚È‚éB¬‚³‚­‚·‚é‚ÆUŒ‚—Í‚ª‰º‚ª‚èA“G‚ÌUŒ‚‚ªŽã‚­‚È‚éB
 Enemy_Defense_Point,Žç”õ—Í,26,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚Æ–hŒä—Í‚ªã‚ª‚èA“G‚Ì‘Ï‹v—Í‚ªã‚ª‚éB¬‚³‚­‚·‚é‚Æ–hŒä—Í‚ª‰º‚ª‚èA“G‚Ì‘Ï‹v—Í‚ª‰º‚ª‚éB
 Enemy_Stan_Point,ƒXƒ^ƒ“’l,70,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚ªƒXƒ^ƒ“‚µ‚â‚·‚­‚È‚éB
 Enemy_Damage_Magnification,“G‚Ìƒ_ƒ[ƒW”{—¦,0.2,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚É—^‚¦‚éƒ_ƒ[ƒW‚ªã‚ª‚éB
@@ -21,7 +21,7 @@ Enemy_Dash_Dis,‘–só‘Ô‚ðŠJŽn‚·‚é‹——£,21,,¢s“®ŽwjÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBƒ_
 Enemy_Dash_Dis_Max,‘–só‘Ô‚ðI—¹‚·‚é‹——£,26,,¢s“®ŽwjÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBƒ_ƒbƒVƒ…ó‘Ô‚ðI—¹‚·‚éŽž“_‚ÌƒvƒŒƒCƒ„‚Æ‚Ì‹——£‚ðÝ’è‚·‚éB”’l‚ð‘‚â‚·‚ÆƒvƒŒƒCƒ„‚Æ‚Ì‹——£‚ðÝ’è‚µ‚½”’l‚Ì‹——£‚ÌŽž“_‚ÅƒvƒŒƒCƒ„‚ÉŒü‚©‚Á‚Äƒ_ƒbƒVƒ…‚ðŽ~‚ß‚é
 Enemy_Attack_Dis,UŒ‚‰Â”\‚É‚È‚é‹——£,4.4,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB“G‚ªUŒ‚ŠJŽnŽž‚ÌƒvƒŒƒCƒ„‚Æ‚Ì‹——£‚ªÝ’è‚µ‚½”’l‚æ‚è¬‚³‚¢A“¯‚¶‚Å‚ ‚ê‚ÎUŒ‚‚ðŠJŽn‚·‚éBÝ’è‚µ‚½”’l‚æ‚è‘å‚«‚¯‚ê‚ÎAUŒ‚‚ðŠJŽn‚µ‚È‚¢B
 Enemy_Attack_Reception,“–‚½‚è”»’è‚Ì”­¶,10,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB“G‚ÌUŒ‚‚É“–‚½‚è”»’è‚ª”­¶‚·‚éƒ^ƒCƒ~ƒ“ƒO‚Ì”’lB‘å‚«‚­‚·‚é‚Æ“–‚½‚è”»’è‚Ì”­¶‚ª’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
-Enemy_Attack_Outreception,“–‚½‚è”»’è‚ÌI—¹,60,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB“G‚ÌUŒ‚‚É“–‚½‚è”»’è‚ªI—¹‚·‚éƒ^ƒCƒ~ƒ“ƒO‚Ì”’lB‘å‚«‚­‚·‚é‚Æ“–‚½‚è”»’è‚ÌI—¹‚ª’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
+Enemy_Attack_Outreception,“–‚½‚è”»’è‚ÌI—¹,120,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB“G‚ÌUŒ‚‚É“–‚½‚è”»’è‚ªI—¹‚·‚éƒ^ƒCƒ~ƒ“ƒO‚Ì”’lB‘å‚«‚­‚·‚é‚Æ“–‚½‚è”»’è‚ÌI—¹‚ª’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
 Enemy_Action_Rand,ƒAƒNƒVƒ‡ƒ“‚Ì„ˆÚÝ’è,1,,~Ý’è‚ð•ÏX‚Í—vŒŸ“¢,intŒ^,ƒvƒƒOƒ‰ƒ€‚Æ‚ÌŒ“‚Ë‡‚¢‚ª‚ ‚é‚½‚ß•ÏX‚ÍA—vŒŸ“¢
 Enemy_Attack_Walk_Rand,•àsó‘Ô‚©‚ç‚ÌUŒ‚s“®”­¶‚ÌŠm—¦,5,,¢s“®ŽwjÝ’è,intŒ^,UŒ‚s“®‚ÌXV•p“xB”’l‚ð”’l‚ð‘å‚«‚­‚·‚é‚ÆŠm—¦‚ª‰º‚ª‚èA¬‚³‚­‚·‚éŠm—¦‚ªã‚ª‚é
 Enemy_Attack_Dash_Rand,‘–só‘Ô‚©‚ç‚ÌUŒ‚s“®”­¶‚ÌŠm—¦,5,,¢s“®ŽwjÝ’è,intŒ^,UŒ‚s“®‚ÌXV•p“xB”’l‚ð”’l‚ð‘å‚«‚­‚·‚é‚ÆŠm—¦‚ª‰º‚ª‚èA¬‚³‚­‚·‚éŠm—¦‚ªã‚ª‚é
@@ -33,8 +33,8 @@ Enemy_Dash_Animation_Frame,‘–sƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,100,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚
 Enemy_BackStep_Animation_Frame,Œã‘ÞƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,100,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBŒã‘ÞƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ª•Ï‚í‚éB”’l‚ð”’l‚ð‘å‚«‚­‚·‚é‚Æ’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
 Enemy_Attack1_Animation_Frame,UŒ‚1ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,220,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBUŒ‚1ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ª•Ï‚í‚éB”’l‚ð”’l‚ð‘å‚«‚­‚·‚é‚Æ’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
 Enemy_Attack2_Animation_Frame,UŒ‚2ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,220,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBUŒ‚2ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ª•Ï‚í‚éB”’l‚ð‘å‚«‚­‚·‚é‚Æ’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
-Enemy_Knockback_Animation_Frame,ƒmƒbƒNƒoƒbƒNƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,110,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBƒmƒbƒNƒoƒbƒNƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ª•Ï‚í‚éB”’l‚ð‘å‚«‚­‚·‚é‚Æ’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
-Enemy_Death_Animation_Frame,Ž€–SƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,110,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBŽ€–SƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ª•Ï‚í‚éB”’l‚ð‘å‚«‚­‚·‚é‚Æ’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
+Enemy_Knockback_Animation_Frame,ƒmƒbƒNƒoƒbƒNƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,90,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBƒmƒbƒNƒoƒbƒNƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ª•Ï‚í‚éB”’l‚ð‘å‚«‚­‚·‚é‚Æ’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
+Enemy_Death_Animation_Frame,Ž€–SƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€,90,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èBŽ€–SƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x‚ª•Ï‚í‚éB”’l‚ð‘å‚«‚­‚·‚é‚Æ’x‚­‚È‚èA¬‚³‚­‚·‚é‚Æ‘‚­‚È‚éB
 Enemy_Animation_No_Attack_1,UŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“1”Ô†,0,,~Ý’è‚ð•ÏX‚Í—vŒŸ“¢,intŒ^,ƒvƒƒOƒ‰ƒ€‚Æ‚ÌŒ“‚Ë‡‚¢‚ª‚ ‚é‚½‚ß•ÏX‚ÍA—vŒŸ“¢
 Enemy_Animation_No_Attack_2,UŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“2”Ô†,1,,~Ý’è‚ð•ÏX‚Í—vŒŸ“¢,intŒ^,ƒvƒƒOƒ‰ƒ€‚Æ‚ÌŒ“‚Ë‡‚¢‚ª‚ ‚é‚½‚ß•ÏX‚ÍA—vŒŸ“¢
 Enemy_Animation_No_Walk,•àsƒAƒjƒ[ƒVƒ‡ƒ“”Ô†,2,,~Ý’è‚ð•ÏX‚Í—vŒŸ“¢,intŒ^,ƒvƒƒOƒ‰ƒ€‚Æ‚ÌŒ“‚Ë‡‚¢‚ª‚ ‚é‚½‚ß•ÏX‚ÍA—vŒŸ“¢

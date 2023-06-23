@@ -19,10 +19,6 @@ public:
 
 	void Release(); //破棄
 
-	void Update();	//更新
-
-	void Render();
-
 	void PlayerGenerate(); //敵生成、引数で生成数と敵の種類を指定する
 
 
