@@ -7,9 +7,10 @@
 class CScene {
 public:
 	enum class EScene {
-		EGAME,		//ゲーム
-		ETUTORIAL,	//チュートリアル
-		ETITLE, 	//タイトル
+		EGAME,		  //ゲーム
+		ETUTORIAL,	  //チュートリアル
+		ESCENESELECT, //シーンセレクト
+		ETITLE, 	  //タイトル
 	};
 	EScene mScene;
 	//virtual 仮想関数

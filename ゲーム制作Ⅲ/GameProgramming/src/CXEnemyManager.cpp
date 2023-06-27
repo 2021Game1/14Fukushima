@@ -10,6 +10,9 @@ CXEnemyManager::CXEnemyManager()
 	, mEnemyList(NULL)
 	, mPlayerPos(PLAYER_ATTACK_POS)
 	, mEnemyPos(NULL)
+	, tmp1(NULL)
+	, tmp2(NULL)
+	, tmp3(NULL)
 {
 
 }
@@ -53,7 +56,7 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 		case CXEnemy::EEnemyType::ETYPE_TUTORIAL:	//チュートリアル時の敵の強さ
 		{
 			//敵を生成
-			CXEnemy* tmp1 = new CXEnemy;
+			tmp1 = new CXEnemy;
 			//敵の初期設定
 			//敵のタイプを設定
 			tmp1->SetIsType(CXEnemy::EEnemyType::ETYPE_TUTORIAL);
@@ -71,7 +74,8 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 			tmp1->Update();
 			//当たり判定のタスクに追加
 			tmp1->TaskCollision();
-			mEnemyList.push_back(tmp1);	//リストに追加
+			//リストに追加
+			mEnemyList.push_back(tmp1);
 		}
 		break;
 
@@ -79,7 +83,7 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 		{
 			if (i == ENEMY_A) {
 				//敵を生成
-				CXEnemy* tmp2 = new CXEnemy;
+				tmp2 = new CXEnemy;
 				//敵の初期設定
 				//敵のタイプを設定
 				tmp2->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_1);
@@ -97,12 +101,13 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 				tmp2->Update();
 				//当たり判定のタスクに追加
 				tmp2->TaskCollision();
-				mEnemyList.push_back(tmp2);	//リストに追加
+				//リストに追加
+				mEnemyList.push_back(tmp2);
 				i++;
 			}
 			if (i == ENEMY_B) {
 				//敵を生成
-				CXEnemy* tmp3 = new CXEnemy;
+				tmp3 = new CXEnemy;
 				//敵の初期設定
 				//敵のタイプを設定
 				tmp3->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_2);
@@ -120,7 +125,8 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 				tmp3->Update();
 				//当たり判定のタスクに追加
 				tmp3->TaskCollision();
-				mEnemyList.push_back(tmp3);	//リストに追加
+				//リストに追加
+				mEnemyList.push_back(tmp3);
 				i++;
 			}
 		}

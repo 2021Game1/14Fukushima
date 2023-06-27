@@ -811,7 +811,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 	break;
-
+	//自身がカプセルコライダかつ、相手もカプセルコライダであれば実行
 	case CCollider::EType::ECAPSUL: {//カプセルコライダ
 		//相手のコライダがカプセルコライダの時
 		if (o->Type() == CCollider::EType::ECAPSUL) {
@@ -826,7 +826,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 	}
-
+	//プレイヤの球コライダがマップの三角コライダに衝突したら実行
 	if (m->Type() == CCollider::EType::ESPHERE && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
 		//相手の親のタグがマップ

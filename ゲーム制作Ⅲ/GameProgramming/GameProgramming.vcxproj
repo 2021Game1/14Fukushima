@@ -32,6 +32,7 @@
     <ClCompile Include="src\CRes.cpp" />
     <ClCompile Include="src\CSceneGame.cpp" />
     <ClCompile Include="src\CSceneManager.cpp" />
+    <ClCompile Include="src\CSceneSelect.cpp" />
     <ClCompile Include="src\CSceneTitle.cpp" />
     <ClCompile Include="src\CSceneTutorial.cpp" />
     <ClCompile Include="src\CShader.cpp" />
@@ -79,6 +80,8 @@
     <ClInclude Include="src\CScene.h" />
     <ClInclude Include="src\CSceneGame.h" />
     <ClInclude Include="src\CSceneManager.h" />
+    <ClInclude Include="src\CSceneSelect.h" />
+    <ClInclude Include="src\CSceneSelect_Data.h" />
     <ClInclude Include="src\CSceneTitle.h" />
     <ClInclude Include="src\CSceneTutorial.h" />
     <ClInclude Include="src\CShader.h" />

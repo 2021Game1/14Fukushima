@@ -68,8 +68,8 @@ void CSceneTutorial::Update() {
 		//Enterキーを押したら、本番のゲームシーンに切り替える
 		if (CKey::Once(VK_RETURN))
 		{
-			//シーンをゲームシーンに設定
-			mScene = CScene::EScene::EGAME;
+			//シーンをシーンセレクトに設定
+			mScene = CScene::EScene::ESCENESELECT;
 		}
 	}
 	//チュートリアルクラスのUpdateを呼び出す

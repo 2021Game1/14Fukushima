@@ -7,15 +7,6 @@
     <Filter Include="MainScene">
       <UniqueIdentifier>{daaa2299-61e6-4899-88cc-633978e436af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\GameScene">
-      <UniqueIdentifier>{9875cf6f-3004-4e20-8620-a1c24e639566}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\GameScene\cpp">
-      <UniqueIdentifier>{4d47496f-682c-4047-8155-06d4892c02fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\GameScene\h">
-      <UniqueIdentifier>{b52b099a-d743-4251-b306-1dd97bd191dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainScene\Player">
       <UniqueIdentifier>{3920030b-a167-40b0-82d5-e525fec99dda}</UniqueIdentifier>
     </Filter>
@@ -379,24 +370,6 @@
     <Filter Include="MainScene\Player\Player\Data">
       <UniqueIdentifier>{1a66c3c5-aaba-42f9-a1f8-69837520c2fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\GameScene\CSceneTutorial">
-      <UniqueIdentifier>{99dc59b3-13c0-42cf-bc6e-3575a9c459f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\GameScene\CSceneTutorial\cpp">
-      <UniqueIdentifier>{3c31e6ff-f94c-4cba-bf7f-f3f78adb2c07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\GameScene\CSceneTutorial\h">
-      <UniqueIdentifier>{0ec50430-8dbd-4f81-8d17-248af7a58985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\GameScene\CSceneTutorial\Tutorial">
-      <UniqueIdentifier>{dbc8f4b9-4995-4165-b2a2-e184a11fb8b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\GameScene\CSceneTutorial\Tutorial\cpp">
-      <UniqueIdentifier>{283c810a-20e7-4a57-949e-bdbacf316c7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\GameScene\CSceneTutorial\Tutorial\h">
-      <UniqueIdentifier>{37fcfba0-474f-48e3-985c-f42364476327}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainScene\Enemy\Manager">
       <UniqueIdentifier>{5c5084ac-13f2-46ba-b65b-3b646ef1b8c7}</UniqueIdentifier>
     </Filter>
@@ -411,6 +384,45 @@
     </Filter>
     <Filter Include="Lib\Texture\Texture\h">
       <UniqueIdentifier>{d662ed47-70b9-415a-8653-9e9fe82d7c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneTutorial">
+      <UniqueIdentifier>{99dc59b3-13c0-42cf-bc6e-3575a9c459f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneTutorial\cpp">
+      <UniqueIdentifier>{3c31e6ff-f94c-4cba-bf7f-f3f78adb2c07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneTutorial\h">
+      <UniqueIdentifier>{0ec50430-8dbd-4f81-8d17-248af7a58985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneGame">
+      <UniqueIdentifier>{9875cf6f-3004-4e20-8620-a1c24e639566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneGame\cpp">
+      <UniqueIdentifier>{4d47496f-682c-4047-8155-06d4892c02fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneGame\h">
+      <UniqueIdentifier>{b52b099a-d743-4251-b306-1dd97bd191dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneSelect">
+      <UniqueIdentifier>{241473d0-3e49-4141-ab78-53085c6c0fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneSelect\cpp">
+      <UniqueIdentifier>{c4aaa9ef-0014-40e1-b89d-a19c07cc73ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneSelect\h">
+      <UniqueIdentifier>{baad9c15-bcb4-42fc-8ecc-8acd622cd26c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneTutorial\Data">
+      <UniqueIdentifier>{dbc8f4b9-4995-4165-b2a2-e184a11fb8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneTutorial\Data\cpp">
+      <UniqueIdentifier>{283c810a-20e7-4a57-949e-bdbacf316c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneTutorial\Data\h">
+      <UniqueIdentifier>{37fcfba0-474f-48e3-985c-f42364476327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Scene\CSceneSelect\data">
+      <UniqueIdentifier>{46668508-de7d-4782-83c6-2eb0c06ecb8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -442,7 +454,7 @@
       <Filter>MainScene\Player\Player\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CSceneGame.cpp">
-      <Filter>MainScene\GameScene\cpp</Filter>
+      <Filter>MainScene\Scene\CSceneGame\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CRes.cpp">
       <Filter>Lib\Res\cpp</Filter>
@@ -529,16 +541,19 @@
       <Filter>Lib\Collider\Collider\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CTutorial.cpp">
-      <Filter>MainScene\GameScene\CSceneTutorial\Tutorial\cpp</Filter>
+      <Filter>MainScene\Scene\CSceneTutorial\Data\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CSceneTutorial.cpp">
-      <Filter>MainScene\GameScene\CSceneTutorial\cpp</Filter>
+      <Filter>MainScene\Scene\CSceneTutorial\cpp</Filter>
     </ClCompile>
     <ClCompile Include="src\CXEnemyManager.cpp">
       <Filter>MainScene\Enemy\Manager</Filter>
     </ClCompile>
     <ClCompile Include="src\CXPlayerManager.cpp">
       <Filter>MainScene\Player\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CSceneSelect.cpp">
+      <Filter>MainScene\Scene\CSceneSelect\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -576,7 +591,7 @@
       <Filter>MainScene\Player\Player\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneGame.h">
-      <Filter>MainScene\GameScene\h</Filter>
+      <Filter>MainScene\Scene\CSceneGame\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CRes.h">
       <Filter>Lib\Res\h</Filter>
@@ -669,16 +684,22 @@
       <Filter>Lib\Collider\Collider\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CTutorial.h">
-      <Filter>MainScene\GameScene\CSceneTutorial\Tutorial\h</Filter>
+      <Filter>MainScene\Scene\CSceneTutorial\Data\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneTutorial.h">
-      <Filter>MainScene\GameScene\CSceneTutorial\h</Filter>
+      <Filter>MainScene\Scene\CSceneTutorial\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CXEnemyManager.h">
       <Filter>MainScene\Enemy\Manager</Filter>
     </ClInclude>
     <ClInclude Include="src\CXPlayerManager.h">
       <Filter>MainScene\Player\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CSceneSelect.h">
+      <Filter>MainScene\Scene\CSceneSelect\h</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CSceneSelect_Data.h">
+      <Filter>MainScene\Scene\CSceneSelect\data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
