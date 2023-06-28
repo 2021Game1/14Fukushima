@@ -738,7 +738,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-
 	if (m->CCollider::Type() == CCollider::EType::ECAPSUL && o->CCollider::Type() == CCollider::EType::ECAPSUL)
 	{
 		CVector adjust;//調整用ベクトル
@@ -788,7 +787,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	}
 
 	//敵が死亡していないとき
-	if (!mHp <= Enemy_Death_Hp) {
+	if (mEnemy_State != EEnemyState::EDEATH) {
 		//自身のコライダタイプの判定
 		if (m->Type() == CCollider::EType::ESPHERE) {
 			//相手のコライダが球コライダの時

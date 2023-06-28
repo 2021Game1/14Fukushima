@@ -1,6 +1,5 @@
 #include "CXEnemyManager.h"
 #include "CEnemyData.h"
-#include "CXPlayer.h"
 
 CXEnemyManager* CXEnemyManager::mInstance = nullptr;
 
@@ -81,54 +80,53 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 
 		case CXEnemy::EEnemyType::ETYPE_GAME_1:	//ゲーム本番時の敵の強さ(強い)
 		{
-			if (i == ENEMY_A) {
-				//敵を生成
-				tmp2 = new CXEnemy;
-				//敵の初期設定
-				//敵のタイプを設定
-				tmp2->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_1);
-				//テーブルでHPなどのパラメータの設定
-				tmp2->EnemyTable();
-				//ポジションの取得
-				tmp2->GetPos();
-				//モデルの大きさを取得
-				tmp2->GetScale();
-				//モデルの回転を取得
-				tmp2->GetRotation();
-				//敵にモデルを設定する
-				tmp2->Init(&gEnemy_Model_Mutant);
-				//更新処理を設定
-				tmp2->Update();
-				//当たり判定のタスクに追加
-				tmp2->TaskCollision();
-				//リストに追加
-				mEnemyList.push_back(tmp2);
-				i++;
-			}
-			if (i == ENEMY_B) {
-				//敵を生成
-				tmp3 = new CXEnemy;
-				//敵の初期設定
-				//敵のタイプを設定
-				tmp3->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_2);
-				//テーブルでHPなどのパラメータの設定
-				tmp3->EnemyTable();
-				//ポジションの取得
-				tmp3->GetPos();
-				//モデルの大きさを取得
-				tmp3->GetScale();
-				//モデルの回転を取得
-				tmp3->GetRotation();
-				//敵にモデルを設定する
-				tmp3->Init(&gEnemy_Model_Mutant);
-				//更新処理を設定
-				tmp3->Update();
-				//当たり判定のタスクに追加
-				tmp3->TaskCollision();
-				//リストに追加
-				mEnemyList.push_back(tmp3);
-				i++;
-			}
+			//敵を生成
+			tmp2 = new CXEnemy;
+			//敵の初期設定
+			//敵のタイプを設定
+			tmp2->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_1);
+			//テーブルでHPなどのパラメータの設定
+			tmp2->EnemyTable();
+			//ポジションの取得
+			tmp2->GetPos();
+			//モデルの大きさを取得
+			tmp2->GetScale();
+			//モデルの回転を取得
+			tmp2->GetRotation();
+			//敵にモデルを設定する
+			tmp2->Init(&gEnemy_Model_Mutant);
+			//更新処理を設定
+			tmp2->Update();
+			//当たり判定のタスクに追加
+			tmp2->TaskCollision();
+			//リストに追加
+			mEnemyList.push_back(tmp2);
+		}
+		break;
+
+		case CXEnemy::EEnemyType::ETYPE_GAME_2:	//ゲーム本番時の敵の強さ(強い)
+		{
+			//敵を生成
+			tmp3 = new CXEnemy;
+			//敵の初期設定
+			//敵のタイプを設定
+			tmp3->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_2);
+			//テーブルでHPなどのパラメータの設定
+			tmp3->EnemyTable();
+			//ポジションの取得
+			tmp3->GetPos();
+			//モデルの大きさを取得
+			tmp3->GetScale();
+			//モデルの回転を取得
+			tmp3->GetRotation();
+			//敵にモデルを設定する
+			tmp3->Init(&gEnemy_Model_Mutant);
+			//更新処理を設定
+			tmp3->Update();
+			//当たり判定のタスクに追加
+			tmp3->TaskCollision();
+			//リストに追加
+			mEnemyList.push_back(tmp3);
 		}
 		break;
 
@@ -158,8 +156,11 @@ void CXEnemyManager::Update()
 	for (size_t i = NULL; i < mEnemyList.size(); i++) {
 		//死亡状態だった時
 		if (CXEnemy::GetInstance()->GetIsDeath()) {
+			delete mEnemyList[i];
+			mEnemyList.clear();
 			mEnemyDeathNum++; //死亡状態の敵のカウント加算
 			continue; //読み飛ばし
+
 		}
 		//ターゲット設定
 		//敵のリストに格納されている位置情報をプレイヤとの距離と参照

@@ -2,7 +2,6 @@
 #define CXENEMYMANAGER_H
 
 #include "CXEnemy.h"
-#include"CRes.h"
 //敵マネージャのデータテーブル
 /*
 CXEnemyManagerクラス
