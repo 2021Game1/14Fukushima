@@ -150,6 +150,7 @@ void CXEnemyManager::Init()
 
 void CXEnemyManager::Update()
 {
+	
 	//リセット
 	mEnemyDeathNum = NULL;
 	//リストに格納されている敵が死亡状態か、どうかを判別する

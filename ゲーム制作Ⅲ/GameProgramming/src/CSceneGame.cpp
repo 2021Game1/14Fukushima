@@ -32,12 +32,21 @@ void CSceneGame::Init() {
 	CRes::GetInstance()->GetinSoundBgmGame().Repeat(0.2);
 	//プレイヤ管理生成
 	CXPlayerManager::GetInstance()->Generate();
-	//敵管理生成
-	CXEnemyManager::GetInstance()->Generate();
 	//プレイヤ生成
 	CXPlayerManager::GetInstance()->PlayerGenerate();
-	//敵生成
-	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_A, CXEnemy::EEnemyType::ETYPE_GAME_1);
+	for (int i = 0; i < ENEMY_GENERATE_A; i++)
+	{	//敵管理生成
+		CXEnemyManager::GetInstance()->Generate();
+		//敵生成
+		CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_A, CXEnemy::EEnemyType::ETYPE_GAME_1);
+	}
+	for (int i = NULL; i < ENEMY_GENERATE_B; i++)
+	{
+		//敵管理生成
+		CXEnemyManager::GetInstance()->Generate();
+		//敵生成
+		CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_B, CXEnemy::EEnemyType::ETYPE_GAME_2);
+	}
 	//カメラ初期化
 	Camera.Init();
 	//カメラターゲット
@@ -49,6 +58,7 @@ void CSceneGame::Init() {
 }
 //更新処理
 void CSceneGame::Update() {
+
 	//プレイヤHPが0になったら実行
 	if (CXPlayer::GetInstance()->GetHp() == NULL) {
 		//ゲームBGMを止める
@@ -70,6 +80,7 @@ void CSceneGame::Update() {
 			mScene = CScene::EScene::ETITLE;
 		}
 	}
+
 
 	//タスクマネージャに格納されている全ての更新処理を呼び出す
 	CTaskManager::Get()->Update();

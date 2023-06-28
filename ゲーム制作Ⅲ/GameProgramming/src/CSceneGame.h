@@ -48,7 +48,7 @@
 #define GAMEOVER_END_Y 600
 
 //ìGê∂ê¨êî
-#define ENEMY_GENERATE_A 2
+#define ENEMY_GENERATE_A 1
 #define ENEMY_GENERATE_B 1
 
 /*

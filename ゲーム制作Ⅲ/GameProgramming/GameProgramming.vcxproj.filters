@@ -424,6 +424,9 @@
     <Filter Include="MainScene\Scene\CSceneSelect\data">
       <UniqueIdentifier>{46668508-de7d-4782-83c6-2eb0c06ecb8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainScene\Player\Player\Manager">
+      <UniqueIdentifier>{bab81afd-47e5-489d-b806-1ee56db2e6b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CXEnemy.cpp">
@@ -549,11 +552,11 @@
     <ClCompile Include="src\CXEnemyManager.cpp">
       <Filter>MainScene\Enemy\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="src\CXPlayerManager.cpp">
-      <Filter>MainScene\Player\Player</Filter>
-    </ClCompile>
     <ClCompile Include="src\CSceneSelect.cpp">
       <Filter>MainScene\Scene\CSceneSelect\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CXPlayerManager.cpp">
+      <Filter>MainScene\Player\Player\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -692,14 +695,14 @@
     <ClInclude Include="src\CXEnemyManager.h">
       <Filter>MainScene\Enemy\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="src\CXPlayerManager.h">
-      <Filter>MainScene\Player\Player</Filter>
-    </ClInclude>
     <ClInclude Include="src\CSceneSelect.h">
       <Filter>MainScene\Scene\CSceneSelect\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CSceneSelect_Data.h">
       <Filter>MainScene\Scene\CSceneSelect\data</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CXPlayerManager.h">
+      <Filter>MainScene\Player\Player\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
