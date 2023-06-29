@@ -58,10 +58,10 @@ public:
 	void Init(CModelX* model);					//敵のモデル設定
 	//更新処理
 	void Update();								//敵の更新
-	//当たり判定の格納
-	void TaskCollision();						//タスクに当たり判定を格納する
 	//テーブル読み込み関数
 	void EnemyTable();							//エネミーテーブル
+	//当たり判定の格納
+	void TaskCollision();						//タスクに当たり判定を格納する
 	//デフォルトコンストラクタ
 	CXEnemy();									//敵のデフォルトコンストラクタ
 protected:
@@ -81,6 +81,7 @@ protected:
 	void Death();								//死亡処理
 	//移動の計算処理
 	void MovingCalculation();
+
 
 private:
 
@@ -139,14 +140,16 @@ private:
 	float Enemy_Rotation_Z;						//モデルの回転Z座標
 	//終わり
 
-	//敵のUIインスタンス
-	CTexture gEnemy_Ui_Hp_BackBar;				//HPの背景バー
-
 	//コライダの宣言
 	CCollider mEnemy_ColSphereRightarm;			//右腕
 	CCollider mEnemy_ColSphereLeftarm;			//左腕
 	CCollider mEnemy_ColSphereBody;				//球の身体
 	CColliderCapsule mEnemy_ColCapsuleBody;		//カプセルの身体
+
+	//敵のUIインスタンス
+	CTexture gEnemy_Ui_Hp_BackBar;				//HPの背景バー
+	//敵モデル
+	CModelX gEnemy_Model_Mutant;
 
 	//敵のパラメータ
 	float mEnemy_Speed;							//敵のスピード

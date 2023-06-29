@@ -2,6 +2,7 @@
 #define CXENEMYMANAGER_H
 
 #include "CXEnemy.h"
+#include "CEnemyData.h"
 //敵マネージャのデータテーブル
 /*
 CXEnemyManagerクラス
@@ -26,6 +27,7 @@ public:
 
 	void Init();    //初期化
 
+	//敵生成
 	void EnemyGenerate(int num, CXEnemy::EEnemyType type); //敵生成、引数で生成数と敵の種類を指定する
 
 	bool GetIsEnemyAllDeath(); //敵が全て死亡状態になるとtrueを返す
@@ -43,8 +45,6 @@ private:
 	CXEnemy* tmp3;
 	//死亡状態の敵の数
 	int mEnemyDeathNum;
-	//敵モデル
-	CModelX gEnemy_Model_Mutant;
 	//ターゲット設定
 	CVector mTargetEnemy; //一番プレイヤから近い敵を格納
 	//ターゲット設定保存

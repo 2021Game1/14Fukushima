@@ -1,5 +1,5 @@
 #include "CXEnemyManager.h"
-#include "CEnemyData.h"
+
 
 CXEnemyManager* CXEnemyManager::mInstance = nullptr;
 
@@ -48,8 +48,8 @@ CXEnemyManager* CXEnemyManager::GetInstance()
 //敵の生成処理
 //引数で生成数、種類を設定する
 void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
-	Init();
-	for (int i = 0; i < num; i++) {
+	//指定した生成数に応じて、生成を実行する
+	for (int i = NULL; i < num; i++) {
 		//生成する敵の種類を判別
 		switch (type) {
 		case CXEnemy::EEnemyType::ETYPE_TUTORIAL:	//チュートリアル時の敵の強さ
@@ -57,22 +57,11 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 			//敵を生成
 			tmp1 = new CXEnemy;
 			//敵の初期設定
-			//敵のタイプを設定
 			tmp1->SetIsType(CXEnemy::EEnemyType::ETYPE_TUTORIAL);
-			//敵にモデルを設定する
-			tmp1->Init(&gEnemy_Model_Mutant);
 			//テーブルでHPなどのパラメータの設定
 			tmp1->EnemyTable();
-			//ポジションの取得
-			tmp1->GetPos();
-			//モデルの大きさを取得
-			tmp1->GetScale();
-			//モデルの回転を取得
-			tmp1->GetRotation();
 			//更新処理を設定
 			tmp1->Update();
-			//当たり判定のタスクに追加
-			tmp1->TaskCollision();
 			//リストに追加
 			mEnemyList.push_back(tmp1);
 		}
@@ -83,22 +72,11 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 			//敵を生成
 			tmp2 = new CXEnemy;
 			//敵の初期設定
-			//敵のタイプを設定
 			tmp2->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_1);
 			//テーブルでHPなどのパラメータの設定
 			tmp2->EnemyTable();
-			//ポジションの取得
-			tmp2->GetPos();
-			//モデルの大きさを取得
-			tmp2->GetScale();
-			//モデルの回転を取得
-			tmp2->GetRotation();
-			//敵にモデルを設定する
-			tmp2->Init(&gEnemy_Model_Mutant);
 			//更新処理を設定
 			tmp2->Update();
-			//当たり判定のタスクに追加
-			tmp2->TaskCollision();
 			//リストに追加
 			mEnemyList.push_back(tmp2);
 		}
@@ -109,22 +87,11 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 			//敵を生成
 			tmp3 = new CXEnemy;
 			//敵の初期設定
-			//敵のタイプを設定
 			tmp3->SetIsType(CXEnemy::EEnemyType::ETYPE_GAME_2);
 			//テーブルでHPなどのパラメータの設定
 			tmp3->EnemyTable();
-			//ポジションの取得
-			tmp3->GetPos();
-			//モデルの大きさを取得
-			tmp3->GetScale();
-			//モデルの回転を取得
-			tmp3->GetRotation();
-			//敵にモデルを設定する
-			tmp3->Init(&gEnemy_Model_Mutant);
 			//更新処理を設定
 			tmp3->Update();
-			//当たり判定のタスクに追加
-			tmp3->TaskCollision();
 			//リストに追加
 			mEnemyList.push_back(tmp3);
 		}
@@ -136,16 +103,7 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 //初期化
 void CXEnemyManager::Init()
 {
-	//3Dモデルファイルの読み込み
-	gEnemy_Model_Mutant.Load(ENEMY_MODEL_FILE);
-	//エネミーのアニメーションの追加
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_ATTACKSP1);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_WALK);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DASH);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_BACKSTEP);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_IDLE);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_KNOCKBACK);
-	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DEATH);
+
 }
 
 void CXEnemyManager::Update()
@@ -157,11 +115,8 @@ void CXEnemyManager::Update()
 	for (size_t i = NULL; i < mEnemyList.size(); i++) {
 		//死亡状態だった時
 		if (CXEnemy::GetInstance()->GetIsDeath()) {
-			delete mEnemyList[i];
-			mEnemyList.clear();
 			mEnemyDeathNum++; //死亡状態の敵のカウント加算
 			continue; //読み飛ばし
-
 		}
 		//ターゲット設定
 		//敵のリストに格納されている位置情報をプレイヤとの距離と参照

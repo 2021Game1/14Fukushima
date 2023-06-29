@@ -34,19 +34,12 @@ void CSceneGame::Init() {
 	CXPlayerManager::GetInstance()->Generate();
 	//ƒvƒŒƒCƒ„¶¬
 	CXPlayerManager::GetInstance()->PlayerGenerate();
-	for (int i = 0; i < ENEMY_GENERATE_A; i++)
-	{	//“GŠÇ—¶¬
-		CXEnemyManager::GetInstance()->Generate();
-		//“G¶¬
-		CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_A, CXEnemy::EEnemyType::ETYPE_GAME_1);
-	}
-	for (int i = NULL; i < ENEMY_GENERATE_B; i++)
-	{
-		//“GŠÇ—¶¬
-		CXEnemyManager::GetInstance()->Generate();
-		//“G¶¬
-		CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_B, CXEnemy::EEnemyType::ETYPE_GAME_2);
-	}
+	//“GŠÇ—¶¬
+	CXEnemyManager::GetInstance()->Generate();
+	//“G¶¬
+	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_A, CXEnemy::EEnemyType::ETYPE_GAME_1);
+	//“G¶¬
+	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_B, CXEnemy::EEnemyType::ETYPE_GAME_2);
 	//ƒJƒƒ‰‰Šú‰»
 	Camera.Init();
 	//ƒJƒƒ‰ƒ^[ƒQƒbƒg
