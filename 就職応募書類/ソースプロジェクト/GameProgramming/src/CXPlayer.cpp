@@ -215,28 +215,24 @@ void CXPlayer::Idle()
 	}
 	//回避状態へ移行
 	//Wキーを入力して、なおかつShiftキーを入力していたら実行
-	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Aキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT) || CKey::Push(VK_A) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Sキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT) || CKey::Push(VK_S) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Dキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT) || CKey::Push(VK_D) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//WASDキーを押すと移動へ移行
 	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
@@ -260,28 +256,24 @@ void CXPlayer::Move()
 	} 
 	//回避状態へ移行
 	//Wキーを入力して、なおかつShiftキーを入力していたら実行
-	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Aキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT) || CKey::Push(VK_A) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Sキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT) || CKey::Push(VK_S) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Dキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-		MoveCamera();
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT) || CKey::Push(VK_D) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//WASDキーのいずれかを入力すると移動状態へ移行
 	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
@@ -399,24 +391,24 @@ void CXPlayer::Attack_1()
 			}
 			//回避状態へ移行
 			//Wキーを入力して、なおかつShiftキーを入力していたら実行
-			if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-				mPlayer_IsHit = false;
+			if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+				mPlayer_InvincibleFlag = false; //無敵状態を終了する
 			}
 			//Aキーを入力して、なおかつShiftキーを入力していたら実行
-			else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-				mPlayer_IsHit = false;
+			else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT) || CKey::Push(VK_A) && CKey::Once(VK_RBUTTON)) {
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+				mPlayer_InvincibleFlag = false; //無敵状態を終了する
 			}
 			//Sキーを入力して、なおかつShiftキーを入力していたら実行
-			else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-				mPlayer_IsHit = false;
+			else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT) || CKey::Push(VK_S) && CKey::Once(VK_RBUTTON)) {
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+				mPlayer_InvincibleFlag = false; //無敵状態を終了する
 			}
 			//Dキーを入力して、なおかつShiftキーを入力していたら実行
-			else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-				mPlayer_IsHit = false;
+			else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT) || CKey::Push(VK_D) && CKey::Once(VK_RBUTTON)) {
+				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+				mPlayer_InvincibleFlag = false; //無敵状態を終了する
 			}
 		//アニメーション終了時
 		//攻撃1から待機モーションの間のアニメーションを描画する
@@ -483,24 +475,24 @@ void CXPlayer::Attack_2()
 	}
 	//回避状態へ移行
 	//Wキーを入力して、なおかつShiftキーを入力していたら実行
-	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Aキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT) || CKey::Push(VK_A) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Sキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT) || CKey::Push(VK_S) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//Dキーを入力して、なおかつShiftキーを入力していたら実行
-	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;
-		mPlayer_IsHit = false;
+	else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT) || CKey::Push(VK_D) && CKey::Once(VK_RBUTTON)) {
+		mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
+		mPlayer_InvincibleFlag = false; //無敵状態を終了する
 	}
 	//アニメーション終了時
 	//攻撃2と待機状態の間のアニメーションを描画する
@@ -540,23 +532,22 @@ void CXPlayer::KnockBack()
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		//Wキーを入力して、なおかつShiftキーを入力していたら実行
-		else if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT)) {
+		else if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
 			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		//Aキーを入力して、なおかつShiftキーを入力していたら実行
-		else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT)) {
+		else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT) || CKey::Push(VK_A) && CKey::Once(VK_RBUTTON)) {
 			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		//Sキーを入力して、なおかつShiftキーを入力していたら実行
-		else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT)) {
+		else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT) || CKey::Push(VK_S) && CKey::Once(VK_RBUTTON)) {
 			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
 		//Dキーを入力して、なおかつShiftキーを入力していたら実行
-		else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT)) {
-
+		else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT) || CKey::Push(VK_D) && CKey::Once(VK_RBUTTON)) {
 			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}
@@ -628,24 +619,67 @@ void CXPlayer::MoveCamera()
 	{
 		//Aキーを入力していれば、移動量を代入する
 		if (CKey::Push(VK_A)) {
-			//移動量を代入
-			mPlayer_MoveDir -= mPlayer_SideVec;
+			if (CKey::Once(VK_SHIFT)) {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_SideVec;
+			}
+			else if (CKey::Once(VK_RBUTTON)) {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_SideVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_SideVec;
+			}
 		}
 		//Dキーを入力していれば、移動量を代入する
 		else if (CKey::Push(VK_D)) {
-			//移動量を代入
-			mPlayer_MoveDir += mPlayer_SideVec;
+			if (CKey::Once(VK_SHIFT)) {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_SideVec;
+			}
+			else if (CKey::Once(VK_RBUTTON)) {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_SideVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_SideVec;
+			}
 		}
 		//Wキーを入力していれば、移動量を代入する
 		if (CKey::Push(VK_W)) {
-			//移動量を代入
-			mPlayer_MoveDir += mPlayer_FrontVec;
+			if (CKey::Once(VK_SHIFT)) {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_FrontVec;
+			}
+			else if (CKey::Once(VK_RBUTTON)) {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_FrontVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_FrontVec;
+			}
 		}
 		//Sキーを入力していれば、移動量を代入する
 		else if (CKey::Push(VK_S)) {
-			//移動量を代入
-			mPlayer_MoveDir -= mPlayer_FrontVec;
+			if (CKey::Once(VK_SHIFT)) {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_FrontVec;
+			}
+			else if (CKey::Once(VK_RBUTTON)) {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_FrontVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_FrontVec;
+			}
 		}
+		//ジャンプ時などはY軸を正規化しないよう注意
+		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();//移動量の代入
+		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
 		//ジャンプ時などはY軸を正規化しないよう注意
 		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();//移動量の代入
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
@@ -811,7 +845,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 	break;
-
+	//自身がカプセルコライダかつ、相手もカプセルコライダであれば実行
 	case CCollider::EType::ECAPSUL: {//カプセルコライダ
 		//相手のコライダがカプセルコライダの時
 		if (o->Type() == CCollider::EType::ECAPSUL) {
@@ -826,7 +860,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 	}
-
+	//プレイヤの球コライダがマップの三角コライダに衝突したら実行
 	if (m->Type() == CCollider::EType::ESPHERE && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
 		//相手の親のタグがマップ

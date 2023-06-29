@@ -2,6 +2,7 @@
 #include "CSceneGame.h"
 #include "CSceneTitle.h"
 #include "CSceneTutorial.h"
+#include "CSceneSelect.h"
 
 //デフォルトコンストラクタ
 CSceneManager::CSceneManager()
@@ -48,6 +49,11 @@ void CSceneManager::Update() {
 
 		case CScene::CScene::EScene::ETITLE:
 			mpScene = new CSceneTitle();
+			mpScene->Init();
+			break;
+
+		case CScene::CScene::EScene::ESCENESELECT:
+			mpScene = new CSceneSelect();
 			mpScene->Init();
 			break;
 		}

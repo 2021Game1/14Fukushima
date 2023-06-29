@@ -58,10 +58,10 @@ public:
 	void Init(CModelX* model);					//敵のモデル設定
 	//更新処理
 	void Update();								//敵の更新
+	//テーブル読み込み関数
+	void EnemyTable();							//エネミーテーブル
 	//当たり判定の格納
 	void TaskCollision();						//タスクに当たり判定を格納する
-	//テーブル読み込み関数
-	void EnemyTable();
 	//デフォルトコンストラクタ
 	CXEnemy();									//敵のデフォルトコンストラクタ
 protected:
@@ -81,6 +81,7 @@ protected:
 	void Death();								//死亡処理
 	//移動の計算処理
 	void MovingCalculation();
+
 
 private:
 
@@ -139,14 +140,17 @@ private:
 	float Enemy_Rotation_Z;						//モデルの回転Z座標
 	//終わり
 
-	//敵のUIインスタンス
-	CTexture gEnemy_Ui_Hp_BackBar;
-
 	//コライダの宣言
 	CCollider mEnemy_ColSphereRightarm;			//右腕
 	CCollider mEnemy_ColSphereLeftarm;			//左腕
 	CCollider mEnemy_ColSphereBody;				//球の身体
 	CColliderCapsule mEnemy_ColCapsuleBody;		//カプセルの身体
+
+	//敵のUIインスタンス
+	CTexture gEnemy_Ui_Hp_BackBar;				//HPの背景バー
+	//敵モデル
+	CModelX gEnemy_Model_Mutant;
+
 	//敵のパラメータ
 	float mEnemy_Speed;							//敵のスピード
 	float mEnemy_Turnspeed;						//敵のターン速度
@@ -168,15 +172,18 @@ private:
 	CVector mEnemy_AttackDir;					//敵の攻撃時の方向を保持する
 	bool mEnemy_Flag;							//敵のフラグ
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
+
 	//ステータス
 	int mHp;									//HP設定
 	int mAttack_Point;							//攻撃力
 	int mDefense_Point;							//守備力
 	int mStan_Point;							//スタン値
 	int mStanAccumulation;						//スタン蓄積
+
 	//プレイヤからの攻撃判断用
 	int mDamage;								//プレイヤからのダメージ
 	int mStan_Damage;							//プレイヤからのスタンダメージ
+
 };
 #endif
 

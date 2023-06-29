@@ -5,8 +5,187 @@
 
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
 
+
+
+
+
+//コライダ初期化
+CXEnemy::CXEnemy()
+	:mEnemy_Type(CXEnemy::EEnemyType::ETYPE_TUTORIAL)
+	, mEnemy_ColCapsuleBody(this, nullptr, CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_TOP_Y, ENEMY_COLCAPSULE_BODY_Z), CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_BOTTOM_Y, ENEMY_COLCAPSULE_BODY_Z), ENEMY_COLCAPSULE_BODY_SIZE)
+	, mEnemy_ColSphereBody(this, nullptr, CVector(ENEMY_COLSPHERE_BODY_X, ENEMY_COLSPHERE_BODY_Y, ENEMY_COLSPHERE_BODY_Z), ENEMY_COLSPHERE_BODY_SIZE)
+	, mEnemy_ColSphereRightarm(this, nullptr, CVector(), ENEMY_COLSPHERE_RIGHTARM_SIZE)
+	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), ENEMY_COLSPHERE_LEFTARM_SIZE)
+	, mHp(NULL)
+	, mDamage(NULL)
+	, mAttack_Point(NULL)
+	, mDefense_Point(NULL)
+	, mStan_Damage(NULL)
+	, mStan_Point(NULL)
+	, mStanAccumulation(NULL)
+	, mEnemy_Speed(ENEMY_SPEED)
+	, mEnemy_Turnspeed(ENEMY_TURNSPEED)
+	, mEnemy_PlayerDis(ENEMY_FLOAT_INITIALIZATION)
+	, mEnemy_FollowGaugeWid(ENEMY_FLOAT_INITIALIZATION)
+	, mEnemy_val(ENEMY_INT_INITIALIZATION)
+	, mEnemy_IsHit(false)
+	, mEnemy_Flag(false)
+	, Enemy_Priority(NULL)
+	, Enemy_Hp(NULL)
+	, Enemy_Hp_Max(NULL)
+	, Enemy_Attack_Point(NULL)
+	, Enemy_Defense_Point(NULL)
+	, Enemy_Stan_Point(NULL)
+	, Enemy_Damage_Magnification(NULL)
+	, Enemy_Death_Hp(NULL)
+	, Enemy_Gravity(NULL)
+	, Enemy_StanAccumulation(NULL)
+	, Enemy_StanAccumulation_Max(NULL)
+	, Enemy_Speed_WalkPattern(NULL)
+	, Enemy_Speed_DashPattern(NULL)
+	, Enemy_Speed_BackPattern(NULL)
+	, Enemy_Walk_Dis(NULL)
+	, Enemy_Dash_Dis(NULL)
+	, Enemy_Walk_Dis_Max(NULL)
+	, Enemy_Dash_Dis_Max(NULL)
+	, Enemy_Attack_Dis(NULL)
+	, Enemy_Attack_Reception(NULL)
+	, Enemy_Attack_Outreception(NULL)
+	, Enemy_Action_Rand(NULL)
+	, Enemy_Attack_Walk_Rand(NULL)
+	, Enemy_Attack_Dash_Rand(NULL)
+	, Enemy_AttackSp1_Set(NULL)
+	, Enemy_AttackSp2_Set(NULL)
+	, Enemy_Idle_Animation_Frame(NULL)
+	, Enemy_Move_Animation_Frame(NULL)
+	, Enemy_Dash_Animation_Frame(NULL)
+	, Enemy_BackStep_Animation_Frame(NULL)
+	, Enemy_Attack1_Animation_Frame(NULL)
+	, Enemy_Attack2_Animation_Frame(NULL)
+	, Enemy_Knockback_Animation_Frame(NULL)
+	, Enemy_Death_Animation_Frame(NULL)
+	, Enemy_Animation_No_Attack_1(NULL)
+	, Enemy_Animation_No_Attack_2(NULL)
+	, Enemy_Animation_No_Walk(NULL)
+	, Enemy_Animation_No_Dash(NULL)
+	, Enemy_Animation_No_BackStep(NULL)
+	, Enemy_Animation_No_Idle(NULL)
+	, Enemy_Animation_No_Knockback(NULL)
+	, Enemy_Animation_No_Death(NULL)
+	, Enemy_Position_X(NULL)
+	, Enemy_Position_Y(NULL)
+	, Enemy_Position_Z(NULL)
+	, Enemy_Scale_X(NULL)
+	, Enemy_Scale_Y(NULL)
+	, Enemy_Scale_Z(NULL)
+	, Enemy_Rotation_X(NULL)
+	, Enemy_Rotation_Y(NULL)
+	, Enemy_Rotation_Z(NULL)
+{
+	//テーブルの呼び出し
+	EnemyTable();
+
+	//初期状態を設定
+	mEnemy_State = CXEnemy::EEnemyState::EIDLE;	//待機状態
+
+	//ポインタの設定
+	mpEnemy_Instance = this;
+
+	//敵のUIの追加
+	gEnemy_Ui_Hp_BackBar.Load2D(ENEMY_UI_HP_BACKBAR);
+
+	//3Dモデルファイルの読み込み
+	gEnemy_Model_Mutant.Load(ENEMY_MODEL_FILE);
+
+	//エネミーのアニメーションの追加
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_ATTACKSP1);
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_WALK);
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DASH);
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_BACKSTEP);
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_IDLE);
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_KNOCKBACK);
+	gEnemy_Model_Mutant.AddAnimationSet(ENEMY_ANIMATION_DEATH);
+
+	//モデルの設定
+	Init(&gEnemy_Model_Mutant);
+
+	//コライダのタグを設定
+	mEnemy_ColCapsuleBody.Tag(CCollider::ETag::EBODY);	//体
+	mEnemy_ColSphereBody.Tag(CCollider::ETag::EBODY);		//体
+	mEnemy_ColSphereRightarm.Tag(CCollider::ETag::ERIGHTARM);	//右手
+	mEnemy_ColSphereLeftarm.Tag(CCollider::ETag::ELEFTARM);	//左手
+
+
+	//タスク処理
+	CTaskManager::Get()->Remove(this);//削除して
+	CTaskManager::Get()->Add(this);//追加する
+}
+
+void CXEnemy::Init(CModelX* model)
+{
+	CXCharacter::Init(model);
+	//合成行列の設定
+	mEnemy_ColCapsuleBody.Matrix(&mpCombinedMatrix[2]);
+	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[2]);
+	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[68]);
+	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
+}
+void CXEnemy::Update() {
+	//状態を判別
+	switch (mEnemy_State)
+	{
+	case CXEnemy::EEnemyState::EIDLE:	//待機状態
+		Idle();	//待機処理を呼ぶ
+		break;
+
+	case CXEnemy::EEnemyState::EATTACK_1:	//攻撃1状態の時
+		Attack_1();	//攻撃1の処理を呼ぶ
+		break;
+
+	case CXEnemy::EEnemyState::EATTACK_2:	//攻撃2状態の時
+		Attack_2();	//攻撃2の処理を呼ぶ
+		break;
+
+	case CXEnemy::EEnemyState::EMOVE:	//移動状態
+		Move();	//移動状態の処理を呼ぶ
+		break;
+
+	case CXEnemy::EEnemyState::EDASH: //回避状態
+		Dash(); //回避処理を呼ぶ
+		break;
+	case CXEnemy::EEnemyState::EBACKSTEP://後退状態
+		BackStep();//後退処理を呼ぶ
+		break;
+	case CXEnemy::EEnemyState::EDEATH: //死亡状態
+		Death(); //死亡処理を呼ぶ
+		break;
+
+	case CXEnemy::EEnemyState::EKNOCKBACK: //ノックバック状態
+		KnockBack(); //ノックバック処理を呼ぶ
+		break;
+	}
+
+	MovingCalculation();
+	if (mEnemy_PlayerDis >= Enemy_Attack_Dis) {
+		mEnemy_AttackDir = mEnemy_Player_Point; //攻撃時の向きを求める
+	}
+	//体力が0になると死亡
+	if (mHp <= Enemy_Death_Hp)
+	{
+		mEnemy_State = CXEnemy::EEnemyState::EDEATH;	//死亡状態へ移行
+		mHp = Enemy_Death_Hp;
+	}
+	//プレイヤーの攻撃判定が無効になると敵の無敵判定を解除する
+	if (CXPlayer::GetInstance()->GetIsHit() == false) {
+		mEnemy_Flag = false;
+	}
+
+	CXCharacter::Update();
+}
+
 void CXEnemy::EnemyTable()
 {
+
 	//生成する敵の種類を判別
 	switch (CXEnemy::mEnemy_Type) {
 	case CXEnemy::EEnemyType::ETYPE_TUTORIAL:	//チュートリアル時の敵の強さ
@@ -219,162 +398,21 @@ void CXEnemy::EnemyTable()
 	}
 }
 
-
-
-
-//コライダ初期化
-CXEnemy::CXEnemy()
-	: mEnemy_Type(CXEnemy::EEnemyType::ETYPE_TUTORIAL)
-	, mHp(NULL)
-	, mDamage(NULL)
-	, mAttack_Point(NULL)
-	, mDefense_Point(NULL)
-	, mStan_Damage(NULL)
-	, mStan_Point(NULL)
-	, mStanAccumulation(NULL)
-	, mEnemy_Speed(ENEMY_SPEED)
-	, mEnemy_Turnspeed(ENEMY_TURNSPEED)
-	, mEnemy_PlayerDis(ENEMY_FLOAT_INITIALIZATION)
-	, mEnemy_FollowGaugeWid(ENEMY_FLOAT_INITIALIZATION)
-	, mEnemy_val(ENEMY_INT_INITIALIZATION)
-	, mEnemy_IsHit(false)
-	, mEnemy_Flag(false)
-	, mEnemy_ColCapsuleBody(this, nullptr, CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_TOP_Y, ENEMY_COLCAPSULE_BODY_Z), CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_BOTTOM_Y, ENEMY_COLCAPSULE_BODY_Z), ENEMY_COLCAPSULE_BODY_SIZE)
-	, mEnemy_ColSphereBody(this, nullptr, CVector(ENEMY_COLSPHERE_BODY_X, ENEMY_COLSPHERE_BODY_Y, ENEMY_COLSPHERE_BODY_Z), ENEMY_COLSPHERE_BODY_SIZE)
-	, mEnemy_ColSphereRightarm(this, nullptr, CVector(), ENEMY_COLSPHERE_RIGHTARM_SIZE)
-	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), ENEMY_COLSPHERE_LEFTARM_SIZE)
-	, Enemy_Priority(NULL)
-	,Enemy_Hp(NULL)
-	,Enemy_Hp_Max(NULL)
-    ,Enemy_Attack_Point(NULL)
-	,Enemy_Defense_Point(NULL)
-    ,Enemy_Stan_Point(NULL)
-    ,Enemy_Damage_Magnification(NULL)
-    ,Enemy_Death_Hp(NULL)
-    ,Enemy_Gravity(NULL)
-    ,Enemy_StanAccumulation(NULL)
-    ,Enemy_StanAccumulation_Max(NULL)
-    ,Enemy_Speed_WalkPattern(NULL)
-    ,Enemy_Speed_DashPattern(NULL)
-    ,Enemy_Speed_BackPattern(NULL)
-    ,Enemy_Walk_Dis(NULL)
-    ,Enemy_Dash_Dis(NULL)
-    ,Enemy_Walk_Dis_Max(NULL)
-    ,Enemy_Dash_Dis_Max(NULL)
-    ,Enemy_Attack_Dis(NULL)
-    ,Enemy_Attack_Reception(NULL)
-    ,Enemy_Attack_Outreception(NULL)
-    ,Enemy_Action_Rand(NULL)
-    ,Enemy_Attack_Walk_Rand(NULL)
-    ,Enemy_Attack_Dash_Rand(NULL)
-    ,Enemy_AttackSp1_Set(NULL)
-    ,Enemy_AttackSp2_Set(NULL)
-    ,Enemy_Idle_Animation_Frame(NULL)
-    ,Enemy_Move_Animation_Frame(NULL)
-    ,Enemy_Dash_Animation_Frame(NULL)
-    ,Enemy_BackStep_Animation_Frame(NULL)
-    ,Enemy_Attack1_Animation_Frame(NULL)
-    ,Enemy_Attack2_Animation_Frame(NULL)
-    ,Enemy_Knockback_Animation_Frame(NULL)
-    ,Enemy_Death_Animation_Frame(NULL)
-    ,Enemy_Animation_No_Attack_1(NULL)
-    ,Enemy_Animation_No_Attack_2(NULL)
-    ,Enemy_Animation_No_Walk(NULL)
-    ,Enemy_Animation_No_Dash(NULL)
-    ,Enemy_Animation_No_BackStep(NULL)
-    ,Enemy_Animation_No_Idle(NULL)
-    ,Enemy_Animation_No_Knockback(NULL)
-    ,Enemy_Animation_No_Death(NULL)
-    ,Enemy_Position_X(NULL)
-    ,Enemy_Position_Y(NULL)
-    ,Enemy_Position_Z(NULL)
-    ,Enemy_Scale_X(NULL)
-    ,Enemy_Scale_Y(NULL)
-    ,Enemy_Scale_Z(NULL)
-    ,Enemy_Rotation_X(NULL)
-    ,Enemy_Rotation_Y(NULL)
-    ,Enemy_Rotation_Z(NULL)
+void CXEnemy::TaskCollision()
 {
-	//初期状態を設定
-	mEnemy_State = CXEnemy::EEnemyState::EIDLE;	//待機状態
-	//コライダのタグを設定
-	mEnemy_ColCapsuleBody.Tag(CCollider::ETag::EBODY);	//体
-	mEnemy_ColSphereBody.Tag(CCollider::ETag::EBODY);		//体
-	mEnemy_ColSphereRightarm.Tag(CCollider::ETag::ERIGHTARM);	//右手
-	mEnemy_ColSphereLeftarm.Tag(CCollider::ETag::ELEFTARM);	//左手
-	mpEnemy_Instance = this;
-	//敵のUIの追加
-	gEnemy_Ui_Hp_BackBar.Load2D(ENEMY_UI_HP_BACKBAR);
-	//テーブルの呼び出し
-	EnemyTable();
-	//タグの設定
-	mTag = CCharacter::ETag::EENEMY;
-	CTaskManager::Get()->Remove(this);//削除して
-	CTaskManager::Get()->Add(this);//追加する
+	//コライダの優先度変更
+	mEnemy_ColCapsuleBody.ChangePriority();
+	mEnemy_ColSphereBody.ChangePriority();
+	mEnemy_ColSphereRightarm.ChangePriority();
+	mEnemy_ColSphereLeftarm.ChangePriority();
+	//衝突処理を実行
+	CCollisionManager::Get()->Collision(&mEnemy_ColCapsuleBody, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereBody, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereRightarm, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLeftarm, COLLISIONRANGE);
 }
 
-void CXEnemy::Init(CModelX* model)
-{
-	CXCharacter::Init(model);
-	//合成行列の設定
-	mEnemy_ColCapsuleBody.Matrix(&mpCombinedMatrix[2]);
-	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[2]);
-	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[68]);
-	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
-}
 
-void CXEnemy::Update() {
-	//状態を判別
-	switch (mEnemy_State)
-	{
-	case CXEnemy::EEnemyState::EIDLE:	//待機状態
-		Idle();	//待機処理を呼ぶ
-		break;
-
-	case CXEnemy::EEnemyState::EATTACK_1:	//攻撃1状態の時
-		Attack_1();	//攻撃1の処理を呼ぶ
-		break;
-
-	case CXEnemy::EEnemyState::EATTACK_2:	//攻撃2状態の時
-		Attack_2();	//攻撃2の処理を呼ぶ
-		break;
-
-	case CXEnemy::EEnemyState::EMOVE:	//移動状態
-		Move();	//移動状態の処理を呼ぶ
-		break;
-
-	case CXEnemy::EEnemyState::EDASH: //回避状態
-		Dash(); //回避処理を呼ぶ
-		break;
-	case CXEnemy::EEnemyState::EBACKSTEP://後退状態
-		BackStep();//後退処理を呼ぶ
-		break;
-	case CXEnemy::EEnemyState::EDEATH: //死亡状態
-		Death(); //死亡処理を呼ぶ
-		break;
-
-	case CXEnemy::EEnemyState::EKNOCKBACK: //ノックバック状態
-		KnockBack(); //ノックバック処理を呼ぶ
-		break;
-	}
-
-	MovingCalculation();
-	if (mEnemy_PlayerDis >= Enemy_Attack_Dis) {
-		mEnemy_AttackDir = mEnemy_Player_Point; //攻撃時の向きを求める
-	}
-	//体力が0になると死亡
-	if (mHp <= Enemy_Death_Hp)
-	{
-		mEnemy_State = CXEnemy::EEnemyState::EDEATH;	//死亡状態へ移行
-		mHp = Enemy_Death_Hp;
-	}
-	//プレイヤーの攻撃判定が無効になると敵の無敵判定を解除する
-	if (CXPlayer::GetInstance()->GetIsHit() == false) {
-		mEnemy_Flag = false;
-	}
-
-	CXCharacter::Update();
-}
 void CXEnemy::Render2D()
 {
 	//2D描画開始
@@ -738,7 +776,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-
 	if (m->CCollider::Type() == CCollider::EType::ECAPSUL && o->CCollider::Type() == CCollider::EType::ECAPSUL)
 	{
 		CVector adjust;//調整用ベクトル
@@ -788,7 +825,7 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	}
 
 	//敵が死亡していないとき
-	if (!mHp <= Enemy_Death_Hp) {
+	if (mEnemy_State != EEnemyState::EDEATH) {
 		//自身のコライダタイプの判定
 		if (m->Type() == CCollider::EType::ESPHERE) {
 			//相手のコライダが球コライダの時
@@ -915,19 +952,6 @@ void CXEnemy::MovingCalculation() {
 	mEnemy_MoveDir = CVector(0.0f, 0.0f, 0.0f);
 	//移動スピードリセット
 	mEnemy_Speed = ENEMY_SPEED;
-}
-void CXEnemy::TaskCollision()
-{
-	//コライダの優先度変更
-	mEnemy_ColCapsuleBody.ChangePriority();
-	mEnemy_ColSphereBody.ChangePriority();
-	mEnemy_ColSphereRightarm.ChangePriority();
-	mEnemy_ColSphereLeftarm.ChangePriority();
-	//衝突処理を実行
-	CCollisionManager::Get()->Collision(&mEnemy_ColCapsuleBody, COLLISIONRANGE);
-	CCollisionManager::Get()->Collision(&mEnemy_ColSphereBody, COLLISIONRANGE);
-	CCollisionManager::Get()->Collision(&mEnemy_ColSphereRightarm, COLLISIONRANGE);
-	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLeftarm, COLLISIONRANGE);
 }
 //インスタンスの取得
 CXEnemy* CXEnemy::GetInstance()
