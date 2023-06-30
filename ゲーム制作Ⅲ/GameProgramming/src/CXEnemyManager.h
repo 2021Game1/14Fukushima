@@ -25,8 +25,6 @@ public:
 
 	void Update();	//更新
 
-	void Init();    //初期化
-
 	//敵生成
 	void EnemyGenerate(int num, CXEnemy::EEnemyType type); //敵生成、引数で生成数と敵の種類を指定する
 

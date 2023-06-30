@@ -2,10 +2,8 @@
 #include"CEnemyData.h"
 #include"CRes.h"
 
-
+//ポインタの初期化
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
-
-
 
 
 
@@ -776,18 +774,21 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-	if (m->CCollider::Type() == CCollider::EType::ECAPSUL && o->CCollider::Type() == CCollider::EType::ECAPSUL)
-	{
-		CVector adjust;//調整用ベクトル
-		//コライダのmとoが衝突しているかの判定
-		if (CCollider::CollisionCapsule(m, o, &adjust))
+	//敵が死亡していないとき
+	if ((mHp > Enemy_Death_Hp)) {
+		if (m->CCollider::Type() == CCollider::EType::ECAPSUL && o->CCollider::Type() == CCollider::EType::ECAPSUL)
 		{
-			if (m->CCollider::Tag() == CCollider::ETag::EBODY && o->CCollider::Tag() == CCollider::ETag::EBODY)
+			CVector adjust;//調整用ベクトル
+			//コライダのmとoが衝突しているかの判定
+			if (CCollider::CollisionCapsule(m, o, &adjust))
 			{
-				//位置の更新(mPosition + adjust)
-				mPosition = mPosition + adjust;
-				//行列の更新
-				CTransform::Update();
+				if (m->CCollider::Tag() == CCollider::ETag::EBODY && o->CCollider::Tag() == CCollider::ETag::EBODY)
+				{
+					//位置の更新(mPosition + adjust)
+					mPosition = mPosition + adjust;
+					//行列の更新
+					CTransform::Update();
+				}
 			}
 		}
 	}

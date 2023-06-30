@@ -53,7 +53,7 @@ void CSceneGame::Init() {
 void CSceneGame::Update() {
 
 	//プレイヤHPが0になったら実行
-	if (CXPlayer::GetInstance()->GetHp() == NULL) {
+	if (CXPlayer::GetInstance()->GetHp() == NULL && CXEnemyManager::GetInstance()->GetIsEnemyAllDeath() == false) {
 		//ゲームBGMを止める
 		CRes::GetInstance()->GetinSoundBgmGame().Stop();
 		//Enterキーを押したら、タイトルシーンに切り替える
@@ -102,7 +102,7 @@ void CSceneGame::Render() {
 	//2Dの描画開始
 	CUtil::Start2D(START2D_FIRST_WID, START2D_END_WID, START2D_FIRST_HEI, START2D_END_HEI);
 	//プレイヤのHPが0だったら実行
-	if (CXPlayer::GetInstance()->GetHp() == NULL) {
+	if (CXPlayer::GetInstance()->GetHp() == NULL && CXEnemyManager::GetInstance()->GetIsEnemyAllDeath() == false) {
 		//ゲームオーバー画像を描画
 		CRes::GetInstance()->GetinGameOverImage().DrawImage(GAMEOVER_FIRST_WID, GAMEOVER_END_WID, GAMEOVER_FIRST_HEI, GAMEOVER_END_HEI, GAMEOVER_FIRST_X, GAMEOVER_END_X, GAMEOVER_END_Y, GAMEOVER_FIRST_Y);
 	}
