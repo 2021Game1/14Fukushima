@@ -47,7 +47,8 @@ CXEnemyManager* CXEnemyManager::GetInstance()
 
 //敵の生成処理
 //引数で生成数、種類を設定する
-void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
+void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type)
+{
 	//指定した生成数に応じて、生成を実行する
 	for (int i = NULL; i < num; i++) {
 		//生成する敵の種類を判別
@@ -103,7 +104,6 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type){
 
 void CXEnemyManager::Update()
 {
-
 	//リセット
 	mEnemyDeathNum = NULL;
 	//リストに格納されている敵が死亡状態か、どうかを判別する
@@ -113,15 +113,41 @@ void CXEnemyManager::Update()
 			mEnemyDeathNum++; //死亡状態の敵のカウント加算
 			continue; //読み飛ばし
 		}
-		//ターゲット設定
-		//敵のリストに格納されている位置情報をプレイヤとの距離と参照
-		mTarget = mEnemyList[i]->GetInstance()->Position() - CXPlayer::GetInstance()->Position();
-		//敵の位置情報をベクトルに変換し、格納
-		mEnemyPos = mTarget.Length();
-		//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
-		if (mPlayerPos > mEnemyPos) {
-			//ターゲットに格納する
-			mTargetEnemy = mTarget.Normalize();
+		if (!tmp1 == NULL) {
+			//ターゲット設定
+			//敵のリストに格納されている位置情報をプレイヤとの距離と参照
+			mTarget = tmp1->Position() - CXPlayer::GetInstance()->Position();
+			//敵の位置情報をベクトルに変換し、格納
+			mEnemyPos = mTarget.Length();
+			//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
+			if (mPlayerPos > mEnemyPos) {
+				//ターゲットに格納する
+				mTargetEnemy = mTarget.Normalize();
+			}
+		}
+		if (!tmp2 == NULL) {
+			//ターゲット設定
+			//敵のリストに格納されている位置情報をプレイヤとの距離と参照
+			mTarget = tmp2->Position() - CXPlayer::GetInstance()->Position();
+			//敵の位置情報をベクトルに変換し、格納
+			mEnemyPos = mTarget.Length();
+			//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
+			if (mPlayerPos > mEnemyPos) {
+				//ターゲットに格納する
+				mTargetEnemy = mTarget.Normalize();
+			}
+		}
+		if (!tmp3 == NULL) {
+			//ターゲット設定
+			//敵のリストに格納されている位置情報をプレイヤとの距離と参照
+			mTarget = tmp3->Position() - CXPlayer::GetInstance()->Position();
+			//敵の位置情報をベクトルに変換し、格納
+			mEnemyPos = mTarget.Length();
+			//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
+			if (mPlayerPos > mEnemyPos) {
+				//ターゲットに格納する
+				mTargetEnemy = mTarget.Normalize();
+			}
 		}
 	}
 }

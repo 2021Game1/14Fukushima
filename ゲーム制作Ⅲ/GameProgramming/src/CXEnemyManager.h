@@ -7,9 +7,6 @@
 /*
 CXEnemyManagerクラス
 */
-//エネミーリストの生成数の把握用
-#define ENEMY_A 1
-#define ENEMY_B 2
 //プレイヤの攻撃範囲座標
 #define PLAYER_ATTACK_POS 5.3
 
