@@ -849,13 +849,16 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	case CCollider::EType::ECAPSUL: {//カプセルコライダ
 		//相手のコライダがカプセルコライダの時
 		if (o->Type() == CCollider::EType::ECAPSUL) {
-			CVector adjust;//調整用ベクトル
-			if (CCollider::CollisionCapsule(m, o, &adjust))
-			{
-				//位置の更新(mPosition + adjust)
-				mPosition = mPosition + adjust;
-				//行列の更新
-				CTransform::Update();
+			//ポインタが敵かつ、死亡状態でないときで
+			if (((CXEnemy*)(o->Parent()))->GetState() != CXEnemy::EEnemyState::EDEATH) {
+				CVector adjust;//調整用ベクトル
+				if (CCollider::CollisionCapsule(m, o, &adjust))
+				{
+					//位置の更新(mPosition + adjust)
+					mPosition = mPosition + adjust;
+					//行列の更新
+					CTransform::Update();
+				}
 			}
 		}
 	}
