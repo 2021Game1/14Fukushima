@@ -228,6 +228,12 @@ void CXPlayer::Idle()
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = CXPlayer::EPlayerState::EATTACK_1;
 	}
+	//WASDキーを押すと移動へ移行
+	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
+		mPlayer_State = CXPlayer::EPlayerState::EMOVE;
+		Se_Player_Walk.Repeat(Player_Se);
+	}
+
 	//回避状態へ移行
 	//Wキーを入力して、なおかつShiftキーを入力していたら実行
 	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
@@ -269,6 +275,13 @@ void CXPlayer::Move()
 	if (CKey::Once(VK_LBUTTON)) {
 		mPlayer_State = CXPlayer::EPlayerState::EATTACK_1;
 	} 
+	//WASDキーのいずれかを入力すると移動状態へ移行
+	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
+		ChangeAnimation(Player_Animation_No_Move, true, Player_Move_Animation_Frame);
+		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
+		Se_Player_Walk.Repeat(Player_Se);
+	}
+
 	//回避状態へ移行
 	//Wキーを入力して、なおかつShiftキーを入力していたら実行
 	if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
@@ -344,6 +357,11 @@ void CXPlayer::Avoidance()
 			}
 		}
 	}
+	//ヒット判定発生
+	if (IsAnimationFinished())
+	{
+		mPlayer_State = CXPlayer::EPlayerState::EIDLE;
+	}
 }
 
 
@@ -409,21 +427,25 @@ void CXPlayer::Attack_1()
 			if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
+				mPlayer_AttackFlag_1 == false;
 			}
 			//Aキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT) || CKey::Push(VK_A) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
+				mPlayer_AttackFlag_1 == false;
 			}
 			//Sキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT) || CKey::Push(VK_S) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
+				mPlayer_AttackFlag_1 == false;
 			}
 			//Dキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT) || CKey::Push(VK_D) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
+				mPlayer_AttackFlag_1 == false;
 			}
 		//アニメーション終了時
 		//攻撃1から待機モーションの間のアニメーションを描画する
@@ -626,6 +648,7 @@ void CXPlayer::MoveCamera()
 		//ジャンプ時などはY軸を正規化しないよう注意
 		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
+		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
 	}
 	//回避状態の場合
 	//移動量を代入
@@ -694,14 +717,16 @@ void CXPlayer::MoveCamera()
 		//ジャンプ時などはY軸を正規化しないよう注意
 		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();//移動量の代入
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
+		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
 	}
 	//移動状態でも回避状態でもない場合
 	else {
 		//ジャンプ時などはY軸を正規化しないよう注意
 		mPlayer_MoveDir = mPlayer_MoveDir;//移動量の代入
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
+		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
 	}
-	mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
+	
 }
 
 //2D描画

@@ -40,19 +40,32 @@ public:
 		ETYPE_GAME_1,							//ゲーム本番時の敵の強さ(強い)
 		ETYPE_GAME_2,							//ゲーム本番時の敵の強さ(弱い)
 	};
-	bool GetIsAnimationFrame();					//再生中のアニメーションフレーム数を取得する
-	bool GetIsHit();							//ヒット状態の判別
-	bool GetIsDeath();							//死亡状態の時にtrueを返す
-	int GetHp();								//現在のHPを取得する
-	CXEnemy::EEnemyType GetIsType();			//現在の敵のタイプを取得
-	void SetIsType(EEnemyType type);			//タイプの設定
-	void SetIsHit(bool hitflag);				//攻撃の当たり判定フラグを設定
-	int GetIsAttackPoint();						//プレイヤに与えるダメージ取得用
-	int GetIsStanPoint();						//プレイヤに与えるスタンダメージ取得用
-	CXEnemy::EEnemyState GetState();			//プレイヤの状態を取得する
-	void GetPos();								//座標の取得
-	void GetScale();							//スケールの取得
-	void GetRotation();							//モデルの回転値取得
+	//再生中のアニメーションフレーム数を取得する
+	bool GetIsAnimationFrame();					
+	//ヒット状態の判別
+	bool GetIsHit();
+	//死亡状態の時にtrueを返す
+	bool GetIsDeath();	
+	//現在のHPを取得する
+	int GetHp();
+	//現在の敵のタイプを取得
+	CXEnemy::EEnemyType GetIsType();
+	//タイプの設定
+	void SetIsType(EEnemyType type);
+	//攻撃の当たり判定フラグを設定
+	void SetIsHit(bool hitflag);
+	//プレイヤに与えるダメージ取得用
+	int GetIsAttackPoint();	
+	//プレイヤに与えるスタンダメージ取得用
+	int GetIsStanPoint();
+	//プレイヤの状態を取得する
+	CXEnemy::EEnemyState GetState();
+	//座標の取得
+	void GetPos();
+	//スケールの取得
+	void GetScale();
+	//モデルの回転値取得
+	void GetRotation();							
 	//敵モデル設定
 	void Init(CModelX* model);					//敵のモデル設定
 	//更新処理
@@ -173,6 +186,7 @@ private:
 	CVector mEnemy_AttackDir;					//敵の攻撃時の方向を保持する
 	bool mEnemy_Flag;							//敵のフラグ
 	bool mEnemy_IsHit;							//敵の攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
+	bool mEnemy_Death_Flag;						//敵の死亡時消去フラグ
 
 	//ステータス
 	int mHp;									//HP設定
