@@ -33,14 +33,13 @@ public:
 		EKNOCKBACK,								//ノックバック
 		EDEATH,									//死亡
 	};
-	EEnemyState mEnemy_State;					//敵の状態判断用
+	
 	//敵の強さの種類
 	enum class EEnemyType {
 		ETYPE_TUTORIAL,							//チュートリアル時の敵の強さ
 		ETYPE_GAME_1,							//ゲーム本番時の敵の強さ(強い)
 		ETYPE_GAME_2,							//ゲーム本番時の敵の強さ(弱い)
 	};
-	EEnemyType mEnemy_Type;						//敵の種類判断用
 	bool GetIsAnimationFrame();					//再生中のアニメーションフレーム数を取得する
 	bool GetIsHit();							//ヒット状態の判別
 	bool GetIsDeath();							//死亡状態の時にtrueを返す
@@ -84,7 +83,9 @@ protected:
 
 
 private:
+	EEnemyState mEnemy_State;					//敵の状態判断用
 
+	EEnemyType mEnemy_Type;						//敵の種類判断用
 	//始め
 	//テーブル取得用変数
 	int Enemy_Priority;							//描画優先度

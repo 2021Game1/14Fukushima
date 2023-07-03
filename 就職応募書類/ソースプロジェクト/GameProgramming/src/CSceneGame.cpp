@@ -16,34 +16,45 @@ CSceneGame::~CSceneGame()
 	//タスクマネージャの削除
 	CTaskManager::Get()->Delete();
 }
+
 //Init処理
 //一度しか動かさない処理
 void CSceneGame::Init() {
 	//シーンの設定
 	//シーンにゲームシーンを設定する
 	mScene = CScene::EScene::EGAME;
+
 	//マップを生成
 	CMap::GetInstance()->Generate();
+
 	//マップ背景を生成
 	CSkyMap::GetInstance()->Generate();
+
 	//リソースの読み込み設定
 	mRes.Init();
+
 	//BGMセット(リピート）
 	CRes::GetInstance()->GetinSoundBgmGame().Repeat(0.2);
+
 	//プレイヤ管理生成
 	CXPlayerManager::GetInstance()->Generate();
+
 	//プレイヤ生成
 	CXPlayerManager::GetInstance()->PlayerGenerate();
+
 	//敵管理生成
 	CXEnemyManager::GetInstance()->Generate();
 	//敵生成
 	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_A, CXEnemy::EEnemyType::ETYPE_GAME_1);
 	//敵生成
 	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_B, CXEnemy::EEnemyType::ETYPE_GAME_2);
+
 	//カメラ初期化
 	Camera.Init();
+
 	//カメラターゲット
 	Camera.SetTarget(CXPlayer::GetInstance()->Position());
+
 	//影の設定
 	float shadowColor[] = { SHADOWCOLOR_0, SHADOWCOLOR_1, SHADOWCOLOR_2, SHADOWCOLOR_3 };	//影の色
 	float lightPos[] = { LIGHTPOS_X, LIGHTPOS_Y, LIGHTPOS_Z };		//光源の位置
@@ -53,7 +64,7 @@ void CSceneGame::Init() {
 void CSceneGame::Update() {
 
 	//プレイヤHPが0になったら実行
-	if (CXPlayer::GetInstance()->GetHp() == NULL) {
+	if (CXPlayer::GetInstance()->GetHp() == NULL && CXEnemyManager::GetInstance()->GetIsEnemyAllDeath() == false) {
 		//ゲームBGMを止める
 		CRes::GetInstance()->GetinSoundBgmGame().Stop();
 		//Enterキーを押したら、タイトルシーンに切り替える
@@ -79,8 +90,6 @@ void CSceneGame::Update() {
 	CTaskManager::Get()->Update();
 	//コリジョンマネージャに格納されている全ての衝突処理を呼び出す
 	CCollisionManager::Get()->Collision();
-	//エネミーマネージャの更新処理を呼び出す
-	CXEnemyManager::GetInstance()->Update();
 
 	//タスクリスト削除
 	CTaskManager::Get()->Delete();
@@ -102,7 +111,7 @@ void CSceneGame::Render() {
 	//2Dの描画開始
 	CUtil::Start2D(START2D_FIRST_WID, START2D_END_WID, START2D_FIRST_HEI, START2D_END_HEI);
 	//プレイヤのHPが0だったら実行
-	if (CXPlayer::GetInstance()->GetHp() == NULL) {
+	if (CXPlayer::GetInstance()->GetHp() == NULL && CXEnemyManager::GetInstance()->GetIsEnemyAllDeath() == false) {
 		//ゲームオーバー画像を描画
 		CRes::GetInstance()->GetinGameOverImage().DrawImage(GAMEOVER_FIRST_WID, GAMEOVER_END_WID, GAMEOVER_FIRST_HEI, GAMEOVER_END_HEI, GAMEOVER_FIRST_X, GAMEOVER_END_X, GAMEOVER_END_Y, GAMEOVER_FIRST_Y);
 	}

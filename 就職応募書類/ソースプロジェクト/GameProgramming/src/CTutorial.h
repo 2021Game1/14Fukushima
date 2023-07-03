@@ -114,7 +114,7 @@
 //カメラ操作量上限設定
 #define CAMERA_ACCEUMULATION_MAX 180
 
-class CTutorial {
+class CTutorial : public CCharacter{
 public:
 	//デフォルトコンストラクタ
 	CTutorial();

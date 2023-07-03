@@ -17,32 +17,45 @@ CSceneTutorial::~CSceneTutorial()
 	//タスクマネージャの削除
 	CTaskManager::Get()->Delete();
 }
+
 //Init処理
 //一度しか動かさない処理
 void CSceneTutorial::Init() {
+
 	//シーンの設定
 	//チュートリアルにシーンを設定
 	mScene = CScene::EScene::ETUTORIAL;
+
 	//地上マップの生成
 	CMap::GetInstance()->Generate();
+
 	//背景マップの生成
 	CSkyMap::GetInstance()->Generate();
+
 	//リソースの読み込み設定
 	mRes.Init();
+
 	//BGMセット(リピート）
 	CRes::GetInstance()->GetinSoundBgmGame().Repeat(0.2);
+
 	//プレイヤ管理生成
 	CXPlayerManager::GetInstance()->Generate();
+
 	//敵管理生成
 	CXEnemyManager::GetInstance()->Generate();
+
 	//プレイヤ生成
 	CXPlayerManager::GetInstance()->PlayerGenerate();
+
 	//敵生成
 	CXEnemyManager::GetInstance()->EnemyGenerate(TUTORIAL_GENERATE_A, CXEnemy::EEnemyType::ETYPE_TUTORIAL);
+
 	//カメラ初期化
 	Camera.Init();
+
 	//カメラターゲット
 	Camera.SetTarget(CXPlayer::GetInstance()->Position());
+
 	//影の設定
 	float shadowColor[] = { SHADOWCOLOR_0, SHADOWCOLOR_1, SHADOWCOLOR_2, SHADOWCOLOR_3 };	//影の色
 	float lightPos[] = { LIGHTPOS_X, LIGHTPOS_Y, LIGHTPOS_Z };		//光源の位置
@@ -50,6 +63,7 @@ void CSceneTutorial::Init() {
 }
 //更新処理
 void CSceneTutorial::Update() {
+
 	//プレイヤHPが0になったら実行
 	if (CXPlayer::GetInstance()->GetHp() == NULL) {
 		//ゲームBGMを止める
@@ -61,6 +75,7 @@ void CSceneTutorial::Update() {
 			mScene = CScene::EScene::ETITLE;
 		}
 	}
+
 	//エネミーマネージャに格納されている敵が全て死亡してるなら実行
 	if (CXEnemyManager::GetInstance()->GetIsEnemyAllDeath()) {
 		//ゲームBGMを止める
@@ -72,15 +87,11 @@ void CSceneTutorial::Update() {
 			mScene = CScene::EScene::ESCENESELECT;
 		}
 	}
-	//チュートリアルクラスのUpdateを呼び出す
-	mTutorial.Update();
 
 	//タスクマネージャに格納されている全ての更新処理を呼び出す
 	CTaskManager::Get()->Update();
 	//コリジョンマネージャに格納されている全ての衝突処理を呼び出す
 	CCollisionManager::Get()->Collision();
-	//エネミーマネージャの更新処理を呼び出す
-	CXEnemyManager::GetInstance()->Update();
 
 
 	//タスクリスト削除
@@ -102,8 +113,6 @@ void CSceneTutorial::Render() {
 	//コライダの描画
 	CCollisionManager::Get()->Render();
 #endif
-	//チュートリアルの描画
-	mTutorial.Render();
 
 }
 //次のシーン取得

@@ -2,10 +2,8 @@
 #include"CEnemyData.h"
 #include"CRes.h"
 
-
+//ポインタの初期化
 CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
-
-
 
 
 
@@ -244,15 +242,23 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
 		mTag = CCharacter::ETag::EENEMY;
-		//優先度を1に変更する
+		//優先度を設定する
 		mPriority = Enemy_Priority;
+		//HPの設定
 		mHp = Enemy_Hp;
+		//攻撃力の設定
 		mAttack_Point = Enemy_Attack_Point;
+		//防御力の設定
 		mDefense_Point = Enemy_Defense_Point;
+		//スタン値の設定
 		mStan_Point = Enemy_Stan_Point;
+		//スタンの蓄積設定
 		mStanAccumulation = Enemy_StanAccumulation;
+		//出現位置の設定
 		mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
+		//モデルのスケール設定
 		mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
+		//モデルの回転設定
 		mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
 	}
 	break;
@@ -313,15 +319,23 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
 		mTag = CCharacter::ETag::EENEMY;
-		//優先度を1に変更する
+		//優先度を設定する
 		mPriority = Enemy_Priority;
+		//HPの設定
 		mHp = Enemy_Hp;
+		//攻撃力の設定
 		mAttack_Point = Enemy_Attack_Point;
+		//防御力の設定
 		mDefense_Point = Enemy_Defense_Point;
+		//スタン値の設定
 		mStan_Point = Enemy_Stan_Point;
+		//スタンの蓄積設定
 		mStanAccumulation = Enemy_StanAccumulation;
+		//出現位置の設定
 		mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
+		//モデルのスケール設定
 		mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
+		//モデルの回転設定
 		mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
 	}
 	break;
@@ -382,15 +396,23 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
 		mTag = CCharacter::ETag::EENEMY;
-		//優先度を1に変更する
+		//描画優先度を設定する
 		mPriority = Enemy_Priority;
+		//HPの設定
 		mHp = Enemy_Hp;
+		//攻撃力の設定
 		mAttack_Point = Enemy_Attack_Point;
+		//防御力の設定
 		mDefense_Point = Enemy_Defense_Point;
+		//スタン値の設定
 		mStan_Point = Enemy_Stan_Point;
+		//スタンの蓄積設定
 		mStanAccumulation = Enemy_StanAccumulation;
+		//出現位置の設定
 		mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
+		//モデルのスケール設定
 		mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
+		//モデルの回転設定
 		mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
 	}
 	break;
@@ -776,18 +798,21 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 	//相手の親が自分の時はリターン
 	if (o->Parent() == this)return;
 
-	if (m->CCollider::Type() == CCollider::EType::ECAPSUL && o->CCollider::Type() == CCollider::EType::ECAPSUL)
-	{
-		CVector adjust;//調整用ベクトル
-		//コライダのmとoが衝突しているかの判定
-		if (CCollider::CollisionCapsule(m, o, &adjust))
+	//敵が死亡していないとき
+	if ((mHp > Enemy_Death_Hp)) {
+		if (m->CCollider::Type() == CCollider::EType::ECAPSUL && o->CCollider::Type() == CCollider::EType::ECAPSUL)
 		{
-			if (m->CCollider::Tag() == CCollider::ETag::EBODY && o->CCollider::Tag() == CCollider::ETag::EBODY)
+			CVector adjust;//調整用ベクトル
+			//コライダのmとoが衝突しているかの判定
+			if (CCollider::CollisionCapsule(m, o, &adjust))
 			{
-				//位置の更新(mPosition + adjust)
-				mPosition = mPosition + adjust;
-				//行列の更新
-				CTransform::Update();
+				if (m->CCollider::Tag() == CCollider::ETag::EBODY && o->CCollider::Tag() == CCollider::ETag::EBODY)
+				{
+					//位置の更新(mPosition + adjust)
+					mPosition = mPosition + adjust;
+					//行列の更新
+					CTransform::Update();
+				}
 			}
 		}
 	}
