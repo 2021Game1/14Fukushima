@@ -38,6 +38,8 @@ private:
 	static CXEnemyManager* mInstance;
 	//“GŠi”[
 	std::vector<CXEnemy*> mEnemyList;
+	//“G‚Ì¶¬”‚ğŠi”[
+	int mEnemyGenerate;
 	//“G‚ğ¶¬
 	CXEnemy* tmp1;
 	CXEnemy* tmp2;

@@ -28,6 +28,7 @@ CXEnemy::CXEnemy()
 	, mEnemy_val(ENEMY_INT_INITIALIZATION)
 	, mEnemy_IsHit(false)
 	, mEnemy_Flag(false)
+	, mEnemy_Death_Flag(false)
 	, Enemy_Priority(NULL)
 	, Enemy_Hp(NULL)
 	, Enemy_Hp_Max(NULL)
@@ -783,6 +784,7 @@ void CXEnemy::KnockBack()
 		//当たり判定のフラグを判定するように変更
 		mEnemy_Flag = false;
 		mEnemy_State = CXEnemy::EEnemyState::EATTACK_2; //攻撃2
+		
 	}
 }
 
@@ -792,6 +794,11 @@ void CXEnemy::Death()
 	ChangeAnimation(Enemy_Animation_No_Death, false, Enemy_Death_Animation_Frame);
 	//敵の攻撃判定をfalseにする
 	mEnemy_IsHit = false;
+	//アニメーション終了時
+	if (IsAnimationFinished())
+	{
+		mEnemy_Death_Flag = true;
+	}
 }
 
 void CXEnemy::Collision(CCollider* m, CCollider* o) {
@@ -1006,7 +1013,7 @@ bool CXEnemy::GetIsHit()
 //死亡状態のときtrueを返す
 bool CXEnemy::GetIsDeath()
 {
-	return (mEnemy_State == CXEnemy::EEnemyState::EDEATH);
+	return mEnemy_Death_Flag;
 }
 //攻撃の当たり判定フラグを設定
 void CXEnemy::SetIsHit(bool hitflag)
