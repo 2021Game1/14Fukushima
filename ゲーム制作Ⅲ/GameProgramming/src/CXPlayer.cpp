@@ -69,20 +69,35 @@ void CXPlayer::PlayerTable() {
 	Player_Trun_Check_Set = table["Player_Trun_Check_Set"]["Value"].fVal;
 
 	//テーブルデータを取得した変数からクラスの変数に代入
+	//描画優先度の設定
 	mPriority = Player_Priority;
+	//ゲージの揺れ幅設定
 	mPlayer_Gauge_Hp_Shake_X = Player_Gauge_Hp_Shake_X;
+	//ゲージの揺れ幅設定
 	mPlayer_Gauge_Hp_Shake_Y = Player_Gauge_Hp_Shake_Y;
+	//ゲージの揺れ幅設定
 	mPlayer_Gauge_Hp_Shake_Range_X = Player_Gauge_Hp_Shake_Range_X;
+	//ゲージの揺れ幅設定
 	mPlayer_Gauge_Hp_Shake_Range_Y = Player_Gauge_Hp_Shake_Range_Y;
+	//ゲージの揺れ幅設定
 	mPlayer_FollowGaugeWid = Player_Gauge_Wid;
+	//プレイヤ移動速度の設定
 	mPlayer_Speed = Player_Speed_Default;
+	//攻撃力設定
 	mAttack_Point = Player_Attack_Point;
+	//防御力設定
 	mDefense_Point = Player_Defense_Point;
+	//ひるみ値設定
 	mStan_Point = Player_Stan_Point;
+	//ひるみ値の蓄積設定
 	mStanAccumulation = Player_StanAccumulation;
+	//HPの設定
 	mPlayer_Hp = Player_Hp;
+	//HP上限の設定
 	mPlayer_Hp_Max = Player_Hp_Max;
+	//HPゲージの揺れ幅設定
 	mPlayer_Gauge_Hp_Rate = Player_Gauge_Hp_Rate;
+	//攻撃対象判別する距離設定(ターゲットを視認する範囲設定)
 	mPlayer_Attack_Dis = Player_Attack_Dis;
 }
 //デフォルトコンストラクタ

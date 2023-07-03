@@ -20,7 +20,10 @@ CTutorial::CTutorial()
 	, mCameraAngle_Acceumulation(false)
 	, mMoveTutorial_Accumulation_Pos(NULL)
 {
-
+	mpTutorial_Instance = this;
+	//タスクマネージャへの追加
+	CTaskManager::Get()->Remove(this);//削除して
+	CTaskManager::Get()->Add(this);//追加する
 }
 //更新処理
 void CTutorial::Update()

@@ -7,10 +7,10 @@
 /*
 CXEnemyManagerクラス
 */
-//プレイヤの攻撃範囲座標
+//プレイヤの攻撃範囲仮の座標
 #define PLAYER_ATTACK_POS 5.3
 
-class CXEnemyManager{
+class CXEnemyManager :public CXCharacter{
 public:
 	CXEnemyManager();	//デフォルトコンストラクタ
 	~CXEnemyManager();	//デストラクタ
@@ -21,6 +21,10 @@ public:
 	static void Release(); //破棄
 
 	void Update();	//更新
+
+	void Init();	//タスクマネージャに格納するためのメソッド(動かさない処理)
+
+	void Render();  //タスクマネージャに格納するためのメソッド(動かさない処理)
 
 	//敵生成
 	void EnemyGenerate(int num, CXEnemy::EEnemyType type); //敵生成、引数で生成数と敵の種類を指定する
@@ -39,7 +43,7 @@ private:
 	CXEnemy* tmp2;
 	CXEnemy* tmp3;
 	//死亡状態の敵の数
-	int mEnemyDeathNum;
+	int mEnemyDeathNum;							
 	//ターゲット設定
 	CVector mTargetEnemy; //一番プレイヤから近い敵を格納
 	//ターゲット設定保存

@@ -6,6 +6,11 @@
 #include"CCharacter.h"
 
 
+/*
+Xファイルから生成したキャラクタのクラス
+CXCharacterクラス
+*/
+
 class CXCharacter : public CCharacter {
 protected:
 	//デフォルトコンストラクタ

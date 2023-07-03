@@ -242,15 +242,23 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
 		mTag = CCharacter::ETag::EENEMY;
-		//優先度を1に変更する
+		//優先度を設定する
 		mPriority = Enemy_Priority;
+		//HPの設定
 		mHp = Enemy_Hp;
+		//攻撃力の設定
 		mAttack_Point = Enemy_Attack_Point;
+		//防御力の設定
 		mDefense_Point = Enemy_Defense_Point;
+		//スタン値の設定
 		mStan_Point = Enemy_Stan_Point;
+		//スタンの蓄積設定
 		mStanAccumulation = Enemy_StanAccumulation;
+		//出現位置の設定
 		mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
+		//モデルのスケール設定
 		mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
+		//モデルの回転設定
 		mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
 	}
 	break;
@@ -311,15 +319,23 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
 		mTag = CCharacter::ETag::EENEMY;
-		//優先度を1に変更する
+		//優先度を設定する
 		mPriority = Enemy_Priority;
+		//HPの設定
 		mHp = Enemy_Hp;
+		//攻撃力の設定
 		mAttack_Point = Enemy_Attack_Point;
+		//防御力の設定
 		mDefense_Point = Enemy_Defense_Point;
+		//スタン値の設定
 		mStan_Point = Enemy_Stan_Point;
+		//スタンの蓄積設定
 		mStanAccumulation = Enemy_StanAccumulation;
+		//出現位置の設定
 		mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
+		//モデルのスケール設定
 		mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
+		//モデルの回転設定
 		mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
 	}
 	break;
@@ -380,15 +396,23 @@ void CXEnemy::EnemyTable()
 		Enemy_Rotation_Z = table["Enemy_Rotation_Z"]["Value"].fVal;
 		//タグの設定
 		mTag = CCharacter::ETag::EENEMY;
-		//優先度を1に変更する
+		//描画優先度を設定する
 		mPriority = Enemy_Priority;
+		//HPの設定
 		mHp = Enemy_Hp;
+		//攻撃力の設定
 		mAttack_Point = Enemy_Attack_Point;
+		//防御力の設定
 		mDefense_Point = Enemy_Defense_Point;
+		//スタン値の設定
 		mStan_Point = Enemy_Stan_Point;
+		//スタンの蓄積設定
 		mStanAccumulation = Enemy_StanAccumulation;
+		//出現位置の設定
 		mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
+		//モデルのスケール設定
 		mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
+		//モデルの回転設定
 		mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
 	}
 	break;
