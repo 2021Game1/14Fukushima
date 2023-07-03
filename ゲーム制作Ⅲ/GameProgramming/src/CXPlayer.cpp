@@ -776,7 +776,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 										//敵の攻撃判定を停止する
 										((CXEnemy*)(o->Parent()))->SetIsHit(false);
 										//ダメージ計算処理
-										mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
+										mDamage = ((CXEnemy*)(o->Parent()))->GetIsAttackPoint() * (((CXEnemy*)(o->Parent()))->GetIsAttackPoint() / mDefense_Point) + (((CXEnemy*)(o->Parent()))->GetIsAttackPoint() * Player_Damage_Magnification);
 										//プレイヤのHPが減算
 										mPlayer_Hp = mPlayer_Hp - mDamage;
 										//プレイヤを無敵状態にする
@@ -797,7 +797,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 										//ノックバックせず、プレイヤのスタン蓄積値は、敵の攻撃スタン値を参照し蓄積する
 										else {
 											//スタンダメージを参照
-											mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
+											mStan_Damage = ((CXEnemy*)(o->Parent()))->GetIsStanPoint() * (((CXEnemy*)(o->Parent()))->GetIsStanPoint() / mDefense_Point);
 											//スタンダメージをスタン蓄積値に蓄積させる
 											mStanAccumulation = mStanAccumulation + mStan_Damage;
 										}
@@ -820,7 +820,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 										//敵の攻撃判定を停止する
 										((CXEnemy*)(o->Parent()))->SetIsHit(false);
 										//ダメージ計算処理
-										mDamage = CXEnemy::GetInstance()->GetIsAttackPoint() * (CXEnemy::GetInstance()->GetIsAttackPoint() / mDefense_Point) + (CXEnemy::GetInstance()->GetIsAttackPoint() * Player_Damage_Magnification);
+										mDamage = ((CXEnemy*)(o->Parent()))->GetIsAttackPoint() * (((CXEnemy*)(o->Parent()))->GetIsAttackPoint() / mDefense_Point) + (((CXEnemy*)(o->Parent()))->GetIsAttackPoint() * Player_Damage_Magnification);
 										//プレイヤのHPが減算
 										mPlayer_Hp = mPlayer_Hp - mDamage;
 										//プレイヤを無敵状態にする
@@ -841,7 +841,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 										//ノックバックせず、プレイヤのスタン蓄積値は、敵の攻撃スタン値を参照し蓄積する
 										else {
 											//スタンダメージを参照
-											mStan_Damage = CXEnemy::GetInstance()->GetIsStanPoint() * (CXEnemy::GetInstance()->GetIsStanPoint() / mDefense_Point);
+											mStan_Damage = ((CXEnemy*)(o->Parent()))->GetIsStanPoint() * (((CXEnemy*)(o->Parent()))->GetIsStanPoint() / mDefense_Point);
 											//スタンダメージをスタン蓄積値に蓄積させる
 											mStanAccumulation = mStanAccumulation + mStan_Damage;
 										}
