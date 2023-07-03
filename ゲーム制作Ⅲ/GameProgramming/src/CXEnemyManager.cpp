@@ -113,19 +113,17 @@ void CXEnemyManager::Update()
 	mEnemyDeathNum = NULL;
 	//リストに格納されている敵が死亡状態か、どうかを判別する
 	for (size_t i = NULL; i < mEnemyList.size(); i++) {
+		//敵が死亡時に実行
+		if (CXEnemy::GetInstance()->GetIsDeath()){
+			mEnemyDeathNum++; //死亡状態の敵のカウント加算
+			continue; //読み飛ばし
+		}
 		//敵が生成されていなければスルー
 		if (!tmp1 == NULL) {
 
 			//ターゲット設定
 			//敵の位置情報をプレイヤとの距離と参照
 			mTarget = tmp1->Position() - CXPlayer::GetInstance()->Position();
-
-			//敵が死亡時に実行
-			if (tmp1->GetIsDeath())
-			{
-				mEnemyDeathNum++; //死亡状態の敵のカウント加算
-				continue; //読み飛ばし
-			}
 
 			//敵の位置情報をベクトルに変換し、格納
 			mEnemyPos = mTarget.Length();
@@ -142,12 +140,7 @@ void CXEnemyManager::Update()
 			//敵の位置情報をプレイヤとの距離と参照
 			mTarget = tmp2->Position() - CXPlayer::GetInstance()->Position();
 
-			//敵が死亡時に実行
-			if (tmp2->GetIsDeath())
-			{
-				mEnemyDeathNum++; //死亡状態の敵のカウント加算
-				continue; //読み飛ばし
-			}
+
 
 			//敵の位置情報をベクトルに変換し、格納
 			mEnemyPos = mTarget.Length();
@@ -164,13 +157,6 @@ void CXEnemyManager::Update()
 			//ターゲット設定
 			//敵のリ位置情報をプレイヤとの距離と参照
 			mTarget = tmp3->Position() - CXPlayer::GetInstance()->Position();
-
-			//敵が死亡時に実行
-			if (tmp3->GetIsDeath())
-			{
-				mEnemyDeathNum++; //死亡状態の敵のカウント加算
-				continue; //読み飛ばし
-			}
 
 			//敵の位置情報をベクトルに変換し、格納
 			mEnemyPos = mTarget.Length();
