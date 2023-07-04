@@ -1,2 +1,0 @@
-﻿LIBCMT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmtd.lib' は他のライブラリの使用と競合しています。/NODEFAULTLIB:library を使用してください。
-  Example_OpenGL.vcxproj -> C:\Users\Takahashi\Downloads\EffekseerForCpp170b\Examples\OpenGL\Debug\Example_OpenGL.exe
