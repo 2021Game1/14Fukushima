@@ -22,12 +22,6 @@
     <Filter Include="MainScene\Enemy">
       <UniqueIdentifier>{b97735c3-4c1b-41d1-9e51-ba45f7dd7545}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\Enemy\cpp">
-      <UniqueIdentifier>{93cd2fcd-a003-488c-a4cf-eefa37af63cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Enemy\h">
-      <UniqueIdentifier>{1063cf03-5050-4c24-8375-63439a3355b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainScene\Enemy\Data">
       <UniqueIdentifier>{64bddef3-0f67-42a7-920f-4bb74fe80eac}</UniqueIdentifier>
     </Filter>
@@ -207,9 +201,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\CXEnemy.cpp">
-      <Filter>MainScene\Enemy\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="src\CTaskManager.cpp">
       <Filter>MainScene\Task\TaskManager\cpp</Filter>
     </ClCompile>
@@ -336,13 +327,13 @@
     <ClCompile Include="src\CTriangle.cpp">
       <Filter>Lib\Character\Model\Triangle</Filter>
     </ClCompile>
+    <ClCompile Include="src\CXEnemy.cpp">
+      <Filter>MainScene\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CPlayerData.h">
       <Filter>MainScene\Player\Player\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CXEnemy.h">
-      <Filter>MainScene\Enemy\h</Filter>
     </ClInclude>
     <ClInclude Include="src\CEnemyData.h">
       <Filter>MainScene\Enemy\Data</Filter>
@@ -481,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="src\CTriangle.h">
       <Filter>Lib\Character\Model\Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CXEnemy.h">
+      <Filter>MainScene\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

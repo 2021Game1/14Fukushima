@@ -9,7 +9,10 @@ CXPlayerManager* CXPlayerManager::mInstance = nullptr;
 CXPlayerManager::CXPlayerManager()
 	: mPlayerList(0)
 {
-
+	mInstance = this;
+	//タスクマネージャへの追加
+	CTaskManager::Get()->Remove(this);//削除して
+	CTaskManager::Get()->Add(this);//追加する
 }
 
 //デストラクタ
@@ -34,6 +37,21 @@ void CXPlayerManager::Release()
 		delete mInstance;
 		mInstance = nullptr;
 	}
+}
+
+//タスクマネージャに格納するためのメソッド(動かさない処理)
+void CXPlayerManager::Init()
+{
+}
+
+//タスクマネージャに格納するためのメソッド(動かさない処理)
+void CXPlayerManager::Update()
+{
+}
+
+//タスクマネージャに格納するためのメソッド(動かさない処理)
+void CXPlayerManager::Render()
+{
 }
 
 //外部クラスからプレイヤマネージャのインスタンスを取得用

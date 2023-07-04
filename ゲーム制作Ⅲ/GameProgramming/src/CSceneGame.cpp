@@ -44,8 +44,10 @@ void CSceneGame::Init() {
 
 	//“GŠÇ—¶¬
 	CXEnemyManager::GetInstance()->Generate();
+
 	//“G¶¬
 	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_A, CXEnemy::EEnemyType::ETYPE_GAME_1);
+
 	//“G¶¬
 	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_B, CXEnemy::EEnemyType::ETYPE_GAME_2);
 

@@ -427,25 +427,25 @@ void CXPlayer::Attack_1()
 			if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
-				mPlayer_AttackFlag_1 == false;
+				mPlayer_AttackFlag_1 = false;
 			}
 			//Aキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_A) && CKey::Once(VK_SHIFT) || CKey::Push(VK_A) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
-				mPlayer_AttackFlag_1 == false;
+				mPlayer_AttackFlag_1 = false;
 			}
 			//Sキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_S) && CKey::Once(VK_SHIFT) || CKey::Push(VK_S) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
-				mPlayer_AttackFlag_1 == false;
+				mPlayer_AttackFlag_1 = false;
 			}
 			//Dキーを入力して、なおかつShiftキーを入力していたら実行
 			else if (CKey::Push(VK_D) && CKey::Once(VK_SHIFT) || CKey::Push(VK_D) && CKey::Once(VK_RBUTTON)) {
 				mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 				mPlayer_InvincibleFlag = false; //無敵状態を終了する
-				mPlayer_AttackFlag_1 == false;
+				mPlayer_AttackFlag_1 = false;
 			}
 		//アニメーション終了時
 		//攻撃1から待機モーションの間のアニメーションを描画する
@@ -563,13 +563,8 @@ void CXPlayer::KnockBack()
 		mPlayer_Flag = true;			//当たり判定を停止する
 	}
 
-		//左クリックで攻撃1へ移行
-		if (CKey::Once(VK_LBUTTON)) {
-			mPlayer_State = CXPlayer::EPlayerState::EATTACK_1;		//攻撃1状態へ移行
-			mPlayer_InvincibleFlag = false; //無敵状態を終了する
-		}
 		//Wキーを入力して、なおかつShiftキーを入力していたら実行
-		else if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
+		if (CKey::Push(VK_W) && CKey::Once(VK_SHIFT) || CKey::Push(VK_W) && CKey::Once(VK_RBUTTON)) {
 			mPlayer_State = CXPlayer::EPlayerState::EAVOIDANCE;		//回避状態へ移行
 			mPlayer_InvincibleFlag = false; //無敵状態を終了する
 		}

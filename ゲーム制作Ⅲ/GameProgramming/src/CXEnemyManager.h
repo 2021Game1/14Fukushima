@@ -38,8 +38,6 @@ private:
 	static CXEnemyManager* mInstance;
 	//敵格納
 	std::vector<CXEnemy*> mEnemyList;
-	//敵の生成数を格納
-	int mEnemyGenerate;
 	//敵を生成
 	CXEnemy* tmp1;
 	CXEnemy* tmp2;
@@ -48,12 +46,20 @@ private:
 	int mEnemyDeathNum;							
 	//ターゲット設定
 	CVector mTargetEnemy; //一番プレイヤから近い敵を格納
-	//ターゲット設定保存
-	CVector mTarget; 
+	//チュートリアルの敵をターゲット設定保存
+	CVector mTarget_Tutorial; 
+	//ゲームシーンの敵をターゲット設定保存
+	CVector mTarget_Game1;
+	//ゲームシーンの敵をターゲット設定保存
+	CVector mTarget_Game2;
 	//プレイヤ座標
 	float mPlayerPos;
-	//敵座標
-	float mEnemyPos;
+	//チュートリアルの敵座標
+	float mEnemyPos_Tutorial;
+	//ゲームシーンの敵座標
+	float mEnemyPos_Game1;
+	//ゲームシーンの敵座標
+	float mEnemyPos_Game2;
 };
 #endif
 

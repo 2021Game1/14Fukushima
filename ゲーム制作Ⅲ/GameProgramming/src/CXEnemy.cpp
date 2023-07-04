@@ -794,11 +794,6 @@ void CXEnemy::Death()
 	ChangeAnimation(Enemy_Animation_No_Death, false, Enemy_Death_Animation_Frame);
 	//“G‚ÌUŒ‚”»’è‚ğfalse‚É‚·‚é
 	mEnemy_IsHit = false;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“I—¹
-	if (IsAnimationFinished())
-	{
-		mEnemy_Death_Flag = true;
-	}
 }
 
 void CXEnemy::Collision(CCollider* m, CCollider* o) {
@@ -1013,7 +1008,10 @@ bool CXEnemy::GetIsHit()
 //€–Só‘Ô‚Ì‚Æ‚«true‚ğ•Ô‚·
 bool CXEnemy::GetIsDeath()
 {
-	return mEnemy_Death_Flag;
+	//“G‚ª€–Só‘Ô‚Å‚ ‚ê‚Îtrue
+	if (mEnemy_State == CXEnemy::EEnemyState::EDEATH)return true;
+	//ˆê’v‚µ‚È‚¯‚ê‚Îfalse
+	else return false;
 }
 //UŒ‚‚Ì“–‚½‚è”»’èƒtƒ‰ƒO‚ğİ’è
 void CXEnemy::SetIsHit(bool hitflag)

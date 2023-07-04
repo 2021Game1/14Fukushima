@@ -8,13 +8,21 @@ CXEnemyManager::CXEnemyManager()
 	: mEnemyDeathNum(NULL)
 	, mEnemyList(NULL)
 	, mPlayerPos(PLAYER_ATTACK_POS)
-	, mEnemyPos(NULL)
+	, mEnemyPos_Tutorial(NULL)
+	, mEnemyPos_Game1(NULL)
+	, mEnemyPos_Game2(NULL)
+	, mTargetEnemy(NULL,NULL,NULL)
+	, mTarget_Tutorial(NULL,NULL,NULL)
+	, mTarget_Game1(NULL,NULL,NULL)
+	, mTarget_Game2(NULL,NULL,NULL)
 	, tmp1(NULL)
 	, tmp2(NULL)
 	, tmp3(NULL)
-	, mEnemyGenerate(NULL)
 {
-
+	mInstance = this;
+	//タスクマネージャへの追加
+	CTaskManager::Get()->Remove(this);//削除して
+	CTaskManager::Get()->Add(this);//追加する
 }
 
 //終了時
@@ -23,17 +31,14 @@ CXEnemyManager::~CXEnemyManager()
 	for (size_t i = NULL; i < mEnemyList.size(); i++) {
 		delete mEnemyList[i];
 	}
-
-	mInstance = this;
-	//タスクマネージャへの追加
-	CTaskManager::Get()->Remove(this);//削除して
-	CTaskManager::Get()->Add(this);//追加する
 }
+
 //敵のマネージャをで生成
 void CXEnemyManager::Generate()
 {
 	mInstance = new CXEnemyManager;
 }
+
 //敵のマネージャを削除する
 void CXEnemyManager::Release()
 {
@@ -105,7 +110,6 @@ void CXEnemyManager::EnemyGenerate(int num, CXEnemy::EEnemyType type)
 		break;
 
 		}
-		mEnemyGenerate += num;
 	}
 }
 
@@ -113,81 +117,74 @@ void CXEnemyManager::Update()
 {
 	//リセット
 	mEnemyDeathNum = NULL;
+	//初期化
+	mTargetEnemy = CVector(NULL, NULL, NULL);
+
 	//リストに格納されている敵が死亡状態か、どうかを判別する
 	for (size_t i = NULL; i < mEnemyList.size(); i++) {
+		//死亡状態だった時
+		if (CXEnemy::GetInstance()->GetIsDeath()) {
+			mEnemyDeathNum++; //死亡状態の敵のカウント加算
+			continue; //読み飛ばし
+		}
 
 		//敵が生成されていなければスルー
 		if (!tmp1 == NULL) {
-			//敵が死亡時に実行
-			if (tmp1->GetIsDeath()) {
-				//敵を消去
-				delete tmp1;
-				//リストを再設定
-				mEnemyList.clear();
-				mEnemyDeathNum++; //死亡状態の敵のカウント加算
-				continue; //読み飛ばし
-			}
-			//ターゲット設定
-			//敵の位置情報をプレイヤとの距離と参照
-			mTarget = tmp1->Position() - CXPlayer::GetInstance()->Position();
+			//敵が死亡していない時に実行
+			if (!tmp1->GetIsDeath()) {
+				//ターゲット設定
+				//敵のリ位置情報をプレイヤとの距離と参照
+				mTarget_Tutorial = tmp1->Position() - CXPlayer::GetInstance()->Position();
+				//敵の位置情報をベクトルに変換し、格納
+				mEnemyPos_Tutorial = mTarget_Tutorial.Length();
+				//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
+				if (mPlayerPos > mEnemyPos_Tutorial) {
+					//ターゲットに格納する
+					mTargetEnemy = mTarget_Tutorial.Normalize();
+				}
+				else {
 
-			//敵の位置情報をベクトルに変換し、格納
-			mEnemyPos = mTarget.Length();
-
-			//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
-			if (mPlayerPos > mEnemyPos) {
-				//ターゲットに格納する
-				mTargetEnemy = mTarget.Normalize();
+				}
 			}
 		}
 		//生成されていなければスルー
 		if (!tmp2 == NULL) {
-			//ターゲット設定
-			//敵の位置情報をプレイヤとの距離と参照
-			mTarget = tmp2->Position() - CXPlayer::GetInstance()->Position();
+			//敵が死亡していない時に実行
+			if (!tmp2->GetIsDeath()) {
+				//ターゲット設定
+				//敵のリ位置情報をプレイヤとの距離と参照
+				mTarget_Game1 = tmp2->Position() - CXPlayer::GetInstance()->Position();
+				//敵の位置情報をベクトルに変換し、格納
+				mEnemyPos_Game1 = mTarget_Game1.Length();
+				//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
+				if (mPlayerPos > mEnemyPos_Game1) {
+					//ターゲットに格納する
+					mTargetEnemy = mTarget_Game1.Normalize();
+				}
+				else {
 
-			//敵が死亡時に実行
-			if (tmp2->GetIsDeath()) {
-				//敵を消去
-				delete tmp2;
-				//リストを再設定
-				mEnemyList.clear();
-				mEnemyDeathNum++; //死亡状態の敵のカウント加算
-				continue; //読み飛ばし
+				}
 			}
 
-			//敵の位置情報をベクトルに変換し、格納
-			mEnemyPos = mTarget.Length();
 
-			//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
-			if (mPlayerPos > mEnemyPos) {
-				//ターゲットに格納する
-				mTargetEnemy = mTarget.Normalize();
-			}
 		}
 		//生成されていなければスルー
 		if (!tmp3 == NULL) {
+			//敵が死亡していない時に実行
+			if (!tmp3->GetIsDeath()) {
+				//ターゲット設定
+				//敵のリ位置情報をプレイヤとの距離と参照
+				mTarget_Game2 = tmp3->Position() - CXPlayer::GetInstance()->Position();
+				//敵の位置情報をベクトルに変換し、格納
+				mEnemyPos_Game2 = mTarget_Game2.Length();
+				//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
+				if (mPlayerPos > mEnemyPos_Game2) {
+					//ターゲットに格納する
+					mTargetEnemy = mTarget_Game2.Normalize();
+				}
+				else {
 
-			//ターゲット設定
-			//敵のリ位置情報をプレイヤとの距離と参照
-			mTarget = tmp3->Position() - CXPlayer::GetInstance()->Position();
-
-			//敵が死亡時に実行
-			if (tmp3->GetIsDeath()) {
-				//敵を消去
-				delete tmp3;
-				//リストを再設定
-				mEnemyDeathNum++; //死亡状態の敵のカウント加算
-				continue; //読み飛ばし
-			}
-
-			//敵の位置情報をベクトルに変換し、格納
-			mEnemyPos = mTarget.Length();
-
-			//敵の位置情報がプレイヤの攻撃距離より近い場合、実行する
-			if (mPlayerPos > mEnemyPos) {
-				//ターゲットに格納する
-				mTargetEnemy = mTarget.Normalize();
+				}
 			}
 		}
 	}
@@ -208,7 +205,7 @@ void CXEnemyManager::Render()
 bool CXEnemyManager::GetIsEnemyAllDeath()
 {
 	//生成されている敵が死亡状態の敵の数と一致したらtrue
-	if (mEnemyGenerate == mEnemyDeathNum)return true;
+	if (mEnemyList.size() == mEnemyDeathNum)return true;
 	//一致しなければfalse
 	else return false;
 }

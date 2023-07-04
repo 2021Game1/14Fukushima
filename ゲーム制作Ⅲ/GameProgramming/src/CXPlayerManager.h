@@ -9,7 +9,7 @@ CXPlayerManagerクラス
 */
 
 
-class CXPlayerManager {
+class CXPlayerManager : public CXCharacter{
 public:
 	CXPlayerManager();	//デフォルトコンストラクタ
 	~CXPlayerManager();	//デストラクタ
@@ -18,6 +18,12 @@ public:
 	void Generate(); //生成
 
 	void Release(); //破棄
+
+	void Update();	//タスクマネージャに格納するためのメソッド(動かさない処理)
+
+	void Init();	//タスクマネージャに格納するためのメソッド(動かさない処理)
+
+	void Render();  //タスクマネージャに格納するためのメソッド(動かさない処理)
 
 	void PlayerGenerate(); //敵生成、引数で生成数と敵の種類を指定する
 
