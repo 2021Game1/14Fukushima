@@ -825,7 +825,6 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 		//三角形コライダとカプセルの衝突処理
 		if (CCollider::CollisionTriangleLine(o, m, &adjust))
 		{
-			mPosition.Y(NULL);
 			//位置の更新(mPosition + adjust)
 			mPosition = mPosition + adjust;
 			//行列の更新
