@@ -13,7 +13,7 @@
 //敵の身体
 #define ENEMY_COLCAPSULE_BODY_X 0.0f					//カプセルコライダのX座標設定
 #define ENEMY_COLCAPSULE_BODY_TOP_Y 190.0f				//カプセルコライダ頂点Y座標設定
-#define ENEMY_COLCAPSULE_BODY_BOTTOM_Y -20.0f			//カプセルコライダ底のY座標設定
+#define ENEMY_COLCAPSULE_BODY_BOTTOM_Y -12.0f			//カプセルコライダ底のY座標設定
 #define ENEMY_COLCAPSULE_BODY_Z 0.0f					//カプセルコライダのZ座標設定
 #define ENEMY_COLCAPSULE_BODY_SIZE 1.2f					//カプセルコライダのサイズ設定
 

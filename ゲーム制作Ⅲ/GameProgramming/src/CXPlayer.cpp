@@ -641,8 +641,7 @@ void CXPlayer::MoveCamera()
 			mPlayer_MoveDir -= mPlayer_FrontVec;
 		}
 		//ジャンプ時などはY軸を正規化しないよう注意
-		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();
-		mPlayer_MoveDirKeep = mPlayer_MoveDir;	//MoveDir保存
+		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
 		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
 	}
 	//回避状態の場合
@@ -710,18 +709,15 @@ void CXPlayer::MoveCamera()
 			}
 		}
 		//ジャンプ時などはY軸を正規化しないよう注意
-		mPlayer_MoveDir = mPlayer_MoveDir.Normalize();//移動量の代入
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
-		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
+		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed_Avoid;	//移動量を設定
 	}
 	//移動状態でも回避状態でもない場合
 	else {
 		//ジャンプ時などはY軸を正規化しないよう注意
-		mPlayer_MoveDir = mPlayer_MoveDir;//移動量の代入
 		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
 		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
 	}
-	
 }
 
 //2D描画
