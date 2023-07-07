@@ -11,8 +11,8 @@ Player_StanAccumulation,ƒvƒŒƒCƒ„‚ÌƒXƒ^ƒ“’~Ï,0,,¢‰Šú‰»‚ÌÝ’è,intŒ^,ƒXƒ^ƒ“’l‚Ì
 Player_StanAccumulation_Max,ƒvƒŒƒCƒ„‚ÌƒXƒ^ƒ“’~ÏÅ‘å’l,120,,¢s“®ŽwjÝ’è,intŒ^,1ˆÈã0‚É‚µ‚È‚¢B‚Ð‚é‚Þ‚Ü‚Å‚Ì‹–—e’lÝ’èB‘å‚«‚­‚·‚é‚Æ‚Ð‚é‚Ý‚É‚­‚­‚È‚éB¬‚³‚­‚·‚é‚Æ‚Ð‚é‚Ý‚â‚·‚­‚È‚éB
 Player_Damage_Magnification,ƒvƒŒƒCƒ„‚Ìƒ_ƒ[ƒW”{—¦,0.2,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚Æ“G‚©‚çŽó‚¯‚éƒ_ƒ[ƒW‚ªã‚ª‚éB
 Player_GameOver_Hp,ƒQ[ƒ€ƒI[ƒo[ðŒ,0,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,intŒ^,”’l‚ðÝ’è‚·‚é‚Æ‚»‚Ì”’l‚É‚È‚Á‚½Žž“_‚ÅŽ€–S
-Player_Speed_Default,ˆÚ“®ƒXƒs[ƒh,0.19,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚ÌˆÚ“®‘¬“x‚ªã‚ª‚èA”’l‚ð¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚ÌˆÚ“®‘¬“x‚ª‰º‚ª‚éB
-Player_Speed_Avoid,‰ñ”ðƒXƒs[ƒh,0.4,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ð‘¬“x‚ªã‚ª‚èA”’l‚ð¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ð‘¬“x‚ª‰º‚ª‚éB
+Player_Speed_Default,ˆÚ“®ƒXƒs[ƒh,0.2,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚ÌˆÚ“®‘¬“x‚ªã‚ª‚èA”’l‚ð¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚ÌˆÚ“®‘¬“x‚ª‰º‚ª‚éB
+Player_Speed_Avoid,‰ñ”ðƒXƒs[ƒh,0.24,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ð‘¬“x‚ªã‚ª‚èA”’l‚ð¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ð‘¬“x‚ª‰º‚ª‚éB
 Player_Avoid_Time,‰ñ”ðŽžŠÔ,40,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ðŽžŠÔ‚ª‰„‚ÑA”’l‚ð¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚Ì‰ñ”ðŽžŠÔ‚ª’Z‚­‚È‚éB
 Player_Gravity,ƒvƒŒƒCƒ„‚Ìd—Í,0.9,,¢ƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚É‚©‚©‚éd—Í‚ª‘å‚«‚­‚È‚èA¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚É‚©‚©‚éd—Í‚ªŒy‚­‚È‚é
 Player_Thrust,ƒvƒŒƒCƒ„‚Ì„—Í,0.9,,¢ƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚É‚©‚©‚é„—Í‚ª‘å‚«‚­‚È‚èA¬‚³‚­‚·‚é‚ÆƒvƒŒƒCƒ„‚É‚©‚©‚é„—Í‚ª¬‚³‚­‚È‚é
@@ -33,7 +33,7 @@ Player_Rotation_Y,ƒvƒŒƒCƒ„‚Ì‰ñ“]YÀ•W,180,,¢‰Šú‰»–Ú“I‚ÌÝ’è,falseŒ^,ƒ‚ƒfƒ‹‚Ì‰ñ
 Player_Rotation_Z,ƒvƒŒƒCƒ„‚Ì‰ñ“]ZÀ•W,0,,¢‰Šú‰»–Ú“I‚ÌÝ’è,falseŒ^,ƒ‚ƒfƒ‹‚Ì‰ñ“]•ûŒü‚ÌÝ’è
 Player_Idle_Animation_Frame,ƒvƒŒƒCƒ„‚Ì‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”,60,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚Æ‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ª’·‚­‚È‚èA¬‚³‚­‚·‚é‚Æ’Z‚­‚È‚é
 Player_Move_Animation_Frame,ƒvƒŒƒCƒ„‚ÌˆÚ“®ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”,50,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆˆÚ“®ƒAƒjƒ[ƒVƒ‡ƒ“‚ª’·‚­‚È‚èA¬‚³‚­‚·‚é‚Æ’Z‚­‚È‚é
-Player_Avoidance_Animation_Frame,ƒvƒŒƒCƒ„‚Ì‰ñ”ðƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”,60,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚Æ‰ñ”ðƒAƒjƒ[ƒVƒ‡ƒ“‚ª’·‚­‚È‚èA¬‚³‚­‚·‚é‚Æ’Z‚­‚È‚é
+Player_Avoidance_Animation_Frame,ƒvƒŒƒCƒ„‚Ì‰ñ”ðƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”,55,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚Æ‰ñ”ðƒAƒjƒ[ƒVƒ‡ƒ“‚ª’·‚­‚È‚èA¬‚³‚­‚·‚é‚Æ’Z‚­‚È‚é
 Player_Attack1_Animation_Frame,ƒvƒŒƒCƒ„‚ÌUŒ‚1ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”,40,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆUŒ‚1ƒAƒjƒ[ƒVƒ‡ƒ“‚ª’·‚­‚È‚èA¬‚³‚­‚·‚é‚Æ’Z‚­‚È‚é
 Player_Attack1_Idle_Animation_Frame,ƒvƒŒƒCƒ„‚ÌUŒ‚1‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”,15,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆUŒ‚1‘Ò‹@ƒAƒjƒ[ƒVƒ‡ƒ“‚ª’·‚­‚È‚èA¬‚³‚­‚·‚é‚Æ’Z‚­‚È‚é
 Player_Attack2_Animation_Frame,ƒvƒŒƒCƒ„‚ÌUŒ‚2ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”,40,,ZƒQ[ƒ€ƒoƒ‰ƒ“ƒX‚ÉŠÖ‚í‚éÝ’è,falseŒ^,0ˆÈã‚ÉÝ’èB”’l‚ð‘å‚«‚­‚·‚é‚ÆUŒ‚2ƒAƒjƒ[ƒVƒ‡ƒ“‚ª’·‚­‚È‚èA¬‚³‚­‚·‚é‚Æ’Z‚­‚È‚é
