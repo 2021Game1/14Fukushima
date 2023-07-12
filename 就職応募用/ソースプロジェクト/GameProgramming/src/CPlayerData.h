@@ -1,10 +1,6 @@
 #ifndef PLAYERDATA_H
 #define PLAYERDATA_H
 
-//‰Šú‰»İ’è
-#define PLAYER_INT_INITIALIZATION 0																//‰Šú‰»
-#define PLAYER_FLOAT_INITIALIZATION 0.0f														//•‚“®¬”“_‚Ì‰Šú‰»
-
 //ƒvƒŒƒCƒ„UI
 #define PLAYER_UI_HP_FRAME "res\\Ui\\Player_HP_Frame.png"
 

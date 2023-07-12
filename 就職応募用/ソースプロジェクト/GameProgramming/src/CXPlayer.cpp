@@ -108,8 +108,8 @@ CXPlayer::CXPlayer()
 	, mPlayer_ColSphereBody(this, nullptr, CVector(), PLAYER_COLSPHERE_BODY_SIZE)
 	, mPlayer_ColSphereLowerBody(this, nullptr, CVector(PLAYER_COLSPHERE_LOWERBODY_X, PLAYER_COLSPHERE_LOWERBODY_Y, PLAYER_COLSPHERE_LOWERBODY_Z), PLAYER_COLSPHERE_LOWERBODY_SIZE)
 	, mPlayer_ColSphereSword(this, nullptr, CVector(PLAYER_COLSPHERE_SWORD_X, PLAYER_COLSPHERE_SWORD_Y, PLAYER_COLSPHERE_SWORD_Z), PLAYER_COLSPHERE_SWORD_SIZE)
-	, mPlayer_ComboCount(PLAYER_INT_INITIALIZATION)
-	, mPlayer_Turnspeed(PLAYER_FLOAT_INITIALIZATION)
+	, mPlayer_ComboCount(NULL)
+	, mPlayer_Turnspeed(NULL)
 	, mPlayer_InvincibleFlag(false)
 	, mPlayer_IsHit(false)
 	, mPlayer_AttackFlag_1(false)
@@ -262,7 +262,7 @@ void CXPlayer::Idle()
 	}
 	//何も入力されなかったので待機処理を動かす
 	else{
-		mPlayer_ComboCount = PLAYER_INT_INITIALIZATION;
+		mPlayer_ComboCount = NULL;
 		ChangeAnimation(Player_Animation_No_Idle, true, Player_Idle_Animation_Frame);
 	}
 }
@@ -611,8 +611,8 @@ void CXPlayer::MoveCamera()
 	mPlayer_SideVec = Camera.GetMat().GetXVec();
 	mPlayer_FrontVec = Camera.GetMat().GetZVec();
 	//高さ移動はカットする
-	mPlayer_SideVec.Y(PLAYER_FLOAT_INITIALIZATION);
-	mPlayer_FrontVec.Y(PLAYER_FLOAT_INITIALIZATION);
+	mPlayer_SideVec.Y(NULL);
+	mPlayer_FrontVec.Y(NULL);
 	//正規化する
 	mPlayer_SideVec.Normalize();
 	mPlayer_FrontVec.Normalize();
@@ -726,8 +726,8 @@ void CXPlayer::Render2D()
 	//2D描画開始
 	CUtil::Start2D(WINDOW_FIRST_WIDTH, WINDOW_WIDTH, WINDOW_FIRST_HEIGHT, WINDOW_HEIGHT);
 	//ゲージを揺らす用
-	int shakeX = PLAYER_INT_INITIALIZATION;
-	int shakeY = PLAYER_INT_INITIALIZATION;
+	int shakeX = NULL;
+	int shakeY = NULL;
 	//ノックバック状態のとき
 	if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EKNOCKBACK) {
 		//ゲージを揺らす値を設定

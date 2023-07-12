@@ -23,9 +23,9 @@ CXEnemy::CXEnemy()
 	, mStanAccumulation(NULL)
 	, mEnemy_Speed(ENEMY_SPEED)
 	, mEnemy_Turnspeed(ENEMY_TURNSPEED)
-	, mEnemy_PlayerDis(ENEMY_FLOAT_INITIALIZATION)
-	, mEnemy_FollowGaugeWid(ENEMY_FLOAT_INITIALIZATION)
-	, mEnemy_val(ENEMY_INT_INITIALIZATION)
+	, mEnemy_PlayerDis(NULL)
+	, mEnemy_FollowGaugeWid(NULL)
+	, mEnemy_val(NULL)
 	, mEnemy_IsHit(false)
 	, mEnemy_Flag(false)
 	, mEnemy_Death_Flag(false)
@@ -474,7 +474,7 @@ void CXEnemy::Render2D()
 
 void CXEnemy::Idle()
 {
-	int random = ENEMY_INT_INITIALIZATION;
+	int random = NULL;
 	//プレイヤーが死亡状態では無いとき
 	if (CXPlayer::EPlayerState::EDEATH != CXPlayer::GetInstance()->GetState())
 	{
@@ -507,7 +507,7 @@ void CXEnemy::Move() {
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirにプレイヤー方向のベクトルを入れる
-	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
+	mEnemy_MoveDir.Y(NULL);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//目標地点を更新
 	int r = rand() % Enemy_Attack_Walk_Rand; //rand()は整数の乱数を返す
@@ -515,16 +515,16 @@ void CXEnemy::Move() {
 	//攻撃出来る距離にいなければ目標地点に移動
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
 	}
-	int random = ENEMY_INT_INITIALIZATION;
+	int random = NULL;
 	//プレイヤーが攻撃可能な距離にいるとき
 	if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 	{
-		if (random == ENEMY_INT_INITIALIZATION)
+		if (random == NULL)
 		{
 			//ランダムで攻撃の種類を決める
 			random = rand() % 2;
@@ -556,7 +556,7 @@ void CXEnemy::Dash()
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirに目標地点方向のベクトルを入れる
-	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
+	mEnemy_MoveDir.Y(NULL);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//目標地点を更新
 	int r = rand() % Enemy_Attack_Dash_Rand; //rand()は整数の乱数を返す
@@ -564,16 +564,16 @@ void CXEnemy::Dash()
 	//攻撃出来る距離にいなければ目標地点に移動
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
 	}
-	int random = ENEMY_INT_INITIALIZATION;
+	int random = NULL;
 	//プレイヤーが攻撃可能な距離にいるとき
 	if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 	{
-		if (random == ENEMY_INT_INITIALIZATION)
+		if (random == NULL)
 		{
 			//ランダムで攻撃の種類を決める
 			random = rand() % Enemy_Action_Rand;
@@ -636,7 +636,7 @@ void CXEnemy::Attack_1()
 	//%Enemy_AttackSp1_SetはEnemy_AttackSp1_Setで割った余りを求める
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
@@ -672,11 +672,11 @@ void CXEnemy::Attack_1()
 	if (IsAnimationFinished())
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
-		int random = ENEMY_INT_INITIALIZATION;
+		int random = NULL;
 		//プレイヤーが攻撃可能な距離にいるとき
 		if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 		{
-			if (random == ENEMY_INT_INITIALIZATION)
+			if (random == NULL)
 			{
 				//ランダムで攻撃の種類を決める
 				random = rand() % Enemy_Action_Rand;
@@ -707,7 +707,7 @@ void CXEnemy::Attack_2()
 	//%Enemy_AttackSp2_SetはEnemy_AttackSp2_Setで割った余りを求める
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
@@ -743,11 +743,11 @@ void CXEnemy::Attack_2()
 	if (IsAnimationFinished())
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
-		int random = ENEMY_INT_INITIALIZATION;
+		int random = NULL;
 		//プレイヤーが攻撃可能な距離にいるとき
 		if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 		{
-			if (random == ENEMY_INT_INITIALIZATION)
+			if (random == NULL)
 			{
 				//ランダムで攻撃の種類を決める
 				random = rand() % Enemy_Action_Rand;
