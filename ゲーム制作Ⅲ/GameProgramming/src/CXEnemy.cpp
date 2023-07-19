@@ -23,9 +23,9 @@ CXEnemy::CXEnemy()
 	, mStanAccumulation(NULL)
 	, mEnemy_Speed(ENEMY_SPEED)
 	, mEnemy_Turnspeed(ENEMY_TURNSPEED)
-	, mEnemy_PlayerDis(ENEMY_FLOAT_INITIALIZATION)
-	, mEnemy_FollowGaugeWid(ENEMY_FLOAT_INITIALIZATION)
-	, mEnemy_val(ENEMY_INT_INITIALIZATION)
+	, mEnemy_PlayerDis(NULL)
+	, mEnemy_FollowGaugeWid(NULL)
+	, mEnemy_val(NULL)
 	, mEnemy_IsHit(false)
 	, mEnemy_Flag(false)
 	, mEnemy_Death_Flag(false)
@@ -189,6 +189,7 @@ void CXEnemy::EnemyTable()
 	switch (CXEnemy::mEnemy_Type) {
 	case CXEnemy::EEnemyType::ETYPE_TUTORIAL:	//チュートリアル時の敵の強さ
 	{
+		//データテーブルのデータを変数に代入していく
 		OX::Table table(ENEMY_DATATABLE_TUTORIAL);
 		Enemy_Priority = table["Enemy_Priority"]["Value"].iVal;
 		Enemy_Hp = table["Enemy_Hp"]["Value"].iVal;
@@ -266,6 +267,7 @@ void CXEnemy::EnemyTable()
 
 	case CXEnemy::EEnemyType::ETYPE_GAME_1:	//ゲーム本番の敵の強さ
 	{
+		//データテーブルのデータを変数に代入していく
 		OX::Table table(ENEMY_DATATABLE_MAINGAME1);
 		Enemy_Priority = table["Enemy_Priority"]["Value"].iVal;
 		Enemy_Hp = table["Enemy_Hp"]["Value"].iVal;
@@ -343,6 +345,7 @@ void CXEnemy::EnemyTable()
 
 	case CXEnemy::EEnemyType::ETYPE_GAME_2:	//ゲーム本番時の敵の強さ
 	{
+		//データテーブルのデータを変数に代入していく
 		OX::Table table(ENEMY_DATATABLE_MAINGAME2);
 		Enemy_Priority = table["Enemy_Priority"]["Value"].iVal;
 		Enemy_Hp = table["Enemy_Hp"]["Value"].iVal;
@@ -474,7 +477,7 @@ void CXEnemy::Render2D()
 
 void CXEnemy::Idle()
 {
-	int random = ENEMY_INT_INITIALIZATION;
+	int random = NULL;
 	//プレイヤーが死亡状態では無いとき
 	if (CXPlayer::EPlayerState::EDEATH != CXPlayer::GetInstance()->GetState())
 	{
@@ -482,10 +485,12 @@ void CXEnemy::Idle()
 		//プレイヤーが一定距離まで近づくと追跡状態へ移行
 		if (mEnemy_PlayerDis <= Enemy_Walk_Dis)
 		{
+			//移動状態へ移行
 			mEnemy_State = CXEnemy::EEnemyState::EMOVE;
 		}
 		else if (mEnemy_PlayerDis <= Enemy_Dash_Dis)
 		{
+			//ダッシュ状態へ移行
 			mEnemy_State = CXEnemy::EEnemyState::EDASH;
 		}
 		else
@@ -507,7 +512,7 @@ void CXEnemy::Move() {
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirにプレイヤー方向のベクトルを入れる
-	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
+	mEnemy_MoveDir.Y(NULL);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//目標地点を更新
 	int r = rand() % Enemy_Attack_Walk_Rand; //rand()は整数の乱数を返す
@@ -515,16 +520,16 @@ void CXEnemy::Move() {
 	//攻撃出来る距離にいなければ目標地点に移動
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
 	}
-	int random = ENEMY_INT_INITIALIZATION;
+	int random = NULL;
 	//プレイヤーが攻撃可能な距離にいるとき
 	if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 	{
-		if (random == ENEMY_INT_INITIALIZATION)
+		if (random == NULL)
 		{
 			//ランダムで攻撃の種類を決める
 			random = rand() % 2;
@@ -556,7 +561,7 @@ void CXEnemy::Dash()
 	//目的地点までのベクトルを求める
 	mEnemy_Player_Point = mEnemy_Point - mPosition;
 	//mMoveDirに目標地点方向のベクトルを入れる
-	mEnemy_MoveDir.Y(ENEMY_FLOAT_INITIALIZATION);
+	mEnemy_MoveDir.Y(NULL);
 	mEnemy_MoveDir = mEnemy_Player_Point.Normalize();
 	//目標地点を更新
 	int r = rand() % Enemy_Attack_Dash_Rand; //rand()は整数の乱数を返す
@@ -564,16 +569,16 @@ void CXEnemy::Dash()
 	//攻撃出来る距離にいなければ目標地点に移動
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
 	}
-	int random = ENEMY_INT_INITIALIZATION;
+	int random = NULL;
 	//プレイヤーが攻撃可能な距離にいるとき
 	if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 	{
-		if (random == ENEMY_INT_INITIALIZATION)
+		if (random == NULL)
 		{
 			//ランダムで攻撃の種類を決める
 			random = rand() % Enemy_Action_Rand;
@@ -636,7 +641,7 @@ void CXEnemy::Attack_1()
 	//%Enemy_AttackSp1_SetはEnemy_AttackSp1_Setで割った余りを求める
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
@@ -672,11 +677,11 @@ void CXEnemy::Attack_1()
 	if (IsAnimationFinished())
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
-		int random = ENEMY_INT_INITIALIZATION;
+		int random = NULL;
 		//プレイヤーが攻撃可能な距離にいるとき
 		if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 		{
-			if (random == ENEMY_INT_INITIALIZATION)
+			if (random == NULL)
 			{
 				//ランダムで攻撃の種類を決める
 				random = rand() % Enemy_Action_Rand;
@@ -707,7 +712,7 @@ void CXEnemy::Attack_2()
 	//%Enemy_AttackSp2_SetはEnemy_AttackSp2_Setで割った余りを求める
 	if (mEnemy_PlayerDis > Enemy_Attack_Dis)
 	{
-		if (r == ENEMY_INT_INITIALIZATION)
+		if (r == NULL)
 		{
 			mEnemy_Point = CXPlayer::GetInstance()->Position();
 		}
@@ -743,11 +748,11 @@ void CXEnemy::Attack_2()
 	if (IsAnimationFinished())
 	{
 		mEnemy_IsHit = false; //ヒット判定終了
-		int random = ENEMY_INT_INITIALIZATION;
+		int random = NULL;
 		//プレイヤーが攻撃可能な距離にいるとき
 		if (mEnemy_PlayerDis <= Enemy_Attack_Dis)
 		{
-			if (random == ENEMY_INT_INITIALIZATION)
+			if (random == NULL)
 			{
 				//ランダムで攻撃の種類を決める
 				random = rand() % Enemy_Action_Rand;
@@ -1035,20 +1040,4 @@ CXEnemy::EEnemyState CXEnemy::GetState()
 void CXEnemy::SetIsType(EEnemyType type) {
 	mEnemy_Type = type;
 }
-//位置を設定する
-void CXEnemy::GetPos()
-{
-	mPosition.Set(Enemy_Position_X, Enemy_Position_Y, Enemy_Position_Z);
-}
-//敵のスケールを取得
-void CXEnemy::GetScale()
-{
-	mScale.Set(Enemy_Scale_X, Enemy_Scale_Y, Enemy_Scale_Z);
-}
-//敵の回転値を取得する
-void CXEnemy::GetRotation()
-{
-	mRotation.Set(Enemy_Rotation_X, Enemy_Rotation_Y, Enemy_Rotation_Z);
-}
-	
 

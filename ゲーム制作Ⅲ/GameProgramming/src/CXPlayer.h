@@ -36,8 +36,8 @@ public:
 		EAVOIDANCE,	//回避
 		EATTACK_1,	//攻撃1
 		EATTACK_2,	//攻撃2
-		EDEATH,		//死亡
 		EKNOCKBACK,	//ノックバック
+		EDEATH,		//死亡
 	};
 	//更新処理
 	void Update();
@@ -80,15 +80,17 @@ private:
 	CSound Se_Player_AttackSp2;						//プレイヤが攻撃2の時流す
 	CSound Se_Player_Walk;							//プレイヤが移動時流す
 	CSound Se_Player_Death;							//プレイヤ死亡時流す
+
 	//敵SE
 	CSound Se_Enemy_AttackSp;						//敵から攻撃を受けた時に流す
+
 	//プレイヤのUIインスタンス
 	CTexture gPlayer_Ui_Hp_Frame;
 
 	//コライダの宣言
 	CCollider mPlayer_ColSphereSword;				//剣
 	CCollider mPlayer_ColSphereBody;				//球の身体
-	CCollider mPlayer_ColSphereLowerBody;				//球の身体
+	CCollider mPlayer_ColSphereLowerBody;			//球の身体
 	CCollider mPlayer_ColSphereHead;				//球の頭
 	CColliderCapsule mPlayer_ColCapsuleBody;		//カプセルの身体
 
@@ -111,13 +113,13 @@ private:
 	float mPlayer_Avoid_Time;			//プレイヤの回避時間
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
 	float mPlayer_Attack_Dis;			//プレイヤの攻撃対象判別後の距離設定
-	CVector mPlayer_Gravity;				//重力の保存用
+	CVector mPlayer_Gravity;			//重力の保存用
 
 	//カメラのパラメータを作成する
 	CVector mPlayer_SideVec;			//プレイヤの横ベクトル
 	CVector mPlayer_FrontVec;			//プレイヤのカメラの正面ベクトル
 
-
+	//HPゲージの揺れ幅設定
 	int	mPlayer_Gauge_Hp_Shake_X;		//HPゲージの揺れ幅最小値のX
 	int	mPlayer_Gauge_Hp_Shake_Y;		//HPゲージの揺れ幅最小値のY
 	int	mPlayer_Gauge_Hp_Shake_Range_X; //HPゲージの揺れ幅最小値のX
@@ -129,12 +131,14 @@ private:
 	bool mPlayer_IsHit;					//プレイヤの攻撃時にtrueを返す　敵に攻撃が当たるor攻撃終了時にfalseを返す
 	bool mPlayer_AttackFlag_Once;		//プレイヤの攻撃した瞬間だけtrueを返す、敵の回避判定に使用
 	int mPlayer_ComboCount;				//プレイヤのコンボルート判別用変数
-	int mPlayer_Flag;					//プレイヤのフラグ
+	int mPlayer_Flag;					//プレイヤのダメージフラグ
+	bool mPlayer_JumpFlag;				//プレイヤのジャンプフラグ
 
 	//敵に与える攻撃
 	int mDamage;					//敵からのダメージ
 	int mStan_Damage;				//敵からのスタンダメージ
 	int mStanAccumulation;			//スタン蓄積
+
 	//ステータス
 	int mPlayer_Hp;					//体力
 	int mPlayer_Hp_Max;				//体力の上限
@@ -183,6 +187,7 @@ private:
 	float Player_Attack1_Idle_Animation_Frame;		//プレイヤの攻撃1の後、再生する待機アニメーションフレーム
 	float Player_Attack2_Animation_Frame;			//プレイヤの攻撃2アニメーションフレーム
 	float Player_Attack2_Idle_Animation_Frame;		//プレイヤの攻撃2の後、再生する待機アニメーションフレーム
+	float Player_Jump_Animation_Frame;				//プレイヤのジャンプ後、再生するジャンプアニメーションフレーム
 	float Player_KnockBack_Animation_Frame;			//プレイヤのノックバックアニメーションフレーム
 	float Player_Death_Animation_Frame;				//プレイヤの死亡アニメーションフレーム
 	int Player_Animation_No_Move;					//プレイヤの移動アニメーション番号
@@ -192,6 +197,7 @@ private:
 	int Player_Animation_No_Attack2_Idle;			//攻撃2再生後の待機アニメーション番号
 	int Player_Animation_No_AvoidDance;				//プレイヤの回避アニメーション番号
 	int Player_Animation_No_Idle;					//プレイヤの待機アニメーション番号
+	int Player_Animation_No_Jump;					//プレイヤのジャンプアニメーション番号
 	int Player_Animation_No_Knockback;				//プレイヤのノックバックアニメーション番号
 	int Player_Animation_No_Death;					//プレイヤの死亡アニメーション番号
 	float Player_Gauge_Frame_Tex_Wid;				//プレイヤのHPゲージフレームテクスチャ終点の横幅
@@ -222,11 +228,12 @@ private:
 	void Idle();						//待機処理
 	void MoveCamera();					//カメラを基準にした移動処理
 	void Move();						//移動処理
+	void Avoidance();					//回避処理
 	void Attack_1();					//攻撃1処理
 	void Attack_2();					//攻撃2処理
-	void Avoidance();					//回避処理
-	void Death();						//死亡処理
 	void KnockBack();					//ノックバック処理
+	void Death();						//死亡処理
+
 	//移動の計算処理
 	void MovingCalculation();
 	//プレイヤの衝突判定関数

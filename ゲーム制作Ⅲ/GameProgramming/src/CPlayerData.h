@@ -1,9 +1,6 @@
 #ifndef PLAYERDATA_H
 #define PLAYERDATA_H
 
-//初期化設定
-#define PLAYER_INT_INITIALIZATION 0																//初期化
-#define PLAYER_FLOAT_INITIALIZATION 0.0f														//浮動小数点の初期化
 
 //プレイヤUI
 #define PLAYER_UI_HP_FRAME "res\\Ui\\Player_HP_Frame.png"
@@ -22,6 +19,7 @@
 #define PLAYER_ANIMATION_ATTACKSP2_IDLE "res\\Player\\Paladin\\Attack2_Idle.x"
 #define PLAYER_ANIMATION_AVOIDANCE "res\\Player\\Paladin\\Avoidance.x" 
 #define PLAYER_ANIMATION_IDLE "res\\Player\\Paladin\\Idle.x"
+#define PLAYER_ANIMATION_JUMP "res\\Player\\Paladin\\Jump.x"
 #define PLAYER_ANIMATION_KNOCKBACK "res\\Player\\Paladin\\KnockBack.x"
 #define PLAYER_ANIMATION_DEATH "res\\Player\\Paladin\\Death.x"
 
@@ -52,9 +50,9 @@
 
 //プレイヤーの下半身
 #define PLAYER_COLSPHERE_LOWERBODY_X 0.0f			//球コライダのX座標設定
-#define PLAYER_COLSPHERE_LOWERBODY_Y 5.0f		//球コライダのY座標設定
+#define PLAYER_COLSPHERE_LOWERBODY_Y -75.0f			//球コライダのY座標設定
 #define PLAYER_COLSPHERE_LOWERBODY_Z 0.0f			//球コライダのZ座標設定
-#define PLAYER_COLSPHERE_LOWERBODY_SIZE 0.3f			//球コライダのサイズ設定
+#define PLAYER_COLSPHERE_LOWERBODY_SIZE 0.5f		//球コライダのサイズ設定
 
 //プレイヤの当たり判定
 #define PLAYER_COLSPHERE_BODY_SIZE 0.9				//球コライダのサイズ設定

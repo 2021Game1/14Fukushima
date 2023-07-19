@@ -27,6 +27,7 @@
 #define WIN_CENTRAL_Y WINDOW_HEIGHT/2 //画面の中央 （Y軸）
 #define ROTATION_RATE 1.0f/15.0f	//回転させたい角度に対する回転する割合
 
+//カメラの基本設定
 #define CAMERA_PRIORITY 100				//カメラの描画優先度
 #define CAMERA_SENSITIVITY 0.0002f		//カメラの感度設定
 #define CAMERA_COLLIDE_DIST 0.05f		//カメラの描画距離
@@ -140,11 +141,10 @@ private:
 	CVector mPos;		//位置
 	CVector mTarget;	//ターゲット
 	CVector mZoom;		//ズーム用
-	float	mDist;	//距離
+	float	mDist;		//距離
 	float mRotRad;		//回転させたい角度
-	float mOldMousePosX, mOldMousePosY;
 
-	bool mSkip;
+	bool mSkip;		       //マウスのカーソルが動いたかどうかを判別するためのフラグ
 	CTransform mTransform; //回転縮小用行列
 
 
@@ -156,7 +156,7 @@ private:
 	//マウスの座標保持用
 	int mOldMouseX, mOldMouseY; //以前の座標
 	int mMouseX, mMouseY;		//現在の座標
-		//staticでポインタを作る
+	//staticでポインタを作る
 	static CCamera* mpCameraInstance;
 
 

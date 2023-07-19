@@ -1,11 +1,11 @@
 #include "CCamera.h"
-#include"CXPlayer.h"
-#include"CXEnemy.h"
+#include "CBillBoard.h"
 #include "CTaskManager.h"
 #include "CTable.h"
 #include <math.h>
 //カメラの外部変数
 CCamera Camera;
+//カメラのインスタンス
 CCamera* CCamera::mpCameraInstance;
 
 //外部クラスから参照できるようの関数
@@ -29,8 +29,6 @@ CCamera::CCamera()
 	, mAngleDelayX(0.0f)
 	, mAngleDelayY(0.0f)
 	, mRotRad(0.0f)
-	, mOldMousePosX(0)
-	, mOldMousePosY(0)
 	, mScreenHeight(0.0f)
 	, mScreenWidth(0.0f)
 	, mCamera_Sensitivity(CAMERA_SENSITIVITY)
@@ -102,23 +100,29 @@ const CVector& CCamera::Eye() const
 {
 	return mEye;
 }
-//カメラのアップデート
+//カメラの更新処理
 void CCamera::Update() {
+	//マウスの位置を取得
 	CInput::GetMousePosWin(&mMouseX, &mMouseY);
+	//マウスの位置を把握することで、カメラの視点を変更する
 	mCameraMoveX = (float)(mOldMouseX - mMouseX);
 	mCameraMoveY = (float)(mOldMouseY - mMouseY);
 	//マウスカーソルが動いた方向にカメラの原点をあわせる
 	if (mSkip == false) {
+		//カメラ感度に合わせて、カメラの視点を変更する
 		if (mCameraMoveX != mCamera_Sensitivity)mAngleX += (mCameraMoveX * mCamera_Sensitivity);
 		mAngleX = mLerp(mAngleX, mAngleDelayX, mCamera_Delay_Rate);
 	}
+	//マウスカーソルの初期化
 	mSkip = false;
+	//マウスの位置を固定するための初期化
 	int X = WIN_CENTRAL_X;
 	int Y = WIN_CENTRAL_Y;
+	//マウスの位置を設定する
 	CInput::SetMousePosW(X, Y);
+	//現在のマウスの位置を過去のマウスに保存
 	mOldMouseX = X;
-	mOldMousePosY = Y;
-
+	mOldMouseY = Y;
 
 	//カメラの位置座標設定
 	mPos.X(mTarget.X() + (sinf(mAngleX)) * (mDist * sinf(mAngleY)));
@@ -186,12 +190,14 @@ void CCamera::Draw() {
 	//ビルボードの逆行列設定
 	CBillBoard::ModelViewInverse(&inverse);
 }
-
+//カメラアングルの変更
 void CCamera::CameraAngleChange() {
+	//カメラの写す距離を設定
 	mDist = CAMERA_DEF_DIST_CHANGE;
 }
-
+//デフォルトのカメラアングル
 void CCamera::CameraAngleDefault() {
+	//カメラの写す距離を戻す
 	mDist = CAMERA_DEF_DIST;
 }
 
@@ -237,7 +243,6 @@ bool CCamera::WorldToScreen(CVector* screen, const CVector& world)
 
 	return true;
 }
-
 
 
 

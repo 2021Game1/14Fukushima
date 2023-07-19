@@ -13,6 +13,8 @@ CSceneGame::~CSceneGame()
 	CMap::GetInstance()->Release();
 	//空の背景マップを削除
 	CSkyMap::GetInstance()->Release();
+	//障害物を削除
+	CStoneManager::GetInstance()->Release();
 	//タスクマネージャの削除
 	CTaskManager::Get()->Delete();
 }
@@ -50,6 +52,11 @@ void CSceneGame::Init() {
 
 	//敵生成
 	CXEnemyManager::GetInstance()->EnemyGenerate(ENEMY_GENERATE_B, CXEnemy::EEnemyType::ETYPE_GAME_2);
+
+	//障害物生成
+	CStoneManager::GetInstance()->Generate();
+	//障害物生成
+	CStoneManager::GetInstance()->StoneGenerate(CStone::EStoneType::ETYPE_STONE_POS_1);
 
 	//カメラ初期化
 	Camera.Init();

@@ -1,11 +1,6 @@
 #ifndef ENEMYDATA_H
 #define ENEMYDATA_H
 
-//‰Šú‰»İ’è
-#define ENEMY_INT_INITIALIZATION 0																//‰Šú‰»
-#define ENEMY_FLOAT_INITIALIZATION 0.0f															//•‚“®¬”“_‚Ì‰Šú‰»
-#define ENEMY_NUM 5
-
 //“GUI
 #define ENEMY_UI_HP_BACKBAR "res\\Ui\\Enemy_HP_BackBar.png"
 

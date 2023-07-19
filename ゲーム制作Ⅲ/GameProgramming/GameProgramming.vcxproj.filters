@@ -199,6 +199,12 @@
     <Filter Include="MainScene\Player\Player\Manager">
       <UniqueIdentifier>{bab81afd-47e5-489d-b806-1ee56db2e6b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainScene\Stone">
+      <UniqueIdentifier>{9adecbc7-6e3a-403a-9e8c-253f6febf845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Stone\Manager">
+      <UniqueIdentifier>{373dfb8c-11a3-48b0-8e9b-f371e9b45c83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CTaskManager.cpp">
@@ -329,6 +335,12 @@
     </ClCompile>
     <ClCompile Include="src\CXEnemy.cpp">
       <Filter>MainScene\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CStone.cpp">
+      <Filter>MainScene\Stone</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CStoneManager.cpp">
+      <Filter>MainScene\Stone\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,6 +487,12 @@
     </ClInclude>
     <ClInclude Include="src\CXEnemy.h">
       <Filter>MainScene\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CStone.h">
+      <Filter>MainScene\Stone</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CStoneManager.h">
+      <Filter>MainScene\Stone\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

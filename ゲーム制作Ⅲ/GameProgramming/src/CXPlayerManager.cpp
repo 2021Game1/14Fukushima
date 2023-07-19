@@ -72,6 +72,7 @@ void CXPlayerManager::PlayerGenerate() {
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_ATTACKSP2_IDLE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_AVOIDANCE);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_IDLE);
+	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_JUMP);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_KNOCKBACK);
 	gPlayer_Model_Knight.AddAnimationSet(PLAYER_ANIMATION_DEATH);
 

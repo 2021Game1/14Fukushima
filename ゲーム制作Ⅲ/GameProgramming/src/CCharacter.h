@@ -21,10 +21,12 @@ public:
 		EPLAYER,	//プレイヤー
 		EENEMY,		//敵
 		EMAP,		//マップ
+		ESTONE		//障害物(石)
 	};
 	//モデルの設定
 	//Model(モデルクラスのポインタ)
 	void Model(CModel *m);
+	//モデルの設定
 	//タグの取得
 	ETag Tag();
 	//描画処理

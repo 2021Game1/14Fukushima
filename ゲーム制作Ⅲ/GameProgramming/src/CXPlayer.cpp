@@ -47,6 +47,7 @@ void CXPlayer::PlayerTable() {
 	Player_Attack1_Idle_Animation_Frame = table["Player_Attack1_Idle_Animation_Frame"]["Value"].fVal;
 	Player_Attack2_Animation_Frame = table["Player_Attack2_Animation_Frame"]["Value"].fVal;
 	Player_Attack2_Idle_Animation_Frame = table["Player_Attack2_Idle_Animation_Frame"]["Value"].fVal;
+	Player_Jump_Animation_Frame = table["Player_Jump_Animation_Frame"]["Value"].fVal;
 	Player_KnockBack_Animation_Frame = table["Player_KnockBack_Animation_Frame"]["Value"].fVal;
 	Player_Death_Animation_Frame = table["Player_Death_Animation_Frame"]["Value"].fVal;
 	Player_Animation_No_Move = table["Player_Animation_No_Move"]["Value"].iVal;
@@ -56,6 +57,7 @@ void CXPlayer::PlayerTable() {
 	Player_Animation_No_Attack2_Idle = table["Player_Animation_No_Attack2_Idle"]["Value"].iVal;
 	Player_Animation_No_AvoidDance = table["Player_Animation_No_AvoidDance"]["Value"].iVal;
 	Player_Animation_No_Idle = table["Player_Animation_No_Idle"]["Value"].iVal;
+	Player_Animation_No_Jump = table["Player_Animation_No_Jump"]["Value"].iVal;
 	Player_Animation_No_Knockback = table["Player_Animation_No_Knockback"]["Value"].iVal;
 	Player_Animation_No_Death = table["Player_Animation_No_Death"]["Value"].iVal;
 	Player_Gauge_Hp_Shake_X = table["Player_Gauge_Hp_Shake_X"]["Value"].iVal;
@@ -108,8 +110,8 @@ CXPlayer::CXPlayer()
 	, mPlayer_ColSphereBody(this, nullptr, CVector(), PLAYER_COLSPHERE_BODY_SIZE)
 	, mPlayer_ColSphereLowerBody(this, nullptr, CVector(PLAYER_COLSPHERE_LOWERBODY_X, PLAYER_COLSPHERE_LOWERBODY_Y, PLAYER_COLSPHERE_LOWERBODY_Z), PLAYER_COLSPHERE_LOWERBODY_SIZE)
 	, mPlayer_ColSphereSword(this, nullptr, CVector(PLAYER_COLSPHERE_SWORD_X, PLAYER_COLSPHERE_SWORD_Y, PLAYER_COLSPHERE_SWORD_Z), PLAYER_COLSPHERE_SWORD_SIZE)
-	, mPlayer_ComboCount(PLAYER_INT_INITIALIZATION)
-	, mPlayer_Turnspeed(PLAYER_FLOAT_INITIALIZATION)
+	, mPlayer_ComboCount(NULL)
+	, mPlayer_Turnspeed(NULL)
 	, mPlayer_InvincibleFlag(false)
 	, mPlayer_IsHit(false)
 	, mPlayer_AttackFlag_1(false)
@@ -129,7 +131,7 @@ CXPlayer::CXPlayer()
 	mPlayer_ColSphereBody.Tag(CCollider::ETag::EBODY);					//体
 	mPlayer_ColSphereLowerBody.Tag(CCollider::ETag::EBODY);				//下半身
 	mPlayer_ColSphereHead.Tag(CCollider::ETag::EHEAD);					//頭
-	mPlayer_ColSphereSword.Tag(CCollider::ETag::ESWORD);					//剣
+	mPlayer_ColSphereSword.Tag(CCollider::ETag::ESWORD);				//剣
 	//プレイヤのテーブルを呼び出し
 	PlayerTable();
 	//タスクマネージャへの追加
@@ -152,14 +154,15 @@ void CXPlayer::Init(CModelX* model)
 	//キャラクタのモデルをセット設定を呼び出す
 	CXCharacter::Init(model);
 	//合成行列の設定
-	mPlayer_ColSphereLowerBody.Matrix(&mpCombinedMatrix[2]);
+	mPlayer_ColSphereLowerBody.Matrix(&mpCombinedMatrix[3]);
 	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[3]);
 	mPlayer_ColSphereBody.Matrix(&mpCombinedMatrix[15]);
 	mPlayer_ColSphereHead.Matrix(&mpCombinedMatrix[16]);
 	mPlayer_ColSphereSword.Matrix(&mpCombinedMatrix[71]);
+
 	//プレイヤの位置,拡縮,回転の設定
 	mPosition.Set(Player_Position_X, Player_Position_Y, Player_Position_Z);								//位置を設定
-	mScale.Set(Player_Scale_X, Player_Scale_Y, Player_Scale_Z);										//スケール設定
+	mScale.Set(Player_Scale_X, Player_Scale_Y, Player_Scale_Z);											//スケール設定
 	mRotation.Set(Player_Rotation_X, Player_Rotation_Y, Player_Rotation_Z);								//回転を設定
 }
 //更新処理
@@ -168,39 +171,40 @@ void CXPlayer::Update() {
 	CVector tpos = mPlayer_ColSphereSword.GetIsMatrix()->GetPos();
 	//状態を判別
 	switch (mPlayer_State) {
-	case CXPlayer::EPlayerState::EIDLE:														//待機状態
+	case CXPlayer::EPlayerState::EIDLE:								//待機状態
 		Idle();														//待機処理を呼ぶ
 		break;
 
-	case CXPlayer::EPlayerState::EATTACK_1:													//攻撃1状態の時
-		Attack_1();													//攻撃1の処理を呼ぶ
-		break;
-
-	case CXPlayer::EPlayerState::EATTACK_2:													//攻撃2状態の時
-		Attack_2();													//攻撃2の処理を呼ぶ
-		break;
-
-	case CXPlayer::EPlayerState::EMOVE:														//移動状態
+	case CXPlayer::EPlayerState::EMOVE:								//移動状態
 		Move();														//移動状態の処理を呼ぶ
 		break;
 
-	case CXPlayer::EPlayerState::EAVOIDANCE:												//回避状態
+	case CXPlayer::EPlayerState::EAVOIDANCE:						//回避状態
 		Avoidance();												//回避処理を呼ぶ
 		break;
 
-	case CXPlayer::EPlayerState::EDEATH:													//死亡状態
-		Death();													//死亡処理を呼ぶ
+	case CXPlayer::EPlayerState::EATTACK_1:							//攻撃1状態の時
+		Attack_1();													//攻撃1の処理を呼ぶ
 		break;
 
-	case CXPlayer::EPlayerState::EKNOCKBACK:												//ノックバック状態
+	case CXPlayer::EPlayerState::EATTACK_2:							//攻撃2状態の時
+		Attack_2();													//攻撃2の処理を呼ぶ
+		break;
+
+	case CXPlayer::EPlayerState::EKNOCKBACK:						//ノックバック状態
 		KnockBack();												//ノックバック処理を呼ぶ
 		break;
+
+	case CXPlayer::EPlayerState::EDEATH:							//死亡状態
+		Death();													//死亡処理を呼ぶ
+		break;
 	}
+	//移動処理に必要な計算処理
 	MovingCalculation();
 	//体力が0になると死亡
 	//プレイヤの体力がゲームオーバー条件のHPと同じまたは低ければ、処理を実行
 	if (mPlayer_Hp <= Player_GameOver_Hp) {
-		mPlayer_State = CXPlayer::EPlayerState::EDEATH;										//死亡状態へ移行
+		mPlayer_State = CXPlayer::EPlayerState::EDEATH;				//死亡状態へ移行
 		//プレイヤのHPをゲームオーバー条件のHPに上書き
 		mPlayer_Hp = Player_GameOver_Hp;							
 	}
@@ -262,7 +266,9 @@ void CXPlayer::Idle()
 	}
 	//何も入力されなかったので待機処理を動かす
 	else{
-		mPlayer_ComboCount = PLAYER_INT_INITIALIZATION;
+		//プレイヤのコンボカウントを初期化する
+		mPlayer_ComboCount = NULL;
+		//待機状態のアニメーション
 		ChangeAnimation(Player_Animation_No_Idle, true, Player_Idle_Animation_Frame);
 	}
 }
@@ -311,10 +317,12 @@ void CXPlayer::Move()
 	}
 	//待機状態へ移行
 	else {
+		//待機状態にプレイヤの状態を変更する
 		mPlayer_State = CXPlayer::EPlayerState::EIDLE;
 	}
 	//歩行状態では無いので歩行SEを停止する
 	if (mPlayer_State != CXPlayer::EPlayerState::EMOVE) {
+		//プレイヤの歩くSEを停止する
 		Se_Player_Walk.Stop();
 	}
 }
@@ -323,11 +331,12 @@ void CXPlayer::Avoidance()
 {
 	//回避時一度だけ通る
 	if (mPlayer_Avoid == false) {
+		//回避のアニメーション
 		ChangeAnimation(Player_Animation_No_AvoidDance, false, Player_Avoidance_Animation_Frame);
 		mPlayer_Avoid = true;							//回避中
-		mPlayer_Speed_Avoid = Player_Speed_Avoid;
-		mPlayer_Avoid_Time = Player_Avoid_Time;
-		MoveCamera();
+		mPlayer_Speed_Avoid = Player_Speed_Avoid;		//回避の移動速度
+		mPlayer_Avoid_Time = Player_Avoid_Time;			//回避している時間
+		MoveCamera();									//カメラの基準移動
 	}
 	//ヒット判定発生
 	if (IsAnimationFinished() == false)
@@ -338,13 +347,13 @@ void CXPlayer::Avoidance()
 			//回避時間をカウントダウン
 			mPlayer_Avoid_Time--;
 			//回避時間0になった時
-			if (mPlayer_Avoid_Time == 0) {
+			if (mPlayer_Avoid_Time == NULL) {
 				mPlayer_Avoid = false;	//回避終了
 			}
 			//回避時の移動値を代入
 			mPlayer_Move = mPlayer_MoveDirKeep * mPlayer_Speed_Avoid;
 
-			//回避状態が終了したとき
+			//回避状態が終了したときに実行する
 			if (mPlayer_Avoid == false) {
 				//回避終了時WASDキーが押されていると移動
 				if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
@@ -352,6 +361,7 @@ void CXPlayer::Avoidance()
 				}
 				//待機状態へ移行
 				else {
+					//待機状態にプレイヤの状態を移行する
 					mPlayer_State = CXPlayer::EPlayerState::EIDLE;
 				}
 			}
@@ -360,6 +370,7 @@ void CXPlayer::Avoidance()
 	//ヒット判定発生
 	if (IsAnimationFinished())
 	{
+		//待機状態にプレイヤの状態を変更する
 		mPlayer_State = CXPlayer::EPlayerState::EIDLE;
 	}
 }
@@ -450,13 +461,14 @@ void CXPlayer::Attack_1()
 		//アニメーション終了時
 		//攻撃1から待機モーションの間のアニメーションを描画する
 		if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1) {
+			//攻撃１後に待機待機アニメーションに繋げるためのアニメーションを描画
 			ChangeAnimation(Player_Animation_No_Attack1_Idle, false, Player_Attack1_Idle_Animation_Frame);
 		}
 		//攻撃1から待機モーションの間のアニメーションを描画が終了時
 		//待機状態へ移行
 		if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack1_Idle) {
 				mPlayer_IsHit = false;								//ヒット判定終了
-				mPlayer_State = CXPlayer::EPlayerState::EIDLE;								//待機状態へ移行
+				mPlayer_State = CXPlayer::EPlayerState::EIDLE;		//待機状態へ移行
 				mPlayer_AttackFlag_1 = false;						//プレイヤの攻撃1フラグをfalseにする
 		}
 }
@@ -534,6 +546,7 @@ void CXPlayer::Attack_2()
 	//アニメーション終了時
 	//攻撃2と待機状態の間のアニメーションを描画する
 	if (IsAnimationFinished() && mAnimationIndex == Player_Animation_No_Attack2) {
+		//攻撃2後に待機待機アニメーションに繋げるためのアニメーションを描画
 		ChangeAnimation(Player_Animation_No_Attack2_Idle, false, Player_Attack2_Idle_Animation_Frame);
 	}	
 	//攻撃2と待機状態の間のアニメーションを描画が終了時
@@ -607,12 +620,12 @@ void CXPlayer::Death()
 void CXPlayer::MoveCamera()
 {
 	//カメラ視点移動　通称無双移動
-	//カメラの左右と前後のベクトルを取得
+	//カメラの左右と高さ、前後ベクトルを取得
 	mPlayer_SideVec = Camera.GetMat().GetXVec();
 	mPlayer_FrontVec = Camera.GetMat().GetZVec();
 	//高さ移動はカットする
-	mPlayer_SideVec.Y(PLAYER_FLOAT_INITIALIZATION);
-	mPlayer_FrontVec.Y(PLAYER_FLOAT_INITIALIZATION);
+	mPlayer_SideVec.Y(NULL);
+	mPlayer_FrontVec.Y(NULL);
 	//正規化する
 	mPlayer_SideVec.Normalize();
 	mPlayer_FrontVec.Normalize();
@@ -726,8 +739,8 @@ void CXPlayer::Render2D()
 	//2D描画開始
 	CUtil::Start2D(WINDOW_FIRST_WIDTH, WINDOW_WIDTH, WINDOW_FIRST_HEIGHT, WINDOW_HEIGHT);
 	//ゲージを揺らす用
-	int shakeX = PLAYER_INT_INITIALIZATION;
-	int shakeY = PLAYER_INT_INITIALIZATION;
+	int shakeX = NULL;
+	int shakeY = NULL;
 	//ノックバック状態のとき
 	if (CXPlayer::GetInstance()->GetState() == CXPlayer::EPlayerState::EKNOCKBACK) {
 		//ゲージを揺らす値を設定
@@ -895,18 +908,14 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 	//プレイヤの球コライダがマップの三角コライダに衝突したら実行
 	if (m->Type() == CCollider::EType::ESPHERE && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
-		//相手の親のタグがマップ
-		if (o->Parent()->Tag() == CCharacter::ETag::EMAP)
-		{
-			//自分のコライダのタグが頭or体
-			if (m->Tag() == CCollider::ETag::EBODY) {
-				if (CCollider::CollisionTriangleSphere(o, m, &adjust))
-				{
-					//位置の更新(mPosition + adjust)
-					mPosition = mPosition + adjust;
-					//行列の更新
-					CTransform::Update();
-				}
+		//自分のコライダのタグが頭or体
+		if (m->Tag() == CCollider::ETag::EBODY) {
+			if (CCollider::CollisionTriangleSphere(o, m, &adjust))
+			{
+				//位置の更新(mPosition + adjust)
+				mPosition = mPosition + adjust;
+				//行列の更新
+				CTransform::Update();
 			}
 		}
 	}
@@ -915,8 +924,8 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 void CXPlayer::MovingCalculation() {
 	//減速させる
 	mPlayer_Move = mPlayer_Move * Player_Thrust;							//プレイヤの移動量に推力を掛ける
-	//重力をプレイヤに掛ける
-	mPosition.Y(mPosition.Y() * Player_Gravity);							//プレイヤのY軸に重力を掛ける
+	//プレイヤのY軸に重力を掛ける	
+	mPosition.Y(mPosition.Y() * Player_Gravity);							//プレイヤに重力を掛ける
 	//座標移動
 	mPosition += mPlayer_Move;												//プレイヤの位置にプレイヤの移動量を足す
 
@@ -949,8 +958,6 @@ void CXPlayer::MovingCalculation() {
 
 	//移動量をリセット
 	mPlayer_MoveDir = CVector(0.0f, 0.0f, 0.0f);
-
-
 }
 //タスクに当たり判定を格納する
 void CXPlayer::TaskCollision()

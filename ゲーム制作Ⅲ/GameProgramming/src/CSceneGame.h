@@ -7,6 +7,7 @@
 #include "CCamera.h"
 #include "CXEnemyManager.h"
 #include "CXPlayerManager.h"
+#include "CStoneManager.h"
 #include "CMap.h"
 #include "CSceneTutorial.h"
 

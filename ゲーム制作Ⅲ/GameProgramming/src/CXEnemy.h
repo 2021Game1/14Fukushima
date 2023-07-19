@@ -59,13 +59,7 @@ public:
 	//プレイヤに与えるスタンダメージ取得用
 	int GetIsStanPoint();
 	//プレイヤの状態を取得する
-	CXEnemy::EEnemyState GetState();
-	//座標の取得
-	void GetPos();
-	//スケールの取得
-	void GetScale();
-	//モデルの回転値取得
-	void GetRotation();							
+	CXEnemy::EEnemyState GetState();					
 	//敵モデル設定
 	void Init(CModelX* model);					//敵のモデル設定
 	//更新処理
