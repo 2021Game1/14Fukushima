@@ -2,7 +2,6 @@
 #include"CXEnemyManager.h"
 #include"CRes.h"
 
-
 CXPlayer* CXPlayer::mpPlayer_Instance = nullptr;												//プレイヤのインスタンス変数の初期化
 
 //テーブルのデータを変数に保存
@@ -85,6 +84,12 @@ void CXPlayer::PlayerTable() {
 	mPlayer_FollowGaugeWid = Player_Gauge_Wid;
 	//プレイヤ移動速度の設定
 	mPlayer_Speed = Player_Speed_Default;
+	//プレイヤ回避速度の設定
+	mPlayer_Speed_Avoid = Player_Speed_Avoid;
+	//プレイヤ移動速度を保存する設定
+	mPlayer_Speed_Keep = Player_Speed_Default;
+	//プレイヤ回避速度を保存する設定
+	mPlayer_Speed_Avoid_Keep = Player_Speed_Avoid;
 	//攻撃力設定
 	mAttack_Point = Player_Attack_Point;
 	//防御力設定
@@ -119,6 +124,7 @@ CXPlayer::CXPlayer()
 	, mPlayer_AttackFlag_Once(false)
 	, mPlayer_Flag(false)
 	, mPlayer_Avoid(false)
+	, mPlayer_Push_Flag(false)
 {
 	//プレイヤのインスタンスを設定
 	mpPlayer_Instance = this;										//プレイヤのインスタンスを自身に設定する
@@ -153,6 +159,7 @@ void CXPlayer::Init(CModelX* model)
 	gPlayer_Ui_Hp_Frame.Load2D(PLAYER_UI_HP_FRAME);
 	//キャラクタのモデルをセット設定を呼び出す
 	CXCharacter::Init(model);
+
 	//合成行列の設定
 	mPlayer_ColSphereLowerBody.Matrix(&mpCombinedMatrix[3]);
 	mPlayer_ColCapsuleBody.Matrix(&mpCombinedMatrix[3]);
@@ -283,10 +290,12 @@ void CXPlayer::Move()
 	} 
 	//WASDキーのいずれかを入力すると移動状態へ移行
 	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
-		ChangeAnimation(Player_Animation_No_Move, true, Player_Move_Animation_Frame);
-		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		Se_Player_Walk.Repeat(Player_Se);
+		ChangeAnimation(Player_Animation_No_Move, true, Player_Move_Animation_Frame);//移動のアニメーション
+		Se_Player_Walk.Repeat(Player_Se);											 //移動時のSE
+		MoveCamera();																 //カメラ基準の移動処理
 	}
+
+
 
 	//回避状態へ移行
 	//Wキーを入力して、なおかつShiftキーを入力していたら実行
@@ -311,9 +320,9 @@ void CXPlayer::Move()
 	}
 	//WASDキーのいずれかを入力すると移動状態へ移行
 	else if (CKey::Push(VK_W) || CKey::Push(VK_A) || CKey::Push(VK_S) || CKey::Push(VK_D)) {
-		ChangeAnimation(Player_Animation_No_Move, true, Player_Move_Animation_Frame);
-		MoveCamera();												//カメラを基準にした移動処理を呼ぶ
-		Se_Player_Walk.Repeat(Player_Se);
+		ChangeAnimation(Player_Animation_No_Move, true, Player_Move_Animation_Frame);//移動のアニメーション
+		Se_Player_Walk.Repeat(Player_Se);											 //移動時のSE
+		MoveCamera();																 //カメラ基準の移動処理
 	}
 	//待機状態へ移行
 	else {
@@ -336,7 +345,7 @@ void CXPlayer::Avoidance()
 		mPlayer_Avoid = true;							//回避中
 		mPlayer_Speed_Avoid = Player_Speed_Avoid;		//回避の移動速度
 		mPlayer_Avoid_Time = Player_Avoid_Time;			//回避している時間
-		MoveCamera();									//カメラの基準移動
+		MoveCamera();									//カメラ基準の移動処理
 	}
 	//ヒット判定発生
 	if (IsAnimationFinished() == false)
@@ -374,7 +383,6 @@ void CXPlayer::Avoidance()
 		mPlayer_State = CXPlayer::EPlayerState::EIDLE;
 	}
 }
-
 
 //攻撃1処理
 void CXPlayer::Attack_1()
@@ -634,32 +642,67 @@ void CXPlayer::MoveCamera()
 	//移動量を代入
 	if (mPlayer_State == CXPlayer::EPlayerState::EMOVE) {
 		//Aキーを入力していれば、移動量を代入する
-		if (CKey::Push(VK_A)) {
-			//移動量を代入
-			mPlayer_MoveDir -= mPlayer_SideVec;
+		if (CKey::Push(VK_A) && mPlayer_Push_Flag == false) {
+			if (!CKey::Push(VK_D)) {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_SideVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_SideVec;
+			}
+			//押さえているのでtrueにする
+			mPlayer_Push_Flag = true;
 		}
 		//Dキーを入力していれば、移動量を代入する
-		else if (CKey::Push(VK_D)) {
-			//移動量を代入
-			mPlayer_MoveDir += mPlayer_SideVec;
+		if (CKey::Push(VK_D) && mPlayer_Push_Flag == false) {
+			if (!CKey::Push(VK_A)) {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_SideVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_SideVec;
+			}
+			//押されえているのでtrueにする
+			mPlayer_Push_Flag = true;
 		}
 		//Wキーを入力していれば、移動量を代入する
-		if (CKey::Push(VK_W)) {
-			//移動量を代入
-			mPlayer_MoveDir += mPlayer_FrontVec;
+		if (CKey::Push(VK_W) && mPlayer_Push_Flag == false) {
+			if (!CKey::Push(VK_S)) {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_FrontVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_FrontVec;
+			}
+			//押されえているのでtrueにする
+			mPlayer_Push_Flag = true;
 		}
 		//Sキーを入力していれば、移動量を代入する
-		else if (CKey::Push(VK_S)) {
-			//移動量を代入
-			mPlayer_MoveDir -= mPlayer_FrontVec;
+		if (CKey::Push(VK_S) && mPlayer_Push_Flag == false) {
+			if (!CKey::Push(VK_W)) {
+				//移動量を代入
+				mPlayer_MoveDir -= mPlayer_FrontVec;
+			}
+			else {
+				//移動量を代入
+				mPlayer_MoveDir += mPlayer_FrontVec;
+			}
+			//押されえているのでtrueにする
+			mPlayer_Push_Flag = true;
+
 		}
 		//ジャンプ時などはY軸を正規化しないよう注意
-		mPlayer_MoveDirKeep = mPlayer_MoveDir;	      //MoveDir保存
+		mPlayer_MoveDirKeep = mPlayer_MoveDir;			//MoveDir保存
 		mPlayer_Move = mPlayer_MoveDir * mPlayer_Speed;	//移動量を設定
+		mPlayer_Push_Flag = false;						//押されていないのでfalseにする
 	}
+
 	//回避状態の場合
 	//移動量を代入
-	else if (mPlayer_State == CXPlayer::EPlayerState::EAVOIDANCE)
+	if (mPlayer_State == CXPlayer::EPlayerState::EAVOIDANCE)
 	{
 		//Aキーを入力していれば、移動量を代入する
 		if (CKey::Push(VK_A)) {
@@ -677,7 +720,7 @@ void CXPlayer::MoveCamera()
 			}
 		}
 		//Dキーを入力していれば、移動量を代入する
-		else if (CKey::Push(VK_D)) {
+		if (CKey::Push(VK_D) && !CKey::Push(VK_A)) {
 			if (CKey::Once(VK_SHIFT)) {
 				//移動量を代入
 				mPlayer_MoveDir += mPlayer_SideVec;
@@ -692,7 +735,7 @@ void CXPlayer::MoveCamera()
 			}
 		}
 		//Wキーを入力していれば、移動量を代入する
-		if (CKey::Push(VK_W)) {
+		if (CKey::Push(VK_W)){
 			if (CKey::Once(VK_SHIFT)) {
 				//移動量を代入
 				mPlayer_MoveDir += mPlayer_FrontVec;
@@ -707,7 +750,7 @@ void CXPlayer::MoveCamera()
 			}
 		}
 		//Sキーを入力していれば、移動量を代入する
-		else if (CKey::Push(VK_S)) {
+		if (CKey::Push(VK_S) && !CKey::Push(VK_W)) {
 			if (CKey::Once(VK_SHIFT)) {
 				//移動量を代入
 				mPlayer_MoveDir -= mPlayer_FrontVec;
@@ -922,12 +965,17 @@ void CXPlayer::Collision(CCollider* m, CCollider* o) {
 }
 //移動計算処理
 void CXPlayer::MovingCalculation() {
-	//減速させる
-	mPlayer_Move = mPlayer_Move * Player_Thrust;							//プレイヤの移動量に推力を掛ける
+	if (mPlayer_State == CXPlayer::EPlayerState::EAVOIDANCE || mPlayer_State == CXPlayer::EPlayerState::EMOVE) {
+		//座標移動
+		mPosition += mPlayer_Move;									//プレイヤの位置にプレイヤの移動量を足す
+	}
+	else if (mPlayer_State != CXPlayer::EPlayerState::EAVOIDANCE && mPlayer_State != CXPlayer::EPlayerState::EMOVE) {
+		//減速させる
+		mPlayer_Move = mPlayer_Move * Player_Thrust;							//プレイヤの移動量に推力を掛ける
+	}
+
 	//プレイヤのY軸に重力を掛ける	
 	mPosition.Y(mPosition.Y() * Player_Gravity);							//プレイヤに重力を掛ける
-	//座標移動
-	mPosition += mPlayer_Move;												//プレイヤの位置にプレイヤの移動量を足す
 
 	//普通に3次元ベクトル計算で算出したほうが正確だが計算量を懸念する場合は擬似計算で軽量化
 	//擬似ベクトル計算

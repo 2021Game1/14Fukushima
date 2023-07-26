@@ -152,6 +152,7 @@ private:
 	CCollider mEnemy_ColSphereRightarm;			//右腕
 	CCollider mEnemy_ColSphereLeftarm;			//左腕
 	CCollider mEnemy_ColSphereBody;				//球の身体
+	CCollider mEnemy_ColSphereLowerBody;		//球の身体
 	CColliderCapsule mEnemy_ColCapsuleBody;		//カプセルの身体
 
 	//敵のUIインスタンス

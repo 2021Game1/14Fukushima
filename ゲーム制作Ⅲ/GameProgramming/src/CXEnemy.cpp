@@ -11,6 +11,7 @@ CXEnemy* CXEnemy::mpEnemy_Instance = nullptr;
 CXEnemy::CXEnemy()
 	:mEnemy_Type(CXEnemy::EEnemyType::ETYPE_TUTORIAL)
 	, mEnemy_ColCapsuleBody(this, nullptr, CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_TOP_Y, ENEMY_COLCAPSULE_BODY_Z), CVector(ENEMY_COLCAPSULE_BODY_X, ENEMY_COLCAPSULE_BODY_BOTTOM_Y, ENEMY_COLCAPSULE_BODY_Z), ENEMY_COLCAPSULE_BODY_SIZE)
+	, mEnemy_ColSphereLowerBody(this, nullptr, CVector(ENEMY_COLSPHERE_LOWERBODY_X, ENEMY_COLSPHERE_LOWERBODY_Y, ENEMY_COLSPHERE_LOWERBODY_Z), ENEMY_COLSPHERE_LOWERBODY_SIZE)
 	, mEnemy_ColSphereBody(this, nullptr, CVector(ENEMY_COLSPHERE_BODY_X, ENEMY_COLSPHERE_BODY_Y, ENEMY_COLSPHERE_BODY_Z), ENEMY_COLSPHERE_BODY_SIZE)
 	, mEnemy_ColSphereRightarm(this, nullptr, CVector(), ENEMY_COLSPHERE_RIGHTARM_SIZE)
 	, mEnemy_ColSphereLeftarm(this, nullptr, CVector(), ENEMY_COLSPHERE_LEFTARM_SIZE)
@@ -29,57 +30,6 @@ CXEnemy::CXEnemy()
 	, mEnemy_IsHit(false)
 	, mEnemy_Flag(false)
 	, mEnemy_Death_Flag(false)
-	, Enemy_Priority(NULL)
-	, Enemy_Hp(NULL)
-	, Enemy_Hp_Max(NULL)
-	, Enemy_Attack_Point(NULL)
-	, Enemy_Defense_Point(NULL)
-	, Enemy_Stan_Point(NULL)
-	, Enemy_Damage_Magnification(NULL)
-	, Enemy_Death_Hp(NULL)
-	, Enemy_Gravity(NULL)
-	, Enemy_StanAccumulation(NULL)
-	, Enemy_StanAccumulation_Max(NULL)
-	, Enemy_Speed_WalkPattern(NULL)
-	, Enemy_Speed_DashPattern(NULL)
-	, Enemy_Speed_BackPattern(NULL)
-	, Enemy_Walk_Dis(NULL)
-	, Enemy_Dash_Dis(NULL)
-	, Enemy_Walk_Dis_Max(NULL)
-	, Enemy_Dash_Dis_Max(NULL)
-	, Enemy_Attack_Dis(NULL)
-	, Enemy_Attack_Reception(NULL)
-	, Enemy_Attack_Outreception(NULL)
-	, Enemy_Action_Rand(NULL)
-	, Enemy_Attack_Walk_Rand(NULL)
-	, Enemy_Attack_Dash_Rand(NULL)
-	, Enemy_AttackSp1_Set(NULL)
-	, Enemy_AttackSp2_Set(NULL)
-	, Enemy_Idle_Animation_Frame(NULL)
-	, Enemy_Move_Animation_Frame(NULL)
-	, Enemy_Dash_Animation_Frame(NULL)
-	, Enemy_BackStep_Animation_Frame(NULL)
-	, Enemy_Attack1_Animation_Frame(NULL)
-	, Enemy_Attack2_Animation_Frame(NULL)
-	, Enemy_Knockback_Animation_Frame(NULL)
-	, Enemy_Death_Animation_Frame(NULL)
-	, Enemy_Animation_No_Attack_1(NULL)
-	, Enemy_Animation_No_Attack_2(NULL)
-	, Enemy_Animation_No_Walk(NULL)
-	, Enemy_Animation_No_Dash(NULL)
-	, Enemy_Animation_No_BackStep(NULL)
-	, Enemy_Animation_No_Idle(NULL)
-	, Enemy_Animation_No_Knockback(NULL)
-	, Enemy_Animation_No_Death(NULL)
-	, Enemy_Position_X(NULL)
-	, Enemy_Position_Y(NULL)
-	, Enemy_Position_Z(NULL)
-	, Enemy_Scale_X(NULL)
-	, Enemy_Scale_Y(NULL)
-	, Enemy_Scale_Z(NULL)
-	, Enemy_Rotation_X(NULL)
-	, Enemy_Rotation_Y(NULL)
-	, Enemy_Rotation_Z(NULL)
 {
 	//テーブルの呼び出し
 	EnemyTable();
@@ -111,6 +61,7 @@ CXEnemy::CXEnemy()
 	//コライダのタグを設定
 	mEnemy_ColCapsuleBody.Tag(CCollider::ETag::EBODY);	//体
 	mEnemy_ColSphereBody.Tag(CCollider::ETag::EBODY);		//体
+	mEnemy_ColSphereLowerBody.Tag(CCollider::ETag::EBODY);		//体
 	mEnemy_ColSphereRightarm.Tag(CCollider::ETag::ERIGHTARM);	//右手
 	mEnemy_ColSphereLeftarm.Tag(CCollider::ETag::ELEFTARM);	//左手
 
@@ -126,6 +77,7 @@ void CXEnemy::Init(CModelX* model)
 	//合成行列の設定
 	mEnemy_ColCapsuleBody.Matrix(&mpCombinedMatrix[2]);
 	mEnemy_ColSphereBody.Matrix(&mpCombinedMatrix[2]);
+	mEnemy_ColSphereLowerBody.Matrix(&mpCombinedMatrix[2]);
 	mEnemy_ColSphereRightarm.Matrix(&mpCombinedMatrix[68]);
 	mEnemy_ColSphereLeftarm.Matrix(&mpCombinedMatrix[41]);
 }
@@ -429,11 +381,13 @@ void CXEnemy::TaskCollision()
 	//コライダの優先度変更
 	mEnemy_ColCapsuleBody.ChangePriority();
 	mEnemy_ColSphereBody.ChangePriority();
+	mEnemy_ColSphereLowerBody.ChangePriority();
 	mEnemy_ColSphereRightarm.ChangePriority();
 	mEnemy_ColSphereLeftarm.ChangePriority();
 	//衝突処理を実行
 	CCollisionManager::Get()->Collision(&mEnemy_ColCapsuleBody, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereBody, COLLISIONRANGE);
+	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLowerBody, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereRightarm, COLLISIONRANGE);
 	CCollisionManager::Get()->Collision(&mEnemy_ColSphereLeftarm, COLLISIONRANGE);
 }
@@ -824,18 +778,19 @@ void CXEnemy::Collision(CCollider* m, CCollider* o) {
 		}
 	}
 
-	//カプセルと三角形の衝突処理
-	if (m->Type() == CCollider::EType::ECAPSUL && o->Type() == CCollider::EType::ETRIANGLE) {
+	//プレイヤの球コライダがマップの三角コライダに衝突したら実行
+	if (m->Type() == CCollider::EType::ESPHERE && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル
-		//三角形コライダとカプセルの衝突処理
-		if (CCollider::CollisionTriangleLine(o, m, &adjust))
-		{
-			//位置の更新(mPosition + adjust)
-			mPosition = mPosition + adjust;
-			//行列の更新
-			CTransform::Update();
+		//自分のコライダのタグが頭or体
+		if (m->Tag() == CCollider::ETag::EBODY) {
+			if (CCollider::CollisionTriangleSphere(o, m, &adjust))
+			{
+				//位置の更新(mPosition + adjust)
+				mPosition = mPosition + adjust;
+				//行列の更新
+				CTransform::Update();
+			}
 		}
-
 	}
 	if (m->Type() == CCollider::EType::ESPHERE && o->Type() == CCollider::EType::ETRIANGLE) {
 		CVector adjust;//調整用ベクトル

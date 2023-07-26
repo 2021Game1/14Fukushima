@@ -44,45 +44,45 @@ public:
 	//モデルの設定、初期設定
 	void Init(CModelX* model);
 	//座標、回転値、スケールの取得
-	void GetPos();								//座標の取得
-	void GetScale();							//スケールの取得
-	void GetRotation();							//モデルの回転値取得
+	void GetPos();						//座標の取得
+	void GetScale();					//スケールの取得
+	void GetRotation();					//モデルの回転値取得
 	//2D描画
 	void Render2D();
 	//タスクコリジョン
-	void TaskCollision();
+	void TaskCollision();				
 	//デフォルトコンストラクタ
-	CXPlayer();
+	CXPlayer();							//初期設定
 	//プレイヤのHP取得関数
-	int GetHp();	
+	int GetHp();						//HPの取得する
 	//プレイヤのインスタンス取得関数
 	static CXPlayer* GetInstance();		//staticで処理を作る
 	//プレイヤのモデル取得
 	//プレイヤのアニメーションフレーム取得関数
-	bool GetIsAnimationFrame();
+	bool GetIsAnimationFrame();			//アニメーションフレームの動作取得(true:動いている　false:動いていない)
 	//プレイヤのヒット判定取得関数
 	bool GetIsHit();					//ヒット状態の判別
 	//プレイヤの与えるダメージ取得用
-	int GetIsAttackPoint();
+	int GetIsAttackPoint();				//攻撃値の取得をする
 	//プレイヤの与えるスタンダメージ取得用
-	int GetIsStanPoint();
+	int GetIsStanPoint();				//スタン値を取得
 	//プレイヤの状態取得関数
 	CXPlayer::EPlayerState GetState();	//プレイヤの状態を取得する
 	//プレイヤの剣コライダの座標取得
 	CVector GetSwordColPos();			//剣のコライダの座標を取得する
 	//プレイヤの移動量取得
-	CVector GetInMoveDir();
+	CVector GetInMoveDir();				//移動量取得
 	//テーブル取得関数
-	void PlayerTable();
+	void PlayerTable();					//テーブルの取得
 private:
 	//プレイヤSE
-	CSound Se_Player_AttackSp1;						//プレイヤが攻撃1の時流す
-	CSound Se_Player_AttackSp2;						//プレイヤが攻撃2の時流す
-	CSound Se_Player_Walk;							//プレイヤが移動時流す
-	CSound Se_Player_Death;							//プレイヤ死亡時流す
+	CSound Se_Player_AttackSp1;			//プレイヤが攻撃1の時流す
+	CSound Se_Player_AttackSp2;			//プレイヤが攻撃2の時流す
+	CSound Se_Player_Walk;				//プレイヤが移動時流す
+	CSound Se_Player_Death;				//プレイヤ死亡時流す
 
 	//敵SE
-	CSound Se_Enemy_AttackSp;						//敵から攻撃を受けた時に流す
+	CSound Se_Enemy_AttackSp;			//敵から攻撃を受けた時に流す
 
 	//プレイヤのUIインスタンス
 	CTexture gPlayer_Ui_Hp_Frame;
@@ -98,6 +98,7 @@ private:
 	EPlayerState mPlayer_State;			//プレイヤの状態判断用
 	bool mPlayer_InvincibleFlag;		//無敵状態の時trueを返す
 	bool mPlayer_Avoid;					//回避状態の時trueを返す
+	bool mPlayer_Push_Flag;				//プレイヤがボタンを押した時の判別フラグ
 
 	//プレイヤのHPゲージ用の変数
 	float mPlayer_FollowGaugeWid;		//被ダメージ分後追いするゲージの幅
@@ -110,6 +111,8 @@ private:
 	CVector mPlayer_AttackDir;			//プレイヤの攻撃時の方向を保持する
 	float mPlayer_Speed;				//プレイヤのスピード(デフォルト)
 	float mPlayer_Speed_Avoid;			//プレイヤのスピード(回避)
+	float mPlayer_Speed_Keep;			//プレイヤのスピードの保存(デフォルト)
+	float mPlayer_Speed_Avoid_Keep;		//プレイヤのスピードの保存(回避)
 	float mPlayer_Avoid_Time;			//プレイヤの回避時間
 	float mPlayer_Turnspeed;			//プレイヤのターンの速度
 	float mPlayer_Attack_Dis;			//プレイヤの攻撃対象判別後の距離設定
@@ -132,7 +135,6 @@ private:
 	bool mPlayer_AttackFlag_Once;		//プレイヤの攻撃した瞬間だけtrueを返す、敵の回避判定に使用
 	int mPlayer_ComboCount;				//プレイヤのコンボルート判別用変数
 	int mPlayer_Flag;					//プレイヤのダメージフラグ
-	bool mPlayer_JumpFlag;				//プレイヤのジャンプフラグ
 
 	//敵に与える攻撃
 	int mDamage;					//敵からのダメージ
